@@ -1,0 +1,143 @@
+﻿<dx:DXWindow
+    x:Class="AquilaErpWpfApp3.Util.NumberPadDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    Title="[숫자]가상 키보드" Height="610" Width="500" ResizeMode="NoResize"  ShowIcon="True" FontSize="15"
+    WindowStyle="ToolWindow" WindowStartupLocation="Manual" Icon="/AquilaErpWpfApp3;component/Images/ktouch.png"   >
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="80"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="110"/>
+            <RowDefinition Height="249*"/>
+        </Grid.RowDefinitions>
+
+        <dxe:TextEdit HorizontalContentAlignment="Left" VerticalContentAlignment="Stretch" FontSize="60" Grid.Row="0" Name="txtKeyPad" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AllowNullInput="True" IsReadOnly="True" VerticalScrollBarVisibility="Auto" />
+        <!--<Button x:Name="EngAndKor" FontSize="16" Foreground="#FFF78A09" Content="한글" HorizontalAlignment="Left" Margin="539,0,0,0" VerticalAlignment="Top" Width="57" Height="60" Grid.Column="0" />-->
+        <dx:SimpleButton Grid.Column="1" x:Name="K_Del" Content="←" FontSize="35" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="HotPink" />
+
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130" />
+                <ColumnDefinition Width="130" />
+                <ColumnDefinition Width="130" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="110"/>
+                <RowDefinition Height="110"/>
+                <RowDefinition Height="110"/>
+                <RowDefinition Height="110"/>
+            </Grid.RowDefinitions>
+
+            <dx:SimpleButton Grid.Column="0" x:Name="K1" Content="1" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <dx:SimpleButton Grid.Column="1" x:Name="K2" Content="2" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <dx:SimpleButton Grid.Column="2" x:Name="K3" Content="3" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+
+            <dx:SimpleButton Grid.Row="1" Grid.Column="0" x:Name="K4" Content="4" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <dx:SimpleButton Grid.Row="1" Grid.Column="1" x:Name="K5" Content="5" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <dx:SimpleButton Grid.Row="1" Grid.Column="2" x:Name="K6" Content="6" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+            <dx:SimpleButton Grid.Row="2" Grid.Column="0" x:Name="K7" Content="7" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <dx:SimpleButton Grid.Row="2" Grid.Column="1" x:Name="K8" Content="8" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <dx:SimpleButton Grid.Row="2" Grid.Column="2" x:Name="K9" Content="9" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+            <dx:SimpleButton Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="K0" Content="0" FontSize="30" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <dx:SimpleButton Grid.Row="3" Grid.Column="2" x:Name="point" Content=". " FontSize="30" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+
+            <dx:SimpleButton Grid.Row="0" Grid.RowSpan="4" Grid.Column="3" x:Name="enter" Content="Enter" BorderBrush="#FFF78A09" Foreground="#FFF78A09" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+            <!--<StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <dx:SimpleButton x:Name="K1" GlyphHeight="70" GlyphWidth="70" Content="1" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    <dx:SimpleButton x:Name="K2" GlyphHeight="70" GlyphWidth="70" Content="2" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <dx:SimpleButton x:Name="K3" GlyphHeight="70" GlyphWidth="70" Content="3" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <dx:SimpleButton x:Name="K4" GlyphHeight="70" GlyphWidth="70" Content="4" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <dx:SimpleButton x:Name="K5" GlyphHeight="70" GlyphWidth="70" Content="5" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <dx:SimpleButton x:Name="K6" GlyphHeight="70" GlyphWidth="70" Content="6" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <dx:SimpleButton x:Name="K7" GlyphHeight="70" GlyphWidth="70" Content="7" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <dx:SimpleButton x:Name="K8" GlyphHeight="70" GlyphWidth="70" Content="8" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <dx:SimpleButton x:Name="K9" GlyphHeight="70" GlyphWidth="70" Content="9" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <dx:SimpleButton x:Name="K0" GlyphHeight="70" GlyphWidth="180" Content="0" FontSize="30" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <dx:SimpleButton x:Name="point" GlyphHeight="70" GlyphWidth="70" Content=". " FontSize="30" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <dx:SimpleButton x:Name="enter" GlyphHeight="70" GlyphWidth="180" Content="Enter" FontSize="30" VerticalAlignment="Stretch" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>-->
+        </Grid>
+        
+        <!-- 숫자 --><!--
+        <Button x:Name="K1" Content="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="45" Height="45" Grid.Row="1" />
+        <Button x:Name="K2" Content="2" HorizontalAlignment="Left" Margin="55,10,0,0" VerticalAlignment="Top" Width="45" Height="45" Grid.Row="1" />
+        <Button x:Name="K3" Content="3" HorizontalAlignment="Left" Margin="100,10,0,0" VerticalAlignment="Top" Width="45" Height="45" Grid.Row="1" />
+        <Button x:Name="K4" Content="4" HorizontalAlignment="Left" Margin="145,10,0,0" VerticalAlignment="Top" Width="45" Height="45" Grid.Row="1" />
+        <Button x:Name="K5" Content="5" HorizontalAlignment="Left" Margin="190,10,0,0" VerticalAlignment="Top" Width="45" Height="45" Grid.Row="1" />
+        <Button x:Name="K6" Content="6" HorizontalAlignment="Left" Margin="235,10,0,0" VerticalAlignment="Top" Width="45" Height="45" Grid.Row="1" />
+        <Button x:Name="K7" Content="7" HorizontalAlignment="Left" Margin="280,10,0,0" VerticalAlignment="Top" Width="45" Height="45" Grid.Row="1" />
+        <Button x:Name="K8" Content="8" HorizontalAlignment="Left" Margin="325,10,0,0" VerticalAlignment="Top" Width="45" Height="45" Grid.Row="1" />
+        <Button x:Name="K9" Content="9" HorizontalAlignment="Left" Margin="370,10,0,0" VerticalAlignment="Top" Width="45" Height="45" Grid.Row="1" />
+        <Button x:Name="K0" Content="0" HorizontalAlignment="Left" Margin="415,10,0,0" VerticalAlignment="Top" Width="45" Height="45" Grid.Row="1" />
+        --><!----><!--
+        <Button x:Name="K_" Content="_" HorizontalAlignment="Left" Margin="460,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="Km_" Content="-" HorizontalAlignment="Left" Margin="505,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="K_Del" Content="←" ToolTip="삭제" Foreground="Pink" HorizontalAlignment="Left" Margin="550,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" FontWeight="Bold" />-->
+        
+        
+        
+        
+        <!-- 1줄 --><!--
+        <Button x:Name="q" Content="Q" HorizontalAlignment="Left" Margin="29,60,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="w" Content="W" HorizontalAlignment="Left" Margin="74,60,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="e" Content="E" HorizontalAlignment="Left" Margin="119,60,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="r" Content="R" HorizontalAlignment="Left" Margin="164,60,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="t" Content="T" HorizontalAlignment="Left" Margin="209,60,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="y" Content="Y" HorizontalAlignment="Left" Margin="254,60,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="u" Content="U" HorizontalAlignment="Left" Margin="299,60,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="i" Content="I" HorizontalAlignment="Left" Margin="344,60,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="o" Content="O" HorizontalAlignment="Left" Margin="389,60,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="p" Content="P" HorizontalAlignment="Left" Margin="434,60,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        --><!-- 2줄 --><!--
+        <Button x:Name="a" Content="A" HorizontalAlignment="Left" Margin="55,110,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="s" Content="S" HorizontalAlignment="Left" Margin="100,110,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="d" Content="D" HorizontalAlignment="Left" Margin="145,110,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="f" Content="F" HorizontalAlignment="Left" Margin="190,110,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="g" Content="G" HorizontalAlignment="Left" Margin="235,110,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="h" Content="H" HorizontalAlignment="Left" Margin="280,110,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="j" Content="J" HorizontalAlignment="Left" Margin="325,110,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="k" Content="K" HorizontalAlignment="Left" Margin="370,110,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="l" Content="L" HorizontalAlignment="Left" Margin="415,110,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        --><!-- 3줄 --><!--
+        <Button x:Name="z" Content="Z" HorizontalAlignment="Left" Margin="74,160,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="x" Content="X" HorizontalAlignment="Left" Margin="119,160,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="c" Content="C" HorizontalAlignment="Left" Margin="164,160,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="v" Content="V" HorizontalAlignment="Left" Margin="209,160,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="b" Content="B" HorizontalAlignment="Left" Margin="254,160,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="n" Content="N" HorizontalAlignment="Left" Margin="299,160,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+        <Button x:Name="m" Content="M" HorizontalAlignment="Left" Margin="344,160,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />
+
+
+        <Button x:Name="enter" FontSize="20" Content="Enter" BorderBrush="#FFF78A09" Foreground="#FFF78A09" HorizontalAlignment="Left" Margin="479,60,0,0" Grid.Row="1" VerticalAlignment="Top" Width="116" Height="95" FontWeight="Bold" />
+        <Button x:Name="shift" FontSize="17" Content="↑Shift" Foreground="#FFF78A09" HorizontalAlignment="Left" Margin="389,160,0,0" Grid.Row="1" VerticalAlignment="Top" Width="206" Height="45" FontStyle="Italic" />-->
+        
+        <!--<Button x:Name="point" Content="." HorizontalAlignment="Left" Margin="20,160,0,0" Grid.Row="1" VerticalAlignment="Top" Width="45" Height="45" />-->
+        <!--<Button x:Name="space" Content="Space" Foreground="#FFF78A09" HorizontalAlignment="Left" Margin="258,106,0,0" Grid.Row="1" VerticalAlignment="Top" Width="157" Height="30" Grid.ColumnSpan="2" />-->
+    </Grid>
+</dx:DXWindow>
+
+    

@@ -1,0 +1,121 @@
+﻿<dx:DXWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    x:Class="AquilaErpWpfApp3.S.View.Dialog.S1147MasterDialog"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+    Title="Master Code" Height="305" Width="465" FontFamily="Arial" 
+    WindowStartupLocation="CenterOwner" ShowIcon="True" ResizeMode="NoResize" FontSize="15" Icon="{dx:DXImage Image=AddItem_16x16.png}">
+
+
+
+    <Window.Resources>
+        <!--<ControlTemplate x:Key="checkTemplate">
+            <Image Name="PART_Editor" Height="16" Width="16"/>
+            <ControlTemplate.Triggers>
+                <DataTrigger Binding="{Binding Path=(dxe:BaseEdit.OwnerEdit).IsChecked}" Value="True" >
+                    <Setter TargetName="PART_Editor" Property="Source" Value="/Images/check_box_T.png"></Setter>
+                    <Setter TargetName="PART_Editor" Property="ToolTip" Value="True"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=(dxe:BaseEdit.OwnerEdit).IsChecked}" Value="False">
+                    <Setter TargetName="PART_Editor" Property="Source" Value="/Images/check_box_F.png"></Setter>
+                    <Setter TargetName="PART_Editor" Property="ToolTip" Value="False"></Setter>
+                </DataTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <Style TargetType="dxe:CheckEdit" x:Key="checkEditStyle">
+            <Setter Property="DisplayTemplate"  Value="{StaticResource checkTemplate}"/>
+            <Setter Property="EditTemplate"  Value="{StaticResource checkTemplate}"/>
+        </Style>-->
+    </Window.Resources>
+
+
+    <Grid Margin="5" x:Name="configCode">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="100*" />
+            <RowDefinition Height="1" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1" />
+            <ColumnDefinition Width="140" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="1" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Height="20" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Text="사업장 : " HorizontalAlignment="Right" TextAlignment="Right"/>
+        <dxg:LookUpEdit HorizontalContentAlignment="Left" Grid.Row="1" Grid.Column="2" VerticalAlignment="Stretch" Margin="2"  x:Name="combo_AREA_NM" Text="{Binding AREA_NM}" IsSynchronizedWithCurrentItem="True" DisplayMember="CLSS_DESC" ValueMember="CLSS_DESC" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="280" PopupWidth="450" >
+            <dxg:LookUpEdit.PopupContentTemplate>
+                <ControlTemplate>
+                    <dxg:GridControl Name="PART_GridControl" >
+                        <dxg:GridControl.View>
+                            <dxg:TableView Name="View_AREA_NM" SearchDelay="0" ShowColumnHeaders="False" ShowGroupedColumns="True" AutoWidth="True" AllowPerPixelScrolling="True" ScrollAnimationDuration="0" ShowAutoFilterRow="False" ShowTotalSummary="False" IsSynchronizedWithCurrentItem="True" />
+                        </dxg:GridControl.View>
+                        <dxg:GridControl.Columns>
+                            <dxg:GridColumn FieldName="CLSS_CD" Width="50" HorizontalHeaderContentAlignment="Center" FilterPopupMode="CheckedList" ToolTip="" >
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="CLSS_DESC" Width="130" HorizontalHeaderContentAlignment="Center"  FilterPopupMode="CheckedList" ToolTip="" >
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                        </dxg:GridControl.Columns>
+                    </dxg:GridControl>
+                </ControlTemplate>
+            </dxg:LookUpEdit.PopupContentTemplate>
+            <dxg:LookUpEdit.StyleSettings>
+                <dxg:SearchLookUpEditStyleSettings />
+            </dxg:LookUpEdit.StyleSettings>
+        </dxg:LookUpEdit>
+
+        <TextBlock Height="20" Text="창고코드 : " Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" TextAlignment="Right" />
+        <dxe:TextEdit x:Name="text_loc_cd" Grid.Row="2" Grid.Column="2" Margin="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="{Binding LOC_CD}" MaxLength="90" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" FontSize="13" MaskType="Numeric" Mask="######" MaskUseAsDisplayFormat="True" />
+
+        <TextBlock Height="20" Text="창고명 : " Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" TextAlignment="Right"  />
+        <dxe:TextEdit x:Name="text_loc_nm" Grid.Row="3" Grid.Column="2" Margin="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="{Binding LOC_NM}" MaxLength="90" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  FontSize="13" />
+
+        <TextBlock Height="20" Text="비고 : " Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" TextAlignment="Right"  />
+        <dxe:TextEdit x:Name="text_loc_rmk" Grid.Row="4" Grid.Column="2" Margin="2" Grid.RowSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="{Binding LOC_RMK}" MaxLength="350" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  FontSize="13" />
+
+        <!--<TextBlock Height="20" HorizontalAlignment="Right" Text="거래처 : " TextAlignment="Right" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1"  />
+        <dxg:LookUpEdit HorizontalContentAlignment="Left" Grid.Column="2" Margin="2" Grid.Row="1" VerticalAlignment="Stretch" x:Name="combo_CLT_CO_NM" Text="{Binding CO_CD}" IsSynchronizedWithCurrentItem="True" DisplayMember="CO_NO" ValueMember="CO_NO" AutoPopulateColumns="True" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="280" PopupWidth="600">
+            <dxg:LookUpEdit.PopupContentTemplate>
+                <ControlTemplate>
+                    <dxg:GridControl Name="PART_GridControl" >
+                        <dxg:GridControl.View>
+                            <dxg:TableView Name="View_CLT_CO_NM" SearchDelay="0" ShowColumnHeaders="False" ShowGroupedColumns="True" AutoWidth="True" AllowPerPixelScrolling="True" ScrollAnimationDuration="0" ShowAutoFilterRow="False" ShowTotalSummary="False" IsSynchronizedWithCurrentItem="True" />
+                        </dxg:GridControl.View>
+                    </dxg:GridControl>
+                </ControlTemplate>
+            </dxg:LookUpEdit.PopupContentTemplate>
+            <dxg:LookUpEdit.StyleSettings>
+                <dxg:SearchLookUpEditStyleSettings />
+            </dxg:LookUpEdit.StyleSettings>
+        </dxg:LookUpEdit>-->
+        <!--<TextBlock Height="20" Text="{Binding ElementName=combo_CLT_CO_NM, Path=SelectedItem.CO_NM}" HorizontalAlignment="Stretch" TextAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="1" Foreground="Gray"  />-->
+
+        <!--<TextBlock Height="20" Text="적용 한도 : " HorizontalAlignment="Right" TextAlignment="Right" Grid.Row="5" Grid.Column="1" />
+        <dxe:TextEdit x:Name="text_APLY_LMT_AMT" Grid.Column="2" Margin="2" VerticalAlignment="Stretch" Text="{Binding APLY_LMT_AMT}" MaxLength="90" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Grid.Row="5" FontSize="13" MaskType="Numeric" Mask="#,###,###,###,###,##0" MaskUseAsDisplayFormat="True" />-->
+
+
+
+        <dxwui:AppBar x:Name="appBar" IsOpen="True" HideMode="Manual" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="3" IsCompact="True" >
+            <dxwui:AppBarButton  Label="확인" Name="OKButton" ToolTip="확인" Glyph="{dx:DXImageGrayscale Image=Apply_32x32.png}"  HorizontalAlignment="Center" AllowGlyphTheming="True" />
+            <dxwui:AppBarButton Label="취소" x:Name="CancelButton" ToolTip="취소" Glyph="{dx:DXImageGrayscale Image=Cancel_32x32.png}" HorizontalAlignment="Center" AllowGlyphTheming="True" />
+        </dxwui:AppBar>
+
+    </Grid>
+</dx:DXWindow>

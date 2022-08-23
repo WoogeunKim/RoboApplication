@@ -1,0 +1,165 @@
+﻿<dx:DXWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    mc:Ignorable="d"
+    x:Class="AquilaErpWpfApp3.View.M.Dialog.M6632WeighingUserDialog"
+    Title="Master Code" Height="450" Width="700" FontFamily="Arial" WindowStartupLocation="CenterOwner" ShowIcon="True" ResizeMode="NoResize" FontSize="13" Icon="{dx:DXImage Image=AssignTo_16x16.png}">
+
+    <Grid Margin="5" x:Name="configCode">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="1.4*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <Image  Grid.Column="0" Grid.Row="0" Source="{dxc:DXImage SvgImages/Business Objects/BO_Validation.svg}" Width="35" Height="35" VerticalAlignment="Center" HorizontalAlignment="Left" />
+        <TextBlock Margin="40,0,0,0" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Text="칭량 작업을 시작 하시겠습니까?" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Stretch"  FontSize="25" Foreground="HotPink" />
+
+
+        <Grid Grid.Column="0" Grid.Row="2">
+            <Border BorderBrush="OrangeRed" BorderThickness="3">
+                <Grid Margin="0,10,0,0">
+                    <Grid Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="작지 번호:" FontWeight="Bold" Foreground="Blue"  HorizontalAlignment="Right" />
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="계획 번호:" HorizontalAlignment="Right" />
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="작업 일자 :" HorizontalAlignment="Right"  />
+
+                        <Image  Grid.Column="0" Grid.Row="3" Source="{dxc:DXImage SvgImages/Business Objects/BO_Validation.svg}" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="작업자 :" HorizontalAlignment="Right" FontWeight="Bold" FontSize="18" />
+
+                        <Image  Grid.Column="0" Grid.Row="4" Source="{dxc:DXImage SvgImages/Business Objects/BO_Validation.svg}" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="분 류 :" FontWeight="Bold" HorizontalAlignment="Right"  FontSize="14" />
+
+                        <Image  Grid.Column="0" Grid.Row="5" Source="{dxc:DXImage SvgImages/Business Objects/BO_Validation.svg}" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <TextBlock Grid.Column="0" Grid.Row="5" Text="벌크 코드 :" HorizontalAlignment="Right"  FontSize="15" />
+
+                        <Image  Grid.Column="0" Grid.Row="6" Source="{dxc:DXImage SvgImages/Business Objects/BO_Validation.svg}" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="벌크 명 :" HorizontalAlignment="Right"  FontSize="15" />
+
+                        <TextBlock Grid.Column="0" Grid.Row="7" Text=" 기준 중량(Kg) :" HorizontalAlignment="Right"  />
+                        <TextBlock Grid.Column="0" Grid.Row="8" Text=" Batch 중량(Kg) :" HorizontalAlignment="Right"  />
+                        <TextBlock Grid.Column="0" Grid.Row="9" Text=" 총 작업 중량 :" FontWeight="Bold" HorizontalAlignment="Right"  />
+                        <TextBlock Grid.Column="0" Grid.Row="10" Text=" 비고 :" Foreground="Gray" HorizontalAlignment="Right" VerticalAlignment="Top" />
+
+                        <TextBlock Grid.Column="2" Grid.Row="0"  FontWeight="Bold" >
+                            <Run Text="{Binding LOT_NO}" Foreground="Blue"/>
+                            <Run Text=" /  지시자 : " FontSize="9" />
+                            <Run Text="{Binding CRE_USR_NM}"  FontSize="9"/>
+                             <!--<Run Text=" /  완료 여부 : " Foreground="Gray" FontSize="9" />
+                            <Run Text="{Binding WRK_END_FLG}" Foreground="Gray" FontSize="9" />-->
+                        </TextBlock>
+                        <TextBlock Grid.Column="2" Grid.Row="1"  >
+                            <!--<Hyperlink Click="FindButton_Click" >-->
+                                <Run Text="{Binding SL_ORD_NO}" />
+                            <!--</Hyperlink>-->
+                            <!--<Run Text=" / " Foreground="HotPink"/>
+                            <Run Text="{Binding Row.SL_ORD_SEQ}" Foreground="HotPink"/>-->
+                        </TextBlock>
+                        <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding WRK_DT}" />
+                        <TextBlock Grid.Column="2" Grid.Row="3" Text="{Binding WRK_MAN_NM}" FontWeight="Bold" Foreground="Gray" FontSize="18" />
+                        <TextBlock Grid.Column="2" Grid.Row="4" Text="{Binding ITM_GRP_CLSS_NM}"  FontWeight="Bold" FontSize="14"/>
+                        <TextBlock Grid.Column="2" Grid.Row="5" Text="{Binding ASSY_ITM_CD}"  FontSize="15"/>
+                        <TextBlock Grid.Column="2" Grid.Row="6" Text="{Binding ASSY_ITM_NM}"  FontSize="15"/>
+                        <TextBlock Grid.Column="2" Grid.Row="7" Text="{Binding BSE_WEIH_VAL, StringFormat='##,##0'}" />
+                        <TextBlock Grid.Column="2" Grid.Row="8" Text="{Binding MIX_WEIH_VAL, StringFormat='##,##0.0'}" />
+                        <TextBlock Grid.Column="2" Grid.Row="9" Text="{Binding TOT_WEIH_VAL, StringFormat='##,##0.0'}"  FontWeight="Bold"/>
+                        <TextBlock Grid.Column="2" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding WRK_DESC}" TextWrapping="Wrap" Foreground="Gray"  />
+                    </Grid>
+                </Grid>
+            </Border>
+
+        </Grid>
+
+
+        <Image  Grid.Column="1" Grid.Row="2" Width="45" Height="60" VerticalAlignment="Center" HorizontalAlignment="Left" Source="{dxc:DXImage SvgImages/Arrows/DoubleNext.svg}" />
+
+
+        <Grid  Grid.Column="2" Grid.Row="2">
+            <Rectangle Width="280" Height="220" Fill="White" VerticalAlignment="Bottom"  Margin="0,20" RadiusY="9.6" RadiusX="9.6" >
+            <Rectangle.Effect>
+                <DropShadowEffect Color="#FFBBBBBB" Direction="0" BlurRadius="10"  RenderingBias="Quality" ShadowDepth="1" />
+            </Rectangle.Effect>
+        </Rectangle>
+
+        <Grid Width="275" Height="140" VerticalAlignment="Bottom" Margin="0,90">
+            <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="Gray" FontSize="16" x:Name="text_loginNm" FontWeight="Bold" />
+            <StackPanel VerticalAlignment="Center" Margin="10">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                    <dxe:TextEdit  Name="txtId"  FontSize="14" Height="60" Margin="0,25,0,0" NullText="ID" Width="200" />
+                        <dx:SimpleButton HorizontalAlignment="Center" Name="btn_id" Height="60" Margin="0,25,0,0">
+                            <StackPanel>
+                                <Image Width="30" Height="30" Source="{dxc:DXImage SvgImages/Business Objects/BO_Appearance.svg}" />
+                                <!--<TextBlock></TextBlock>-->
+                            </StackPanel>
+                        </dx:SimpleButton>
+                    </StackPanel>
+                    <TextBlock Height="5"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                        <dxe:PasswordBoxEdit Name="txtPass" MaxLength="20" Height="45" Margin="0,0,0,0" NullText="Password" Width="200" />
+                        <dx:SimpleButton HorizontalAlignment="Center" Name="btn_pass" Height="45" Margin="0,0,0,0">
+                            <StackPanel>
+                                <Image Width="30" Height="30" Source="{dxc:DXImage SvgImages/Business Objects/BO_Appearance.svg}" />
+                                <!--<TextBlock></TextBlock>-->
+                            </StackPanel>
+                        </dx:SimpleButton>
+                    </StackPanel>
+                <TextBlock Height="10"/>
+                <TextBlock Foreground="Gray" FontSize="15" x:Name="text_CoNm"  HorizontalAlignment="Center" FontWeight="Bold"  />
+                <!--<dxe:TextEdit materialDesign:HintAssist.Hint="ID" NullText="ID" Style="{StaticResource MateriaDesignFloatingHintTextBox}" HorizontalAlignment="Stretch" Name="txtId" VerticalAlignment="Center"  AllowNullInput="True"  VerticalContentAlignment="Center" FontSize="14" />
+                <dxe:PasswordBoxEdit Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="2,137.4,0,0" Name="txtPass" VerticalAlignment="Top" Width="154" Height="23" AllowNullInput="True" NullText="패스워드" MaxLength="20" VerticalContentAlignment="Center" />-->
+
+            </StackPanel>
+        </Grid>
+        <dx:SimpleButton HorizontalAlignment="Center" Name="btn_login" VerticalAlignment="Bottom" Margin="0,35" Width="210" Height="60"  >
+            <StackPanel>
+                <Image Source="{dx:DXImageOffice2013 Image=Apply_32x32.png}" Width="30" Height="30" />
+                <!--<TextBlock></TextBlock>-->
+            </StackPanel>
+        </dx:SimpleButton>
+        <!--<Button  HorizontalAlignment="Center"  Name="btn_login" VerticalAlignment="Bottom" Margin="0,50" Width="150" >
+            <StackPanel>
+                <Image Source="{dx:DXImageOffice2013 Image=Apply_32x32.png}" Width="20" Height="20" />
+                <TextBlock>LOGIN</TextBlock>
+            </StackPanel>
+        </Button>-->
+        <!--<TextBlock Text="2020 © IEG CO., ALL RIGHTS RESERVED" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" FontSize="11" />-->
+
+    </Grid>
+
+
+
+
+    </Grid>
+</dx:DXWindow>

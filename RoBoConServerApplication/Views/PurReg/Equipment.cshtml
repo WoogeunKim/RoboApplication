@@ -1,0 +1,246 @@
+﻿@model ModelsLibrary.Fproof.FproofVo
+
+@{
+    ViewBag.Title = "설비 통합 모니터링";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>설비 통합 모니터링</h2>
+
+<div class="row">
+    <div class="col-sm-12">
+        @(Html.DevExtreme().SelectBox().ID("selectBox").Name("LOT-NO : ").DataSource(d => d.WebApi().RouteName("PurRegWebApi").LoadAction("ProcLotNoookup").LoadParams(new { CHNL_CD = Context.Session["CHNL_CD"] }).Key("PROC_LOT_NO")) .DisplayExpr("PROC_LOT_NO") .ValueExpr("PROC_LOT_NO") .SearchEnabled(true).OnValueChanged("lookup_valueChanged") )
+    </div>
+
+    @*<div class="col-sm-2">
+        @(Html.DevExtreme().Toolbar().Items(items => {
+                items.Add().Widget(w => w.Button().Icon("refresh").OnClick("refreshButton_click")).LocateInMenu(ToolbarItemLocateInMenuMode.Auto).Location(ToolbarItemLocation.Before);
+            }))
+    </div>*@
+
+    @*<div class="col-md-pull-12">
+        <div class="dx-fieldset">
+        <div class="jumbotron">
+
+            @using (Html.BeginForm())
+            {
+                using (Html.DevExtreme().ValidationGroup())
+                {
+                    @Html.AntiForgeryToken()
+
+                    @(Html.DevExtreme().Form<VisualServerApplication.Models.RegisterEqViewModel>().ShowValidationSummary(true).Items(items => {
+                    items.AddGroup().Caption("LOT-NO를 선택 해주세요.").Items(groupItems =>
+                    {
+                        groupItems.AddSimpleFor(m => m.PROC_LOT_NO).Name("LOT-NO : ")
+                            .Editor(e => e.Lookup().DataSource(d => d.WebApi().RouteName("PurRegWebApi").LoadAction("ProcLotNoookup").LoadParams(new { CHNL_CD = Context.Session["CHNL_CD"] }).Key("PROC_LOT_NO"))
+                            .DisplayExpr(new JS("lookup_displayExpr"))
+                            .ValueExpr("PROC_LOT_NO")
+                            .ShowPopupTitle(false)
+                            .Placeholder("LOT-NO")
+                            .SearchEnabled(true)
+                            .OnValueChanged("lookup_valueChanged"));
+
+
+                        //items.AddButton().HorizontalAlignment(HorizontalAlignment.Left).ButtonOptions(b => b.Text("Register").Type(ButtonType.Success).UseSubmitBehavior(true));
+                    });
+
+                }).FormData(Model)
+            )}
+            }
+            </div>
+        </div>*@
+
+    <div class="row">
+        @*<div class="col-sm-1">
+            @(Html.DevExtreme().Toolbar().Items(items => {
+                    items.Add().Widget(w => w.Button().Icon("refresh").OnClick("refreshButton_click")).LocateInMenu(ToolbarItemLocateInMenuMode.Auto).Location(ToolbarItemLocation.Before);
+                }))
+
+        </div>*@
+
+        <div class="col-sm-12">
+            <br />
+            <br />
+
+            @*<div class="dx-fieldset-header">Equipment Data</div>*@
+            @(Html.DevExtreme().DataGrid<ModelsLibrary.Fproof.FproofVo>()
+                        .ID("gridContainer")
+                        .DataSourceOptions(o => o.ReshapeOnPush(true))
+                        .RepaintChangesOnly(true)
+                        .ColumnAutoWidth(true)
+                        .ShowBorders(true)
+                        .DataSource(d => d.WebApi().RouteName("PurRegWebApi")
+                        .LoadParams(new { CHNL_CD = Context.Session["CHNL_CD"] })
+                        .LoadAction("GetEqMstSelect")
+                        .Key("PROC_LOT_NO")
+                )
+                .Columns(columns =>
+                {
+                    columns.AddFor(m => m.CHNL_CD).Caption("").Width(150).Alignment(HorizontalAlignment.Center).AllowEditing(false).Visible(false);
+                    columns.AddFor(m => m.PROC_LOT_NO).Caption("LOT NO").Width(250).Alignment(HorizontalAlignment.Center).AllowEditing(false);
+                    columns.AddFor(m => m.ROUT_CD).Caption("센서명").Alignment(HorizontalAlignment.Left).AllowEditing(false);
+                    columns.AddFor(m => m.SENSOR_VAL).Caption("센서수집집계").Width(200).Format("###,###,##0.00").Alignment(HorizontalAlignment.Right).AllowEditing(false);
+                })
+                    @*.MasterDetail(md => { md.Enabled(true);
+                    md.Template(@<text> <div class="master-detail-caption">Equipment Data Monitoring</div>
+                                @(Html.DevExtreme().DataGrid<ModelsLibrary.Fproof.FproofVo>()
+                                    .ColumnAutoWidth(true)
+                                    .HeaderFilter(f => f.Visible(true))
+                                    .ShowBorders(true)
+                                    .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+                                    //.Selection(s => s.Mode(SelectionMode.Single))
+                                    //.HoverStateEnabled(true)
+                                    .Columns(columns => {
+                                        columns.AddFor(m => m.SENSOR_NO).Caption("센서코드").Width(150).Alignment(HorizontalAlignment.Center).AllowEditing(false);
+                                        columns.AddFor(m => m.SENSOR_SEQ).Caption("센서순번").Width(150).Alignment(HorizontalAlignment.Center).AllowEditing(false);
+                                        columns.AddFor(m => m.SENSOR_VAL).Caption("수집값").Format("###,###,##0.00").Width(100).Alignment(HorizontalAlignment.Right).AllowEditing(false).AllowHeaderFiltering(false);
+                                        //columns.AddFor(m => m.Subject);
+
+                                        //columns.AddFor(m => m.StartDate);
+
+                                        //columns.AddFor(m => m.DueDate);
+
+                                        //columns.AddFor(m => m.Priority);
+
+                                        //columns.Add()
+                                        //    .Caption("Completed")
+                                        //    .DataType(GridColumnDataType.Boolean)
+                                        //    .CalculateCellValue(@"function(rowData) { return rowData.Status == ""Completed""; }");
+                                    })
+                                    .DataSource(d => d.WebApi()
+                                        .RouteName("PurRegWebApi")
+                                        .LoadAction("GetEqMonitoringSelect")
+                                        .LoadParams(new { SENSOR_NO = new JS("data.SENSOR_NO") })
+                                    )
+                                )
+                            </text>);
+                        })*@
+                //.Summary(s => s.TotalItems(totalItems => { totalItems.Add().SummaryType(SummaryType.Count).Column("RMN_QTY"); })
+                //.GroupItems(groupItems => {groupItems.Add().SummaryType(SummaryType.Count);}))
+                //.FilterRow(f => f.Visible(false))
+                .ColumnAutoWidth(true)
+                //.Paging(p => p.PageSize(50))
+                //.HeaderFilter(f => f.Visible(true))
+                .GroupPanel(p => p.Visible(false))
+                //.Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+                .ShowBorders(true)
+                .Selection(s => s.Mode(SelectionMode.Single))
+                //.HoverStateEnabled(true)
+                .SearchPanel(sp => sp.Visible(false))
+                .OnSelectionChanged("selectionChanged")
+                //.OnSelectionChanged(@<text>  function(e) {   e.component.collapseAll(-1);  e.component.expandRow(e.currentSelectedRowKeys[0]);       }    </text>)
+                //.OnContentReady(@<text> function(e) { if(!e.component.getSelectedRowKeys().length)  e.component.selectRowsByIndexes(0);  }  </text>)
+                )
+
+            @(Html.DevExtreme().SpeedDialAction().ID("action-refersh").Icon("search").Label("Refersh").OnClick("refershRow"))
+        </div>
+
+        @*<div class="selected" display="none">
+                <span id="selected-employee-notes"></span>
+            </div>*@
+
+        @*<div class="dx-fieldset">
+                <div class="dx-fieldset-header">
+                    Equipment Data Monitoring
+                </div>
+                <div class="dx-field">
+                    @(Html.DevExtreme().DataGrid<ModelsLibrary.Fproof.FproofVo>()
+                    .ID("gridContainer2")
+                    .DataSourceOptions(o => o.ReshapeOnPush(true))
+                    .RepaintChangesOnly(true)
+                    .ColumnAutoWidth(true)
+                    .ShowBorders(true)
+                    .DataSource(d => d.WebApi().RouteName("PurRegWebApi")
+                    .LoadParams(new { CHNL_CD = Context.Session["CHNL_CD"], CRE_USR_ID = Context.Session["USR_ID"] })
+                    .LoadAction("GetEqMonitoringSelect")
+                    .Key("SENSOR_NO")
+            )
+            .Columns(columns =>
+            {
+                columns.AddFor(m => m.SENSOR_NO).Caption("Eq No.").Width(150).Alignment(HorizontalAlignment.Center).AllowEditing(false);
+                columns.AddFor(m => m.SENSOR_SEQ).Caption("Seq").Width(150).Alignment(HorizontalAlignment.Center).AllowEditing(false);
+                columns.AddFor(m => m.SENSOR_VAL).Caption("Value").Format("###,###,##0.00").Width(100).Alignment(HorizontalAlignment.Right).AllowEditing(false);
+
+            })
+            .Summary(s => s.TotalItems(totalItems => { totalItems.Add().SummaryType(SummaryType.Count).Column("RMN_QTY"); })
+            .GroupItems(groupItems => {groupItems.Add().SummaryType(SummaryType.Count);}))
+            //.FilterRow(f => f.Visible(false))
+            .ColumnAutoWidth(true)
+            .Paging(p => p.PageSize(150))
+            .HeaderFilter(f => f.Visible(true))
+            .GroupPanel(p => p.Visible(true))
+            .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+            .ShowBorders(true)
+            //.Selection(s => s.Mode(SelectionMode.Single))
+            .HoverStateEnabled(true)
+            .SearchPanel(sp => sp.Visible(true))
+
+            )
+
+                </div>
+            </div>*@
+    </div>
+</div>
+
+
+    <script type="text/javascript">
+        function lookup_valueChanged(data) {
+            var dataGrid = $("#gridContainer").dxDataGrid("getDataSource");
+            if (data.value == "All") {
+                dataGrid.clearFilter();
+            }
+            else
+            {
+                dataGrid.filter(["PROC_LOT_NO", "=", data.value]);
+            }
+            dataGrid.reload();
+            DevExpress.ui.notify("PROC_LOT_NO : " + data.value);
+            //$(".selected").show();
+            //$("#selected-employee-img").attr("src", e.value.Picture);
+            //$("#selected-employee-notes").text("LOT-NO : " + e.value.PROC_LOT_NO + "/r/n" + "품번 : " + e.value.ROUT_ITM_CD + "/r/n" + "품명 : " + e.value.ITM_NM + "/r/n");
+        }
+
+        function lookup_displayExpr(item) {
+            if (!item) {
+                return "";
+            }
+
+            return item.PROC_LOT_NO /*+ " / " + item.ITM_NM*/;
+        }
+
+        //function refreshButton_click() {
+        //    $("#gridContainer").dxDataGrid("getDataSource").reload();
+        //    DevExpress.ui.notify("Refresh!");
+        //}
+
+        //$(function () {
+        //    //var productsStore = $("#gridContainer").dxDataGrid("getDataSource").store();
+        //    setInterval(function () {
+        //        //    //if (orders.length > 500000) {
+        //        //    //    return;
+        //        //    //}
+
+        //        //for (var i = 0; i < updatesPerSecond / 20; i++)
+        //        //{
+        //        //    addOrder(productsStore);
+        //        $("#gridContainer").dxDataGrid("getDataSource").reload();
+        //        //$("#gridContainer").dxDataGrid("getDataSource").reload();
+        //        //}
+        //    }, 15000);
+        //});
+
+
+        var selectedRowIndex = -1;
+
+        var selectionChanged = function (e) {
+            selectedRowIndex = e.component.getRowIndexByKey(e.selectedRowKeys[0]);
+
+            //$("#action-remove").dxSpeedDialAction("instance").option("visible", selectedRowIndex !== -1);
+            //$("#action-edit").dxSpeedDialAction("instance").option("visible", selectedRowIndex !== -1);
+        }
+
+        var refershRow = function () {
+            $("#gridContainer").dxDataGrid("getDataSource").reload();
+            DevExpress.ui.notify("Refresh!");
+        }
+
+    </script>

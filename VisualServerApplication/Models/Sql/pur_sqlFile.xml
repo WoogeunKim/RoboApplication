@@ -1,0 +1,3024 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="pur" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  
+  <statements>
+    <!-- P4411 발주 관리-->
+     <select id="P4411SelectMstList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+        SELECT T1.CHNL_CD  AS CHNL_CD
+            , T1.PUR_ORD_NO
+            , T1.PUR_CO_CD
+            , T2.CO_NM
+            , T1.AREA_CD
+            , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD , 'L-002', T1.AREA_CD) AS AREA_NM
+            , CONVERT(VARCHAR, T1.PUR_DT, 23) AS PUR_DT 
+            , T1.PUR_ITM_CD
+            , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD , 'L-111', T1.PUR_ITM_CD) AS PUR_ITM_NM
+            , CONVERT(VARCHAR, T1.PUR_DUE_DT, 23) AS PUR_DUE_DT
+            , T1.PUR_CLZ_FLG
+            , T1.PUR_RMK
+            , T1.CRE_USR_ID
+            , dbo.USR_NM_FNC(T1.CHNL_CD , T1.CRE_USR_ID) AS  CRE_USR_NM
+            , CONVERT(VARCHAR, T1.CRE_DT, 121) AS CRE_DT 
+            , T1.UPD_USR_ID
+            , (SELECT CONVERT(VARCHAR, X.UPD_DT, 121) AS UPD_DT FROM TB_PUR_ORD_DTL X  WHERE 1=1 AND X.CHNL_CD = T1.CHNL_CD AND X.PUR_ORD_NO = T1.PUR_ORD_NO AND X.PUR_ORD_SEQ = (SELECT MAX(Y.PUR_ORD_SEQ) FROM TB_PUR_ORD_DTL Y  WHERE 1=1 AND Y.PUR_ORD_NO = T1.PUR_ORD_NO) ) AS UPD_DT
+            , T2.HDQTR_PHN_NO
+            , T2.HDQTR_FAX_NO 
+            , (
+                  SELECT ISNULL(SUM(PUR_AMT), 0)  AS PUR_AMT
+                    FROM TB_PUR_ORD_DTL
+                      WHERE 1 = 1
+                        AND CHNL_CD    = T1.CHNL_CD 
+                        AND PUR_ORD_NO = T1.PUR_ORD_NO          
+              ) AS PUR_SUM_AMT
+             , T1.PUR_WK_CD
+            FROM TB_PUR_ORD T1
+               , TB_CD_CO   T2
+            WHERE 1 = 1
+              AND T1.CHNL_CD    = #CHNL_CD#
+              AND T1.CHNL_CD    = T2.CHNL_CD
+              AND T1.PUR_CO_CD   = T2.CO_NO
+            <isNotNull property="PUR_CO_CD">
+              AND T1.PUR_CO_CD   = #PUR_CO_CD#
+            </isNotNull>
+             <isNotNull property="AREA_CD">
+               AND T1.AREA_CD   = #AREA_CD#
+             </isNotNull>
+             <isNotNull property="FM_DT">
+              AND T1.PUR_DT >= CAST( #FM_DT# + ' 00:00:00' AS DATETIME)
+              AND T1.PUR_DT <![CDATA[<=]]> CAST( #TO_DT# + ' 23:59:59' AS DATETIME)
+            </isNotNull>
+     </select>
+    
+     <!-- Service -->
+    <select id="P4411SelectPurOrdNo" resultClass="string">
+      SELECT dbo.FF_NO_FMT(#CHNL_CD#, 'PUR', #AREA_CD#) AS LST_FMT_NO  FROM CPY_T WHERE NO = 1
+    </select>
+
+    <update id="P4411UpdatePurOrdNo" parameterClass="ModelsLibrary.Pur.PurVo">
+      UPDATE TB_SYS_NO_FMT
+        SET LST_FMT_NO  = #PUR_ORD_NO#
+       WHERE TBL_ID     = 'PUR'
+          AND CHNL_CD   = #CHNL_CD#
+          AND AREA_CD   = #AREA_CD#
+    </update>
+    
+     <insert id="P4411InsertMst" parameterClass="ModelsLibrary.Pur.PurVo">
+       INSERT INTO TB_PUR_ORD 
+       (
+           PUR_ORD_NO
+         , AREA_CD
+         , PUR_CO_CD
+         , PUR_DT
+         , PUR_ITM_CD
+         , PUR_DUE_DT
+         , PUR_CLZ_FLG
+         , PUR_RMK
+         , CRE_USR_ID
+         , CRE_DT
+         , UPD_USR_ID
+         , UPD_DT
+         , CHNL_CD
+         , PUR_WK_CD
+       ) 
+       VALUES 
+       (
+           #PUR_ORD_NO#
+         , #AREA_CD#
+         , #PUR_CO_CD#
+         , #PUR_DT#
+         , #PUR_ITM_CD#
+         , #PUR_DUE_DT#
+         , #PUR_CLZ_FLG#
+         , #PUR_RMK#
+         , #CRE_USR_ID#
+         , GETDATE()
+         , #UPD_USR_ID#
+         , GETDATE()
+         , #CHNL_CD#
+         , #PUR_WK_CD#
+       )
+     </insert>
+    
+    <update id="P4411UpdateMst" parameterClass="ModelsLibrary.Pur.PurVo">
+      UPDATE TB_PUR_ORD
+        SET
+            PUR_CO_CD     = #PUR_CO_CD#
+          , PUR_DT        = #PUR_DT#
+          , PUR_ITM_CD    = #PUR_ITM_CD#
+          , PUR_DUE_DT    = #PUR_DUE_DT#
+          , PUR_CLZ_FLG   = #PUR_CLZ_FLG#
+          , PUR_RMK       = #PUR_RMK#
+          , PUR_WK_CD     = #PUR_WK_CD#
+          , UPD_USR_ID    = #UPD_USR_ID#
+          , UPD_DT        = GETDATE()
+        WHERE PUR_ORD_NO  = #PUR_ORD_NO#
+          AND CHNL_CD     = #CHNL_CD#
+    </update>
+
+    <delete id="P4411DeleteMst" parameterClass="ModelsLibrary.Pur.PurVo">
+        DELETE FROM TB_PUR_ORD
+          WHERE 1 = 1
+            AND CHNL_CD     = #CHNL_CD#
+            AND PUR_ORD_NO  = #PUR_ORD_NO#
+    </delete>
+    
+    <select id="P4411SelectReport" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+        WITH TMP AS (
+          SELECT CO_NO
+               , CO_NM
+               , CO_RGST_NO
+               , PRSD_NM
+               , HDQTR_PST_NO
+               , HDQTR_ADDR
+            FROM TB_CD_CO
+           WHERE 1 = 1  
+		     AND CHNL_CD    = #CHNL_CD#
+             AND CO_NO      = (SELECT CLSS_DESC FROM TB_SYS_CLSS_CD WHERE 1 = 1 AND CHNL_CD = #CHNL_CD# AND CLSS_TP_CD = 'S100') )
+         SELECT
+             #CHNL_CD#   AS CHNL_CD
+           , ROW_NUMBER() OVER (PARTITION BY  NULL ORDER BY  T1.PUR_ORD_NO, T3.ITM_CD  ) RN 
+           , DATENAME(YY, T1.PUR_DT) + '년 '  + Right('00' + CONVERT(NVARCHAR, DATENAME(MM, T1.PUR_DT)), 2)+ '월 ' + Right('00' + CONVERT(NVARCHAR, DATENAME(DD, T1.PUR_DT)),2) + '일'  AS PUR_DT 
+           , T1.PUR_ORD_NO  
+           , dbo.CD_COMPANY_NM_FNC(#CHNL_CD#, T1.PUR_CO_CD) AS CO_NM 
+           , dbo.DEPT_NM_FNC(#CHNL_CD#,T1.CRE_USR_ID) + ' ' + dbo.USR_NM_FNC(#CHNL_CD#,T1.CRE_USR_ID)  AS PUR_DEPT_NM 
+           , T3.ITM_NM      
+           , T3.ITM_SZ_NM
+           , T3.UOM_CD
+           , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#,'L-003', T3.UOM_CD)  AS UOM_NM
+           , T2.PUR_QTY     
+           , T2.PUR_ITM_RMK     
+           , dbo.USR_NM_FNC(#CHNL_CD#, T1.CRE_USR_ID) AS PUR_EMPE_NM
+           , '' AS QC_CD
+           , T2.CO_UT_PRC     
+           , T2.PUR_AMT
+           , T1.PUR_RMK
+           , CONVERT(VARCHAR, GETDATE(), 120)  AS PRN_DT 
+           , CONVERT(VARCHAR, T1.PUR_DUE_DT, 23) AS PUR_DUE_DT
+           , dbo.FF_ITM_TP_QTY(#CHNL_CD#, T2.ITM_CD, T2.PUR_QTY, 'A')  AS MD_QTY
+           , dbo.FF_ITM_TP_QTY(#CHNL_CD#, T2.ITM_CD, T2.PUR_QTY, 'B') AS PK_QTY
+           , T3.MD_PER_QTY
+           , T4.CO_NM     AS  PUR_CO_NM
+           , T4.CO_RGST_NO
+           , T4.PRSD_NM
+           , T4.HDQTR_PST_NO + ') ' + T4.HDQTR_ADDR  AS  HDQTR_ADDR
+           , dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T3.ITM_GRP_CLSS_CD, T3.N1ST_ITM_GRP_CD) AS N1ST_ITM_GRP_NM
+        FROM TB_PUR_ORD      T1
+           , TB_PUR_ORD_DTL  T2
+           , TB_CD_ITM    T3
+           , TMP          T4
+       WHERE 1 = 1
+         AND T1.CHNL_CD     = #CHNL_CD#
+         AND T1.PUR_ORD_NO  = T2.PUR_ORD_NO
+         AND T2.ITM_CD      = T3.ITM_CD
+         AND T1.PUR_ORD_NO  = #PUR_ORD_NO#
+    </select>
+    
+    <select id="P4411SelectWeeklyReport" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+        SELECT N1ST_ITM_GRP_NM
+           , ITM_SZ_NM
+           , MTRL_NM_NM     AS ITM_NM
+           , UOM_NM
+           , SUM(PUR_QTY)   AS PUR_QTY
+           , SUM(N1ST_QTY)  AS N1ST_QTY
+           , SUM(N2ND_QTY)  AS N2ND_QTY
+           , SUM(N3RD_QTY)  AS N3RD_QTY
+           , SUM(N4TH_QTY)  AS N4TH_QTY
+           , SUM(N5TH_QTY)  AS N5TH_QTY
+           , MAX(T1.PUR_RMK)  AS PUR_RMK
+           , CONVERT(VARCHAR, GETDATE(), 120) AS PRN_DT
+           , ROW_NUMBER() OVER ( PARTITION BY  NULL ORDER BY  N1ST_ITM_GRP_NM ) RN 
+        FROM (
+            SELECT T2.ITM_CD
+                 , dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T3.ITM_GRP_CLSS_CD, T3.N1ST_ITM_GRP_CD)  AS N1ST_ITM_GRP_NM
+                 , T3.N1ST_ITM_GRP_CD
+                 , T3.ITM_NM
+                 , T3.ITM_SZ_NM
+                 , T3.CAR_ITM_NM
+                 , T3.MTRL_NM_CD
+                 , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'DH02', T3.MTRL_NM_CD)  AS MTRL_NM_NM 
+                 , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-003', T3.UOM_CD)     AS UOM_NM
+                 , T1.PUR_WK_CD
+                 , T1.PUR_RMK
+                 , T2.PUR_QTY
+                 , ISNULL(CASE WHEN T1.PUR_WK_CD = 1 THEN T2.PUR_QTY END, 0)   AS N1ST_QTY
+                 , ISNULL(CASE WHEN T1.PUR_WK_CD = 2 THEN T2.PUR_QTY END, 0)   AS N2ND_QTY
+                 , ISNULL(CASE WHEN T1.PUR_WK_CD = 3 THEN T2.PUR_QTY END, 0)   AS N3RD_QTY
+                 , ISNULL(CASE WHEN T1.PUR_WK_CD = 4 THEN T2.PUR_QTY END, 0)   AS N4TH_QTY
+                 , ISNULL(CASE WHEN T1.PUR_WK_CD = 5 THEN T2.PUR_QTY END, 0)   AS N5TH_QTY           
+              FROM TB_PUR_ORD       T1
+                 , TB_PUR_ORD_DTL   T2
+                 , TB_CD_ITM        T3
+             WHERE 1 = 1
+               AND T1.CHNL_CD     = #CHNL_CD#
+               AND T1.CHNL_CD     = T2.CHNL_CD
+               AND T1.CHNL_CD     = T3.CHNL_CD
+               AND T1.AREA_CD     = #AREA_CD#
+               AND T1.PUR_ORD_NO  = T2.PUR_ORD_NO
+               AND T2.ITM_CD      = T3.ITM_CD
+               AND T1.PUR_DT      >= CAST(#FM_DT# + '01'  AS DATETIME)
+               AND T1.PUR_DT      <![CDATA[<=]]> dbo.SYS_LAST_DAY(CAST(#TO_DT# + '01'  AS DATETIME))
+            <isNotNull property="A_PUR_CO_CD">
+              <iterate property="A_PUR_CO_CD" prepend=" AND T1.PUR_CO_CD IN " open = "(" close=")" conjunction=",">
+                #A_PUR_CO_CD[]#
+              </iterate>
+            </isNotNull>
+      ) T1         
+      GROUP BY N1ST_ITM_GRP_NM
+             , ITM_SZ_NM
+              , MTRL_NM_NM
+              , UOM_NM
+    </select>
+    
+      <!-- P4411-->
+     <select id="P4411SelectDtlList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+          SELECT #CHNL_CD#   AS CHNL_CD
+           , T1.PUR_ORD_NO
+           , T1.PUR_ORD_SEQ
+           , T1.ITM_CD
+           , T2.ITM_NM
+           , T2.ITM_SZ_NM
+           , T1.UOM_CD
+           , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-003', T2.UOM_CD)  AS UOM_NM 
+           , T1.PUR_QTY
+           , T1.CO_UT_PRC     
+           , T1.PUR_AMT
+           , T1.PUR_ITM_RMK
+           , T1.CRE_USR_ID
+           , T1.UPD_USR_ID
+           , ROW_NUMBER() OVER (PARTITION BY  NULL ORDER BY  T2.ITM_CD  ) RN 
+           , dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T2.ITM_GRP_CLSS_CD, T2.N1ST_ITM_GRP_CD) AS N1ST_ITM_GRP_NM
+					 , #CO_NM# AS CO_NM
+					 , '완조립' AS  ROUT_NM
+					 , T1.PUR_ORD_NO + '-' + DBO.F_RPAD( CONVERT(VARCHAR, T1.PUR_ORD_SEQ), 3, '0') AS GBN
+					 , T1.COLR_CD
+					 , T1.COLR_CD + '/' + dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-026', T1.COLR_CD)  AS COLR_NM 
+           , T2.CAR_ITM_NM
+        FROM TB_PUR_ORD_DTL  T1
+           , TB_CD_ITM       T2
+       WHERE 1 = 1 
+         AND T1.CHNL_CD     = #CHNL_CD#
+         AND T1.CHNL_CD     = T2.CHNL_CD
+         AND T1.ITM_CD      = T2.ITM_CD
+         AND T1.PUR_ORD_NO  = #PUR_ORD_NO#
+    </select>
+    
+    <insert id="P4411InsertDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+      INSERT INTO TB_PUR_ORD_DTL
+      (
+          PUR_ORD_NO
+        , PUR_ORD_SEQ
+        , ITM_CD
+        , UOM_CD
+        , CO_UT_PRC
+        , PUR_QTY
+        , PUR_AMT
+        , PUR_ITM_RMK
+        , CRE_USR_ID
+        , CRE_DT
+        , UPD_USR_ID
+        , UPD_DT
+        , CHNL_CD
+				, ORD_NO
+				, ORD_SEQ
+				, COLR_CD
+      ) 
+      VALUES
+      (
+          #PUR_ORD_NO#
+        , ISNULL((SELECT MAX(PUR_ORD_SEQ) + 1 FROM TB_PUR_ORD_DTL WHERE PUR_ORD_NO = #PUR_ORD_NO#), 1)
+        , #ITM_CD#
+        , #UOM_CD#
+        , #CO_UT_PRC#
+        , #PUR_QTY#
+        , ROUND(#PUR_AMT#, 0)
+        , #PUR_ITM_RMK#
+        , #CRE_USR_ID#
+        , GETDATE()
+        , #UPD_USR_ID#
+        , GETDATE()
+        , #CHNL_CD#
+				, #SL_ORD_NO#
+				, #SL_ORD_SEQ#
+				, #COLR_CD#
+      )
+    </insert>
+    
+    <update id="P4411UpdateDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+      UPDATE TB_PUR_ORD_DTL
+      SET
+          ITM_CD       = #ITM_CD#
+        , UOM_CD       = #UOM_CD#
+        , PUR_QTY      = #PUR_QTY#
+        , CO_UT_PRC    = #CO_UT_PRC#
+        , PUR_AMT      = ROUND(#PUR_AMT#, 0)
+        , PUR_ITM_RMK  = #PUR_ITM_RMK#
+        , UPD_USR_ID   = #UPD_USR_ID#
+        , UPD_DT       = GETDATE()
+		, COLR_CD	   = #COLR_CD#
+      WHERE 1 = 1
+        AND CHNL_CD     = #CHNL_CD#
+        AND PUR_ORD_NO  = #PUR_ORD_NO#
+        AND PUR_ORD_SEQ = #PUR_ORD_SEQ#
+    </update>
+    
+    <delete id="P4411DeleteDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+        DELETE FROM TB_PUR_ORD_DTL
+          WHERE 1 = 1
+            AND CHNL_CD       = #CHNL_CD#
+            AND PUR_ORD_NO    = #PUR_ORD_NO#
+          <isNotNull property="PUR_ORD_SEQ">
+            AND PUR_ORD_SEQ   = #PUR_ORD_SEQ#
+          </isNotNull>
+    </delete>
+    
+      <!-- P44110 (차종)-->
+     <select id="P4411SelectPopUp1List" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+      SELECT  ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY ITM_CD) AS RN 
+          , N1ST_ITM_GRP_NM   
+          , ITM_CD    
+          , ITM_NM    
+          , ITM_SZ_NM 
+          , UOM_NM 
+          , PUR_QTY 
+          , CO_UT_PRC 
+          , PUR_AMT 
+          , PUR_ITM_RMK 
+          , COLR_NM
+          , GBN
+          , ORD_RMK
+          , PUR_ORD_NO
+          , CRE_USR_ID
+          , UPD_USR_ID
+          , CHNL_CD
+					, STK_QTY
+      FROM (
+          SELECT  dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T3.ITM_GRP_CLSS_CD, T3.N1ST_ITM_GRP_CD) AS N1ST_ITM_GRP_NM
+                , T3.ITM_CD
+                , T3.ITM_NM
+                , T3.ITM_SZ_NM
+                , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-003', T3.UOM_CD)  AS UOM_NM      
+                , 0.00          AS PUR_QTY
+                , T2.CO_UT_PRC  AS CO_UT_PRC
+                , 0             AS PUR_AMT 
+                , ''            AS PUR_ITM_RMK
+                , T3.N2ND_ITM_GRP_CD AS COLR_NM
+                , T3.CAR_ITM_NM AS ORD_RMK
+                , T3.N2ND_ITM_GRP_CD + ' / ' + dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-026', T3.N2ND_ITM_GRP_CD) AS GBN
+                , ROW_NUMBER() OVER (PARTITION BY T3.ITM_CD ORDER BY T2.CNG_APLY_DT DESC ) AS RN 
+                , T1.PUR_ORD_NO
+                , #CRE_USR_ID#  AS CRE_USR_ID
+                , #UPD_USR_ID#  AS UPD_USR_ID
+                , #CHNL_CD#     AS CHNL_CD
+								, T4.ITM_QTY	AS STK_QTY
+            FROM TB_PUR_ORD       T1
+               , TB_CD_CO_UT_PRC  T2
+               , TB_CD_ITM        T3 LEFT OUTER JOIN TB_INVT_DLY_STK T4         
+              ON ( T3.ITM_CD = T4.ITM_CD AND T3.CHNL_CD = T4.CHNL_CD )     
+           WHERE 1 = 1
+             AND T1.CHNL_CD       = T2.CHNL_CD
+             AND T1.CHNL_CD       = T3.CHNL_CD
+             AND T1.PUR_CO_CD     = T2.CO_NO
+             AND T2.ITM_CD        = T3.ITM_CD
+             AND T1.CHNL_CD       = #CHNL_CD#
+             AND T1.PUR_ORD_NO    = #PUR_ORD_NO#
+         ) T1
+     WHERE 1 = 1
+       AND RN = 1
+    </select>
+
+	  <!-- P4420 (SCM 발주)-->
+	<select id="P4420SelectPopUp1List" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+        SELECT 
+               T1.SCM_RLSE_NO       AS IN_NO
+             , T2.SCM_PUR_NO        AS IMP_PUR_NO
+             , T2.SCM_PUR_SEQ       AS IMP_PUR_SEQ
+			 , (T2.SCM_PUR_NO + '_' + CONVERT(VARCHAR, T2.SCM_PUR_SEQ)) AS GBN
+             , T1.ITM_CD            AS ORD_ITM_CD
+             , T2.SCM_PUR_ITM_CD    AS ITM_CD
+			 , T4.ITM_NM            AS ITM_NM
+             , T2.SCM_PUR_ITM_QTY   AS SL_ITM_QTY
+             , T2.SCM_PUR_CO_CD     AS CO_CD
+             <!--, T3.INP_QTY
+             , T4.UOM_WGT         
+             , T4.UOM_RUN_WGT-->     
+             , (T2.SCM_PUR_ITM_QTY * (T4.UOM_WGT + T4.UOM_RUN_WGT)) * 0.001 AS ITM_USE_QTY   
+          FROM TB_SCM_ORD_RLSE  T1
+             , TB_SCM_PUR       T2
+               <!--LEFT OUTER JOIN  dbo.ufnGetBom( #CHNL_CD# , 'HSC02-AB018-0004-01') T3
+               ON (
+                            T2.SCM_PUR_ITM_CD   = T3.CMPO_CD
+                        AND T2.BOM_LVL_VAL      = T3.CMPO_LVL_VAL
+                )-->
+              , TB_CD_ITM T4
+         WHERE 1 = 1
+           AND T1.CHNL_CD           = #CHNL_CD#
+           AND T1.CHNL_CD           = T2.CHNL_CD
+           AND T1.SCM_RLSE_NO       = T2.SCM_RLSE_NO
+           AND T2.SCM_ROUT_CD       = 'IN'
+           AND T1.CHNL_CD           = T4.CHNL_CD
+           AND T2.CHNL_CD           = T4.CHNL_CD
+           AND T2.SCM_PUR_ITM_CD    = T4.ITM_CD
+		<isNotNull property="FM_DT">
+           AND T2.PUR_CFM_DT        >= CAST(#FM_DT# + ' 00:00:00' AS DATETIME)
+           AND T2.PUR_CFM_DT  <![CDATA[<=]]> CAST(#TO_DT# + ' 23:59:59' AS DATETIME)
+		</isNotNull>
+           AND NOT EXISTS (SELECT 'X'
+                             FROM TB_PUR_ORD_DTL  X
+                            WHERE 1 = 1
+                              AND X.CHNL_CD = #CHNL_CD#
+                              AND X.ORD_NO = T2.SCM_PUR_NO
+                              AND X.ORD_SEQ = T2.SCM_PUR_SEQ
+                           )
+    </select>
+	  
+    <!-- P4411 발주 관리-->
+
+	  
+	  
+
+	  <!-- P441102 원재료 발주 관리-->
+	  <select id="P441102SelectMstList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT T1.CHNL_CD  AS CHNL_CD
+		        , T1.PUR_ORD_NO
+		        , T1.PUR_CO_CD
+		        , T2.CO_NM
+		        , T1.AREA_CD
+		        , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD , 'L-002', T1.AREA_CD) AS AREA_NM
+		        , CONVERT(VARCHAR, T1.PUR_DT, 23) AS PUR_DT
+		        , T1.PUR_ITM_CD
+		        , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD , 'L-111', T1.PUR_ITM_CD) AS PUR_ITM_NM
+		        , CONVERT(VARCHAR, T1.PUR_DUE_DT, 23) AS PUR_DUE_DT
+		        , T1.PUR_CLZ_FLG
+		        , T1.PUR_RMK
+		        , T1.CRE_USR_ID
+		        , dbo.USR_NM_FNC(T1.CHNL_CD , T1.CRE_USR_ID) AS  CRE_USR_NM
+		        , CONVERT(VARCHAR, T1.CRE_DT, 121) AS CRE_DT
+		        , T1.UPD_USR_ID
+		        , (SELECT CONVERT(VARCHAR, X.UPD_DT, 121) AS UPD_DT FROM TB_PUR_ORD_DTL X  WHERE 1=1 AND X.CHNL_CD = T1.CHNL_CD AND X.PUR_ORD_NO = T1.PUR_ORD_NO AND X.PUR_ORD_SEQ = (SELECT MAX(Y.PUR_ORD_SEQ) FROM TB_PUR_ORD_DTL Y  WHERE 1=1 AND Y.PUR_ORD_NO = T1.PUR_ORD_NO) ) AS UPD_DT
+		        , T2.HDQTR_PHN_NO
+		        , T2.HDQTR_FAX_NO
+		        , (  SELECT ISNULL(SUM(PUR_AMT), 0)  AS PUR_AMT 
+		              FROM TB_PUR_ORD_DTL
+		                WHERE 1 = 1
+		                    AND CHNL_CD    = T1.CHNL_CD
+		                    AND PUR_ORD_NO = T1.PUR_ORD_NO
+		          ) AS PUR_SUM_AMT
+		        , T1.PUR_WK_CD
+				, T2.CNTC_MAN_EML
+		  FROM TB_PUR_ORD T1
+		     , TB_CD_CO   T2
+		  WHERE 1 = 1
+		    AND T1.CHNL_CD    = #CHNL_CD#
+		    AND T1.CHNL_CD    = T2.CHNL_CD
+		    AND T1.PUR_CO_CD   = T2.CO_NO
+		  <isNotNull property="PUR_CO_CD">
+			  AND T1.PUR_CO_CD   = #PUR_CO_CD#
+		  </isNotNull>
+		  <isNotNull property="AREA_CD">
+			  AND T1.AREA_CD   = #AREA_CD#
+		  </isNotNull>
+		  <isNotNull property="PUR_ITM_CD">
+			 AND T1.PUR_ITM_CD = #PUR_ITM_CD#
+		  </isNotNull>
+		  <isNotNull property="FM_DT">
+			  AND T1.PUR_DT >= CAST( #FM_DT# + ' 00:00:00' AS DATETIME)
+			  AND T1.PUR_DT <![CDATA[<=]]> CAST( #TO_DT# + ' 23:59:59' AS DATETIME)
+		  </isNotNull>
+	  </select>
+
+	  <!-- Service -->
+	  <select id="P441102SelectPurOrdNo" resultClass="string">
+		  SELECT dbo.FF_NO_FMT(#CHNL_CD#, 'PUR', #AREA_CD#) AS LST_FMT_NO  FROM CPY_T WHERE NO = 1
+	  </select>
+
+	  <update id="P441102UpdatePurOrdNo" parameterClass="ModelsLibrary.Pur.PurVo">
+		  UPDATE TB_SYS_NO_FMT
+		  SET LST_FMT_NO  = #PUR_ORD_NO#
+		  WHERE TBL_ID     = 'PUR'
+		  AND CHNL_CD   = #CHNL_CD#
+		  AND AREA_CD   = #AREA_CD#
+	  </update>
+
+	  <insert id="P441102InsertMst" parameterClass="ModelsLibrary.Pur.PurVo">
+		  INSERT INTO TB_PUR_ORD
+		  (
+		    PUR_ORD_NO
+		  , AREA_CD
+		  , PUR_CO_CD
+		  , PUR_DT
+		  , PUR_ITM_CD
+		  , PUR_DUE_DT
+		  , PUR_CLZ_FLG
+		  , PUR_RMK
+		  , CRE_USR_ID
+		  , CRE_DT
+		  , UPD_USR_ID
+		  , UPD_DT
+		  , CHNL_CD
+		  , PUR_WK_CD
+		  )
+		  VALUES
+		  (
+		    #PUR_ORD_NO#
+		  , #AREA_CD#
+		  , #PUR_CO_CD#
+		  , #PUR_DT#
+		  , #PUR_ITM_CD#
+		  , #PUR_DUE_DT#
+		  , #PUR_CLZ_FLG#
+		  , #PUR_RMK#
+		  , #CRE_USR_ID#
+		  , GETDATE()
+		  , #UPD_USR_ID#
+		  , GETDATE()
+		  , #CHNL_CD#
+		  , #PUR_WK_CD#
+		  )
+	  </insert>
+
+	  <update id="P441102UpdateMst" parameterClass="ModelsLibrary.Pur.PurVo">
+		  UPDATE TB_PUR_ORD
+		  SET
+		    PUR_CO_CD     = #PUR_CO_CD#
+		  , PUR_DT        = #PUR_DT#
+		  , PUR_ITM_CD    = #PUR_ITM_CD#
+		  , PUR_DUE_DT    = #PUR_DUE_DT#
+		  , PUR_CLZ_FLG   = #PUR_CLZ_FLG#
+		  , PUR_RMK       = #PUR_RMK#
+		  , PUR_WK_CD     = #PUR_WK_CD#
+		  , UPD_USR_ID    = #UPD_USR_ID#
+		  , UPD_DT        = GETDATE()
+		  WHERE PUR_ORD_NO  = #PUR_ORD_NO#
+		  AND CHNL_CD     = #CHNL_CD#
+	  </update>
+
+	  <delete id="P441102DeleteMst" parameterClass="ModelsLibrary.Pur.PurVo">
+		  DELETE FROM TB_PUR_ORD
+		  WHERE 1 = 1
+		  AND CHNL_CD     = #CHNL_CD#
+		  AND PUR_ORD_NO  = #PUR_ORD_NO#
+	  </delete>
+
+	  <!-- P4411-->
+	  <select id="P441102SelectDtlList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT #CHNL_CD#   AS CHNL_CD
+		      , T1.PUR_ORD_NO
+		      , T1.PUR_ORD_SEQ
+			  , CONVERT(VARCHAR, T1.IN_REQ_DT, 23) AS IN_REQ_DT
+		      , T1.ITM_CD
+		      , T2.ITM_NM
+		      , T2.ITM_SZ_NM
+		      , T2.UOM_CD
+		      , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-003', T2.UOM_CD)  AS UOM_NM
+		      , ISNULL(T1.PUR_QTY, 0) AS PUR_QTY
+		      , T1.CO_UT_PRC
+		      , T1.PUR_AMT
+		      , T1.PUR_ITM_RMK
+		      , T1.CRE_USR_ID
+		      , T1.UPD_USR_ID
+		      <!--, ROW_NUMBER() OVER (PARTITION BY  NULL ORDER BY  T2.ITM_CD  ) RN-->
+		      , dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T2.ITM_GRP_CLSS_CD, T2.N1ST_ITM_GRP_CD) AS N1ST_ITM_GRP_NM
+			  , (SELECT TOP 1 dbo.CD_COMPANY_NM_FNC(#CHNL_CD#, X.PUR_CO_CD) FROM TB_PUR_ORD AS X  WHERE 1=1 AND  X.PUR_ORD_NO = T1.PUR_ORD_NO) AS CO_NM
+			  , (T1.PUR_AMT * 0.1) AS VAT_AMT
+              , (T1.PUR_AMT) + (T1.PUR_AMT * 0.1) AS TOT_AMT
+			  , T3.SL_ORD_NO
+			  , T3.SL_ORD_SEQ
+			  , (T3.SL_ORD_NO + '_' + CONVERT(VARCHAR, T3.SL_ORD_SEQ)) AS GBN
+			  , ISNULL(T2.PK_PER_QTY, 0) AS PK_PER_QTY
+			  , CONVERT(VARCHAR, T3.DUE_DT, 23) AS DE_DUE_DT
+			  , ROW_NUMBER() OVER (PARTITION BY  NULL ORDER BY  T1.PUR_ORD_SEQ  ) AS RN
+			  , (SELECT TOP 1 X.ITM_USE_QTY FROM TB_PUR_MRP_DTL AS X WHERE X.CHNL_CD = T1.CHNL_CD AND X.UN_FOL_NO = T1.ORD_NO  AND X.CO_CD = #PUR_CO_CD# AND X.ITM_CD = T1.ITM_CD) AS  ITM_USE_QTY
+		  FROM TB_PUR_ORD_DTL  T1 LEFT OUTER JOIN TB_PUR_MRP T3 ON(T1.CHNL_CD = T3.CHNL_CD AND T1.ORD_NO = T3.UN_FOL_NO)
+		    , TB_CD_ITM       T2
+		  WHERE 1 = 1
+		      AND T1.CHNL_CD     = #CHNL_CD#
+		      AND T1.CHNL_CD     = T2.CHNL_CD
+		      AND T1.ITM_CD      = T2.ITM_CD
+		      AND T1.PUR_ORD_NO  = #PUR_ORD_NO#
+			ORDER BY T1.PUR_ORD_SEQ
+	  </select>
+
+	   <!-- P441102-->
+	  <select id="P441102SelectDtlBarCodeList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT #CHNL_CD#   AS CHNL_CD
+			  , T4.LAST_FMT_NO
+			  , (T3.SL_ORD_NO + '_' + CONVERT(VARCHAR, T3.SL_ORD_SEQ)) + '__' + (T1.PUR_ORD_NO + '_' + CONVERT(VARCHAR, T1.PUR_ORD_SEQ)) + '_' + RIGHT('000'+ (CONVERT(VARCHAR, ISNULL((SELECT CONVERT(VARCHAR, MAX(RIGHT(X.STK_SER_NO, 3))) FROM TB_CD_STK_SER X WHERE 1 = 1 AND X.PUR_ORD_NO = T1.PUR_ORD_NO AND X.PUR_ORD_SEQ = T1.PUR_ORD_SEQ), 0) + T4.NO)),3) AS STK_SER_NO
+			  , T1.PUR_ORD_NO
+			  , T1.PUR_ORD_SEQ
+			  , CONVERT(VARCHAR, T1.IN_REQ_DT, 23) AS IN_REQ_DT
+			  , T1.ITM_CD
+			  , T2.ITM_NM
+			  , T2.ITM_SZ_NM
+			  , T2.UOM_CD
+			  , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-003', T2.UOM_CD)  AS UOM_NM
+			  , T1.PUR_QTY
+			  , T1.CO_UT_PRC
+			  , T1.PUR_AMT
+			  , T1.PUR_ITM_RMK
+			  , T1.CRE_USR_ID
+			  , T1.UPD_USR_ID
+			  , ROW_NUMBER() OVER (PARTITION BY  NULL ORDER BY  T2.ITM_CD  ) RN
+			  , dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T2.ITM_GRP_CLSS_CD, T2.N1ST_ITM_GRP_CD) AS N1ST_ITM_GRP_NM
+			  , (SELECT TOP 1 dbo.CD_COMPANY_NM_FNC(#CHNL_CD#, X.PUR_CO_CD) FROM TB_PUR_ORD AS X  WHERE 1=1 AND  X.PUR_ORD_NO = T1.PUR_ORD_NO) AS CO_NM
+			  , (T1.PUR_AMT * 0.1) AS VAT_AMT
+			  , (T1.PUR_AMT) + (T1.PUR_AMT * 0.1) AS TOT_AMT
+			  , T3.SL_ORD_NO
+			  , T3.SL_ORD_SEQ
+			  , 'N' AS CLZ_FLG
+			  , #SL_ITM_QTY#	AS PK_PER_QTY
+			  , #SL_ITM_QTY#	AS SL_ITM_QTY
+		FROM TB_PUR_ORD_DTL  T1 LEFT OUTER JOIN TB_PUR_MRP T3 ON(T1.CHNL_CD = T3.CHNL_CD AND T1.ORD_NO = T3.UN_FOL_NO)
+			  , TB_CD_ITM       T2
+			  , CPY_T T4
+		  WHERE 1 = 1
+			  AND T1.CHNL_CD     = #CHNL_CD#
+			  AND T1.CHNL_CD     = T2.CHNL_CD
+			  AND T1.ITM_CD      = T2.ITM_CD
+			  AND T1.PUR_ORD_NO  = #PUR_ORD_NO#
+			  <isNotNull property="PUR_ORD_SEQ">
+				  AND T1.PUR_ORD_SEQ = #PUR_ORD_SEQ#
+			  </isNotNull>
+		      AND T4.NO <![CDATA[<=]]> #RN#
+		      AND T3.SL_ORD_NO IS NOT NULL
+		  ORDER BY T1.PUR_ORD_SEQ
+	  </select>
+
+	  
+	  <!-- P441102  BarCode Report-->
+	  <select id="P441102SelectDtlBarCodeReportList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT #CHNL_CD#   AS CHNL_CD
+				<!--
+				  , T4.LAST_FMT_NO
+				  , (T3.SL_ORD_NO + '_' + CONVERT(VARCHAR, T3.SL_ORD_SEQ)) + '__' + (T1.PUR_ORD_NO + '_' + CONVERT(VARCHAR, T1.PUR_ORD_SEQ)) + '_' + RIGHT('000'+ (CONVERT(VARCHAR, ISNULL((SELECT CONVERT(VARCHAR, MAX(RIGHT(X.STK_SER_NO, 3)) + 1) FROM TB_CD_STK_SER X WHERE 1 = 1 AND X.PUR_ORD_NO = T1.PUR_ORD_NO AND X.PUR_ORD_SEQ = T1.PUR_ORD_SEQ), 0) + T4.NO)),3) AS STK_SER_NO
+				-->
+		  		  , T4.STK_SER_NO
+				  , T1.PUR_ORD_NO
+				  , T1.PUR_ORD_SEQ
+				  , CONVERT(VARCHAR, T1.IN_REQ_DT, 23) AS IN_REQ_DT
+				  , T1.ITM_CD
+				  , T2.ITM_NM
+				  , T2.ITM_SZ_NM
+				  , T2.UOM_CD
+				  , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-003', T2.UOM_CD)  AS UOM_NM
+				  , T1.PUR_QTY
+				  , T1.CO_UT_PRC
+				  , T1.PUR_AMT
+				  , T1.PUR_ITM_RMK
+				  , T1.CRE_USR_ID
+				  , T1.UPD_USR_ID
+				  , ROW_NUMBER() OVER (PARTITION BY  NULL ORDER BY  T2.ITM_CD) AS RN
+				  , dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T2.ITM_GRP_CLSS_CD, T2.N1ST_ITM_GRP_CD) AS N1ST_ITM_GRP_NM
+				  , (SELECT TOP 1 dbo.CD_COMPANY_NM_FNC(#CHNL_CD#, X.PUR_CO_CD) FROM TB_PUR_ORD AS X  WHERE 1=1 AND  X.PUR_ORD_NO = T1.PUR_ORD_NO) AS CO_NM
+				  , (T1.PUR_AMT * 0.1) AS VAT_AMT
+				  , (T1.PUR_AMT) + (T1.PUR_AMT * 0.1) AS TOT_AMT
+				  , T3.SL_ORD_NO
+				  , T3.SL_ORD_SEQ
+				  , 'N' AS CLZ_FLG
+				  , ISNULL(T4.ITM_QTY, 0) AS SL_ITM_QTY
+				FROM TB_PUR_ORD_DTL  T1 LEFT OUTER JOIN TB_PUR_MRP T3 ON(T1.CHNL_CD = T3.CHNL_CD AND T1.ORD_NO = T3.UN_FOL_NO)
+					, TB_CD_ITM       T2
+				    , TB_CD_STK_SER    T4
+					<!--
+					, CPY_T T4
+					-->
+				  WHERE 1 = 1
+					AND T1.CHNL_CD     = #CHNL_CD#
+					AND T1.CHNL_CD     = T2.CHNL_CD
+					AND T1.CHNL_CD     = T4.CHNL_CD
+					AND T1.ITM_CD      = T2.ITM_CD
+					AND T1.PUR_ORD_NO  = #PUR_ORD_NO#
+					AND T1.PUR_ORD_NO  = T4.PUR_ORD_NO
+					AND T1.PUR_ORD_SEQ  = T4.PUR_ORD_SEQ
+					AND T3.SL_ORD_NO IS NOT NULL
+				ORDER BY T1.PUR_ORD_SEQ
+	  </select>
+		  
+	  
+	  <insert id="P441102InsertBarCodeDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+		  INSERT INTO TB_CD_STK_SER
+		  (
+		        PUR_ORD_NO
+		      , PUR_ORD_SEQ
+		      , STK_SER_NO
+		      , GRP_SER_NO
+		      , CRE_USR_ID
+		      , CRE_DT
+		      , UPD_USR_ID
+		      , UPD_DT
+		      , CHNL_CD
+		      , CLZ_FLG
+			  , ITM_QTY
+		  )
+		  VALUES
+		  (
+		        #PUR_ORD_NO#
+		      , #PUR_ORD_SEQ#
+		      , #STK_SER_NO#
+		      , #GRP_SER_NO#
+		      , #CRE_USR_ID#
+		      , GETDATE()
+		      , #UPD_USR_ID#
+		      , GETDATE()
+		      , #CHNL_CD#
+		      , #CLZ_FLG#
+			  , #SL_ITM_QTY#
+		  )
+	  </insert>
+	  
+	  
+	  
+	  <insert id="P441102InsertDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+		   INSERT INTO TB_PUR_ORD_DTL
+		  (
+		        PUR_ORD_NO
+		      , PUR_ORD_SEQ
+		      , ITM_CD
+		      , UOM_CD
+		      , CO_UT_PRC
+		      , PUR_QTY
+		      , PUR_AMT
+		      , PUR_ITM_RMK
+		      , CRE_USR_ID
+		      , CRE_DT
+		      , UPD_USR_ID
+		      , UPD_DT
+		      , CHNL_CD
+		      , DUE_DT
+		      , IN_REQ_DT
+		      , ORD_NO
+		      , ORD_SEQ
+		      , SCM_OK_FLG
+		  )
+		  VALUES
+		  (
+		        #PUR_ORD_NO#
+		      , ISNULL((SELECT MAX(PUR_ORD_SEQ) + 1 FROM TB_PUR_ORD_DTL WHERE PUR_ORD_NO = #PUR_ORD_NO#), 1)
+		      , #ITM_CD#
+		      , #UOM_CD#
+		      , #CO_UT_PRC#
+		      , #PUR_QTY#
+		      , ROUND(#PUR_AMT#, 0)
+		      , #PUR_ITM_RMK#
+		      , #CRE_USR_ID#
+		      , GETDATE()
+		      , #UPD_USR_ID#
+		      , GETDATE()
+		      , #CHNL_CD#
+		      , #DUE_DT#
+		      , CONVERT(DATETIME, #IN_REQ_DT#)
+		      , #ORD_NO#
+		      , #ORD_SEQ#
+		      , #SCM_OK_FLG#
+		  )
+	  </insert>
+
+	  <update id="P441102UpdateDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+		  UPDATE TB_PUR_ORD_DTL
+		  SET
+		        ITM_CD       = #ITM_CD#
+		      , UOM_CD       = #UOM_CD#
+		      , PUR_QTY      = #PUR_QTY#
+		      , CO_UT_PRC    = #CO_UT_PRC#
+		      , PUR_AMT      = ROUND(#PUR_AMT#, 0)
+		      , PUR_ITM_RMK  = #PUR_ITM_RMK#
+		      , UPD_USR_ID   = #UPD_USR_ID#
+		      , UPD_DT       = GETDATE()
+		      , IN_REQ_DT    = #IN_REQ_DT#
+		  WHERE 1 = 1
+		    AND CHNL_CD     = #CHNL_CD#
+		    AND PUR_ORD_NO  = #PUR_ORD_NO#
+		    AND PUR_ORD_SEQ = #PUR_ORD_SEQ#
+	  </update>
+
+	  <delete id="P441102DeleteDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+		  DELETE FROM TB_PUR_ORD_DTL
+		  WHERE 1 = 1
+		    AND CHNL_CD       = #CHNL_CD#
+		    AND PUR_ORD_NO    = #PUR_ORD_NO#
+		  <isNotNull property="PUR_ORD_SEQ">
+			  AND PUR_ORD_SEQ   = #PUR_ORD_SEQ#
+		  </isNotNull>
+	  </delete>
+	  
+	  <!-- P441102 => Popup 원재료 소요량 전개-->
+	  <select id="P441102SelectPopUp" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT T1.SL_ORD_NO
+		      , T1.SL_ORD_SEQ
+		      , T1.ORD_ITM_CD
+		      , T2.UN_FOL_NO                 AS ORD_NO
+		      , T2.MRP_SEQ                   AS ORD_SEQ
+		      , CONVERT(VARCHAR, T1.DUE_DT, 23) AS  DUE_DT
+		      , T3.ITM_CD
+		      , T3.ITM_NM
+		      , T2.ITM_PRC                AS CO_UT_PRC
+		      , T2.REQ_ORD_QTY            AS PUR_QTY
+		      , T3.UOM_CD
+		      , dbo.CD_SYS_CLSS_FNC(T3.CHNL_CD, 'L-003', T3.UOM_CD) AS UOM_NM
+		      , (T2.ITM_PRC * T2.REQ_ORD_QTY) AS PUR_AMT
+		      , CONVERT(VARCHAR, GETDATE(), 23) AS IN_REQ_DT
+		      , T2.MRP_DESC                           AS PUR_ITM_RMK
+		      , dbo.CD_COMPANY_NM_FNC(T2.CHNL_CD, T2.CO_CD)  AS CO_NM
+		      , dbo.PUR_N1ST_GRP_NM_FNC(T3.CHNL_CD, T3.ITM_GRP_CLSS_CD, T3.N1ST_ITM_GRP_CD) AS N1ST_ITM_GRP_NM
+		      , ((T2.ITM_PRC * T2.REQ_ORD_QTY)  * 0.1) AS VAT_AMT
+		      , (T2.ITM_PRC * T2.REQ_ORD_QTY) + ((T2.ITM_PRC * T2.REQ_ORD_QTY)  * 0.1) AS TOT_AMT
+		      , T1.CHNL_CD
+		      , #UPD_USR_ID# AS CRE_USR_ID
+		      , #UPD_USR_ID# AS UPD_USR_ID
+		      , #PUR_ORD_NO# AS PUR_ORD_NO
+		  FROM TB_PUR_MRP T1
+		      , TB_PUR_MRP_DTL T2
+		      , TB_CD_ITM T3
+		  WHERE 1 = 1
+		  AND T1.CHNL_CD     = T2.CHNL_CD
+		  AND T1.UN_FOL_NO   = T2.UN_FOL_NO
+		  AND T2.ITM_CD      = T3.ITM_CD
+		  AND T1.CHNL_CD     = #CHNL_CD#
+		  AND T3.ITM_GRP_CLSS_CD = 'M'
+		  AND T2.CO_CD       = #CO_CD#
+		  AND NOT EXISTS (SELECT 'X' FROM TB_PUR_ORD_DTL X  WHERE 1 = 1 	 AND X.CHNL_CD = #CHNL_CD# AND X.ORD_NO = T2.UN_FOL_NO AND X.ORD_SEQ = T2.MRP_SEQ)
+	  </select>
+	  <!-- P441102 원재료 발주 관리-->
+
+	  
+	  
+	  <!-- P441103 부자재 발주 관리-->
+	  <select id="P441103SelectMstList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT T1.CHNL_CD  AS CHNL_CD
+		  , T1.PUR_ORD_NO
+		  , T1.PUR_CO_CD
+		  , T2.CO_NM
+		  , T1.AREA_CD
+		  , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD , 'L-002', T1.AREA_CD) AS AREA_NM
+		  , CONVERT(VARCHAR, T1.PUR_DT, 23) AS PUR_DT
+		  , T1.PUR_ITM_CD
+		  , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD , 'L-111', T1.PUR_ITM_CD) AS PUR_ITM_NM
+		  , CONVERT(VARCHAR, T1.PUR_DUE_DT, 23) AS PUR_DUE_DT
+		  , T1.PUR_CLZ_FLG
+		  , T1.PUR_RMK
+		  , T1.CRE_USR_ID
+		  , dbo.USR_NM_FNC(T1.CHNL_CD , T1.CRE_USR_ID) AS  CRE_USR_NM
+		  , CONVERT(VARCHAR, T1.CRE_DT, 121) AS CRE_DT
+		  , T1.UPD_USR_ID
+		  , (SELECT CONVERT(VARCHAR, X.UPD_DT, 121) AS UPD_DT FROM TB_PUR_ORD_DTL X  WHERE 1=1 AND X.CHNL_CD = T1.CHNL_CD AND X.PUR_ORD_NO = T1.PUR_ORD_NO AND X.PUR_ORD_SEQ = (SELECT MAX(Y.PUR_ORD_SEQ) FROM TB_PUR_ORD_DTL Y  WHERE 1=1 AND Y.PUR_ORD_NO = T1.PUR_ORD_NO) ) AS UPD_DT
+		  , T2.HDQTR_PHN_NO
+		  , T2.HDQTR_FAX_NO
+		  , (  SELECT ISNULL(SUM(PUR_AMT), 0)  AS PUR_AMT  FROM TB_PUR_ORD_DTL  WHERE 1 = 1   AND CHNL_CD    = T1.CHNL_CD  AND PUR_ORD_NO = T1.PUR_ORD_NO   ) AS PUR_SUM_AMT
+		  , T1.PUR_WK_CD
+		  , T2.CNTC_MAN_EML
+		  FROM TB_PUR_ORD T1
+			 , TB_CD_CO   T2
+		  WHERE 1 = 1
+		  AND T1.CHNL_CD    = #CHNL_CD#
+		  AND T1.CHNL_CD    = T2.CHNL_CD
+		  AND T1.PUR_CO_CD   = T2.CO_NO
+		  <isNotNull property="PUR_CO_CD">
+			  AND T1.PUR_CO_CD   = #PUR_CO_CD#
+		  </isNotNull>
+		  <isNotNull property="AREA_CD">
+			  AND T1.AREA_CD   = #AREA_CD#
+		  </isNotNull>
+		  <isNotNull property="PUR_ITM_CD">
+			  AND T1.PUR_ITM_CD = #PUR_ITM_CD#
+		  </isNotNull>
+		  <isNotNull property="FM_DT">
+			  AND T1.PUR_DT >= CAST( #FM_DT# + ' 00:00:00' AS DATETIME)
+			  AND T1.PUR_DT <![CDATA[<=]]> CAST( #TO_DT# + ' 23:59:59' AS DATETIME)
+		  </isNotNull>
+	  </select>
+
+	  <!-- Service -->
+	  <select id="P441103SelectPurOrdNo" resultClass="string">
+		  SELECT dbo.FF_NO_FMT(#CHNL_CD#, 'PUR', #AREA_CD#) AS LST_FMT_NO  FROM CPY_T WHERE NO = 1
+	  </select>
+
+	  <update id="P441103UpdatePurOrdNo" parameterClass="ModelsLibrary.Pur.PurVo">
+		  UPDATE TB_SYS_NO_FMT
+		  SET LST_FMT_NO  = #PUR_ORD_NO#
+		  WHERE TBL_ID     = 'PUR'
+		  AND CHNL_CD   = #CHNL_CD#
+		  AND AREA_CD   = #AREA_CD#
+	  </update>
+
+	  <insert id="P441103InsertMst" parameterClass="ModelsLibrary.Pur.PurVo">
+		  INSERT INTO TB_PUR_ORD
+		  (
+		  PUR_ORD_NO
+		  , AREA_CD
+		  , PUR_CO_CD
+		  , PUR_DT
+		  , PUR_ITM_CD
+		  , PUR_DUE_DT
+		  , PUR_CLZ_FLG
+		  , PUR_RMK
+		  , CRE_USR_ID
+		  , CRE_DT
+		  , UPD_USR_ID
+		  , UPD_DT
+		  , CHNL_CD
+		  , PUR_WK_CD
+		  )
+		  VALUES
+		  (
+		    #PUR_ORD_NO#
+		  , #AREA_CD#
+		  , #PUR_CO_CD#
+		  , #PUR_DT#
+		  , #PUR_ITM_CD#
+		  , #PUR_DUE_DT#
+		  , #PUR_CLZ_FLG#
+		  , #PUR_RMK#
+		  , #CRE_USR_ID#
+		  , GETDATE()
+		  , #UPD_USR_ID#
+		  , GETDATE()
+		  , #CHNL_CD#
+		  , #PUR_WK_CD#
+		  )
+	  </insert>
+
+	  <update id="P441103UpdateMst" parameterClass="ModelsLibrary.Pur.PurVo">
+		  UPDATE TB_PUR_ORD
+		  SET
+		  PUR_CO_CD     = #PUR_CO_CD#
+		  , PUR_DT        = #PUR_DT#
+		  , PUR_ITM_CD    = #PUR_ITM_CD#
+		  , PUR_DUE_DT    = #PUR_DUE_DT#
+		  , PUR_CLZ_FLG   = #PUR_CLZ_FLG#
+		  , PUR_RMK       = #PUR_RMK#
+		  , PUR_WK_CD     = #PUR_WK_CD#
+		  , UPD_USR_ID    = #UPD_USR_ID#
+		  , UPD_DT        = GETDATE()
+		  WHERE PUR_ORD_NO  = #PUR_ORD_NO#
+		  AND CHNL_CD     = #CHNL_CD#
+	  </update>
+
+	  <delete id="P441103DeleteMst" parameterClass="ModelsLibrary.Pur.PurVo">
+		  DELETE FROM TB_PUR_ORD
+		  WHERE 1 = 1
+		  AND CHNL_CD     = #CHNL_CD#
+		  AND PUR_ORD_NO  = #PUR_ORD_NO#
+	  </delete>
+
+	  <!-- P441103-->
+	  <select id="P441103SelectDtlList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT #CHNL_CD#   AS CHNL_CD
+		      , T1.PUR_ORD_NO
+		      , T1.PUR_ORD_SEQ
+			  , CONVERT(VARCHAR, T1.IN_REQ_DT, 23) AS IN_REQ_DT
+		      , T1.ITM_CD
+		      , T2.ITM_NM
+		      , T2.ITM_SZ_NM
+		      , T2.UOM_CD
+		      , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-003', T2.UOM_CD)  AS UOM_NM
+		      , T1.PUR_QTY
+		      , T1.CO_UT_PRC
+		      , T1.PUR_AMT
+		      , T1.PUR_ITM_RMK
+		      , T1.CRE_USR_ID
+		      , T1.UPD_USR_ID
+		      <!--, ROW_NUMBER() OVER (PARTITION BY  NULL ORDER BY  T2.ITM_CD  ) RN-->
+		      , dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T2.ITM_GRP_CLSS_CD, T2.N1ST_ITM_GRP_CD) AS N1ST_ITM_GRP_NM
+			  , (SELECT TOP 1 dbo.CD_COMPANY_NM_FNC(#CHNL_CD#, X.PUR_CO_CD) FROM TB_PUR_ORD AS X  WHERE 1=1 AND  X.PUR_ORD_NO = T1.PUR_ORD_NO) AS CO_NM
+			  , (T1.PUR_AMT * 0.1) AS VAT_AMT
+              , (T1.PUR_AMT) + (T1.PUR_AMT * 0.1) AS TOT_AMT
+			  , T3.SL_ORD_NO
+			  , T3.SL_ORD_SEQ
+			  , (T3.SL_ORD_NO + '_' + CONVERT(VARCHAR, T3.SL_ORD_SEQ)) AS GBN
+			  , ISNULL(T2.PK_PER_QTY, 0) AS PK_PER_QTY
+			  , CONVERT(VARCHAR, T3.DUE_DT, 23) AS DE_DUE_DT
+			  , ROW_NUMBER() OVER (PARTITION BY  NULL ORDER BY  T1.PUR_ORD_SEQ  ) AS RN
+			  , (SELECT TOP 1 X.ITM_USE_QTY FROM TB_PUR_MRP_DTL AS X WHERE X.CHNL_CD = T1.CHNL_CD AND X.UN_FOL_NO = T1.ORD_NO AND X.CO_CD = #PUR_CO_CD# AND X.ITM_CD = T1.ITM_CD) AS  ITM_USE_QTY
+		  FROM TB_PUR_ORD_DTL  T1  LEFT OUTER JOIN TB_PUR_MRP T3 ON(T1.CHNL_CD = T3.CHNL_CD AND T1.ORD_NO = T3.UN_FOL_NO)
+		    , TB_CD_ITM       T2
+		  WHERE 1 = 1
+		      AND T1.CHNL_CD     = #CHNL_CD#
+		      AND T1.CHNL_CD     = T2.CHNL_CD
+		      AND T1.ITM_CD      = T2.ITM_CD
+		      AND T1.PUR_ORD_NO  = #PUR_ORD_NO#
+		  ORDER BY T1.PUR_ORD_SEQ
+	  </select>
+
+	  <!-- P441103-->
+	  <select id="P441103SelectDtlBarCodeList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT #CHNL_CD#   AS CHNL_CD
+		  , T4.LAST_FMT_NO
+		  , (T3.SL_ORD_NO + '_' + CONVERT(VARCHAR, T3.SL_ORD_SEQ)) + '__' + (T1.PUR_ORD_NO + '_' + CONVERT(VARCHAR, T1.PUR_ORD_SEQ)) + '_' + RIGHT('000'+ (CONVERT(VARCHAR, ISNULL((SELECT CONVERT(VARCHAR, MAX(RIGHT(X.STK_SER_NO, 3)) ) FROM TB_CD_STK_SER X WHERE 1 = 1 AND X.PUR_ORD_NO = T1.PUR_ORD_NO AND X.PUR_ORD_SEQ = T1.PUR_ORD_SEQ), 0) + T4.NO)),3) AS STK_SER_NO
+		  , T1.PUR_ORD_NO
+		  , T1.PUR_ORD_SEQ
+		  , CONVERT(VARCHAR, T1.IN_REQ_DT, 23) AS IN_REQ_DT
+		  , T1.ITM_CD
+		  , T2.ITM_NM
+		  , T2.ITM_SZ_NM
+		  , T2.UOM_CD
+		  , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-003', T2.UOM_CD)  AS UOM_NM
+		  , T1.PUR_QTY
+		  , T1.CO_UT_PRC
+		  , T1.PUR_AMT
+		  , T1.PUR_ITM_RMK
+		  , T1.CRE_USR_ID
+		  , T1.UPD_USR_ID
+		  , ROW_NUMBER() OVER (PARTITION BY  NULL ORDER BY  T2.ITM_CD  ) AS RN
+		  , dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T2.ITM_GRP_CLSS_CD, T2.N1ST_ITM_GRP_CD) AS N1ST_ITM_GRP_NM
+		  , (SELECT TOP 1 dbo.CD_COMPANY_NM_FNC(#CHNL_CD#, X.PUR_CO_CD) FROM TB_PUR_ORD AS X  WHERE 1=1 AND  X.PUR_ORD_NO = T1.PUR_ORD_NO) AS CO_NM
+		  , (T1.PUR_AMT * 0.1) AS VAT_AMT
+		  , (T1.PUR_AMT) + (T1.PUR_AMT * 0.1) AS TOT_AMT
+		  , T3.SL_ORD_NO
+		  , T3.SL_ORD_SEQ
+		  , 'N' AS CLZ_FLG
+		   , #SL_ITM_QTY#	AS SL_ITM_QTY
+		  FROM TB_PUR_ORD_DTL  T1 LEFT OUTER JOIN TB_PUR_MRP T3 ON(T1.CHNL_CD = T3.CHNL_CD AND T1.ORD_NO = T3.UN_FOL_NO)
+		  , TB_CD_ITM       T2
+		  , CPY_T T4
+		  WHERE 1 = 1
+		  AND T1.CHNL_CD     = #CHNL_CD#
+		  AND T1.CHNL_CD     = T2.CHNL_CD
+		  AND T1.ITM_CD      = T2.ITM_CD
+		  AND T1.PUR_ORD_NO  = #PUR_ORD_NO#
+		  <isNotNull property="PUR_ORD_SEQ">
+			  AND T1.PUR_ORD_SEQ = #PUR_ORD_SEQ#
+		    </isNotNull>
+		      AND T4.NO <![CDATA[<=]]> #RN#
+		      AND T3.SL_ORD_NO IS NOT NULL
+		  ORDER BY T1.PUR_ORD_SEQ
+	  </select>
+	  
+	   <!-- P441103  BarCode Report-->
+	  <select id="P441103SelectDtlBarCodeReportList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT #CHNL_CD#   AS CHNL_CD
+				<!--
+				  , T4.LAST_FMT_NO
+				  , (T3.SL_ORD_NO + '_' + CONVERT(VARCHAR, T3.SL_ORD_SEQ)) + '__' + (T1.PUR_ORD_NO + '_' + CONVERT(VARCHAR, T1.PUR_ORD_SEQ)) + '_' + RIGHT('000'+ (CONVERT(VARCHAR, ISNULL((SELECT CONVERT(VARCHAR, MAX(RIGHT(X.STK_SER_NO, 3)) + 1) FROM TB_CD_STK_SER X WHERE 1 = 1 AND X.PUR_ORD_NO = T1.PUR_ORD_NO AND X.PUR_ORD_SEQ = T1.PUR_ORD_SEQ), 0) + T4.NO)),3) AS STK_SER_NO
+				-->
+		  		  , T4.STK_SER_NO
+				  , T1.PUR_ORD_NO
+				  , T1.PUR_ORD_SEQ
+				  , CONVERT(VARCHAR, T1.IN_REQ_DT, 23) AS IN_REQ_DT
+				  , T1.ITM_CD
+				  , T2.ITM_NM
+				  , T2.ITM_SZ_NM
+				  , T2.UOM_CD
+				  , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-003', T2.UOM_CD)  AS UOM_NM
+				  , T1.PUR_QTY
+				  , T1.CO_UT_PRC
+				  , T1.PUR_AMT
+				  , T1.PUR_ITM_RMK
+				  , T1.CRE_USR_ID
+				  , T1.UPD_USR_ID
+				  , ROW_NUMBER() OVER (PARTITION BY  NULL ORDER BY  T2.ITM_CD  ) RN
+				  , dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T2.ITM_GRP_CLSS_CD, T2.N1ST_ITM_GRP_CD) AS N1ST_ITM_GRP_NM
+				  , (SELECT TOP 1 dbo.CD_COMPANY_NM_FNC(#CHNL_CD#, X.PUR_CO_CD) FROM TB_PUR_ORD AS X  WHERE 1=1 AND  X.PUR_ORD_NO = T1.PUR_ORD_NO) AS CO_NM
+				  , (T1.PUR_AMT * 0.1) AS VAT_AMT
+				  , (T1.PUR_AMT) + (T1.PUR_AMT * 0.1) AS TOT_AMT
+				  , T3.SL_ORD_NO
+				  , T3.SL_ORD_SEQ
+				  , 'N' AS CLZ_FLG
+				  , ISNULL(T2.PK_PER_QTY, 0) AS PK_PER_QTY
+				  FROM TB_PUR_ORD_DTL  T1 LEFT OUTER JOIN TB_PUR_MRP T3 ON(T1.CHNL_CD = T3.CHNL_CD AND T1.ORD_NO = T3.UN_FOL_NO)
+					, TB_CD_ITM       T2
+				    , TB_CD_STK_SER    T4
+					<!--
+					, CPY_T T4
+					-->
+				  WHERE 1 = 1
+					AND T1.CHNL_CD     = #CHNL_CD#
+					AND T1.CHNL_CD     = T2.CHNL_CD
+					AND T1.CHNL_CD     = T4.CHNL_CD
+					AND T1.ITM_CD      = T2.ITM_CD
+					AND T1.PUR_ORD_NO  = #PUR_ORD_NO#
+					AND T1.PUR_ORD_NO  = T4.PUR_ORD_NO
+					AND T1.PUR_ORD_SEQ  = T4.PUR_ORD_SEQ
+					AND T3.SL_ORD_NO IS NOT NULL
+				ORDER BY T1.PUR_ORD_SEQ
+	  </select>
+
+	  <insert id="P441103InsertBarCodeDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+		  INSERT INTO TB_CD_STK_SER
+		  (
+		        PUR_ORD_NO
+		      , PUR_ORD_SEQ
+		      , STK_SER_NO
+		      , GRP_SER_NO
+		      , CRE_USR_ID
+		      , CRE_DT
+		      , UPD_USR_ID
+		      , UPD_DT
+		      , CHNL_CD
+		      , CLZ_FLG
+		  )
+		  VALUES
+		  (
+		        #PUR_ORD_NO#
+		      , #PUR_ORD_SEQ#
+		      , #STK_SER_NO#
+		      , #GRP_SER_NO#
+		      , #CRE_USR_ID#
+		      , GETDATE()
+		      , #UPD_USR_ID#
+		      , GETDATE()
+		      , #CHNL_CD#
+		      , #CLZ_FLG#
+		  )
+	  </insert>
+	  
+	  <insert id="P441103InsertDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+		  INSERT INTO TB_PUR_ORD_DTL
+		  (
+		        PUR_ORD_NO
+		      , PUR_ORD_SEQ
+		      , ITM_CD
+		      , UOM_CD
+		      , CO_UT_PRC
+		      , PUR_QTY
+		      , PUR_AMT
+		      , PUR_ITM_RMK
+		      , CRE_USR_ID
+		      , CRE_DT
+		      , UPD_USR_ID
+		      , UPD_DT
+		      , CHNL_CD
+		      , DUE_DT
+		      , IN_REQ_DT
+		      , ORD_NO
+		      , ORD_SEQ
+		      , SCM_OK_FLG
+		  )
+		  VALUES
+		  (
+		        #PUR_ORD_NO#
+		      , ISNULL((SELECT MAX(PUR_ORD_SEQ) + 1 FROM TB_PUR_ORD_DTL WHERE PUR_ORD_NO = #PUR_ORD_NO#), 1)
+		      , #ITM_CD#
+		      , #UOM_CD#
+		      , #CO_UT_PRC#
+		      , #PUR_QTY#
+		      , ROUND(#PUR_AMT#, 0)
+		      , #PUR_ITM_RMK#
+		      , #CRE_USR_ID#
+		      , GETDATE()
+		      , #UPD_USR_ID#
+		      , GETDATE()
+		      , #CHNL_CD#
+		      , #DUE_DT#
+		      , CONVERT(DATETIME, #IN_REQ_DT#)
+		      , #ORD_NO#
+		      , #ORD_SEQ#
+		      , #SCM_OK_FLG#
+		  )
+	  </insert>
+
+	  <update id="P441103UpdateDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+		  UPDATE TB_PUR_ORD_DTL
+		  SET
+				ITM_CD       = #ITM_CD#
+			  , UOM_CD       = #UOM_CD#
+			  , PUR_QTY      = #PUR_QTY#
+			  , CO_UT_PRC    = #CO_UT_PRC#
+			  , PUR_AMT      = ROUND(#PUR_AMT#, 0)
+			  , PUR_ITM_RMK  = #PUR_ITM_RMK#
+			  , UPD_USR_ID   = #UPD_USR_ID#
+			  , UPD_DT       = GETDATE()
+			  , IN_REQ_DT    = #IN_REQ_DT#
+		  WHERE 1 = 1
+			AND CHNL_CD     = #CHNL_CD#
+			AND PUR_ORD_NO  = #PUR_ORD_NO#
+			AND PUR_ORD_SEQ = #PUR_ORD_SEQ#
+	  </update>
+
+	  <delete id="P441103DeleteDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+		  DELETE FROM TB_PUR_ORD_DTL
+		  WHERE 1 = 1
+		  AND CHNL_CD       = #CHNL_CD#
+		  AND PUR_ORD_NO    = #PUR_ORD_NO#
+		  <isNotNull property="PUR_ORD_SEQ">
+			  AND PUR_ORD_SEQ   = #PUR_ORD_SEQ#
+		  </isNotNull>
+	  </delete>
+	  
+	    <!-- P441103 => Popup 부자재 소요량 전개-->
+     <select id="P441103SelectPopUp" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		 SELECT T1.SL_ORD_NO                    
+		        , T1.SL_ORD_SEQ                 
+		        , T1.ORD_ITM_CD
+		        , T2.UN_FOL_NO                 AS ORD_NO
+		        , T2.MRP_SEQ                   AS ORD_SEQ
+		        , CONVERT(VARCHAR, T1.DUE_DT, 23) AS  DUE_DT 
+		        , T3.ITM_CD
+		        , T3.ITM_NM
+		        , T2.ITM_PRC                AS CO_UT_PRC
+		        , T2.REQ_ORD_QTY            AS PUR_QTY
+		        , T3.UOM_CD
+		        , dbo.CD_SYS_CLSS_FNC(T3.CHNL_CD, 'L-003', T3.UOM_CD) AS UOM_NM
+		        , (T2.ITM_PRC * T2.REQ_ORD_QTY) AS PUR_AMT
+				, ((T2.ITM_PRC * T2.REQ_ORD_QTY)  * 0.1) AS VAT_AMT
+				, (T2.ITM_PRC * T2.REQ_ORD_QTY) + ((T2.ITM_PRC * T2.REQ_ORD_QTY)  * 0.1) AS TOT_AMT
+		        , CONVERT(VARCHAR, GETDATE(), 23) AS IN_REQ_DT
+		        , T2.MRP_DESC                           AS PUR_ITM_RMK
+		        , dbo.CD_COMPANY_NM_FNC(T2.CHNL_CD, T2.CO_CD)  AS CO_NM
+				, dbo.PUR_N1ST_GRP_NM_FNC(T3.CHNL_CD, T3.ITM_GRP_CLSS_CD, T3.N1ST_ITM_GRP_CD) AS N1ST_ITM_GRP_NM
+				, T1.CHNL_CD 
+				, #UPD_USR_ID# AS CRE_USR_ID
+				, #UPD_USR_ID# AS UPD_USR_ID
+				, #PUR_ORD_NO# AS PUR_ORD_NO
+		 FROM TB_PUR_MRP T1
+		    , TB_PUR_MRP_DTL T2
+		    , TB_CD_ITM T3
+		 WHERE 1 = 1
+		     AND T1.CHNL_CD     = T2.CHNL_CD
+		     AND T1.UN_FOL_NO   = T2.UN_FOL_NO
+		     AND T2.ITM_CD      = T3.ITM_CD
+		     AND T1.CHNL_CD     = #CHNL_CD#
+		     AND T3.ITM_GRP_CLSS_CD = 'B'
+		     AND T2.CO_CD       = #CO_CD#
+		     AND NOT EXISTS (SELECT 'X' FROM TB_PUR_ORD_DTL X  WHERE 1 = 1 	 AND X.CHNL_CD = #CHNL_CD# AND X.ORD_NO = T2.UN_FOL_NO AND X.ORD_SEQ = T2.MRP_SEQ)
+	 </select>
+	  
+	   <!--기타 발주--> 
+	  <select id="P441103SelectItmPopup" parameterClass="ModelsLibrary.Code.SystemCodeVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT
+		        T1.ITM_CD
+		      , T1.ITM_NM
+		      , T1.ITM_SZ_NM
+		      , T1.UOM_CD
+		      , T1.UOM_NM
+			  , T1.CHNL_CD 
+			  , 'B11111111111111' AS ORD_NO
+			  , CONVERT(VARCHAR, GETDATE(), 23) AS IN_REQ_DT
+			  , #UPD_USR_ID# AS CRE_USR_ID
+			  , #UPD_USR_ID# AS UPD_USR_ID
+			  , #SEEK# AS PUR_ORD_NO
+		  FROM MV_TB_CD_ITM      T1
+		  WHERE 1 = 1
+		    AND T1.CHNL_CD =  #CHNL_CD#
+		  <isNotNull property="ITM_CD" >
+			  AND T1.ITM_CD = #ITM_CD#
+		  </isNotNull>
+		  <isNotNull property="ITM_NM" >
+			  AND T1.ITM_NM = #ITM_NM#
+		  </isNotNull>
+		  <isNotNull property="ITM_GRP_CLSS_CD" >
+			  AND T1.ITM_GRP_CLSS_CD = #ITM_GRP_CLSS_CD#
+		  </isNotNull>
+		  <isNotNull property="N1ST_ITM_GRP_CD" >
+			  AND T1.N1ST_ITM_GRP_CD = #N1ST_ITM_GRP_CD#
+		  </isNotNull>
+		  <isNotNull property="N2ND_ITM_GRP_CD" >
+			  AND T1.N2ND_ITM_GRP_CD = #N2ND_ITM_GRP_CD#
+		  </isNotNull>
+		  <isNotNull property="DELT_FLG" >
+			  AND T1.DELT_FLG = #DELT_FLG#
+		  </isNotNull>
+	  </select>
+	  
+	  
+	  <!-- P441103 부자재 발주 관리-->
+
+
+
+
+	  <!-- P4422 매입정산마감-->
+    <select id="P4422SelectMstList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+      SELECT #CHNL_CD#         AS CHNL_CD
+      , (SELECT MAX(X.CLZ_FLG)
+      FROM TB_PUR_INAUD_CO_CLZ  X
+      WHERE 1 = 1
+      AND X.CHNL_CD         = #CHNL_CD#
+      AND X.PUR_CLZ_YRMON   = #FM_DT#
+      AND X.CO_CD           = T1.CO_CD
+      ) AS CLZ_FLG
+      , T1.CO_CD AS CO_NO
+      , dbo.CD_COMPANY_NM_FNC(#CHNL_CD#, T1.CO_CD)  AS CO_NM
+      , ISNULL(MAX(T1.INIT_AMT), 0)      AS INIT_AMT
+      , ISNULL(MAX(T1.IN_AMT), 0)        AS IN_AMT
+      , ISNULL(MAX(T2.SUM_TAX_AMT), 0)   AS CLT_TAX_AMT
+      , ISNULL(MAX(T2.SUM_AMT), 0)       AS CLT_AMT
+      , (ISNULL(MAX(T1.INIT_AMT), 0) + ISNULL(MAX(T1.IN_AMT), 0)  + ISNULL(MAX(T2.SUM_TAX_AMT), 0) - ISNULL(MAX(T2.SUM_AMT), 0)) AS RMN_AMT
+      , #FM_DT#     AS FM_DT
+      , T3.AREA_CD
+      <isNotNull property="AREA_NM">
+        , #AREA_NM#      AS AREA_NM
+      </isNotNull>
+      FROM (
+      SELECT CO_CD
+      , PUR_INIT_AMT  AS INIT_AMT
+      , 0             AS IN_AMT
+      , 0             AS CLT_AMT
+      FROM TB_PUR_CO_INIT_AMT
+      WHERE 1 = 1
+      AND CHNL_CD    = #CHNL_CD#
+      AND AREA_CD    = AREA_CD
+      <isNotNull property="AREA_CD">
+        AND AREA_CD     = #AREA_CD#
+      </isNotNull>
+      <isNotNull property="CO_NO">
+        AND CO_CD    LIKE  #CO_NO#
+      </isNotNull>
+      AND PUR_YRMON  = #FM_DT#
+      UNION ALL
+      SELECT T1.CO_CD
+      , 0
+      , SUM(T2.INAUD_AMT)
+      , 0
+      FROM TB_INAUD_MAST T1
+      , TB_INAUD_DTL  T2
+      , TB_CD_ITM     T3
+      WHERE 1 = 1
+      AND T1.CHNL_CD  = #CHNL_CD#
+      AND T1.CHNL_CD  = T2.CHNL_CD
+      AND T1.CHNL_CD  = T3.CHNL_CD
+      AND T1.INSRL_NO = T2.INSRL_NO
+      AND T2.ITM_CD   = T3.ITM_CD
+      AND T1.IO_CD    = 'I'
+      AND T1.AREA_CD     = T1.AREA_CD
+      AND T1.CO_CD  NOT IN ('11030', '15322', '15525', '25276', '20578', '20577', '30001', '30002', '15855')
+      <isNotNull property="AREA_CD">
+        AND T1.AREA_CD     = #AREA_CD#
+      </isNotNull>
+      AND T2.INAUD_CD NOT IN ('RGH', 'RGS')
+      AND T1.INAUD_DT >= CAST(#FM_DT#+'01'+ ' 00:00:00' AS DATETIME)
+      AND T1.INAUD_DT <![CDATA[<=]]> CAST(CONVERT(VARCHAR(8), dbo.SYS_LAST_DAY(CAST(#FM_DT#+'01'+ ' 23:59:59' AS DATETIME) ) , 112)  + ' 23:59:59' AS DATETIME)
+      GROUP BY T1.CO_CD
+      ) T1 LEFT OUTER JOIN (
+      SELECT T1.AREA_CD
+      , T1.CO_CD
+      , T1.SUM_AMT
+      , T1.SUM_TAX_AMT
+      FROM (
+      SELECT T2.AREA_CD
+      , T2.CO_CD
+      , T2.PUR_CLZ_YRMON
+      , ISNULL(SUM(CASE WHEN T2.SL_ADJ_CD = '500' THEN T2.SL_ITM_AMT END), 0)  AS SUM_TAX_AMT
+      , ISNULL(SUM(CASE WHEN T2.SL_ADJ_CD IN ( '400', '450', '900', '800')  THEN T2.SL_ITM_AMT END), 0)  AS SUM_AMT
+      FROM TB_PUR_INAUD_CLZ_DTL  T2
+      WHERE 1 = 1
+      AND T2.CHNL_CD = #CHNL_CD#
+      AND T2.AREA_CD = T2.AREA_CD
+      AND T2.PUR_CLZ_YRMON = #FM_DT#
+      <isNotNull property="AREA_CD">
+        AND T2.AREA_CD     = #AREA_CD#
+      </isNotNull>
+      <isNotNull property="CO_NO">
+        AND T2.CO_CD LIKE #CO_NO#
+      </isNotNull>
+      GROUP BY T2.CO_CD
+      , T2.AREA_CD
+      , T2.PUR_CLZ_YRMON
+      ) T1
+      ) T2 ON ( T1.CO_CD = T2.CO_CD)
+      , TB_CD_CO  T3
+      WHERE 1 = 1
+      AND T3.CHNL_CD = #CHNL_CD#
+      AND T1.CO_CD = T3.CO_NO
+      AND T1.CO_CD  IN ( SELECT X.CO_NO
+      FROM TB_CD_CO_TP  X
+      ,  TB_CD_CO     Z
+      WHERE 1 = 1
+      AND X.CHNL_CD    = #CHNL_CD#
+      AND X.CHNL_CD    = Z.CHNL_CD
+      AND T1.CO_CD     = X.CO_NO
+      AND X.CO_NO      = Z.CO_NO
+      AND Z.DELT_FLG   = 'N'
+      <isNotNull property="CO_TP_CD">
+        AND X.CO_TP_CD  = #CO_TP_CD#
+      </isNotNull>
+      )
+      GROUP BY  T1.CO_CD
+      , T3.AREA_CD
+    </select>
+
+    <statement id="ProcP4422" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="int">
+      declare @RTN VARCHAR(MAX)
+      <isEqual property="RN" compareValue="1">
+        exec @RTN = sp_purchaseClose #CHNL_CD#, #AREA_CD#, #FM_DT#, #CO_NO#,  #CRE_USR_ID#
+      </isEqual>
+      <isEqual property="RN" compareValue="2">
+        exec @RTN = sp_purchaseClose_insert #CHNL_CD#, #AREA_CD#, #FM_DT#, #CO_NO#, #GBN#, #CRE_USR_ID#, #PUR_AMT#
+      </isEqual>
+      select @RTN AS R_value
+    </statement>
+    
+    
+    <update id="P4422UpdateMst" parameterClass="ModelsLibrary.Pur.PurVo">
+       UPDATE TB_PUR_INAUD_CO_CLZ
+         SET CLZ_FLG = #CLZ_FLG#
+       WHERE 1 = 1    
+         AND PUR_CLZ_YRMON = #PUR_CLZ_YRMON#
+         AND CO_CD         = #CO_NO#
+         AND AREA_CD       = #AREA_CD#
+         AND CHNL_CD       = #CHNL_CD#
+    </update>
+    
+    
+    <select id="P4422SelectDtlList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+       SELECT  #CHNL_CD#   AS CHNL_CD
+            , T2.SL_ADJ_CD 
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'P-009', T2.SL_ADJ_CD)  AS SL_ADJ_NM
+            , T2.INAUD_DT
+            , T2.ITM_CD
+            , T3.ITM_NM
+            , T2.SL_ITM_AMT    
+            , T2.IN_NO
+            , T2.INAUD_RMK
+            , T2.PUR_CLZ_YRMON
+            , T2.CO_CD AS CO_NO
+            , T2.AREA_CD
+            , SL_ITM_TAX_AMT
+        FROM  TB_PUR_INAUD_CLZ_DTL T2 
+            , TB_CD_ITM            T3
+        WHERE 1 = 1  
+          AND T2.CHNL_CD       = #CHNL_CD#
+          AND T2.CHNL_CD       = T3.CHNL_CD
+          AND T2.ITM_CD        = T3.ITM_CD
+          AND T2.PUR_CLZ_YRMON = #FM_DT#
+          AND T2.CO_CD         = #CO_NO#
+    </select> 
+    
+    <insert id="P4422InsertDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+       INSERT INTO TB_PUR_INAUD_CLZ_DTL 
+       (
+          PUR_CLZ_YRMON
+        , CO_CD
+        , AREA_CD
+        , ITM_CD
+        , SL_ADJ_CD
+        , SL_ADJ_RESON_CD
+        , SL_ITM_QTY
+        , SL_ITM_PRC
+        , SL_ITM_AMT
+        , CRE_USR_ID
+        , CRE_DT
+        , UPD_USR_ID
+        , UPD_DT
+        , INAUD_DT
+        , SL_ITM_TAX_AMT
+        , CHNL_CD
+      )  
+      VALUES
+      (
+          #PUR_CLZ_YRMON#
+        , #CO_NO#
+        , #AREA_CD#
+        , #ITM_CD#
+        , #SL_ADJ_CD#
+        , #SL_ADJ_RESON_CD#
+        , #SL_ITM_QTY#
+        , #SL_ITM_PRC#
+        , #SL_ITM_AMT#
+        , #CRE_USR_ID#
+        , GETDATE()
+        , #UPD_USR_ID#
+        , GETDATE()
+        , GETDATE()
+        , #SL_ITM_TAX_AMT#
+        , #CHNL_CD#
+      )  
+    </insert>
+    
+    <update id="P4422UpdateDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+       UPDATE TB_PUR_INAUD_CLZ_DTL
+       SET
+          PUR_CLZ_YRMON    = #PUR_CLZ_YRMON#
+        , CO_CD            = #CO_NO#
+        <isNotNull property="GBN">	
+        , AREA_CD          = #GBN#
+        </isNotNull>
+        , ITM_CD           = #ITM_CD#
+        <isNotNull property="YRMON">	
+        , SL_ADJ_CD        = #YRMON#
+        </isNotNull>
+        <isNotNull property="IN_NO">	
+        , IN_NO        = #IN_NO#
+        </isNotNull>
+        <isNotNull property="INAUD_RMK">	
+        , INAUD_RMK        = #INAUD_RMK#
+        </isNotNull>
+        , SL_ADJ_RESON_CD  = #SL_ADJ_RESON_CD#
+        , SL_ITM_QTY       = #SL_ITM_QTY#
+        , SL_ITM_PRC       = #SL_ITM_PRC#
+        , SL_ITM_AMT       = #SL_ITM_AMT#
+        , SL_ITM_TAX_AMT   = #SL_ITM_TAX_AMT#
+        , UPD_USR_ID 			 = #UPD_USR_ID#
+        , UPD_DT           = GETDATE()
+        , INAUD_DT         = #INAUD_DT#
+      WHERE PUR_CLZ_YRMON = #PUR_CLZ_YRMON#
+        AND CO_CD         = #CO_NO#
+        AND AREA_CD       = #AREA_CD#
+        AND ITM_CD        = #ITM_CD#
+        AND SL_ADJ_CD     = #SL_ADJ_CD#
+        AND INAUD_DT      = #INAUD_DT#
+        AND CHNL_CD       = #CHNL_CD#
+    </update>
+          
+    <delete id="P4422DeleteDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+      DELETE FROM TB_PUR_INAUD_CLZ_DTL
+        WHERE PUR_CLZ_YRMON = #PUR_CLZ_YRMON#
+          AND CO_CD         = #CO_NO#
+          AND AREA_CD       = #AREA_CD#
+          AND ITM_CD        = #ITM_CD#
+          AND SL_ADJ_CD     = #SL_ADJ_CD#
+          AND INAUD_DT      = #INAUD_DT#
+          AND CHNL_CD       = #CHNL_CD#
+    </delete>
+    <!-- P4422 매입정산마감-->
+    
+   
+    <!-- P4415 발주현황-->
+    <select id="P4415SelectMstList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY AREA_CD, CO_NM, RN ) AS RN
+          , AREA_CD
+          , AREA_NM
+          , PUR_ORD_NO
+          , PUR_ORD_SEQ
+          , PUR_CO_CD AS CO_CD
+          , CO_NM
+          , PUR_DT
+          , PUR_DUE_DT
+          , ITM_CD
+          , ITM_NM
+          , ITM_SZ_NM
+          , UOM_CD
+          , UOM_NM
+          , PUR_QTY
+          , PUR_RMN_QTY
+          , CO_UT_PRC
+          , SPLY_AMT
+          , VAT_AMT
+          , PUR_AMT
+          , CURR_NM
+          , PUR_ITM_RMK
+          , #CHNL_CD#  AS CHNL_CD
+          , ITM_GRP_CLSS_NM
+          , ISNULL(PUR_CLZ_FLG, 'N') AS PUR_CLZ_FLG
+          , (CASE WHEN ISNULL(PUR_CLZ_FLG, 'N') = 'N' THEN 0 ELSE 1 END) AS isCheckd
+      FROM (
+          SELECT T1.AREA_CD
+              , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-002', T1.AREA_CD)  AS AREA_NM
+              , T1.PUR_ORD_NO + '-' + dbo.F_RPAD(CAST( T2.PUR_ORD_SEQ AS VARCHAR), 2, '0') AS PUR_ORD_NO
+              , T1.PUR_CO_CD
+              , T2.PUR_ORD_SEQ
+              , dbo.CD_COMPANY_NM_FNC(#CHNL_CD#, T1.PUR_CO_CD) AS CO_NM
+              , CONVERT(VARCHAR, T1.PUR_DT, 23) AS PUR_DT
+              , CONVERT(VARCHAR, T1.PUR_DUE_DT, 23) AS PUR_DUE_DT
+              , T2.ITM_CD
+              , T3.ITM_NM
+              , T3.ITM_SZ_NM
+              , T2.UOM_CD
+              , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-003', T2.UOM_CD)  AS UOM_NM
+              , T2.PUR_QTY
+              , T2.PUR_QTY - (CASE WHEN T1.CHNL_CD = #CHNL_CD# THEN dbo.FF_PUR_RMN_HS_QTY(#CHNL_CD#, T2.PUR_ORD_NO, T2.PUR_ORD_SEQ)  
+                           ELSE dbo.FF_PUR_RMN_QTY(#CHNL_CD#, T2.PUR_ORD_NO, T2.PUR_ORD_SEQ) END ) AS PUR_RMN_QTY
+              , T2.CO_UT_PRC
+              , T2.PUR_QTY * T2.CO_UT_PRC AS SPLY_AMT 
+              ,(T2.PUR_QTY * T2.CO_UT_PRC) * 0.1 AS  VAT_AMT
+              ,(T2.PUR_QTY * T2.CO_UT_PRC) + ((T2.PUR_QTY *T2.CO_UT_PRC) * 0.1) AS PUR_AMT
+              , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-007', T4.CURR_CD)  AS CURR_NM
+              , T2.PUR_ITM_RMK
+              , ROW_NUMBER() OVER ( PARTITION BY NULL ORDER BY T1.PUR_DT, T2.ITM_CD) AS RN
+              , T3.ITM_GRP_CLSS_NM 
+              , T1.PUR_CLZ_FLG
+      FROM TB_PUR_ORD       T1
+          , TB_PUR_ORD_DTL   T2
+          OUTER APPLY ( 
+            SELECT T4.ITM_CD
+                 , ISNULL(T4.CO_UT_PRC, 0) AS CO_UT_PRC
+                 , T4.CO_ITM_CD
+                 , T4.CO_ITM_NM
+                 , T4.CURR_CD
+              FROM (
+                    SELECT X.ITM_CD
+                         , X.CO_UT_PRC
+                         , X.CO_ITM_CD
+                         , X.CO_ITM_NM
+                         , X.CURR_CD
+                         , ROW_NUMBER() OVER(PARTITION BY X.ITM_CD ORDER BY X.CNG_APLY_DT DESC) AS RN 
+                      FROM TB_CD_CO_UT_PRC X
+                     WHERE 1 = 1
+                       AND X.CHNL_CD    = #CHNL_CD#
+                       AND X.MN_CO_FLG  = 'Y' 
+                       AND T2.ITM_CD    = X.ITM_CD
+                   ) T4
+             WHERE 1 = 1
+               AND RN = 1
+          ) T4
+          , MV_TB_CD_ITM        T3          
+      WHERE 1 = 1
+          AND T1.CHNL_CD      = #CHNL_CD#
+          AND T1.CHNL_CD      = T2.CHNL_CD
+          AND T1.CHNL_CD      = T3.CHNL_CD
+          AND T1.PUR_ORD_NO   = T2.PUR_ORD_NO
+          AND T2.ITM_CD       = T3.ITM_CD
+     <isNotNull property="AREA_CD">
+         AND T1.AREA_CD    = #AREA_CD#     
+      </isNotNull>
+         AND T1.PUR_DT    >= CAST(#FM_DT# + ' 00:00:00' AS DATETIME) 
+         AND T1.PUR_DT    <![CDATA[<=]]> CAST(#TO_DT# + ' 23:59:59' AS DATETIME) 
+      <isNotNull property="PUR_CO_CD">
+         AND T1.PUR_CO_CD  = #PUR_CO_CD#
+      </isNotNull>
+      ) T1
+      WHERE 1=1
+      <isNotNull property="PUR_CLZ_FLG">
+         AND ISNULL(T1.PUR_CLZ_FLG, 'N') = #PUR_CLZ_FLG#
+      </isNotNull>
+    </select>
+
+	<update id="P4415UpdateMst" parameterClass="ModelsLibrary.Pur.PurVo">
+		  UPDATE TB_PUR_ORD
+		  SET
+				PUR_CLZ_FLG   = #PUR_CLZ_FLG#
+			  , UPD_USR_ID    = #UPD_USR_ID#
+			  , UPD_DT        = GETDATE()
+		  WHERE PUR_ORD_NO  = #PUR_ORD_NO#
+			AND CHNL_CD     = #CHNL_CD#
+	</update>
+	  
+	<update id="P4415UpdateDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+		  UPDATE TB_CD_STK_SER
+		  SET
+				CLZ_FLG		= #PUR_CLZ_FLG#
+			  , UPD_USR_ID  = #UPD_USR_ID#
+			  , UPD_DT      = GETDATE()
+		  WHERE PUR_ORD_NO  = #PUR_ORD_NO#
+			AND PUR_ORD_SEQ = #PUR_ORD_SEQ#
+			AND CHNL_CD     = #CHNL_CD#
+	</update>
+	  
+
+
+    <!-- P4426 매입원장[일자] -->
+    <select id="P4426SelectMstList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+       SELECT RN 
+            , PUR_CLZ_YRMON
+            , SUBSTRING(PUR_CLZ_YRMON, 1, 6) AS YRMON
+            , CO_CD         AS CO_NO
+            , ITM_CD
+            , ITM_NM
+            , ITM_SZ_NM
+            , INAUD_RMK
+            , SL_ITM_QTY    AS IMP_ITM_QTY
+            , SL_ITM_PRC    AS IMP_ITM_PRC
+            , SL_ITM_AMT    AS IMP_ITM_AMT 
+            , SUM_AMT       AS ITM_SUM_AMT
+            , RMN_AMT = SUM(SL_ITM_AMT - SUM_AMT) OVER (PARTITION BY  SUBSTRING(PUR_CLZ_YRMON, 1, 6) , CO_CD  ORDER BY RN ) 
+            , INSRL_NO
+            , dbo.CD_COMPANY_NM_FNC(#CHNL_CD#, CO_CD)   AS CO_NM
+            , #CHNL_CD#  AS CHNL_CD
+          FROM (
+            SELECT  ROW_NUMBER() OVER (PARTITION BY SUBSTRING(PUR_CLZ_YRMON, 1, 6) , CO_CD ORDER BY RN, PUR_CLZ_YRMON, CO_CD) AS RN 
+                  , PUR_CLZ_YRMON
+                  , CO_CD
+                  , ITM_CD
+                  , ITM_NM
+                  , ITM_SZ_NM
+                  , INAUD_RMK
+                  , SL_ITM_QTY 
+                  , SL_ITM_PRC
+                  , SL_ITM_AMT 
+                  , SUM_AMT  
+                  , INSRL_NO
+              FROM (
+                      SELECT  TOP 1 
+                               RN 
+                             , PUR_CLZ_YRMON
+                             , CO_CD
+                             , ITM_CD
+                             , ITM_NM
+                             , ITM_SZ_NM
+                             , INAUD_RMK
+                             , ISNULL(SL_ITM_QTY, 0)  AS SL_ITM_QTY 
+                             , ISNULL(SL_ITM_PRC, 0)  AS SL_ITM_PRC
+                             , ISNULL(SL_ITM_AMT, 0)  AS SL_ITM_AMT 
+                             , ISNULL(PUR_CLT_AMT, 0) AS SUM_AMT
+                             , NULL AS INSRL_NO
+                        FROM (
+                               SELECT 0        AS RN 
+                                    , PUR_YRMON   AS PUR_CLZ_YRMON
+                                    , CO_CD
+                                    , ''       AS ITM_CD
+                                    , ''       AS ITM_NM
+                                    , ''       AS ITM_SZ_NM
+                                    , '이월'   AS INAUD_RMK
+                                    , 0        AS SL_ITM_QTY
+                                    , 0        AS SL_ITM_PRC
+                                    , PUR_INIT_AMT  AS SL_ITM_AMT
+                                    , PUR_CLT_AMT
+                                 FROM TB_PUR_CO_INIT_AMT
+                            WHERE 1 = 1 
+                              AND CHNL_CD     = #CHNL_CD#
+                              AND PUR_YRMON  = SUBSTRING(#FM_DT# , 1, 6)
+                                  <isNotNull property="CO_NO">	
+                                   AND CO_CD          = #CO_NO#
+                                </isNotNull>    
+                                UNION ALL
+                                SELECT -1
+                                     , SUBSTRING(#FM_DT#, 1, 6)
+                                     , NULL
+                                     , NULL
+                                     , NULL
+                                     , NULL
+                                     , '이월'
+                                     , NULL
+                                     , NULL
+                                     , NULL     
+                                     , NULL
+                                  FROM CPY_T
+                                 WHERE 1 = 1
+                                   AND NO = 1
+                          ) T1             
+                      UNION ALL     
+                      SELECT ROW_NUMBER() OVER (PARTITION BY CONVERT(VARCHAR(8), T1.INAUD_DT, 112), T1.CO_CD ORDER BY T2.INSRL_NO, T2.INSRL_SEQ) AS RN 
+                           , CONVERT(VARCHAR(8), T1.INAUD_DT, 112) 
+                           , T1.CO_CD
+                           , T2.ITM_CD
+                           , T3.ITM_NM
+                           , T3.ITM_SZ_NM
+                           , T1.INAUD_RMK
+                           , T2.INAUD_QTY
+                           , T2.INAUD_PRC
+                           , T2.INAUD_AMT
+                           , 0
+                           , T2.INSRL_NO
+                           FROM TB_INAUD_MAST T1
+                              , TB_INAUD_DTL  T2
+                              , TB_CD_ITM     T3                              
+                          WHERE 1 = 1
+                            AND T1.CHNL_CD     = #CHNL_CD#
+                            AND T1.CHNL_CD     = T2.CHNL_CD
+                            AND T1.CHNL_CD     = T3.CHNL_CD
+                            AND T1.INSRL_NO = T2.INSRL_NO
+                            AND T2.ITM_CD   = T3.ITM_CD
+                            AND T1.IO_CD    = 'I' 
+                            AND T2.INAUD_CD NOT IN ('RGH', 'RGS')                            
+                            AND T1.INAUD_DT >= CAST(#FM_DT#+ ' 00:00:00' AS DATETIME) 
+                            AND T1.INAUD_DT <![CDATA[<=]]> CAST(#TO_DT#+ ' 23:59:59' AS DATETIME)      
+                            <isNotNull property="CO_NO">	
+                            AND T1.CO_CD   = #CO_NO#
+                          </isNotNull>
+                      UNION ALL            
+                         SELECT 999
+                              , T2.INAUD_DT
+                              , T1.CO_CD
+                              , NULL
+                              , NULL
+                              , NULL
+                              , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'P-009', SL_ADJ_CD)
+                              , 0
+                              , 0
+                              , 0
+                              , SUM(T2.SL_ITM_AMT) AS SUM_AMT
+                              , NULL
+                          FROM TB_PUR_INAUD_CO_CLZ  T1
+                             , TB_PUR_INAUD_CLZ_DTL T2 
+                             , TB_CD_ITM            T3
+                         WHERE 1 = 1
+                           AND T1.CHNL_CD     = #CHNL_CD#
+                           AND T1.CHNL_CD     = T2.CHNL_CD
+                           AND T1.CHNL_CD     = T3.CHNL_CD
+                           AND T1.AREA_CD       = T2.AREA_CD
+                           AND T1.PUR_CLZ_YRMON = T2.PUR_CLZ_YRMON
+                           AND T1.CO_CD         = T2.CO_CD   
+                           AND T2.ITM_CD        = T3.ITM_CD
+                           AND T1.PUR_CLZ_YRMON >= SUBSTRING(#FM_DT#, 1, 6)
+                           AND T1.PUR_CLZ_YRMON <![CDATA[<=]]> SUBSTRING(#TO_DT#, 1, 6)
+                           AND T3.ITM_CD        = '77777'
+                           AND T1.CO_CD         = #CO_NO#
+                        GROUP BY T1.CO_CD
+                               , T1.PUR_CLZ_YRMON
+                               , T2.SL_ADJ_CD
+                               , T2.INAUD_DT
+            ) T1 
+        ) T1
+    </select>   
+
+    <!--P4401 구매코드관리-->
+   <select id="P4401SelectMstList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+      <!--SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.N1ST_ITM_GRP_CD, T1.N2ND_ITM_GRP_CD, T1.ITM_CD) AS RN 
+          , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-001', ITM_GRP_CLSS_CD) AS ITM_GRP_CLSS_NM 
+          , dbo.PUR_N1ST_GRP_NM_FNC(#CHNL_CD#, ITM_GRP_CLSS_CD, N1ST_ITM_GRP_CD) AS N1ST_ITM_GRP_NM
+          , dbo.PUR_N2ST_GRP_NM_FNC(#CHNL_CD#, ITM_GRP_CLSS_CD, N1ST_ITM_GRP_CD,  N2ND_ITM_GRP_CD) AS N2ND_ITM_GRP_NM      
+          , T1.ITM_CD   
+          , T2.CO_NM 
+          , ITM_NM      
+          , ITM_SZ_NM
+          , CONVERT(VARCHAR(10), CNG_APLY_DT, 120) as  CNG_APLY_DT      
+          , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-003', T1.UOM_CD) AS UOM_NM      
+          , T2.CO_UT_PRC
+          , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-007', T2.CURR_CD ) AS CURR_NM            
+          , CONVERT(VARCHAR(10),  T2.UPD_DT, 120) AS UPD_DT  
+          , #CHNL_CD#  AS CHNL_CD
+      FROM TB_CD_ITM T1 LEFT OUTER JOIN 
+          (   SELECT ITM_CD
+                   , CO_UT_PRC
+                   , CO_NM 
+                   , CO_NO
+                   , CURR_CD
+                   , CNG_APLY_DT
+                   , UPD_DT
+				   , CHNL_CD
+                FROM (
+                      SELECT T1.ITM_CD
+                       , CONVERT(FLOAT, T1.CO_UT_PRC) AS CO_UT_PRC
+                       , ROW_NUMBER() OVER 
+                        (PARTITION BY T1.ITM_CD
+                         ORDER BY T1.CNG_APLY_DT DESC ) RN 
+                       , CO_NO
+                       , dbo.CD_COMPANY_NM_FNC(#CHNL_CD#, CO_NO) CO_NM 
+                       , CURR_CD
+                       , CNG_APLY_DT
+                       , UPD_DT
+					   , CHNL_CD
+                FROM TB_CD_CO_UT_PRC  T1
+              WHERE 1 = 1
+                      AND T1.CHNL_CD     = #CHNL_CD#
+                      AND T1.ITM_BZTP_FLG = 'P'
+                      AND T1.MN_CO_FLG = 'Y'      
+                  ) T1
+                  WHERE RN = 1
+              ) T2       
+      ON (T1.ITM_CD = T2.ITM_CD  AND T1.CHNL_CD =  T2.CHNL_CD )       
+      WHERE 1 = 1
+          AND T1.CHNL_CD = #CHNL_CD#
+       <isNotNull property="ITM_GRP_CLSS_CD">
+          AND T1.ITM_GRP_CLSS_CD = #ITM_GRP_CLSS_CD#
+       </isNotNull>-->
+	   WITH TMP AS (
+        SELECT 'A' AS GBN 
+             , CLSS_CD
+             , CLSS_DESC
+          FROM TB_SYS_CLSS_CD
+         WHERE 1 = 1
+           AND CHNL_CD    = #CHNL_CD#
+           AND CLSS_TP_CD = 'L-001'  
+        UNION ALL
+       SELECT 'B' AS GBN 
+             , CLSS_CD
+             , CLSS_DESC
+          FROM TB_SYS_CLSS_CD
+         WHERE 1 = 1
+           AND CHNL_CD    = #CHNL_CD#
+           AND CLSS_TP_CD = 'L-003'          
+        UNION ALL
+       SELECT 'C' AS GBN 
+             , CLSS_CD
+             , CLSS_DESC
+          FROM TB_SYS_CLSS_CD
+         WHERE 1 = 1
+           AND CHNL_CD    = #CHNL_CD#
+           AND CLSS_TP_CD = 'S-007'
+        )      
+        SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.N1ST_ITM_GRP_CD, T1.N2ND_ITM_GRP_CD, T1.ITM_CD) AS RN 
+             , (SELECT CLSS_DESC FROM TMP X WHERE X.GBN = 'A' AND X.CLSS_CD = T1.ITM_GRP_CLSS_CD) AS ITM_GRP_CLSS_NM 
+             , T1.ITM_GRP_CLSS_CD
+             , T1.N1ST_ITM_GRP_NM
+             , T1.N2ND_ITM_GRP_NM
+             , T1.ITM_CD   
+             , T1.CO_NM 
+             , T1.ITM_NM      
+             , T1.ITM_SZ_NM
+             , T1.CNG_APLY_DT
+             , T1.UOM_CD
+             , (SELECT CLSS_DESC FROM TMP X WHERE X.GBN = 'B' AND X.CLSS_CD = T1.UOM_CD) AS UOM_NM      
+             , T1.CO_UT_PRC
+             , T1.CURR_CD
+             , (SELECT CLSS_DESC FROM TMP X WHERE X.GBN = 'C' AND X.CLSS_CD = T1.CURR_CD) AS CURR_NM           
+             , T1.UPD_DT
+             , T1.CHNL_CD
+          FROM (
+               SELECT 
+                    T1.ITM_GRP_CLSS_CD
+                  , N1ST_ITM_GRP_CD
+                  , N2ND_ITM_GRP_CD
+                  , (SELECT dbo.PUR_N1ST_GRP_NM_FNC(#CHNL_CD#, ITM_GRP_CLSS_CD, N1ST_ITM_GRP_CD) FROM CPY_T WHERE NO  = 1) AS N1ST_ITM_GRP_NM
+                  , (SELECT dbo.PUR_N2ST_GRP_NM_FNC(#CHNL_CD#, ITM_GRP_CLSS_CD, N1ST_ITM_GRP_CD,  N2ND_ITM_GRP_CD) FROM CPY_T WHERE NO  = 1)  AS N2ND_ITM_GRP_NM      
+                  , T1.ITM_CD   
+                  , T2.CO_NM 
+                  , ITM_NM      
+                  , ITM_SZ_NM
+                  , CONVERT(VARCHAR(10), CNG_APLY_DT, 120) as  CNG_APLY_DT      
+                  , T1.UOM_CD
+                  , T2.CO_UT_PRC
+                  , T2.CURR_CD
+                  , CONVERT(VARCHAR(10),  T2.UPD_DT, 120) AS UPD_DT  
+                  , #CHNL_CD#  AS CHNL_CD
+              FROM TB_CD_ITM T1 LEFT OUTER JOIN 
+                  (   SELECT ITM_CD
+                           , CO_UT_PRC
+                           , CO_NM 
+                           , CO_NO
+                           , CURR_CD
+                           , CNG_APLY_DT
+                           , UPD_DT
+                       , CHNL_CD
+                        FROM (
+                              SELECT T1.ITM_CD
+                               , CONVERT(FLOAT, T1.CO_UT_PRC) AS CO_UT_PRC
+                               , ROW_NUMBER() OVER 
+                                (PARTITION BY T1.ITM_CD
+                                 ORDER BY T1.CNG_APLY_DT DESC ) RN 
+                               , CO_NO
+                               , dbo.CD_COMPANY_NM_FNC(#CHNL_CD#, CO_NO) CO_NM 
+                               , CURR_CD
+                               , CNG_APLY_DT
+                               , UPD_DT
+                          , CHNL_CD
+                        FROM TB_CD_CO_UT_PRC  T1
+                      WHERE 1 = 1
+                              AND T1.CHNL_CD     = #CHNL_CD#
+                              AND T1.ITM_BZTP_FLG = 'P'
+                              AND T1.MN_CO_FLG = 'Y'      
+                          ) T1
+                          WHERE RN = 1
+                      ) T2       
+                ON (T1.ITM_CD = T2.ITM_CD  AND T1.CHNL_CD =  T2.CHNL_CD)       
+              WHERE 1 = 1
+                  AND T1.CHNL_CD = #CHNL_CD#
+       <isNotNull property="ITM_GRP_CLSS_CD">
+		   AND T1.ITM_GRP_CLSS_CD = #ITM_GRP_CLSS_CD#
+	   </isNotNull>
+        ) T1
+	   
+	   
+    </select>
+    
+    <select id="P4401SelectDtlList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+          SELECT RN 
+                , CO_NO
+                , CO_NM 
+                , CNG_APLY_DT
+                , CO_UT_PRC
+                , CURR_CD
+                , CURR_NM    
+                , MN_CO_FLG
+                , CRNT_PRC_FLG
+                , CNG_HIS_DESC      
+                , CO_ITM_CD
+                , CO_ITM_NM      
+                , ITM_CD      
+                , ITM_BZTP_FLG 
+                , #CHNL_CD#  AS CHNL_CD
+            FROM (
+                SELECT  ROW_NUMBER() OVER (PARTITION BY CO_NO, ITM_CD, ITM_BZTP_FLG ORDER BY CNG_APLY_DT DESC ) RN 
+                      , CO_NO
+                      , dbo.CD_COMPANY_NM_FNC(#CHNL_CD#, CO_NO) AS CO_NM 
+                      , CONVERT(VARCHAR(10), CNG_APLY_DT, 120) AS CNG_APLY_DT
+                      , CONVERT(FLOAT, CO_UT_PRC) AS CO_UT_PRC
+                      , CURR_CD
+                      , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-007', CURR_CD ) AS CURR_NM    
+                      , (CASE WHEN MN_CO_FLG = 'Y' THEN 1 ELSE 0 END) AS MN_CO_FLG
+                      , (CASE WHEN CRNT_PRC_FLG = 'Y' THEN 1 ELSE 0 END) AS CRNT_PRC_FLG
+                      , CNG_HIS_DESC      
+                      , CO_ITM_CD
+                      , CO_ITM_NM      
+                      , ITM_CD      
+                      , ITM_BZTP_FLG 
+                  FROM TB_CD_CO_UT_PRC
+                WHERE 1 = 1
+                  AND CHNL_CD     = #CHNL_CD#
+                  AND ITM_CD  = #ITM_CD#   
+                 <isNotNull property="CO_ITM_CD">
+                       AND CO_ITM_CD  = #CO_ITM_CD#   
+                 </isNotNull>
+                 <isNotNull property="CO_NO">
+                       AND CO_NO  = #CO_NO#   
+                 </isNotNull>
+                 <isNotNull property="CNG_APLY_DT">
+                       AND CNG_APLY_DT  = #CNG_APLY_DT#   
+                 </isNotNull>
+                 <isNotNull property="ITM_BZTP_FLG">
+                       AND ITM_BZTP_FLG  = #ITM_BZTP_FLG#   
+                 </isNotNull>
+            ) T1  
+            WHERE 1 = 1
+            <isNotNull property="RN">
+               <isEqual property="RN" compareValue="1">
+                AND RN LIKE '1%'  
+               </isEqual>
+            </isNotNull>
+    </select>
+    
+    <insert id="P4401InsertDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+      INSERT INTO TB_CD_CO_UT_PRC
+       (
+            CHNL_CD
+          , ITM_CD
+          , CO_ITM_CD
+          , CO_NO
+          , CNG_APLY_DT
+          , ITM_BZTP_FLG
+          , CO_ITM_NM
+          , CO_UT_PRC
+          , MN_CO_FLG
+          , CRNT_PRC_FLG
+          , UOM_CD
+          , LOT_VAL
+          , CURR_CD
+          , CNG_HIS_DESC
+          , CRE_USR_ID
+          , CRE_DT
+          , UPD_USR_ID
+          , UPD_DT
+      ) 
+      VALUES
+      (
+          #CHNL_CD#
+        , #ITM_CD#  
+        , #CO_ITM_CD#  
+        , #CO_NO#  
+        , #CNG_APLY_DT#
+        , #ITM_BZTP_FLG#  
+        , #CO_ITM_NM#
+        , #CO_UT_PRC#
+        , #MN_CO_FLG#
+        , #CRNT_PRC_FLG#
+        , #UOM_CD#
+        , #LOT_VAL#
+        , #CURR_CD#
+        , #CNG_HIS_DESC#
+        , #CRE_USR_ID#
+        , GETDATE()
+        , #UPD_USR_ID#
+        , GETDATE()
+      )
+    </insert>
+    
+    <update id="P4401UpdateDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+     UPDATE TB_CD_CO_UT_PRC
+       SET
+            CO_ITM_NM = #CO_ITM_NM#
+          , CO_UT_PRC = #CO_UT_PRC#
+          , MN_CO_FLG = #MN_CO_FLG#
+          , CRNT_PRC_FLG = #CRNT_PRC_FLG#
+          , UOM_CD = #UOM_CD#
+          , LOT_VAL = #LOT_VAL#
+          , CURR_CD = #CURR_CD#
+          , CNG_HIS_DESC = #CNG_HIS_DESC#
+          , UPD_USR_ID = #UPD_USR_ID#
+          , UPD_DT = GETDATE()
+        WHERE 1 = 1
+          AND CHNL_CD = #CHNL_CD#
+          AND ITM_CD = #ITM_CD#
+          AND CO_ITM_CD = #CO_ITM_CD#
+          AND CO_NO = #CO_NO#
+          AND CNG_APLY_DT = #CNG_APLY_DT#
+          AND ITM_BZTP_FLG = #ITM_BZTP_FLG#
+    </update>
+    
+    <delete id="P4401DeleteDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+       DELETE TB_CD_CO_UT_PRC
+          WHERE 1=1
+            AND CHNL_CD = #CHNL_CD#
+            AND ITM_CD = #ITM_CD#
+            AND ITM_BZTP_FLG = #ITM_BZTP_FLG#
+          <isNotNull property="CO_ITM_CD">
+            AND CO_ITM_CD = #CO_ITM_CD#
+          </isNotNull>
+          <isNotNull property="CO_NO">
+            AND CO_NO = #CO_NO#
+          </isNotNull>
+          <isNotNull property="CNG_APLY_DT">
+            AND CNG_APLY_DT = #CNG_APLY_DT#
+          </isNotNull>
+    </delete>
+
+
+
+	  <!--P44011 수주마감-->
+	  <select id="P44011SelectMstList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT 
+		        ISNULL(T5.CLZ_FLG, 'N' ) AS CLZ_FLG
+		      , ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.SO_DT) AS RN
+		      , CONVERT(VARCHAR, CAST(T1.SO_DT  AS   DATETIME), 23) AS SO_DT  
+		      , ISNULL(CONVERT(VARCHAR, CAST(T2.DUE_DT AS   DATETIME), 23), '') AS DUE_DT
+		      , T1.TR_CD        AS CO_NO
+		      , T3.CO_NM
+		      , T1.SO_NB        AS SL_ORD_NO
+		      , T2.SO_SQ        AS SL_ORD_SEQ
+			  , (CONVERT(VARCHAR, T1.SO_NB) + ' / ' + CONVERT(VARCHAR, T2.SO_SQ))  AS GBN
+		      , T2.ITEM_CD      AS ITM_CD
+		      , T4.ITM_NM
+			  , T4.ITM_SZ_NM
+		      , T2.SO_QT        AS SL_ITM_QTY
+		      , T1.EXCH_CD      AS CURR_CD
+		      , CASE WHEN T1.EXCH_CD = 'KRW' THEN T2.SO_UM ELSE EXCH_UM END AS SL_ITM_PRC
+		      , CASE WHEN T1.EXCH_CD = 'KRW' THEN T2.SOG_AM ELSE EXCH_AM END AS SL_ITM_AMT
+		      , CONVERT(VARCHAR, T1.INSERT_DT, 121)  AS CRE_DT
+		      , T1.INSERT_ID  AS CRE_USR_ID
+			  , T3.CHNL_CD  
+			  , #UPD_USR_ID# AS UPD_USR_ID
+		  FROM DZICUBE.dbo.LSO    T1 , DZICUBE.dbo.LSO_D  T2 
+		  LEFT OUTER JOIN TB_CD_ITM          T4
+		    ON (      T2.ITEM_CD = T4.ITM_CD
+		            AND T4.CHNL_CD = #CHNL_CD#
+		        )
+		    LEFT OUTER JOIN TB_SL_ORD_CLZ T5
+		        ON (    T2.SO_NB  = T5.SL_ORD_NO
+		            AND T2.SO_SQ = T5.SL_ORD_SEQ
+		            AND T5.CHNL_CD = #CHNL_CD#
+		        )
+		    , TB_CD_CO           T3
+		  WHERE 1 = 1
+		      AND T1.CO_CD      = T2.CO_CD
+		      AND T1.SO_NB      = T2.SO_NB
+		      AND T1.TR_CD      = T3.CO_NO
+		      AND T3.CHNL_CD    = #CHNL_CD#
+		  <isNotNull property="SL_ORD_NO">
+			  AND T2.SO_NB = #SL_ORD_NO#
+		  </isNotNull>
+		  <isNotNull property="FM_DT">
+			  AND T1.SO_DT      >= #FM_DT#
+		  </isNotNull>
+		  <isNotNull property="TO_DT">
+			  AND T1.SO_DT      <![CDATA[<=]]> #TO_DT#
+		  </isNotNull>
+		  <isNotNull property="CLZ_FLG">
+			  AND ISNULL(T5.CLZ_FLG, 'N' ) = #CLZ_FLG#
+		  </isNotNull>
+	  </select>
+
+	  <select id="P44011SelectMstChk" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT  CHNL_CD
+		        , SL_ORD_NO
+				, SL_ORD_SEQ
+				, CLZ_FLG  
+			FROM TB_SL_ORD_CLZ 
+			    WHERE 1 =1 
+				    AND CHNL_CD     = #CHNL_CD# 
+					AND SL_ORD_NO   = #SL_ORD_NO# 
+					AND SL_ORD_SEQ  = #SL_ORD_SEQ#
+	  </select>
+
+	 <insert id="P44011InsertMst" parameterClass="ModelsLibrary.Pur.PurVo">
+		INSERT INTO TB_SL_ORD_CLZ
+		(
+		    CHNL_CD
+		  , SL_ORD_NO
+		  , SL_ORD_SEQ
+		  , CLZ_FLG
+		  , CRE_USR_ID
+		  , CRE_DT
+		  , UPD_USR_ID
+		  , UPD_DT
+		)
+		VALUES 
+		(
+		    #CHNL_CD#
+		  , #SL_ORD_NO#
+		  , #SL_ORD_SEQ#
+		  , #CLZ_FLG#
+		  , #CRE_USR_ID#
+		  , GETDATE()
+		  , #UPD_USR_ID#
+		  , GETDATE()
+		)
+	  </insert>
+
+	  <update id="P44011UpdateMst" parameterClass="ModelsLibrary.Pur.PurVo">
+		  UPDATE TB_SL_ORD_CLZ
+		    SET   CLZ_FLG       = #CLZ_FLG#
+			    , UPD_USR_ID    = #UPD_USR_ID#
+                , UPD_DT        = GETDATE()
+		    WHERE 1 = 1
+		        AND CHNL_CD     = #CHNL_CD#
+		        AND SL_ORD_NO   = #SL_ORD_NO#
+		        AND SL_ORD_SEQ  = #SL_ORD_SEQ#
+	  </update>
+
+
+
+
+	  <!--P414101 BOM등록(구매) -->
+	  <select id="P414101SelectMstList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT
+		        ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.ITM_CD) AS RN
+		      , T1.ITM_CD
+		      , T1.ITM_NM
+		      , T1.ITM_SZ_NM
+		      , (SELECT MAX(UPD_DT) FROM TB_PROD_BOM X WHERE 1=1 AND X.ASSY_CD = T1.ITM_CD AND X.CHNL_CD = T1.CHNL_CD) AS UPD_DT
+			  , T1.CHNL_CD
+		  FROM TB_CD_ITM T1
+		    WHERE 1=1
+		        AND T1.CHNL_CD         = #CHNL_CD#
+		        AND T1.ITM_GRP_CLSS_CD = 'G'
+				AND T1.DELT_FLG        = 'N'
+		  ORDER BY UPD_DT DESC
+	  </select>
+
+	  <select id="P414101SelectDtlList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  WITH TMP AS(
+		    SELECT T1.ITM_CD
+		        , MAX(CASE WHEN GBN = 'L-001' THEN CLSS_DESC END ) AS ITM_GRP_CLSS_NM
+		    FROM (
+		        SELECT 'L-001'       AS GBN
+		               , T1.ITM_CD
+		               , T2.CLSS_DESC
+		        FROM TB_CD_ITM        T1
+		          ,  TB_SYS_CLSS_CD   T2
+		        WHERE 1 = 1
+		            AND T1.CHNL_CD          = #CHNL_CD#
+		            AND T1.CHNL_CD          = T2.CHNL_CD
+		            AND T2.CLSS_TP_CD       = 'L-001'
+		            AND T1.ITM_GRP_CLSS_CD  = T2.CLSS_CD
+		    )T1
+		    GROUP BY T1.ITM_CD
+		  )
+		  SELECT
+		        ROW_NUMBER() OVER (PARTITION BY T2.ROUT_CD ORDER BY T2.ASSY_SEQ) AS RN
+		      , T2.ASSY_CD AS ITM_CD
+		      , T2.ASSY_SEQ
+		      , T1.ITM_GRP_CLSS_CD
+		      , T3.ITM_GRP_CLSS_NM
+		      , T2.CMPO_CD
+					, dbo.CD_ITEM_NM_FNC(T1.CHNL_CD, T2.CMPO_CD) AS GBN
+		      , T1.ITM_NM
+		      , T1.ITM_SZ_NM
+		      , CONVERT(DECIMAL(12,6), T2.INP_QTY) AS INP_QTY
+		      , CONVERT(VARCHAR, T2.UPD_DT, 121) AS UPD_DT
+		      , T2.UPD_USR_ID
+		      , T1.CHNL_CD
+					, T2.ROUT_CD
+					, dbo.FF_NM_ROUT(T2.CHNL_CD, T2.ROUT_CD) AS ROUT_NM
+					, T2.PRNT_ROUT_CD
+					, dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-908', T2.PRNT_ROUT_CD) AS PRNT_ROUT_NM
+					, '[' + dbo.FF_NM_ROUT(T2.CHNL_CD, T2.ROUT_CD) + '] ' + (T2.ROUT_CD + '-' + T2.ASSY_CD) AS ORD_ITM_CD
+		  FROM TB_CD_ITM T1
+		    LEFT OUTER JOIN TMP T3 
+		    ON (  T1.ITM_CD =T3.ITM_CD  ) LEFT OUTER JOIN TB_PROD_BOM T2 ON( T1.CHNL_CD = T2.CHNL_CD)
+		  WHERE 1=1
+		    AND T1.CHNL_CD    = T2.CHNL_CD
+		    AND T1.ITM_CD     = T2.CMPO_CD
+		    AND T1.CHNL_CD    = #CHNL_CD#
+		    AND T2.ASSY_CD    = #ITM_CD#
+	  </select>
+
+		  <insert id="P414101InsertDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+		  INSERT INTO TB_PROD_BOM
+		  (
+		        CHNL_CD
+		      , ASSY_CD
+		      , ASSY_SEQ
+		      , CMPO_CD
+		      , INP_QTY
+		      , ROUT_ITM_CD
+		      , CRE_USR_ID
+		      , CRE_DT
+		      , UPD_USR_ID
+		      , UPD_DT
+			  , ROUT_CD
+			  , PRNT_ROUT_CD
+		  )
+		  VALUES
+		  (
+		        #CHNL_CD#
+		      , #ITM_CD#
+		      , #ASSY_SEQ#
+		      , #CMPO_CD#
+		      , #INP_QTY#
+		      , #ITM_CD#
+		      , #CRE_USR_ID#
+		      , GETDATE()
+		      , #UPD_USR_ID#
+		      , GETDATE()
+			  , #ROUT_CD#
+			  , #PRNT_ROUT_CD#
+		  )
+	  </insert>
+
+	  <update id="P414101UpdateDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+		  UPDATE TB_PROD_BOM
+		  SET   
+		      INP_QTY       = #INP_QTY#
+		    , UPD_USR_ID    = #UPD_USR_ID#
+		    , UPD_DT        = GETDATE()
+				, ROUT_CD       = #ROUT_CD#
+				, PRNT_ROUT_CD  = #PRNT_ROUT_CD#
+		  WHERE 1 = 1
+		      AND CHNL_CD       = #CHNL_CD#
+		      AND CMPO_CD       = #CMPO_CD#
+		      AND ASSY_CD       = #ITM_CD#
+		      AND ASSY_SEQ      = #ASSY_SEQ#
+		      AND ROUT_ITM_CD   = #ITM_CD#
+	  </update>
+
+	  <delete id="P414101DeleteDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+		  DELETE TB_PROD_BOM
+		   WHERE 1 = 1
+		     AND CHNL_CD       = #CHNL_CD#
+		     AND CMPO_CD       = #CMPO_CD#
+		     AND ASSY_CD       = #ITM_CD#
+		     AND ASSY_SEQ      = #ASSY_SEQ#
+		     AND ROUT_ITM_CD   = #ITM_CD#
+	  </delete>
+
+
+
+	  <!--P441100 원자재 소요량 전개 -->
+	  <select id="P441100SelectMstList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		   SELECT 
+		        ISNULL(T5.CLZ_FLG, 'N' ) AS CLZ_FLG
+		      , ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.SO_DT) AS RN
+		      , CONVERT(VARCHAR, CAST(T1.SO_DT  AS   DATETIME), 23) AS SO_DT  
+		      , ISNULL(CONVERT(VARCHAR, CAST(T2.DUE_DT AS   DATETIME), 23), '') AS DUE_DT
+		      , T1.TR_CD        AS CO_NO
+		      , T3.CO_NM
+		      , T1.SO_NB        AS SL_ORD_NO
+		      , T2.SO_SQ        AS SL_ORD_SEQ
+			  , (CONVERT(VARCHAR, T1.SO_NB) + ' / ' + CONVERT(VARCHAR, T2.SO_SQ))  AS GBN
+		      , T2.ITEM_CD      AS ITM_CD
+		      , T4.ITM_NM
+		      , ISNULL(T2.SO_QT, 0) AS SL_ITM_QTY
+		      , T1.EXCH_CD      AS CURR_CD
+		      , CASE WHEN T1.EXCH_CD = 'KRW' THEN T2.SO_UM ELSE EXCH_UM END AS SL_ITM_PRC
+		      , CASE WHEN T1.EXCH_CD = 'KRW' THEN T2.SOG_AM ELSE EXCH_AM END AS SL_ITM_AMT
+		      , CONVERT(VARCHAR, T1.INSERT_DT, 121)  AS CRE_DT
+		      , T1.INSERT_ID  AS CRE_USR_ID
+			  , T3.CHNL_CD  
+			  , #UPD_USR_ID# AS UPD_USR_ID
+		      , (SELECT ISNULL(MAX(UN_FOL_NO), '') FROM TB_PUR_MRP AS X WHERE 1=1 AND X.SL_ORD_NO = T2.SO_NB AND X.SL_ORD_SEQ = T2.SO_SQ AND X.CHNL_CD = #CHNL_CD# AND X.MRP_TP_CD = 'W') AS UN_FOL_NO
+			  , (SELECT ISNULL(MAX(CONVERT(VARCHAR, CRE_DT, 23)), '') FROM TB_PUR_MRP AS X WHERE 1=1 AND X.SL_ORD_NO = T2.SO_NB AND X.SL_ORD_SEQ = T2.SO_SQ AND X.CHNL_CD = #CHNL_CD# AND X.MRP_TP_CD = 'W') AS CRE_DT
+		  FROM DZICUBE.dbo.LSO    T1 , DZICUBE.dbo.LSO_D  T2 
+		  LEFT OUTER JOIN TB_CD_ITM          T4
+		    ON (      T2.ITEM_CD = T4.ITM_CD
+		            AND T4.CHNL_CD = #CHNL_CD#
+		        )
+		    LEFT OUTER JOIN TB_SL_ORD_CLZ T5
+		        ON (    T2.SO_NB  = T5.SL_ORD_NO
+		            AND T2.SO_SQ = T5.SL_ORD_SEQ
+		            AND T5.CHNL_CD = #CHNL_CD#
+		        )
+		    , TB_CD_CO           T3
+		  WHERE 1 = 1
+		      AND T4.ITM_GRP_CLSS_CD = 'G'
+		      AND T1.CO_CD      = T2.CO_CD
+		      AND T1.SO_NB      = T2.SO_NB
+		      AND T1.TR_CD      = T3.CO_NO
+		      AND T3.CHNL_CD    = #CHNL_CD#
+		  <isNotNull property="SL_ORD_NO">
+			  AND T2.SO_NB      = #SL_ORD_NO#
+		  </isNotNull>
+		  <isNotNull property="FM_DT">
+			  AND T1.SO_DT      >= #FM_DT#
+		  </isNotNull>
+		  <isNotNull property="TO_DT">
+			  AND T1.SO_DT      <![CDATA[<=]]> #TO_DT#
+		  </isNotNull>
+		  <isNotNull property="CLZ_FLG">
+			  AND ISNULL(T5.CLZ_FLG, 'N' ) = #CLZ_FLG#
+		  </isNotNull>
+	  </select>
+
+	  <statement id="ProcP441100" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="int">
+		  declare @RTN VARCHAR(MAX)
+		  exec @RTN = sp_purRequireCalc #CHNL_CD#, 'W', #SL_ORD_NO#, #SL_ORD_SEQ#, #UPD_USR_ID#
+		  select @RTN AS R_value
+	  </statement>
+
+	<!--벌크 목록-->
+	<select id="P441100SelectBulkDtlList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		SELECT 
+			  dbo.CD_SYS_CLSS_FNC(T2.CHNL_CD, 'L-001', T2.ITM_GRP_CLSS_CD) AS ITM_GRP_CLSS_NM
+		    , ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T2.ITM_CD) AS RN 
+            , T2.ITM_CD
+            , T2.ITM_NM
+			, T1.CHNL_CD
+			, #UN_FOL_NO# AS UN_FOL_NO
+			, #ITM_CD# AS GBN
+			, #UPD_USR_ID# AS UPD_USR_ID
+			, #SL_ITM_QTY# AS SL_ITM_QTY
+        FROM TB_PROD_BOM        T1
+            , TB_CD_ITM          T2
+        WHERE 1 = 1
+            AND T1.CHNL_CD      = T2.CHNL_CD
+            AND T1.CHNL_CD      = #CHNL_CD#
+            AND T1.CMPO_CD      = T2.ITM_CD
+            AND T2.ITM_GRP_CLSS_CD  = 'W'
+            AND T1.ROUT_ITM_CD  = #ITM_CD#
+	  </select>
+		  
+	  <select id="P441100SelectDtlList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  <!--
+		  SELECT dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-001', T3.ITM_GRP_CLSS_CD) AS ITM_GRP_CLSS_NM
+		      , T3.ITM_CD
+		      , T3.ITM_NM
+		      , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-003', T3.UOM_CD) AS UOM_NM
+		      , T2.ITM_USE_QTY
+		      , ISNULL(T2.LSS_VAL, 0)  AS LSS_VAL
+		      , ISNULL(T2.ITM_USE_QTY, 0) + ISNULL(T2.LSS_VAL, 0)  AS TOT_USE_QTY
+			  , T2.REQ_ORD_QTY
+		      , T2.CO_CD
+		      , dbo.CD_COMPANY_NM_FNC(T1.CHNL_CD, T2.CO_CD)  AS CO_NM
+		      , T2.UN_FOL_NO
+		      , T2.MRP_SEQ
+			  , T1.CHNL_CD
+			  , #UPD_USR_ID# AS UPD_USR_ID
+		  FROM TB_PUR_MRP       T1
+		      , TB_PUR_MRP_DTL   T2
+		      , TB_CD_ITM        T3
+		  WHERE 1 = 1
+		      AND T1.CHNL_CD   = T2.CHNL_CD
+		      AND T1.UN_FOL_NO = T2.UN_FOL_NO
+		      AND T2.ITM_CD    = T3.ITM_CD
+		      AND T1.CHNL_CD   = T3.CHNL_CD
+		      AND T1.CHNL_CD   = #CHNL_CD#
+		      AND T1.UN_FOL_NO = #UN_FOL_NO#
+			  AND T3.ITM_CD	   = #ITM_CD#
+			-->
+	  
+	  		SELECT 
+				  ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T6.ASSY_ITM_SEQ) AS RN 
+				, T6.ASSY_ITM_SEQ
+				, T6.ITM_CD
+				, T6.ITM_NM
+				, T6.ITM_GRP_CLSS_NM
+				, T6.UOM_NM
+				, T7.ITM_USE_QTY
+				, ISNULL(T7.LSS_VAL, 0)  AS LSS_VAL
+				, ISNULL(T7.ITM_USE_QTY, 0) + ISNULL(T7.LSS_VAL, 0)  AS TOT_USE_QTY
+				, T7.REQ_ORD_QTY
+				, T7.CO_CD
+				, dbo.CD_COMPANY_NM_FNC(T7.CHNL_CD, T7.CO_CD)  AS CO_NM
+				, T7.UN_FOL_NO
+				, T7.MRP_SEQ
+				, #UPD_USR_ID# AS UPD_USR_ID
+			    , #SL_ITM_QTY# AS SL_ITM_QTY
+			FROM
+			(
+				SELECT dbo.CD_SYS_CLSS_FNC(T2.CHNL_CD, 'L-001', T2.ITM_GRP_CLSS_CD) AS ITM_GRP_CLSS_NM
+					, 0  AS ASSY_ITM_SEQ
+					, T2.ITM_CD
+					, T2.ITM_NM
+					, dbo.CD_SYS_CLSS_FNC(T2.CHNL_CD, 'L-003', T2.UOM_CD) AS UOM_NM
+				FROM TB_PROD_BOM        T1
+					, TB_CD_ITM          T2
+				WHERE 1 = 1
+					AND T1.CHNL_CD      = T2.CHNL_CD
+					AND T1.CHNL_CD      = #CHNL_CD#
+					AND T1.CMPO_CD      = T2.ITM_CD
+					AND T2.ITM_GRP_CLSS_CD  = 'W'
+					AND T1.ROUT_ITM_CD  = #GBN#
+					AND T2.ITM_CD		 = #ITM_CD#
+				UNION ALL
+				SELECT dbo.CD_SYS_CLSS_FNC(T2.CHNL_CD, 'L-001', T4.ITM_GRP_CLSS_CD) AS ITM_GRP_CLSS_NM
+					, T3.ASSY_ITM_SEQ
+					, T4.ITM_CD
+					, T4.ITM_NM
+					, dbo.CD_SYS_CLSS_FNC(T2.CHNL_CD, 'L-003', T4.UOM_CD) AS UOM_NM     
+				FROM TB_PROD_BOM        T1
+					, TB_CD_ITM          T2
+					, TB_PROD_WEIH_TBL   T3     
+					, TB_CD_ITM          T4
+				WHERE 1 = 1
+					AND T1.CHNL_CD      = T2.CHNL_CD
+					AND T1.CHNL_CD      = T3.CHNL_CD
+					AND T1.CHNL_CD      = T4.CHNL_CD
+					AND T1.CHNL_CD      = #CHNL_CD#
+					AND T1.CMPO_CD      = T2.ITM_CD
+					AND T1.CMPO_CD      = T3.ASSY_ITM_CD
+					AND T3.CMPO_CD      = T4.ITM_CD
+					AND T2.ITM_GRP_CLSS_CD  = 'W'
+					AND T1.ROUT_ITM_CD  = #GBN#
+					AND T3.ASSY_ITM_CD	 = #ITM_CD#
+			) AS T6 LEFT OUTER JOIN 
+					(
+							SELECT dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-001', T3.ITM_GRP_CLSS_CD) AS ITM_GRP_CLSS_NM
+								, T3.ITM_CD
+								, T3.ITM_NM
+								, dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-003', T3.UOM_CD) AS UOM_NM
+								, T2.ITM_USE_QTY
+								, ISNULL(T2.LSS_VAL, 0)  AS LSS_VAL
+								, ISNULL(T2.ITM_USE_QTY, 0) + ISNULL(T2.LSS_VAL, 0)  AS TOT_USE_QTY
+								, T2.REQ_ORD_QTY
+								, T2.CO_CD
+								, dbo.CD_COMPANY_NM_FNC(T1.CHNL_CD, T2.CO_CD)  AS CO_NM
+								, T2.UN_FOL_NO
+								, T2.MRP_SEQ
+								, T1.CHNL_CD
+							FROM TB_PUR_MRP       T1
+								, TB_PUR_MRP_DTL   T2
+								, TB_CD_ITM        T3
+							WHERE 1 = 1
+								AND T1.CHNL_CD   = T2.CHNL_CD
+								AND T1.UN_FOL_NO = T2.UN_FOL_NO
+								AND T2.ITM_CD    = T3.ITM_CD
+								AND T1.CHNL_CD   = T3.CHNL_CD
+								AND T1.CHNL_CD   = #CHNL_CD#
+								AND T1.UN_FOL_NO = #UN_FOL_NO#
+					) 
+					AS T7 ON(T6.ITM_CD = T7.ITM_CD)
+	  </select>
+
+	 
+	  
+	  
+	  <select id="P441100SelectUpdateDtlList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+            SELECT
+                   #UN_FOL_NO#	AS UN_FOL_NO
+                 , ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.ASSY_ITM_SEQ) AS RN 
+	             , #CHNL_CD#	AS CHNL_CD
+                 , T1.ITM_CD
+                 , T1.LOSS_QTY AS LSS_VAL
+				 , (T1.LOSS_QTY + T1.IN_USE_QTY) AS REQ_ORD_QTY
+                 , #UPD_USR_ID# AS UPD_USR_ID
+              FROM (
+                  SELECT dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-001', T2.ITM_GRP_CLSS_CD) AS ITM_GRP_CLSS_NM
+                       , 0  AS ASSY_ITM_SEQ
+                       , T2.ITM_CD
+                       , T2.ITM_NM
+                       , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-003', T2.UOM_CD) AS UOM_NM
+                       , T1.INP_QTY * #SL_ITM_QTY#   AS IN_USE_QTY
+                       , #LSS_VAL#      AS LOSS_QTY
+                    FROM TB_PROD_BOM        T1
+                       , TB_CD_ITM          T2
+                   WHERE 1 = 1
+                     AND T1.CHNL_CD      = T2.CHNL_CD
+                     AND T1.CHNL_CD      = #CHNL_CD#
+                     AND T1.CMPO_CD      = T2.ITM_CD
+                     AND T2.ITM_GRP_CLSS_CD  = 'W'
+                     AND T1.ROUT_ITM_CD  = #ITM_CD#    
+                  UNION ALL
+                  SELECT dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-001', T4.ITM_GRP_CLSS_CD) AS ITM_GRP_CLSS_NM
+                       , T3.ASSY_ITM_SEQ
+                       , T4.ITM_CD
+                       , T4.ITM_NM
+                       , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-003', T4.UOM_CD) AS UOM_NM     
+                       , (T1.INP_QTY * #SL_ITM_QTY#) * (T3.BSE_WEIH_VAL / 1000.0) * ( T3.WEIH_VAL)
+                       , #LSS_VAL# * (T3.BSE_WEIH_VAL / 1000.0) * ( T3.WEIH_VAL) 
+                    FROM TB_PROD_BOM        T1
+                       , TB_CD_ITM          T2
+                       , TB_PROD_WEIH_TBL   T3     
+                       , TB_CD_ITM          T4
+                   WHERE 1 = 1
+                     AND T1.CHNL_CD      = T2.CHNL_CD
+                     AND T1.CHNL_CD      = T3.CHNL_CD
+                     AND T1.CHNL_CD      = T4.CHNL_CD
+                     AND T1.CHNL_CD      = #CHNL_CD#
+                     AND T1.CMPO_CD      = T2.ITM_CD
+                     AND T1.CMPO_CD      = T3.ASSY_ITM_CD
+                     AND T3.CMPO_CD      = T4.ITM_CD
+                     AND T2.ITM_GRP_CLSS_CD  = 'W'
+                     AND T1.ROUT_ITM_CD  = #ITM_CD#     
+					 AND T3.ASSY_ITM_CD = #GBN#
+            ) T1 LEFT OUTER JOIN (
+                       SELECT ITM_CD
+                            , CO_NO
+                            , ITM_PRC
+                         FROM (
+                              SELECT T2.ITM_CD 
+                                   , T2.CO_NO
+                                   , T2.CO_UT_PRC  AS ITM_PRC
+                                   , ROW_NUMBER() OVER (PARTITION BY T2.ITM_CD ORDER BY CNG_APLY_DT DESC)  AS RN 
+                                FROM TB_CD_CO_UT_PRC T2
+                               WHERE 1 = 1 
+                                 AND T2.CHNL_CD      = #CHNL_CD#
+                                 AND T2.ITM_BZTP_FLG = 'P'
+                                 AND T2.MN_CO_FLG    = 'Y' 
+                                 AND T2.CRNT_PRC_FLG = 'Y' 
+                              ) T1
+                       WHERE 1 = 1
+                         AND RN = 1
+                      ) T2 ON ( T1.ITM_CD = T2.ITM_CD )    
+	  </select>
+
+	  
+	  <update id="P441100UpdateDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+		  UPDATE TB_PUR_MRP_DTL
+		  SET
+		    UPD_USR_ID      = #UPD_USR_ID#
+		  , UPD_DT          = GETDATE()
+		  <isNotNull property="LSS_VAL">
+			  , LSS_VAL     = #LSS_VAL#
+		  </isNotNull>
+		  <isNotNull property="REQ_ORD_QTY">
+			  , REQ_ORD_QTY     = #REQ_ORD_QTY#
+		  </isNotNull>
+		  <isNotNull property="CO_CD">
+			  , CO_CD           = #CO_CD#
+		  </isNotNull>
+		  WHERE 1 = 1
+		    AND CHNL_CD     = #CHNL_CD#
+		    AND UN_FOL_NO   = #UN_FOL_NO#
+		<isNotNull property="ITM_CD">
+			AND ITM_CD      = #ITM_CD#
+		</isNotNull>
+		<isNotNull property="MRP_SEQ">
+			AND MRP_SEQ     = #MRP_SEQ#
+		</isNotNull>
+	  </update>
+	  
+	    <insert id="P441100InsertMemo" parameterClass="ModelsLibrary.Pur.PurVo">
+		  INSERT INTO TB_PUR_MRP_MEMO
+		  (
+				CHNL_CD
+			  , SL_ORD_NO
+			  , SL_ORD_SEQ
+			  , CO_CD
+			  , SL_RMK
+			  , CRE_USR_ID
+			  , CRE_DT
+			  , UPD_USR_ID
+			  , UPD_DT
+		  )
+		  VALUES
+		  (
+				#CHNL_CD#
+			  , #SL_ORD_NO#
+			  , #SL_ORD_SEQ#
+			  , #CO_NO#
+			  , #PUR_ITM_RMK#
+			  , #CRE_USR_ID#
+			  , GETDATE()
+			  , #UPD_USR_ID#
+			  , GETDATE()
+		  )
+	  </insert>
+
+	  <delete id="P441100DeleteMemo" parameterClass="ModelsLibrary.Pur.PurVo">
+		  DELETE TB_PUR_MRP_MEMO
+			WHERE 1 = 1
+			  AND CHNL_CD     = #CHNL_CD#
+			  AND SL_ORD_NO   = #SL_ORD_NO#
+			  AND SL_ORD_SEQ  = #SL_ORD_SEQ#
+			<isNotNull property="CO_NO">
+			  AND CO_CD       = #CO_NO#
+		  </isNotNull>
+	  </delete>
+
+	    <!-- 소요량 취합 -->
+	   <select id="P441100SelectMargeList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		   SELECT
+				 T5.ITM_GRP_CLSS_NM
+			   , T5.ITM_CD
+			   , T5.ITM_NM
+			   , T5.ITM_SZ_NM
+			   , T5.UOM_CD
+			   , T5.UOM_NM
+			   , SUM(T5.LSS_VAL)		AS LSS_VAL
+			   , SUM(T5.TOT_USE_QTY)	AS TOT_USE_QTY
+			   , SUM(T5.REQ_ORD_QTY)	AS REQ_ORD_QTY
+			   , T5.CO_CD
+			   , T5.CO_NM
+			   , T5.UN_FOL_NO			AS UN_FOL_NO
+			   , T5.MRP_SEQ				AS MRP_SEQ
+			   , T5.CHNL_CD
+			   , T5.UPD_USR_ID
+			   , T5.ORD_ITM_CD			AS PUR_ITM_CD
+			   , dbo.CD_ITEM_NM_FNC(T5.CHNL_CD, T5.ORD_ITM_CD) AS PUR_ITM_NM
+			   , T5.SL_ORD_NO
+			   , T5.SL_ORD_SEQ
+			   , dbo.FF_CO_UR_PRC(T5.CHNL_CD , T5.CO_CD, T5.ITM_CD, GETDATE()) AS CO_UT_PRC
+		   FROM
+		   (
+			   SELECT dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-001', T3.ITM_GRP_CLSS_CD) AS ITM_GRP_CLSS_NM
+				   , T3.ITM_CD
+				   , T3.ITM_NM
+				   , T3.ITM_SZ_NM
+				   , T3.UOM_CD
+				   , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-003', T3.UOM_CD) AS UOM_NM
+				   , T2.ITM_USE_QTY
+				   , ISNULL(T2.LSS_VAL, 0)  AS LSS_VAL
+				   , ISNULL(T2.ITM_USE_QTY, 0) + ISNULL(T2.LSS_VAL, 0)  AS TOT_USE_QTY
+				   , T2.REQ_ORD_QTY
+				   , T2.CO_CD
+				   , dbo.CD_COMPANY_NM_FNC(T1.CHNL_CD, T2.CO_CD)  AS CO_NM
+				   , T2.UN_FOL_NO AS UN_FOL_NO
+				   , T2.MRP_SEQ
+				   , T1.CHNL_CD
+				   , #UPD_USR_ID# AS UPD_USR_ID
+				   , T1.ORD_ITM_CD
+				   , T1.SL_ORD_NO
+				   , T1.SL_ORD_SEQ
+			   FROM TB_PUR_MRP       T1
+				   , TB_PUR_MRP_DTL   T2
+				   , TB_CD_ITM        T3
+			   WHERE 1 = 1
+				   AND T1.CHNL_CD   = T2.CHNL_CD
+				   AND T1.UN_FOL_NO = T2.UN_FOL_NO
+				   AND T2.ITM_CD    = T3.ITM_CD
+				   AND T1.CHNL_CD   = T3.CHNL_CD
+				   AND T1.CHNL_CD   = #CHNL_CD#
+				    <isNotNull property="A_UN_FOL_NO">
+					  <iterate property="A_UN_FOL_NO" prepend=" AND T1.UN_FOL_NO IN " open = "(" close=")" conjunction=",">
+						  #A_UN_FOL_NO[]#
+					  </iterate>
+					</isNotNull>
+				   AND T3.ITM_GRP_CLSS_CD = 'M'
+		   ) AS T5
+		   WHERE 1=1
+			   GROUP BY ITM_GRP_CLSS_NM
+				   , ITM_CD
+				   , ITM_NM
+				   , ITM_SZ_NM
+				   , UOM_CD
+				   , UOM_NM
+				   , UN_FOL_NO
+				   , MRP_SEQ
+				   , CO_CD
+				   , CO_NM
+				   , CHNL_CD
+				   , UPD_USR_ID
+				   , ORD_ITM_CD
+				   , SL_ORD_NO
+			       , SL_ORD_SEQ
+	   </select>
+	  
+
+
+
+
+
+	  <!--P441101 부자재 소요량 전개 -->
+	  <select id="P441101SelectMstList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		   SELECT 
+		        ISNULL(T5.CLZ_FLG, 'N' ) AS CLZ_FLG
+		      , ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.SO_DT) AS RN
+		      , CONVERT(VARCHAR, CAST(T1.SO_DT  AS   DATETIME), 23) AS SO_DT  
+		      , ISNULL(CONVERT(VARCHAR, CAST(T2.DUE_DT AS   DATETIME), 23), '') AS DUE_DT
+		      , T1.TR_CD        AS CO_NO
+		      , T3.CO_NM
+		      , T1.SO_NB        AS SL_ORD_NO
+		      , T2.SO_SQ        AS SL_ORD_SEQ
+			  , (CONVERT(VARCHAR, T1.SO_NB) + ' / ' + CONVERT(VARCHAR, T2.SO_SQ))  AS GBN
+		      , T2.ITEM_CD      AS ITM_CD
+		      , T4.ITM_NM
+		      , ISNULL(T2.SO_QT, 0) AS SL_ITM_QTY
+		      , T1.EXCH_CD      AS CURR_CD
+		      , CASE WHEN T1.EXCH_CD = 'KRW' THEN T2.SO_UM ELSE EXCH_UM END AS SL_ITM_PRC
+		      , CASE WHEN T1.EXCH_CD = 'KRW' THEN T2.SOG_AM ELSE EXCH_AM END AS SL_ITM_AMT
+		      , CONVERT(VARCHAR, T1.INSERT_DT, 121)  AS CRE_DT
+		      , T1.INSERT_ID  AS CRE_USR_ID
+			  , T3.CHNL_CD  
+			  , #UPD_USR_ID# AS UPD_USR_ID
+		      , (SELECT ISNULL(MAX(UN_FOL_NO), '') FROM TB_PUR_MRP AS X WHERE 1=1 AND X.SL_ORD_NO = T2.SO_NB AND X.SL_ORD_SEQ = T2.SO_SQ AND X.CHNL_CD = #CHNL_CD# AND X.MRP_TP_CD = 'B') AS UN_FOL_NO
+			  , (SELECT ISNULL(MAX(CONVERT(VARCHAR, CRE_DT, 23)), '') FROM TB_PUR_MRP AS X WHERE 1=1 AND X.SL_ORD_NO = T2.SO_NB AND X.SL_ORD_SEQ = T2.SO_SQ AND X.CHNL_CD = #CHNL_CD# AND X.MRP_TP_CD = 'B') AS CRE_DT
+			  , (SELECT ISNULL(X.SL_RMK , '') FROM TB_PUR_MRP_MEMO AS X WHERE 1=1 AND X.SL_ORD_NO = T2.SO_NB AND X.SL_ORD_SEQ = T2.SO_SQ AND X.CHNL_CD = #CHNL_CD# AND X.CO_CD = T1.TR_CD) AS PUR_ITM_RMK
+		  FROM DZICUBE.dbo.LSO    T1 , DZICUBE.dbo.LSO_D  T2 
+		  LEFT OUTER JOIN TB_CD_ITM          T4
+		    ON (      T2.ITEM_CD = T4.ITM_CD
+		            AND T4.CHNL_CD = #CHNL_CD#
+		        )
+		    LEFT OUTER JOIN TB_SL_ORD_CLZ T5
+		        ON (    T2.SO_NB  = T5.SL_ORD_NO
+		            AND T2.SO_SQ = T5.SL_ORD_SEQ
+		            AND T5.CHNL_CD = #CHNL_CD#
+		        )
+		    , TB_CD_CO           T3
+		  WHERE 1 = 1
+		      AND T4.ITM_GRP_CLSS_CD = 'G'
+		      AND T1.CO_CD      = T2.CO_CD
+		      AND T1.SO_NB      = T2.SO_NB
+		      AND T1.TR_CD      = T3.CO_NO
+		      AND T3.CHNL_CD    = #CHNL_CD#
+		  <isNotNull property="SL_ORD_NO">
+			  AND T2.SO_NB      = #SL_ORD_NO#
+		  </isNotNull>
+		  <isNotNull property="FM_DT">
+			  AND T1.SO_DT      >= #FM_DT#
+		  </isNotNull>
+		  <isNotNull property="TO_DT">
+			  AND T1.SO_DT      <![CDATA[<=]]> #TO_DT#
+		  </isNotNull>
+		  <isNotNull property="CLZ_FLG">
+			  AND ISNULL(T5.CLZ_FLG, 'N' ) = #CLZ_FLG#
+		  </isNotNull>
+	  </select>
+
+	  <statement id="ProcP441101" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="int">
+		  declare @RTN VARCHAR(MAX)
+		  exec @RTN = sp_purRequireCalc #CHNL_CD#, 'B', #SL_ORD_NO#, #SL_ORD_SEQ#, #UPD_USR_ID#
+		  select @RTN AS R_value
+	  </statement>
+
+	  <select id="P441101SelectDtlList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-001', T3.ITM_GRP_CLSS_CD) AS ITM_GRP_CLSS_NM
+             , T3.ITM_CD
+             , T3.ITM_NM
+             , T3.ITM_SZ_NM
+             , T3.UOM_CD
+             , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-003', T3.UOM_CD) AS UOM_NM
+             , (#SL_ITM_QTY# * T2.WEIH_VAL) AS SL_ITM_QTY
+             , dbo.FF_ITM_STK_QTY(#CHNL_CD#, '001', T3.ITM_CD, GETDATE())  AS STK_QTY 
+			 , T2.MGR_ITM_QTY
+             , T2.PRE_OCPY_QTY
+             , ((#SL_ITM_QTY# * T2.WEIH_VAL) + T2.MGR_ITM_QTY -  T2.PRE_OCPY_QTY ) AS ITM_USE_QTY
+			 , ((#SL_ITM_QTY# * T2.WEIH_VAL) + T2.MGR_ITM_QTY -  T2.PRE_OCPY_QTY ) AS REQ_ORD_QTY
+			 <!--
+			 , (#SL_ITM_QTY# - T2.PRE_OCPY_QTY ) AS ITM_USE_QTY
+			 , T2.REQ_ORD_QTY AS  REQ_ORD_QTY
+			 -->
+             , T2.CO_CD
+             , dbo.CD_COMPANY_NM_FNC(#CHNL_CD#, T2.CO_CD)  AS CO_NM    
+             , T2.UN_FOL_NO
+             , T2.MRP_SEQ
+			 , T1.CHNL_CD
+			 , #UPD_USR_ID# AS UPD_USR_ID
+          FROM TB_PUR_MRP       T1
+             , TB_PUR_MRP_DTL   T2
+             , TB_CD_ITM        T3
+         WHERE 1 = 1
+           AND T1.CHNL_CD   = T2.CHNL_CD
+           AND T1.UN_FOL_NO = T2.UN_FOL_NO
+           AND T2.ITM_CD    = T3.ITM_CD
+           AND T1.CHNL_CD   = T3.CHNL_CD
+           AND T1.CHNL_CD   = #CHNL_CD#
+		   AND T1.UN_FOL_NO = #UN_FOL_NO#
+           AND T3.ITM_GRP_CLSS_CD = 'B'
+	  </select>
+
+	  <update id="P441101UpdateDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+		  UPDATE TB_PUR_MRP_DTL
+		  SET
+		       UPD_USR_ID      = #UPD_USR_ID#
+		     , UPD_DT          = GETDATE()
+		<isNotNull property="ITM_PRC">
+			 , ITM_PRC			= #ITM_PRC#
+	    </isNotNull>
+		<isNotNull property="PRE_OCPY_QTY">
+		      , PRE_OCPY_QTY    = #PRE_OCPY_QTY#
+	    </isNotNull>
+		<isNotNull property="REQ_ORD_QTY">
+			  , REQ_ORD_QTY     = #REQ_ORD_QTY#
+		</isNotNull>
+		<isNotNull property="MGR_ITM_QTY">
+			  , MGR_ITM_QTY     = #MGR_ITM_QTY#
+		</isNotNull>
+		<isNotNull property="CO_CD">
+			  , CO_CD           = #CO_CD#
+		</isNotNull>
+		  WHERE 1 = 1
+		      AND CHNL_CD     = #CHNL_CD#
+		      AND UN_FOL_NO   = #UN_FOL_NO#
+		      AND MRP_SEQ     = #MRP_SEQ#
+	  </update>
+
+	  <insert id="P441101InsertMemo" parameterClass="ModelsLibrary.Pur.PurVo">
+		  INSERT INTO TB_PUR_MRP_MEMO
+		  (
+				CHNL_CD
+			  , SL_ORD_NO
+			  , SL_ORD_SEQ
+			  , CO_CD
+			  , SL_RMK
+			  , CRE_USR_ID
+			  , CRE_DT
+			  , UPD_USR_ID
+			  , UPD_DT
+		  )
+		  VALUES
+		  (
+				#CHNL_CD#
+			  , #SL_ORD_NO#
+			  , #SL_ORD_SEQ#
+			  , #CO_NO#
+			  , #PUR_ITM_RMK#
+			  , #CRE_USR_ID#
+			  , GETDATE()
+			  , #UPD_USR_ID#
+			  , GETDATE()
+		  )
+	  </insert>
+
+	  <delete id="P441101DeleteMemo" parameterClass="ModelsLibrary.Pur.PurVo">
+		  DELETE TB_PUR_MRP_MEMO
+			WHERE 1 = 1
+			  AND CHNL_CD     = #CHNL_CD#
+			  AND SL_ORD_NO   = #SL_ORD_NO#
+			  AND SL_ORD_SEQ  = #SL_ORD_SEQ#
+		  <isNotNull property="CO_NO">
+			  AND CO_CD       = #CO_NO#
+		  </isNotNull>
+	  </delete>
+
+	  
+	  <!-- 소요량 취합 -->
+	   <select id="P441101SelectMargeList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		   SELECT
+				 T5.ITM_GRP_CLSS_NM
+			   , T5.ITM_CD
+			   , T5.ITM_NM
+			   , T5.ITM_SZ_NM
+			   , T5.UOM_CD
+			   , T5.UOM_NM
+			   , SUM(T5.SL_ITM_QTY)		AS SL_ITM_QTY
+			   , T5.STK_QTY
+			   , SUM(T5.MGR_ITM_QTY)	AS MGR_ITM_QTY
+			   , SUM(T5.PRE_OCPY_QTY)	AS PRE_OCPY_QTY
+			   , SUM(T5.ITM_USE_QTY)	AS ITM_USE_QTY
+			   , SUM(T5.REQ_ORD_QTY)	AS REQ_ORD_QTY
+			   , T5.CO_CD
+			   , T5.CO_NM
+			   , T5.UN_FOL_NO			AS UN_FOL_NO
+			   , T5.MRP_SEQ				AS MRP_SEQ
+			   , T5.CHNL_CD
+			   , T5.UPD_USR_ID
+			   , T5.ORD_ITM_CD			AS PUR_ITM_CD
+			   , dbo.CD_ITEM_NM_FNC(T5.CHNL_CD, T5.ORD_ITM_CD) AS PUR_ITM_NM
+			   , T5.SL_ORD_NO
+			   , T5.SL_ORD_SEQ
+			   , dbo.FF_CO_UR_PRC(T5.CHNL_CD , T5.CO_CD, T5.ITM_CD, GETDATE()) AS CO_UT_PRC
+		   FROM
+		   (
+			   SELECT dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-001', T3.ITM_GRP_CLSS_CD) AS ITM_GRP_CLSS_NM
+				   , T3.ITM_CD
+				   , T3.ITM_NM
+				   , T3.ITM_SZ_NM
+				   , T3.UOM_CD
+				   , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-003', T3.UOM_CD) AS UOM_NM
+				   , MGR_ITM_QTY AS SL_ITM_QTY
+				   , dbo.FF_ITM_STK_QTY(T1.CHNL_CD, '001', T3.ITM_CD, GETDATE())  AS STK_QTY
+				   , T2.MGR_ITM_QTY
+				   , T2.PRE_OCPY_QTY
+				   , REQ_ORD_QTY AS ITM_USE_QTY
+				   , REQ_ORD_QTY AS REQ_ORD_QTY
+				   , T2.CO_CD
+				   , dbo.CD_COMPANY_NM_FNC(T1.CHNL_CD, T2.CO_CD)  AS CO_NM
+				   , T2.UN_FOL_NO AS UN_FOL_NO
+				   , T2.MRP_SEQ
+				   , T1.CHNL_CD
+				   , #UPD_USR_ID# AS UPD_USR_ID
+				   , T1.ORD_ITM_CD
+				   , T1.SL_ORD_NO
+				   , T1.SL_ORD_SEQ
+			   FROM TB_PUR_MRP       T1
+				   , TB_PUR_MRP_DTL   T2
+				   , TB_CD_ITM        T3
+			   WHERE 1 = 1
+				   AND T1.CHNL_CD   = T2.CHNL_CD
+				   AND T1.UN_FOL_NO = T2.UN_FOL_NO
+				   AND T2.ITM_CD    = T3.ITM_CD
+				   AND T1.CHNL_CD   = T3.CHNL_CD
+				   AND T1.CHNL_CD   = #CHNL_CD#
+				    <isNotNull property="A_UN_FOL_NO">
+					  <iterate property="A_UN_FOL_NO" prepend=" AND T1.UN_FOL_NO IN " open = "(" close=")" conjunction=",">
+						  #A_UN_FOL_NO[]#
+					  </iterate>
+					</isNotNull>
+				   AND T3.ITM_GRP_CLSS_CD = 'B'
+		   ) AS T5
+		   WHERE 1=1
+			   GROUP BY ITM_GRP_CLSS_NM
+				   , ITM_CD
+				   , ITM_NM
+				   , ITM_SZ_NM
+				   , UOM_CD
+				   , UOM_NM
+				   , STK_QTY
+				   , UN_FOL_NO
+				   , MRP_SEQ
+				   , CO_CD
+				   , CO_NM
+				   , CHNL_CD
+				   , UPD_USR_ID
+				   , ORD_ITM_CD
+				   , SL_ORD_NO
+			       , SL_ORD_SEQ
+	   </select>
+	  
+
+	  
+	  <!-- Bulk 역전개-->
+	    <select id="P441105SelectMstList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+			SELECT
+				  ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.ASSY_CD) AS RN  
+				, T2.ITM_GRP_CLSS_CD
+				, dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-001', T2.ITM_GRP_CLSS_CD) AS ITM_GRP_CLSS_NM   
+				, T1.ASSY_CD AS ITM_CD
+				, T2.ITM_NM 
+				, T2.ITM_SZ_NM 
+				, dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-003', T2.UOM_CD) AS UOM_NM
+				, T1.INP_QTY  
+				, T1.LOSS_RT  AS IN_PRC  
+				, T1.INP_QTY+(T1.INP_QTY * (T1.LOSS_RT * 0.01) ) AS PUR_QTY 
+				, T3.CO_NO
+				, dbo.CD_COMPANY_NM_FNC(T3.CHNL_CD,T3.CO_NO ) AS CO_NM 
+			FROM  TB_PROD_BOM T1 LEFT OUTER JOIN TB_CD_CO_UT_PRC AS T3 ON (T1.ASSY_CD = T3.ITM_CD  AND T1.CHNL_CD = T3.CHNL_CD)
+				, TB_CD_ITM T2      
+			WHERE 1 = 1
+				AND T1.CHNL_CD = T2.CHNL_CD
+				AND T1.CHNL_CD = #CHNL_CD#
+				AND T1.ASSY_CD = T2.ITM_CD 
+				AND T1.CMPO_CD = #ITM_CD#
+			UNION ALL
+			SELECT
+				  ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.ASSY_ITM_CD) AS RN  
+				, T2.ITM_GRP_CLSS_CD
+				, dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-001', T2.ITM_GRP_CLSS_CD) AS ITM_GRP_CLSS_NM  
+				, T1.ASSY_ITM_CD   AS ITM_CD
+				, T2.ITM_NM      
+				, T2.ITM_SZ_NM 
+				, dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-003', T2.UOM_CD) AS UOM_NM 
+				, T1.WEIH_VAL  
+				, T1.LOSS_RT AS LOSS_RT  
+				, T1.WEIH_VAL + (T1.WEIH_VAL * (T1.LOSS_RT * 0.01) ) AS REQ_QTY 
+				, T2.PROD_LOC_CD  
+				, (dbo.FF_ITM_LOC_NM(T1.CHNL_CD, '001', T2.ITM_CD))  AS PROD_LOC_NM 
+			FROM  TB_PROD_WEIH_TBL T1   
+				, TB_CD_ITM T2    
+			WHERE 1 = 1
+				AND T1.CHNL_CD = T2.CHNL_CD
+				AND T1.CHNL_CD = #CHNL_CD#
+				AND T1.ASSY_ITM_CD = T2.ITM_CD  
+				AND T1.CMPO_CD =  #ITM_CD#
+				AND T2.ITM_GRP_CLSS_CD = 'W'
+		</select>
+	  
+	  
+
+  </statements>
+</sqlMap>

@@ -1,0 +1,77 @@
+﻿<dx:DXWindow 
+        x:Class="AquilaErpWpfApp3.View.S.Dialog.S1148MasterDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AquilaErpWpfApp3.View.S.Dialog"
+        mc:Ignorable="d"
+        Title="Master Code" Height="500" Width="400" FontFamily="Arial" WindowStartupLocation="CenterOwner" ShowIcon="True" ResizeMode="NoResize" FontSize="13" Icon="{dx:DXImage Image=AddItem_16x16.png}">
+    <Grid Margin="0,10" x:Name="configCode">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1.5*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="도면업체코드 : " FontSize="13" TextAlignment="Right" Margin="0,12,5,0"/>
+        <dxe:TextEdit Grid.Column="1" Grid.Row="0" Margin="5,6,30,6" MaxLength="10" Text="{Binding SHP_CO_CD}" x:Name="text_SHP_CO" />
+
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="도면업체 : " FontSize="13" TextAlignment="Right" Margin="0,12,5,0"/>
+        <dxe:TextEdit Grid.Column="1" Grid.Row="1" Margin="5,6,30,6" MaxLength="10" Text="{Binding SHP_CLSS_COL_NM}" x:Name="text_SHP_CLSS"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="부호 : " FontSize="13" TextAlignment="Right" Margin="0,12,5,0"/>
+        <dxe:TextEdit Grid.Column="1" Grid.Row="2" Margin="5,6,30,6" MaxLength="10" Text="{Binding SHP_SEQ}" x:Name="text_SHP_SEQ"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="3" Text="형번 : " FontSize="13" TextAlignment="Right" Margin="0,12,5,0"/>
+        <dxe:TextEdit Grid.Column="1" Grid.Row="3" Margin="5,6,30,6" MaxLength="10" Text="{Binding SHP_NO}" x:Name="text_SHP_NO"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="4" Text="철근형상 : " FontSize="13" TextAlignment="Right" Margin="0,12,5,0"/>
+        <dxe:TextEdit Grid.Column="1" Grid.Row="4" Margin="5,6,30,6" MaxLength="10" Text="{Binding SHP_TP_IMG}" x:Name="text_SHP_TP_IMG"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="5" Text="철근규격 : " FontSize="13" TextAlignment="Right" Margin="0,12,5,0"/>
+        <dxe:TextEdit Grid.Column="1" Grid.Row="5" Margin="5,6,30,6" MaxLength="10" Text="{Binding SHP_SZ}" x:Name="text_SHP_SZ"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="6" Text="길이 : " FontSize="13" TextAlignment="Right" Margin="0,12,5,0"/>
+        <dxe:TextEdit Grid.Column="1" Grid.Row="6" Margin="5,6,30,6" MaxLength="10" Text="{Binding SHP_ITM_SZ}" x:Name="text_SHP_ITM_SZ"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="7" Text="수량 : " FontSize="13" TextAlignment="Right" Margin="0,12,5,0"/>
+        <dxe:TextEdit Grid.Column="1" Grid.Row="7" Margin="5,6,30,6" MaxLength="10" Text="{Binding SHP_ITM_QTY}" x:Name="text_SHP_ITM_QTY"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="8" Text="총길이 : " FontSize="13" TextAlignment="Right" Margin="0,12,5,0"/>
+        <dxe:TextEdit Grid.Column="1" Grid.Row="8" Margin="5,6,30,6" MaxLength="10" Text="{Binding SHP_ITM_LEN}" x:Name="text_SHP_ITM_LEN"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="9" Text="중량 : " FontSize="13" TextAlignment="Right" Margin="0,12,5,0"/>
+        <dxe:TextEdit Grid.Column="1" Grid.Row="9" Margin="5,6,30,6" MaxLength="10" Text="{Binding SHP_ITM_WGT}" x:Name="text_SHP_ITM_WGT" />
+
+
+        <Button x:Name="OKButton" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="10" Height="30" Width="90" HorizontalAlignment="Right" Margin="0,0,140,0">
+            <StackPanel HorizontalAlignment="Left" Width="62" Height="Auto" Orientation="Horizontal">
+                <Image Width="20" Height="20" Source="{dx:DXImage Image=Apply_16x16.png}" Stretch="Fill"/>
+                <TextBlock Margin="5,0,50,0" VerticalAlignment="Center" FontSize="18" Text="확인" TextWrapping="Wrap" Width="40"/>
+            </StackPanel>
+        </Button>
+
+        <Button x:Name="CancelButton" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="10" Height="30" Width="90" HorizontalAlignment="Right" Margin="0,0,30,0">
+            <StackPanel HorizontalAlignment="Left" Width="62" Height="Auto" Orientation="Horizontal">
+                <Image Width="20" Height="20" Source="{dx:DXImage Image=Cancel_16x16.png}" Stretch="Fill"/>
+                <TextBlock Margin="5,0,50,0" VerticalAlignment="Center" FontSize="18" Text="취소" TextWrapping="Wrap" Width="40"/>
+            </StackPanel>
+        </Button>
+
+    </Grid>
+</dx:DXWindow>

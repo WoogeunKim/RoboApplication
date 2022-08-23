@@ -1,0 +1,49 @@
+﻿<dx:DXWindow
+    x:Class="AquilaErpWpfApp3.View.SAL.Dialog.S22313ExcelDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxsps="http://schemas.devexpress.com/winfx/2008/xaml/spreadsheet"
+    xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="F/PROOF" Height="620" Width="1380" ShowIcon="False" ShowTitle="False"  ResizeMode="CanResize" WindowState="Maximized" FontSize="13" FontFamily="Arial"
+    WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen" Icon="{dx:DXImageGrayscale Image=ExportToXLS_16x16.png}"
+    >
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="3"/>
+        </Grid.RowDefinitions>
+
+
+        <dxsps:SpreadsheetControl Grid.Column="1" Grid.Row="1" x:Name="spreadsheetControl" />
+
+
+        <dxwui:AppBar Grid.Column="1" Grid.Row="2" IsOpen="True" IsCompact="False" HideMode="Manual"  IsSticky="True" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" >
+
+            <dxwui:AppBarButton Label="HomeTax" HorizontalAlignment="Left" AllowGlyphTheming="True" x:Name="btn_link" >
+                <Image Stretch="Fill" Width="25" Height="25" Source="{dx:DXImageGrayscale Image=Show_32x32.png}"/>
+            </dxwui:AppBarButton>
+
+
+            <dxwui:AppBarButton Label="저장" HorizontalAlignment="Center" AllowGlyphTheming="True" x:Name="btn_save" >
+                <Image Stretch="Fill" Width="25" Height="25" Source="{dx:DXImageGrayscale Image=OpenFile_32x32.png}"/>
+            </dxwui:AppBarButton>
+
+
+            <dxwui:AppBarSeparator HorizontalContentAlignment="Center" HorizontalAlignment="Center" />
+
+
+            <dxwui:AppBarButton Label="닫기" HorizontalAlignment="Center" AllowGlyphTheming="True" x:Name="btn_close" >
+                <Image Stretch="Fill" Width="25" Height="25" Source="{dx:DXImageGrayscale Image=Delete_32x32.png}"/>
+            </dxwui:AppBarButton>
+        </dxwui:AppBar>
+    </Grid>
+</dx:DXWindow>

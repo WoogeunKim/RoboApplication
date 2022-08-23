@@ -1,0 +1,76 @@
+﻿<dx:DXWindow
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+      xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+      xmlns:dxd="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+      xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+      x:Class="AquilaErpWpfApp3.Util.MailWriteDialog"
+      Title="Mail Write" Height="640" Width="1024" FontFamily="Arial" WindowStartupLocation="CenterOwner" ShowIcon="True" ResizeMode="NoResize" FontSize="12" Icon="{dx:DXImage Image=Employee_16x16.png}">
+    <Grid>
+        <dxd:DockLayoutManager>
+            <dxd:LayoutGroup>
+                <dxd:LayoutPanel Caption="Master" AllowContextMenu="False" AllowClose="False" ShowCaption="False" ItemWidth="1.5*">
+                    <dxg:GridControl x:Name="SendUsrSelectList" ShowBorder="False" Margin="1" SelectionMode="MultipleRow"  AutoExpandAllGroups="True">
+                        <dxg:GridControl.View>
+                            <dxg:TableView x:Name="view" FontSize="13" ShowFixedTotalSummary="True" ShowGroupPanel="True" AutoWidth="True" ShowCheckBoxSelectorColumn="True" CheckBoxSelectorColumnWidth="30" />
+                        </dxg:GridControl.View>
+                        <dxg:GridControl.Columns>
+                            <dxg:GridColumn FieldName="USR_ID" Header="유저ID" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" AllowNullInput="False" />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+
+                            <dxg:GridColumn FieldName="USR_N1ST_NM" Header="이름" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AllowNullInput="False" />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+
+                            <dxg:GridColumn FieldName="OFC_PSN_NM" Header="직책" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AllowNullInput="False" />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="CELL_PHN_NO" Header="전화번호" Width="160" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AllowNullInput="False" />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="GRP_NM" Header="부서" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" GroupIndex="1">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AllowNullInput="False" />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <!--<dxg:GridColumn FieldName="GRP_NM" Header="부서" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" >
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" AllowNullInput="False" />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>-->
+                        </dxg:GridControl.Columns>
+                        <dxg:GridControl.TotalSummary>
+                            <dxg:GridSummaryItem SummaryType="Count" Alignment="Right"/>
+                        </dxg:GridControl.TotalSummary>
+                    </dxg:GridControl>
+                </dxd:LayoutPanel>
+                <dxd:LayoutPanel Caption="메시지 창"  ShowCaption="True"  AllowContextMenu="False" AllowClose="False" ItemWidth="1*" Background="Gray" ShowPinButton="False">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <dxe:TextEdit Grid.Row="0" Margin="5" FontSize="15" x:Name="text_TIT_MSG" MaxLength="39" VerticalContentAlignment="Top" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible"  />
+                        <Button x:Name="SendButton" Grid.Row="1" Height="100" Content="보내기" FontSize="20"/>
+                    </Grid>
+                </dxd:LayoutPanel>
+            </dxd:LayoutGroup>
+        </dxd:DockLayoutManager>
+    </Grid>
+
+
+
+
+</dx:DXWindow>

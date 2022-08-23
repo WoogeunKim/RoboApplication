@@ -1,0 +1,3254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{73D858D7-92C9-4280-8563-A2052DD8FDD7}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>AquilaErpWpfApp3</RootNamespace>
+    <AssemblyName>AquilaErpWpfApp3</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <PublishUrl>D:\WebService\git\_TempExe\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://210.217.42.139:8888/AquilaERP/</InstallUrl>
+    <UpdateUrl>http://210.217.42.139:8888/AquilaERP/</UpdateUrl>
+    <TargetCulture>ko-KR</TargetCulture>
+    <ProductName>Aquila ERP</ProductName>
+    <PublisherName>Industry Expert Group</PublisherName>
+    <SuiteName>생산관리시스템</SuiteName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>index.html</WebPage>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <TrustUrlParameters>true</TrustUrlParameters>
+    <ApplicationRevision>178</ApplicationRevision>
+    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>53E38B65185043C17F8C7B4CD2A750796D77146E</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>iegkr_com_chain.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>AquilaErpWpfApp3.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Charts.v19.2.Core, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.DataAccess.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Docs.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Images.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Mvvm.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Office.v19.2.Core, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Pdf.v19.2.Core, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.PivotGrid.v19.2.Core, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v19.2.Core, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.RichEdit.v19.2.Export, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Sparkline.v19.2.Core, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Spreadsheet.v19.2.Core, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Charts.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Controls.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Core.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Dialogs.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Docking.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.DocumentViewer.v19.2.Core, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Gantt.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Grid.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Grid.v19.2.Core, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Layout.v19.2.Core, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.LayoutControl.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.PivotGrid.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Printing.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Ribbon.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.RichEdit.v19.2.Core, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.RichEdit.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Spreadsheet.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Themes.Office2016ColorfulSE.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Themes.Office2016DarkGraySE.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpo.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraCharts.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.CodeParser.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGauges.v19.2.Core, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v19.2, Version=19.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="Linkhub, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\Linkhub.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Neodynamic.SDK.ThermalLabel">
+      <HintPath>C:\Users\Administrator\Desktop\삭제\Neodynamic.SDK.ThermalLabel.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Popbill, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\Popbill.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Deployment">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Printing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Util\BarPrint.cs" />
+    <Compile Include="Util\Enumerations.cs" />
+    <Compile Include="Util\Hangul.cs" />
+    <Compile Include="Util\IEG_InfoView.xaml.cs">
+      <DependentUpon>IEG_InfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Util\InfoViewModel.cs" />
+    <Compile Include="Util\KeyPadDialog.xaml.cs">
+      <DependentUpon>KeyPadDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Util\LabelDao.cs" />
+    <Compile Include="Util\LoginDialog.xaml.cs">
+      <DependentUpon>LoginDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Util\NumberPadDialog.xaml.cs">
+      <DependentUpon>NumberPadDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Util\ProgressWindow.xaml.cs">
+      <DependentUpon>ProgressWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Util\MailDialog.xaml.cs">
+      <DependentUpon>MailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Util\MailWriteDialog.xaml.cs">
+      <DependentUpon>MailWriteDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Util\SplashScreenView.xaml.cs">
+      <DependentUpon>SplashScreenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Util\SystemProperties.cs" />
+    <Compile Include="ViewModel\I55221ViewModel.cs" />
+    <Compile Include="ViewModel\I66130ViewModel.cs" />
+    <Compile Include="ViewModel\I66110ViewModel.cs" />
+    <Compile Include="ViewModel\I6611ViewModel.cs" />
+    <Compile Include="ViewModel\I6618ViewModel.cs" />
+    <Compile Include="ViewModel\I66201ViewModel.cs" />
+    <Compile Include="ViewModel\I66210ViewModel.cs" />
+    <Compile Include="ViewModel\I66230ViewModel.cs" />
+    <Compile Include="ViewModel\M6521ViewModel.cs" />
+    <Compile Include="ViewModel\M6511ViewModel.cs" />
+    <Compile Include="ViewModel\M6500ViewModel.cs" />
+    <Compile Include="ViewModel\M7711ViewModel.cs" />
+    <Compile Include="ViewModel\M6641ViewModel.cs" />
+    <Compile Include="ViewModel\M66521ViewModel.cs" />
+    <Compile Include="ViewModel\M66531ViewModel.cs" />
+    <Compile Include="ViewModel\P4412ViewModel.cs" />
+    <Compile Include="ViewModel\P4423ViewModel.cs" />
+    <Compile Include="ViewModel\S11472ViewModel.cs" />
+    <Compile Include="ViewModel\S11479ViewModel.cs" />
+    <Compile Include="ViewModel\S1148ViewModel.cs" />
+    <Compile Include="ViewModel\S1431ViewModel.cs" />
+    <Compile Include="ViewModel\S221111ViewModel.cs" />
+    <Compile Include="ViewModel\S22111ViewModel.cs" />
+    <Compile Include="ViewModel\S2218ViewModel.cs" />
+    <Compile Include="ViewModel\M6638ViewModel.cs" />
+    <Compile Include="ViewModel\S22226ViewModel.cs" />
+    <Compile Include="ViewModel\S2257ViewModel.cs" />
+    <Compile Include="ViewModel\S22225ViewModel.cs" />
+    <Compile Include="ViewModel\T6325ViewModel.cs" />
+    <Compile Include="ViewModel\M6111ViewModel.cs" />
+    <Compile Include="ViewModel\T8825ViewModel.cs" />
+    <Compile Include="View\INV\Dialog\I66110DetailOthDialog.xaml.cs">
+      <DependentUpon>I66110DetailOthDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Dialog\I66110DetailPurDialog.xaml.cs">
+      <DependentUpon>I66110DetailPurDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Dialog\I6611DetailPurDialog.xaml.cs">
+      <DependentUpon>I6611DetailPurDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Dialog\I66210DetailOutDialog.xaml.cs">
+      <DependentUpon>I66210DetailOutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I55221.xaml.cs">
+      <DependentUpon>I55221.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I66130.xaml.cs">
+      <DependentUpon>I66130.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I66110.xaml.cs">
+      <DependentUpon>I66110.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I6611.xaml.cs">
+      <DependentUpon>I6611.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I66201.xaml.cs">
+      <DependentUpon>I66201.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I66210.xaml.cs">
+      <DependentUpon>I66210.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I66230.xaml.cs">
+      <DependentUpon>I66230.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Report\I66110BarCodeReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\INV\Report\I66110BarCodeReport.Designer.cs">
+      <DependentUpon>I66110BarCodeReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6684DocDialog.xaml.cs">
+      <DependentUpon>M6684DocDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\M6684ViewModel.cs" />
+    <Compile Include="ViewModel\M6730ViewModel.cs" />
+    <Compile Include="ViewModel\M6720ViewModel.cs" />
+    <Compile Include="ViewModel\M6710ViewModel.cs" />
+    <Compile Include="ViewModel\M66560ViewModel.cs" />
+    <Compile Include="ViewModel\I5511ViewModel.cs" />
+    <Compile Include="ViewModel\I5512ViewModel.cs" />
+    <Compile Include="ViewModel\I5521ViewModel.cs" />
+    <Compile Include="ViewModel\I5522ViewModel.cs" />
+    <Compile Include="ViewModel\I6210ViewModel.cs" />
+    <Compile Include="ViewModel\M6630ViewModel.cs" />
+    <Compile Include="ViewModel\M6633ViewModel.cs" />
+    <Compile Include="ViewModel\P441105ViewModel.cs" />
+    <Compile Include="ViewModel\M5210ViewModel.cs" />
+    <Compile Include="ViewModel\S2215ViewModel.cs" />
+    <Compile Include="ViewModel\S2232ViewModel.cs" />
+    <Compile Include="ViewModel\S2230ViewModel.cs" />
+    <Compile Include="ViewModel\S7711ViewModel.cs" />
+    <Compile Include="ViewModel\S7712ViewModel.cs" />
+    <Compile Include="ViewModel\S1414ViewModel.cs" />
+    <Compile Include="ViewModel\S22223ViewModel.cs" />
+    <Compile Include="ViewModel\S3311ViewModel.cs" />
+    <Compile Include="ViewModel\S3321ViewModel.cs" />
+    <Compile Include="ViewModel\P441106ViewModel.cs" />
+    <Compile Include="ViewModel\S1146ViewModel.cs" />
+    <Compile Include="ViewModel\S14130ViewModel.cs" />
+    <Compile Include="ViewModel\S1413ViewModel.cs" />
+    <Compile Include="ViewModel\S2240ViewModel.cs" />
+    <Compile Include="ViewModel\S22213ViewModel.cs" />
+    <Compile Include="ViewModel\T6311ViewModel.cs" />
+    <Compile Include="ViewModel\T91101ViewModel.cs" />
+    <Compile Include="ViewModel\T91104ViewModel.cs" />
+    <Compile Include="ViewModel\T91103ViewModel.cs" />
+    <Compile Include="ViewModel\T91100ViewModel.cs" />
+    <Compile Include="ViewModel\T8815ViewModel.cs" />
+    <Compile Include="ViewModel\T8814ViewModel.cs" />
+    <Compile Include="ViewModel\T8813ViewModel.cs" />
+    <Compile Include="ViewModel\T8812ViewModel.cs" />
+    <Compile Include="ViewModel\I6610ViewModel.cs" />
+    <Compile Include="ViewModel\I55121ViewModel.cs" />
+    <Compile Include="ViewModel\I6613ViewModel.cs" />
+    <Compile Include="ViewModel\I6614ViewModel.cs" />
+    <Compile Include="ViewModel\I6616ViewModel.cs" />
+    <Compile Include="ViewModel\I6617ViewModel.cs" />
+    <Compile Include="ViewModel\I6620ViewModel.cs" />
+    <Compile Include="ViewModel\M66550ViewModel.cs" />
+    <Compile Include="ViewModel\M665101ViewModel.cs" />
+    <Compile Include="ViewModel\M665110ViewModel.cs" />
+    <Compile Include="ViewModel\M66111ViewModel.cs" />
+    <Compile Include="ViewModel\M66214ViewModel.cs" />
+    <Compile Include="ViewModel\M66213ViewModel.cs" />
+    <Compile Include="ViewModel\M66321ViewModel.cs" />
+    <Compile Include="ViewModel\M6637ViewModel.cs" />
+    <Compile Include="ViewModel\M66540ViewModel.cs" />
+    <Compile Include="ViewModel\M66530ViewModel.cs" />
+    <Compile Include="ViewModel\M66520ViewModel.cs" />
+    <Compile Include="ViewModel\M663300ViewModel.cs" />
+    <Compile Include="ViewModel\M663104ViewModel.cs" />
+    <Compile Include="ViewModel\M6631ViewModel.cs" />
+    <Compile Include="ViewModel\M6632ViewModel.cs" />
+    <Compile Include="ViewModel\M66412ViewModel.cs" />
+    <Compile Include="ViewModel\M66410ViewModel.cs" />
+    <Compile Include="ViewModel\M6647ViewModel.cs" />
+    <Compile Include="ViewModel\M6649ViewModel.cs" />
+    <Compile Include="ViewModel\M6646ViewModel.cs" />
+    <Compile Include="ViewModel\M66212ViewModel.cs" />
+    <Compile Include="ViewModel\M66211ViewModel.cs" />
+    <Compile Include="ViewModel\M6629ViewModel.cs" />
+    <Compile Include="ViewModel\M66210ViewModel.cs" />
+    <Compile Include="ViewModel\M6611ViewModel.cs" />
+    <Compile Include="ViewModel\M6622ViewModel.cs" />
+    <Compile Include="ViewModel\M6623ViewModel.cs" />
+    <Compile Include="ViewModel\M6625ViewModel.cs" />
+    <Compile Include="ViewModel\M6626ViewModel.cs" />
+    <Compile Include="ViewModel\M6627ViewModel.cs" />
+    <Compile Include="ViewModel\M6628ViewModel.cs" />
+    <Compile Include="ViewModel\M6661ViewModel.cs" />
+    <Compile Include="ViewModel\M6651ViewModel.cs" />
+    <Compile Include="ViewModel\M6681ViewModel.cs" />
+    <Compile Include="ViewModel\M6682ViewModel.cs" />
+    <Compile Include="ViewModel\M6683ViewModel.cs" />
+    <Compile Include="ViewModel\M6663ViewModel.cs" />
+    <Compile Include="ViewModel\M663100ViewModel.cs" />
+    <Compile Include="ViewModel\M6650ViewModel.cs" />
+    <Compile Include="ViewModel\P441101ViewModel.cs" />
+    <Compile Include="ViewModel\P441100ViewModel.cs" />
+    <Compile Include="ViewModel\P44011ViewModel.cs" />
+    <Compile Include="ViewModel\P414101ViewModel.cs" />
+    <Compile Include="ViewModel\P441103ViewModel.cs" />
+    <Compile Include="ViewModel\P441102ViewModel.cs" />
+    <Compile Include="ViewModel\P4420ViewModel.cs" />
+    <Compile Include="ViewModel\S1412ViewModel.cs" />
+    <Compile Include="ViewModel\S2220ViewModel.cs" />
+    <Compile Include="ViewModel\S21110ViewModel.cs" />
+    <Compile Include="ViewModel\P4401ViewModel.cs" />
+    <Compile Include="ViewModel\P4411ViewModel.cs" />
+    <Compile Include="ViewModel\P4415ViewModel.cs" />
+    <Compile Include="ViewModel\P4422ViewModel.cs" />
+    <Compile Include="ViewModel\P4426ViewModel.cs" />
+    <Compile Include="ViewModel\S11315ViewModel.cs" />
+    <Compile Include="ViewModel\S1144ViewModel.cs" />
+    <Compile Include="ViewModel\S1145ViewModel.cs" />
+    <Compile Include="ViewModel\S1163ViewModel.cs" />
+    <Compile Include="ViewModel\S1162ViewModel.cs" />
+    <Compile Include="ViewModel\S1161ViewModel.cs" />
+    <Compile Include="ViewModel\S1147ViewModel.cs" />
+    <Compile Include="ViewModel\S1310ViewModel.cs" />
+    <Compile Include="ViewModel\S1311ViewModel.cs" />
+    <Compile Include="ViewModel\S131ViewModel.cs" />
+    <Compile Include="ViewModel\S133ViewModel.cs" />
+    <Compile Include="ViewModel\S139ViewModel.cs" />
+    <Compile Include="ViewModel\S1149ViewModel.cs" />
+    <Compile Include="ViewModel\S141ViewModel.cs" />
+    <Compile Include="ViewModel\S143ViewModel.cs" />
+    <Compile Include="ViewModel\S2211ViewModel.cs" />
+    <Compile Include="ViewModel\S22122ViewModel.cs" />
+    <Compile Include="ViewModel\S2216ViewModel.cs" />
+    <Compile Include="ViewModel\S2217ViewModel.cs" />
+    <Compile Include="ViewModel\M66110ViewModel.cs" />
+    <Compile Include="ViewModel\S2221ViewModel.cs" />
+    <Compile Include="ViewModel\M661002ViewModel.cs" />
+    <Compile Include="ViewModel\S2222ViewModel.cs" />
+    <Compile Include="ViewModel\S2225ViewModel.cs" />
+    <Compile Include="ViewModel\S22230ViewModel.cs" />
+    <Compile Include="ViewModel\S2227ViewModel.cs" />
+    <Compile Include="ViewModel\S2228ViewModel.cs" />
+    <Compile Include="ViewModel\S2229ViewModel.cs" />
+    <Compile Include="ViewModel\S22310ViewModel.cs" />
+    <Compile Include="ViewModel\S22313ViewModel.cs" />
+    <Compile Include="ViewModel\S11410ViewModel.cs" />
+    <Compile Include="ViewModel\S2231ViewModel.cs" />
+    <Compile Include="ViewModel\S2238ViewModel.cs" />
+    <Compile Include="ViewModel\S2239ViewModel.cs" />
+    <Compile Include="ViewModel\S2247ViewModel.cs" />
+    <Compile Include="ViewModel\S2281ViewModel.cs" />
+    <Compile Include="ViewModel\S2282ViewModel.cs" />
+    <Compile Include="ViewModel\S2326ViewModel.cs" />
+    <Compile Include="ViewModel\S2212ViewModel.cs" />
+    <Compile Include="ViewModel\S2213ViewModel.cs" />
+    <Compile Include="View\INV\Dialog\I5511DetailImpDialog.xaml.cs">
+      <DependentUpon>I5511DetailImpDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Dialog\I5511DetailEtcDialog.xaml.cs">
+      <DependentUpon>I5511DetailEtcDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Dialog\I5511DetailOutDialog.xaml.cs">
+      <DependentUpon>I5511DetailOutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Dialog\I5511MasterDialog.xaml.cs">
+      <DependentUpon>I5511MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Dialog\I5512DetailEtcDialog.xaml.cs">
+      <DependentUpon>I5512DetailEtcDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Dialog\I5512DetailSampleOutDialog.xaml.cs">
+      <DependentUpon>I5512DetailSampleOutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Dialog\I5512DetailOutDialog.xaml.cs">
+      <DependentUpon>I5512DetailOutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Dialog\I5512BarCodeDialog.xaml.cs">
+      <DependentUpon>I5512BarCodeDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Dialog\I5512MasterDialog.xaml.cs">
+      <DependentUpon>I5512MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Dialog\I5512NextMonthDialog.xaml.cs">
+      <DependentUpon>I5512NextMonthDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Dialog\I5511NextMonthDialog.xaml.cs">
+      <DependentUpon>I5511NextMonthDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Dialog\I6610DetailPurDialog.xaml.cs">
+      <DependentUpon>I6610DetailPurDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I5511.xaml.cs">
+      <DependentUpon>I5511.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I5512.xaml.cs">
+      <DependentUpon>I5512.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I5521.xaml.cs">
+      <DependentUpon>I5521.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I5522.xaml.cs">
+      <DependentUpon>I5522.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I6210.xaml.cs">
+      <DependentUpon>I6210.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I6610.xaml.cs">
+      <DependentUpon>I6610.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I55121.xaml.cs">
+      <DependentUpon>I55121.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I6613.xaml.cs">
+      <DependentUpon>I6613.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I6614.xaml.cs">
+      <DependentUpon>I6614.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I6618.xaml.cs">
+      <DependentUpon>I6618.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I6616.xaml.cs">
+      <DependentUpon>I6616.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I6617.xaml.cs">
+      <DependentUpon>I6617.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\I6620.xaml.cs">
+      <DependentUpon>I6620.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Report\I5521Report.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\INV\Report\I5521Report.Designer.cs">
+      <DependentUpon>I5521Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Report\I6610Report.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\INV\Report\I6610Report.designer.cs">
+      <DependentUpon>I6610Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M5210MasterDialog.xaml.cs">
+      <DependentUpon>M5210MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6511MasterDialog.xaml.cs">
+      <DependentUpon>M6511MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6500MasterDialog.xaml.cs">
+      <DependentUpon>M6500MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6641MasterDialog.xaml.cs">
+      <DependentUpon>M6641MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6710DetailInItmDialog.xaml.cs">
+      <DependentUpon>M6710DetailInItmDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6710DetailBadItmDialog.xaml.cs">
+      <DependentUpon>M6710DetailBadItmDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6710MasterDialog.xaml.cs">
+      <DependentUpon>M6710MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M66213DetailDialog.xaml.cs">
+      <DependentUpon>M66213DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M66213CopyDialog.xaml.cs">
+      <DependentUpon>M66213CopyDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6630MasterDialog.xaml.cs">
+      <DependentUpon>M6630MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6631DetailDialog.xaml.cs">
+      <DependentUpon>M6631DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6632WeighingUserDialog.xaml.cs">
+      <DependentUpon>M6632WeighingUserDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6631Master2Dialog.xaml.cs">
+      <DependentUpon>M6631Master2Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M66550MasterDialog.xaml.cs">
+      <DependentUpon>M66550MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M665101MasterDialog.xaml.cs">
+      <DependentUpon>M665101MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M665100MasterDialog.xaml.cs">
+      <DependentUpon>M665100MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M66214MasterDialog.xaml.cs">
+      <DependentUpon>M66214MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M66213MasterDialog.xaml.cs">
+      <DependentUpon>M66213MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M66212MasterDialog.xaml.cs">
+      <DependentUpon>M66212MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6623DetailDialog.xaml.cs">
+      <DependentUpon>M6623DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6637MasterDialog.xaml.cs">
+      <DependentUpon>M6637MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M663104MasterDialog.xaml.cs">
+      <DependentUpon>M663104MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6631Master1Dialog.xaml.cs">
+      <DependentUpon>M6631Master1Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6632WeighingConfigDialog.xaml.cs">
+      <DependentUpon>M6632WeighingConfigDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6632WeighingConfigTestDialog.xaml.cs">
+      <DependentUpon>M6632WeighingConfigTestDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6632WeighingDialog.xaml.cs">
+      <DependentUpon>M6632WeighingDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6632ProducePrintDialog.xaml.cs">
+      <DependentUpon>M6632ProducePrintDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M66540MasterDialog.xaml.cs">
+      <DependentUpon>M66540MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M66530PrintDialog.xaml.cs">
+      <DependentUpon>M66530PrintDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M66410MasterDialog.xaml.cs">
+      <DependentUpon>M66410MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6647MasterDialog.xaml.cs">
+      <DependentUpon>M6647MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6649MasterDialog.xaml.cs">
+      <DependentUpon>M6649MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6646MasterDialog.xaml.cs">
+      <DependentUpon>M6646MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M66211MasterDialog.xaml.cs">
+      <DependentUpon>M66211MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6611MasterDialog.xaml.cs">
+      <DependentUpon>M6611MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6651ExcelDialog.xaml.cs">
+      <DependentUpon>M6651ExcelDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6627ExcelDialog.xaml.cs">
+      <DependentUpon>M6627ExcelDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6626ExcelDialog.xaml.cs">
+      <DependentUpon>M6626ExcelDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6622ExcelDialog.xaml.cs">
+      <DependentUpon>M6622ExcelDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6622MasterDialog.xaml.cs">
+      <DependentUpon>M6622MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6623MasterDialog.xaml.cs">
+      <DependentUpon>M6623MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6625MasterDialog.xaml.cs">
+      <DependentUpon>M6625MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6626MasterDialog.xaml.cs">
+      <DependentUpon>M6626MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6627MasterDialog.xaml.cs">
+      <DependentUpon>M6627MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6628MasterDialog.xaml.cs">
+      <DependentUpon>M6628MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M66110MasterDialog.xaml.cs">
+      <DependentUpon>M66110MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6629MasterDialog.xaml.cs">
+      <DependentUpon>M6629MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M66530MasterDialog.xaml.cs">
+      <DependentUpon>M66530MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M66520MasterDialog.xaml.cs">
+      <DependentUpon>M66520MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6661MasterDialog.xaml.cs">
+      <DependentUpon>M6661MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6651MasterDialog.xaml.cs">
+      <DependentUpon>M6651MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6710DetailIdleDialog.xaml.cs">
+      <DependentUpon>M6710DetailIdleDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6710DetailBadDialog.xaml.cs">
+      <DependentUpon>M6710DetailBadDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6681WrkDialog.xaml.cs">
+      <DependentUpon>M6681WrkDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6681DwgDialog.xaml.cs">
+      <DependentUpon>M6681DwgDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6682MasterDialog.xaml.cs">
+      <DependentUpon>M6682MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6683MasterDialog.xaml.cs">
+      <DependentUpon>M6683MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6663DetailDialog.xaml.cs">
+      <DependentUpon>M6663DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6663DetailHistoryDialog.xaml.cs">
+      <DependentUpon>M6663DetailHistoryDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6632WeighingPrintDialog.xaml.cs">
+      <DependentUpon>M6632WeighingPrintDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M6521MasterDialog.xaml.cs">
+      <DependentUpon>M6521MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6521.xaml.cs">
+      <DependentUpon>M6521.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6511.xaml.cs">
+      <DependentUpon>M6511.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6500.xaml.cs">
+      <DependentUpon>M6500.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M7711.xaml.cs">
+      <DependentUpon>M7711.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6641.xaml.cs">
+      <DependentUpon>M6641.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66521.xaml.cs">
+      <DependentUpon>M66521.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66531.xaml.cs">
+      <DependentUpon>M66531.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6684.xaml.cs">
+      <DependentUpon>M6684.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6730.xaml.cs">
+      <DependentUpon>M6730.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6720.xaml.cs">
+      <DependentUpon>M6720.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6710.xaml.cs">
+      <DependentUpon>M6710.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66560.xaml.cs">
+      <DependentUpon>M66560.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6630.xaml.cs">
+      <DependentUpon>M6630.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6633.xaml.cs">
+      <DependentUpon>M6633.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66550.xaml.cs">
+      <DependentUpon>M66550.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M665101.xaml.cs">
+      <DependentUpon>M665101.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M665100.xaml.cs">
+      <DependentUpon>M665100.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66111.xaml.cs">
+      <DependentUpon>M66111.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66214.xaml.cs">
+      <DependentUpon>M66214.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66213.xaml.cs">
+      <DependentUpon>M66213.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6631.xaml.cs">
+      <DependentUpon>M6631.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66321.xaml.cs">
+      <DependentUpon>M66321.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6637.xaml.cs">
+      <DependentUpon>M6637.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66540.xaml.cs">
+      <DependentUpon>M66540.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66530.xaml.cs">
+      <DependentUpon>M66530.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66520.xaml.cs">
+      <DependentUpon>M66520.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M663300.xaml.cs">
+      <DependentUpon>M663300.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M663104.xaml.cs">
+      <DependentUpon>M663104.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6632.xaml.cs">
+      <DependentUpon>M6632.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66412.xaml.cs">
+      <DependentUpon>M66412.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66410.xaml.cs">
+      <DependentUpon>M66410.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6647.xaml.cs">
+      <DependentUpon>M6647.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6649.xaml.cs">
+      <DependentUpon>M6649.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6646.xaml.cs">
+      <DependentUpon>M6646.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66212.xaml.cs">
+      <DependentUpon>M66212.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66211.xaml.cs">
+      <DependentUpon>M66211.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6629.xaml.cs">
+      <DependentUpon>M6629.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66210.xaml.cs">
+      <DependentUpon>M66210.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6611.xaml.cs">
+      <DependentUpon>M6611.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6622.xaml.cs">
+      <DependentUpon>M6622.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6623.xaml.cs">
+      <DependentUpon>M6623.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6625.xaml.cs">
+      <DependentUpon>M6625.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6626.xaml.cs">
+      <DependentUpon>M6626.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6627.xaml.cs">
+      <DependentUpon>M6627.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6628.xaml.cs">
+      <DependentUpon>M6628.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6661.xaml.cs">
+      <DependentUpon>M6661.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6682.xaml.cs">
+      <DependentUpon>M6682.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6683.xaml.cs">
+      <DependentUpon>M6683.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6681.xaml.cs">
+      <DependentUpon>M6681.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M663100.xaml.cs">
+      <DependentUpon>M663100.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6650.xaml.cs">
+      <DependentUpon>M6650.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Report\M6628Report.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\M\Report\M6628Report.designer.cs">
+      <DependentUpon>M6628Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6651.xaml.cs">
+      <DependentUpon>M6651.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6663.xaml.cs">
+      <DependentUpon>M6663.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Report\M6633BarCodeReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\M\Report\M6633BarCodeReport.Designer.cs">
+      <DependentUpon>M6633BarCodeReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Report\M66520Report_Bulk.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\M\Report\M66520Report_Bulk.designer.cs">
+      <DependentUpon>M66520Report_Bulk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Report\M66520Report_Items.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\M\Report\M66520Report_Items.designer.cs">
+      <DependentUpon>M66520Report_Items.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Report\M665101Report.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\M\Report\M665101Report.designer.cs">
+      <DependentUpon>M665101Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Report\M66520Report_Work.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\M\Report\M66520Report_Work.designer.cs">
+      <DependentUpon>M66520Report_Work.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M661002.xaml.cs">
+      <DependentUpon>M661002.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M5210.xaml.cs">
+      <DependentUpon>M5210.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6111.xaml.cs">
+      <DependentUpon>M6111.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6638.xaml.cs">
+      <DependentUpon>M6638.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P4401DetailDialog.xaml.cs">
+      <DependentUpon>P4401DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P441100DetailDialog.xaml.cs">
+      <DependentUpon>P441100DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P441100MergeDialog.xaml.cs">
+      <DependentUpon>P441100MergeDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P441101MergeDialog.xaml.cs">
+      <DependentUpon>P441101MergeDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P441101MasterDialog.xaml.cs">
+      <DependentUpon>P441101MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P441102DetailDialog.xaml.cs">
+      <DependentUpon>P441102DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P441103Detail_2Dialog.xaml.cs">
+      <DependentUpon>P441103Detail_2Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P441106DetailDialog.xaml.cs">
+      <DependentUpon>P441106DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P441106MasterDialog.xaml.cs">
+      <DependentUpon>P441106MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P4412Detail_2Dialog.xaml.cs">
+      <DependentUpon>P4412Detail_2Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P4411EmailConfigDialog.xaml.cs">
+      <DependentUpon>P4411EmailConfigDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P4411EmailDialog.xaml.cs">
+      <DependentUpon>P4411EmailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P441103EmailDialog.xaml.cs">
+      <DependentUpon>P441103EmailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P441103EmailConfigDialog.xaml.cs">
+      <DependentUpon>P441103EmailConfigDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P441102EmailDialog.xaml.cs">
+      <DependentUpon>P441102EmailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P441102EmailConfigDialog.xaml.cs">
+      <DependentUpon>P441102EmailConfigDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P441103MasterDialog.xaml.cs">
+      <DependentUpon>P441103MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P441103DetailDialog.xaml.cs">
+      <DependentUpon>P441103DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P4420Detail_3Dialog.xaml.cs">
+      <DependentUpon>P4420Detail_3Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P4420Detail_1Dialog.xaml.cs">
+      <DependentUpon>P4420Detail_1Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P4411Detail_1Dialog.xaml.cs">
+      <DependentUpon>P4411Detail_1Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P4420Detail_2Dialog.xaml.cs">
+      <DependentUpon>P4420Detail_2Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P4411Detail_3Dialog.xaml.cs">
+      <DependentUpon>P4411Detail_3Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P4411Detail_2Dialog.xaml.cs">
+      <DependentUpon>P4411Detail_2Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P414101MasterDialog.xaml.cs">
+      <DependentUpon>P414101MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P441102MasterDialog.xaml.cs">
+      <DependentUpon>P441102MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P441100MasterDialog.xaml.cs">
+      <DependentUpon>P441100MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P4420MasterDialog.xaml.cs">
+      <DependentUpon>P4420MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P4411MasterDialog.xaml.cs">
+      <DependentUpon>P4411MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P4423MasterDialog.xaml.cs">
+      <DependentUpon>P4423MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P4422MasterDialog.xaml.cs">
+      <DependentUpon>P4422MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P4412.xaml.cs">
+      <DependentUpon>P4412.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P441105.xaml.cs">
+      <DependentUpon>P441105.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P4401.xaml.cs">
+      <DependentUpon>P4401.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P414101.xaml.cs">
+      <DependentUpon>P414101.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P441106.xaml.cs">
+      <DependentUpon>P441106.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P4420.xaml.cs">
+      <DependentUpon>P4420.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P441103.xaml.cs">
+      <DependentUpon>P441103.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P441102.xaml.cs">
+      <DependentUpon>P441102.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P441101.xaml.cs">
+      <DependentUpon>P441101.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P441100.xaml.cs">
+      <DependentUpon>P441100.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P4411.xaml.cs">
+      <DependentUpon>P4411.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P44011.xaml.cs">
+      <DependentUpon>P44011.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P4415.xaml.cs">
+      <DependentUpon>P4415.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P4423.xaml.cs">
+      <DependentUpon>P4423.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P4422.xaml.cs">
+      <DependentUpon>P4422.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P4426.xaml.cs">
+      <DependentUpon>P4426.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Report\P4412Report.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\PUR\Report\P4412Report.designer.cs">
+      <DependentUpon>P4412Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Report\P4411Report.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\PUR\Report\P4411Report.designer.cs">
+      <DependentUpon>P4411Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Report\P441102Report.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\PUR\Report\P441102Report.designer.cs">
+      <DependentUpon>P441102Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Report\P441102TagReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\PUR\Report\P441102TagReport.designer.cs">
+      <DependentUpon>P441102TagReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Report\P441103TagReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\PUR\Report\P441103TagReport.designer.cs">
+      <DependentUpon>P441103TagReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Report\P441103Report.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\PUR\Report\P441103Report.designer.cs">
+      <DependentUpon>P441103Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Report\P4411TagReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\PUR\Report\P4411TagReport.Designer.cs">
+      <DependentUpon>P4411TagReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Report\P4411WeekReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\PUR\Report\P4411WeekReport.designer.cs">
+      <DependentUpon>P4411WeekReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S22111AddDialog.xaml.cs">
+      <DependentUpon>S22111AddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S22111DetailDialog.xaml.cs">
+      <DependentUpon>S22111DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S22111MasterDialog.xaml.cs">
+      <DependentUpon>S22111MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S22111NextMonthDialog.xaml.cs">
+      <DependentUpon>S22111NextMonthDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S22226ExcelOutputDialog.xaml.cs">
+      <DependentUpon>S22226ExcelOutputDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S3311MasterDialog.xaml.cs">
+      <DependentUpon>S3311MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S22226ExcelInputDialog.xaml.cs">
+      <DependentUpon>S22226ExcelInputDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S3321ExcelConfigDialog.xaml.cs">
+      <DependentUpon>S3321ExcelConfigDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S3321ExcelDialog.xaml.cs">
+      <DependentUpon>S3321ExcelDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S3321DetailDialog.xaml.cs">
+      <DependentUpon>S3321DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S3321MasterDialog.xaml.cs">
+      <DependentUpon>S3321MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S2220MasterDialog.xaml.cs">
+      <DependentUpon>S2220MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S2211AddDialog.xaml.cs">
+      <DependentUpon>S2211AddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S2211DetailDialog.xaml.cs">
+      <DependentUpon>S2211DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S2211MasterDialog.xaml.cs">
+      <DependentUpon>S2211MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S2211NextMonthDialog.xaml.cs">
+      <DependentUpon>S2211NextMonthDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S2216MasterDialog.xaml.cs">
+      <DependentUpon>S2216MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S2217DetailDialog.xaml.cs">
+      <DependentUpon>S2217DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S2217MasterDialog.xaml.cs">
+      <DependentUpon>S2217MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S2221MasterDialog.xaml.cs">
+      <DependentUpon>S2221MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S2222MasterDialog.xaml.cs">
+      <DependentUpon>S2222MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S2225BillHistoryDialog.xaml.cs">
+      <DependentUpon>S2225BillHistoryDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S2225BillDialog.xaml.cs">
+      <DependentUpon>S2225BillDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S22313BillDialog.xaml.cs">
+      <DependentUpon>S22313BillDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S22313ExcelDialog.xaml.cs">
+      <DependentUpon>S22313ExcelDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S11410MasterDialog.xaml.cs">
+      <DependentUpon>S11410MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Dialog\S2231MasterDialog.xaml.cs">
+      <DependentUpon>S2231MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S221111.xaml.cs">
+      <DependentUpon>S221111.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S22111.xaml.cs">
+      <DependentUpon>S22111.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2215.xaml.cs">
+      <DependentUpon>S2215.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2218.xaml.cs">
+      <DependentUpon>S2218.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S22226.xaml.cs">
+      <DependentUpon>S22226.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2257.xaml.cs">
+      <DependentUpon>S2257.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S22225.xaml.cs">
+      <DependentUpon>S22225.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2232.xaml.cs">
+      <DependentUpon>S2232.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2230.xaml.cs">
+      <DependentUpon>S2230.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S22223.xaml.cs">
+      <DependentUpon>S22223.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S3311.xaml.cs">
+      <DependentUpon>S3311.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S3321.xaml.cs">
+      <DependentUpon>S3321.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Report\S22122Report.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\SAL\Report\S22122Report.designer.cs">
+      <DependentUpon>S22122Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Report\S2212Report.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\SAL\Report\S2212Report.designer.cs">
+      <DependentUpon>S2212Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Report\S2217Report.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\SAL\Report\S2217Report.designer.cs">
+      <DependentUpon>S2217Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2240.xaml.cs">
+      <DependentUpon>S2240.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2220.xaml.cs">
+      <DependentUpon>S2220.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2211.xaml.cs">
+      <DependentUpon>S2211.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S22122.xaml.cs">
+      <DependentUpon>S22122.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2216.xaml.cs">
+      <DependentUpon>S2216.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2217.xaml.cs">
+      <DependentUpon>S2217.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66110.xaml.cs">
+      <DependentUpon>M66110.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S22213.xaml.cs">
+      <DependentUpon>S22213.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2221.xaml.cs">
+      <DependentUpon>S2221.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2222.xaml.cs">
+      <DependentUpon>S2222.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2225.xaml.cs">
+      <DependentUpon>S2225.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S22230.xaml.cs">
+      <DependentUpon>S22230.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2227.xaml.cs">
+      <DependentUpon>S2227.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2228.xaml.cs">
+      <DependentUpon>S2228.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2229.xaml.cs">
+      <DependentUpon>S2229.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S11410.xaml.cs">
+      <DependentUpon>S11410.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2231.xaml.cs">
+      <DependentUpon>S2231.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S22310.xaml.cs">
+      <DependentUpon>S22310.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S22313.xaml.cs">
+      <DependentUpon>S22313.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2238.xaml.cs">
+      <DependentUpon>S2238.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2239.xaml.cs">
+      <DependentUpon>S2239.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2247.xaml.cs">
+      <DependentUpon>S2247.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2281.xaml.cs">
+      <DependentUpon>S2281.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2282.xaml.cs">
+      <DependentUpon>S2282.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2326.xaml.cs">
+      <DependentUpon>S2326.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2212.xaml.cs">
+      <DependentUpon>S2212.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2213.xaml.cs">
+      <DependentUpon>S2213.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S11472MasterDialog.xaml.cs">
+      <DependentUpon>S11472MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S11479DetailDialog.xaml.cs">
+      <DependentUpon>S11479DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S11479MasterDialog.xaml.cs">
+      <DependentUpon>S11479MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1148MasterDialog.xaml.cs">
+      <DependentUpon>S1148MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1414DetailDialog.xaml.cs">
+      <DependentUpon>S1414DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1414MasterDialog.xaml.cs">
+      <DependentUpon>S1414MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1431MasterDialog.xaml.cs">
+      <DependentUpon>S1431MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S143FaxDialog.xaml.cs">
+      <DependentUpon>S143FaxDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S11472.xaml.cs">
+      <DependentUpon>S11472.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S11479.xaml.cs">
+      <DependentUpon>S11479.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S1148.xaml.cs">
+      <DependentUpon>S1148.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S1431.xaml.cs">
+      <DependentUpon>S1431.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S7712.xaml.cs">
+      <DependentUpon>S7712.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S7711.xaml.cs">
+      <DependentUpon>S7711.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S1414.xaml.cs">
+      <DependentUpon>S1414.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S1413.xaml.cs">
+      <DependentUpon>S1413.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1146MasterDialog.xaml.cs">
+      <DependentUpon>S1146MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S14130MasterDialog.xaml.cs">
+      <DependentUpon>S14130MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S141BarPrintDialog.xaml.cs">
+      <DependentUpon>S141BarPrintDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1412MasterDialog.xaml.cs">
+      <DependentUpon>S1412MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S21110DetailDialog.xaml.cs">
+      <DependentUpon>S21110DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1144DetailDialog.xaml.cs">
+      <DependentUpon>S1144DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1144DetailHistoryDialog.xaml.cs">
+      <DependentUpon>S1144DetailHistoryDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1145DetailDialog.xaml.cs">
+      <DependentUpon>S1145DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1145MasterDialog_1.xaml.cs">
+      <DependentUpon>S1145MasterDialog_1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1145MasterDialog_2.xaml.cs">
+      <DependentUpon>S1145MasterDialog_2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1162MasterDialog.xaml.cs">
+      <DependentUpon>S1162MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1161MasterDialog.xaml.cs">
+      <DependentUpon>S1161MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1147MasterDialog.xaml.cs">
+      <DependentUpon>S1147MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1149MasterDialog.xaml.cs">
+      <DependentUpon>S1149MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S143ClassDialog.xaml.cs">
+      <DependentUpon>S143ClassDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S143CustomerDialog.xaml.cs">
+      <DependentUpon>S143CustomerDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S1146.xaml.cs">
+      <DependentUpon>S1146.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S14130.xaml.cs">
+      <DependentUpon>S14130.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S1412.xaml.cs">
+      <DependentUpon>S1412.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S21110.xaml.cs">
+      <DependentUpon>S21110.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S11315.xaml.cs">
+      <DependentUpon>S11315.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S1144.xaml.cs">
+      <DependentUpon>S1144.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S1145.xaml.cs">
+      <DependentUpon>S1145.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S1163.xaml.cs">
+      <DependentUpon>S1163.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S1162.xaml.cs">
+      <DependentUpon>S1162.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S1161.xaml.cs">
+      <DependentUpon>S1161.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S1147.xaml.cs">
+      <DependentUpon>S1147.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S1149.xaml.cs">
+      <DependentUpon>S1149.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S143.xaml.cs">
+      <DependentUpon>S143.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1310MasterDialog.xaml.cs">
+      <DependentUpon>S1310MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S133DetailDialog.xaml.cs">
+      <DependentUpon>S133DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S133MasterDialog.xaml.cs">
+      <DependentUpon>S133MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S136GroupDialog.xaml.cs">
+      <DependentUpon>S136GroupDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S136MenuDialog.xaml.cs">
+      <DependentUpon>S136MenuDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S136UserDialog.xaml.cs">
+      <DependentUpon>S136UserDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S139MenuDialog.xaml.cs">
+      <DependentUpon>S139MenuDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S141MasterDialog.xaml.cs">
+      <DependentUpon>S141MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S1310.xaml.cs">
+      <DependentUpon>S1310.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S1311.xaml.cs">
+      <DependentUpon>S1311.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1311CommentDialog.xaml.cs">
+      <DependentUpon>S1311CommentDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S1311MasterDialog.xaml.cs">
+      <DependentUpon>S1311MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S133.xaml.cs">
+      <DependentUpon>S133.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S136.xaml.cs">
+      <DependentUpon>S136.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S139.xaml.cs">
+      <DependentUpon>S139.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S131DetailDialog.xaml.cs">
+      <DependentUpon>S131DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\Dialog\S131MasterDialog.xaml.cs">
+      <DependentUpon>S131MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S131.xaml.cs">
+      <DependentUpon>S131.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S141.xaml.cs">
+      <DependentUpon>S141.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\Dialog\T6325MasterDialog.xaml.cs">
+      <DependentUpon>T6325MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\Dialog\T6311MasterDialog.xaml.cs">
+      <DependentUpon>T6311MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\Dialog\T8825MasterDialog.xaml.cs">
+      <DependentUpon>T8825MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\Dialog\T8813DetailDialog.xaml.cs">
+      <DependentUpon>T8813DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\Dialog\T91101MasterDialog.xaml.cs">
+      <DependentUpon>T91101MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\Dialog\T91103MasterDialog.xaml.cs">
+      <DependentUpon>T91103MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\Dialog\T91100MasterDialog.xaml.cs">
+      <DependentUpon>T91100MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\Dialog\T8815MasterDialog.xaml.cs">
+      <DependentUpon>T8815MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\Dialog\T8814MasterDialog.xaml.cs">
+      <DependentUpon>T8814MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\Dialog\T8813MasterDialog.xaml.cs">
+      <DependentUpon>T8813MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\Dialog\T8812MasterDialog.xaml.cs">
+      <DependentUpon>T8812MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\Report\T8812BarCodeReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\TEC\Report\T8812BarCodeReport.Designer.cs">
+      <DependentUpon>T8812BarCodeReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\Report\T8813BarCodeReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\TEC\Report\T8813BarCodeReport.designer.cs">
+      <DependentUpon>T8813BarCodeReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\Report\T8813LabelReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\TEC\Report\T8813LabelReport.Designer.cs">
+      <DependentUpon>T8813LabelReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\Report\T8814BarCodeReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\TEC\Report\T8814BarCodeReport.designer.cs">
+      <DependentUpon>T8814BarCodeReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\T6326.xaml.cs">
+      <DependentUpon>T6326.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\T6325.xaml.cs">
+      <DependentUpon>T6325.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\T6321.xaml.cs">
+      <DependentUpon>T6321.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\T6311.xaml.cs">
+      <DependentUpon>T6311.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\T8826.xaml.cs">
+      <DependentUpon>T8826.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\T8825.xaml.cs">
+      <DependentUpon>T8825.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\T8822.xaml.cs">
+      <DependentUpon>T8822.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\T91101.xaml.cs">
+      <DependentUpon>T91101.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\T91104.xaml.cs">
+      <DependentUpon>T91104.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\T91103.xaml.cs">
+      <DependentUpon>T91103.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\T91100.xaml.cs">
+      <DependentUpon>T91100.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\T8815.xaml.cs">
+      <DependentUpon>T8815.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\T8814.xaml.cs">
+      <DependentUpon>T8814.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\T8813.xaml.cs">
+      <DependentUpon>T8813.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TEC\T8812.xaml.cs">
+      <DependentUpon>T8812.xaml</DependentUpon>
+    </Compile>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Util\IEG_InfoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Util\KeyPadDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Util\LoginDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Util\NumberPadDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Util\ProgressWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Util\MailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Util\MailWriteDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Util\SplashScreenView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\Dialog\I66110DetailOthDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\Dialog\I66110DetailPurDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\Dialog\I6611DetailPurDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\Dialog\I66210DetailOutDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I55221.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I66130.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I66110.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I6611.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I66201.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I66210.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I66230.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6684DocDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\Dialog\I5511DetailImpDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\Dialog\I5511DetailEtcDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\Dialog\I5511DetailOutDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\Dialog\I5511MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\Dialog\I5512DetailEtcDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\Dialog\I5512DetailSampleOutDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\Dialog\I5512DetailOutDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\Dialog\I5512BarCodeDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\Dialog\I5512MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\Dialog\I5512NextMonthDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\Dialog\I5511NextMonthDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\Dialog\I6610DetailPurDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I5511.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I5512.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I5521.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I5522.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I6210.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I6610.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I55121.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I6613.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I6614.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I6618.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I6616.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I6617.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\I6620.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M5210MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6511MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6500MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6641MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6710DetailInItmDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6710DetailBadItmDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6710MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M66213DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M66213CopyDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6630MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6631DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6632WeighingUserDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6631Master2Dialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M66550MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M665101MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M665100MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M66214MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M66213MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M66212MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6623DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6637MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M663104MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6631Master1Dialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6632WeighingConfigDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6632WeighingConfigTestDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6632WeighingDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6632ProducePrintDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M66540MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M66530PrintDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M66410MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6647MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6649MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6646MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M66211MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6611MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6651ExcelDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6627ExcelDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6626ExcelDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6622ExcelDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6622MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6623MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6625MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6626MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6627MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6628MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M66110MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6629MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M66530MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M66520MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6661MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6651MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6710DetailIdleDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6710DetailBadDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6681WrkDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6681DwgDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6682MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6683MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6663DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6663DetailHistoryDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6632WeighingPrintDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M6521MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6521.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6511.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6500.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M7711.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6641.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66521.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66531.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6684.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6730.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6720.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6710.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66560.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6630.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6633.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66550.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M665101.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M665100.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66111.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66214.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66213.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6631.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66321.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6637.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66540.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66530.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66520.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M663300.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M663104.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6632.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66412.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66410.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6647.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6649.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6646.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66212.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66211.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6629.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66210.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6611.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6622.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6623.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6625.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6626.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6627.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6628.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6661.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6651.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6682.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6683.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6681.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6663.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M663100.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M661002.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6650.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M5210.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6111.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6638.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P4401DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P441100DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P441100MergeDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P441101MergeDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P441101MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P441102DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P441103Detail_2Dialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P441106DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P441106MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P4412Detail_2Dialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P4411EmailConfigDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P4411EmailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P441103EmailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P441103EmailConfigDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P441102EmailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P441102EmailConfigDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P441103MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P441103DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P4420Detail_3Dialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P4420Detail_1Dialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P4411Detail_1Dialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P4420Detail_2Dialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P4411Detail_3Dialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P4411Detail_2Dialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P414101MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P441102MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P441100MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P4420MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P4411MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P4423MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P4422MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P4412.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P441105.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P4401.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P414101.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P441106.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P4420.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P441103.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P441102.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P441101.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P441100.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P4411.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P44011.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P4415.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P4423.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P4422.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P4426.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S22111AddDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S22111DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S22111MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S22111NextMonthDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S22226ExcelOutputDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S3311MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S22226ExcelInputDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S3321ExcelConfigDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S3321ExcelDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S3321DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S3321MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S2220MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S2211AddDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S2211DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S2211MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S2211NextMonthDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S2216MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S2217DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S2217MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S2221MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S2222MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S2225BillHistoryDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S2225BillDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S22313BillDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S22313ExcelDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S11410MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\Dialog\S2231MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S221111.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S22111.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2215.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2218.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S22226.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2257.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S22225.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2232.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2230.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S22223.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S3311.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S3321.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2240.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2220.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2211.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S22122.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2216.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2217.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66110.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S22213.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2221.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2222.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2225.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S22230.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2227.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2228.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2229.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S11410.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2231.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S22310.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S22313.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2238.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2239.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2247.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2281.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2282.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2326.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2212.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2213.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S11472MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S11479DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S11479MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1148MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1414DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1414MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1431MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S143FaxDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S11472.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S11479.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S1148.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S1431.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S7712.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S7711.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S1414.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S1413.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1146MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S14130MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S141BarPrintDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1412MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S21110DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1144DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1144DetailHistoryDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1145DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1145MasterDialog_1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1145MasterDialog_2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1162MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1161MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1147MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1149MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S143ClassDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S143CustomerDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S1146.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S14130.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S1412.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S21110.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S11315.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S1144.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S1145.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S1163.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S1162.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S1161.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S1147.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S1149.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S143.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1310MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S133DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S133MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S136GroupDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S136MenuDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S136UserDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S139MenuDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S141MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S1310.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S1311.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1311CommentDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S1311MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S133.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S136.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S139.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S131DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\Dialog\S131MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S131.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\S\S141.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\Dialog\T6325MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\Dialog\T6311MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\Dialog\T8825MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\Dialog\T8813DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\Dialog\T91101MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\Dialog\T91103MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\Dialog\T91100MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\Dialog\T8815MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\Dialog\T8814MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\Dialog\T8813MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\Dialog\T8812MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\T6326.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\T6325.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\T6321.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\T6311.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\T8826.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\T8825.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\T8822.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\T91101.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\T91104.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\T91103.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\T91100.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\T8815.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\T8814.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\T8813.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TEC\T8812.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\INV\Report\I5521Report.resx">
+      <DependentUpon>I5521Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\INV\Report\I6610Report.resx">
+      <DependentUpon>I6610Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\INV\Report\I66110BarCodeReport.resx">
+      <DependentUpon>I66110BarCodeReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\M\Report\M6628Report.resx">
+      <DependentUpon>M6628Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\M\Report\M6633BarCodeReport.resx">
+      <DependentUpon>M6633BarCodeReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\M\Report\M66520Report_Bulk.resx">
+      <DependentUpon>M66520Report_Bulk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\M\Report\M66520Report_Items.resx">
+      <DependentUpon>M66520Report_Items.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\M\Report\M665101Report.resx">
+      <DependentUpon>M665101Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\M\Report\M66520Report_Work.resx">
+      <DependentUpon>M66520Report_Work.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\PUR\Report\P4412Report.resx">
+      <DependentUpon>P4412Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\PUR\Report\P4411Report.resx">
+      <DependentUpon>P4411Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\PUR\Report\P441102Report.resx">
+      <DependentUpon>P441102Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\PUR\Report\P441102TagReport.resx">
+      <DependentUpon>P441102TagReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\PUR\Report\P441103TagReport.resx">
+      <DependentUpon>P441103TagReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\PUR\Report\P441103Report.resx">
+      <DependentUpon>P441103Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\PUR\Report\P4411TagReport.resx">
+      <DependentUpon>P4411TagReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\PUR\Report\P4411WeekReport.resx">
+      <DependentUpon>P4411WeekReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\SAL\Report\S22122Report.resx">
+      <DependentUpon>S22122Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\SAL\Report\S2212Report.resx">
+      <DependentUpon>S2212Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\SAL\Report\S2217Report.resx">
+      <DependentUpon>S2217Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\TEC\Report\T8812BarCodeReport.resx">
+      <DependentUpon>T8812BarCodeReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\TEC\Report\T8813BarCodeReport.resx">
+      <DependentUpon>T8813BarCodeReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\TEC\Report\T8813LabelReport.resx">
+      <DependentUpon>T8813LabelReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\TEC\Report\T8814BarCodeReport.resx">
+      <DependentUpon>T8814BarCodeReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="iegkr_com_chain.pfx" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="VisualErpWpfApp_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ModelsLibrary\ModelsLibrary.csproj">
+      <Project>{45f964ff-989e-473f-83e5-4c5b6ab3b834}</Project>
+      <Name>ModelsLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\logo.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2%28x86 및 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\check_box_F.png" />
+    <Resource Include="Images\check_box_T.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\HR01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Code_Central.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dll\Linkhub.dll" />
+    <Content Include="Dll\Neodynamic.SDK.ThermalLabel.dll" />
+    <Resource Include="Images\green.png" />
+    <Resource Include="Images\red.png" />
+    <Resource Include="Images\ktouch.png" />
+    <Resource Include="Images\yellow.png" />
+    <Resource Include="Images\logo_32.png" />
+    <Content Include="Dll\Popbill.dll" />
+    <Content Include="uio32.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="uio64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

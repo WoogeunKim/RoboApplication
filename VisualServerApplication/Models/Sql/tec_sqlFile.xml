@@ -1,0 +1,911 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="tec" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <statements>
+	  <!-- 품질검사 - 원재료 -->
+	  <select id="T8812SelectMstList" parameterClass="ModelsLibrary.Tec.TecVo" resultClass="ModelsLibrary.Tec.TecVo">
+		  SELECT 
+				ROW_NUMBER() OVER (PARTITION BY T1.AREA_CD ORDER BY T1.INAUD_DT) AS RN
+			  , CONVERT(VARCHAR(10),T1.INAUD_DT,23) AS INAUD_DT
+			  , T1.ITM_CD
+			  , T2.ITM_NM
+			  , T2.ITM_SZ_NM
+			  , dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T2.ITM_GRP_CLSS_CD , T2.N1ST_ITM_GRP_CD) AS N1ST_ITM_GRP_NM
+			  , T1.CO_CD
+			  , dbo.CD_COMPANY_NM_FNC(T1.CHNL_CD, T1.CO_CD) AS CO_NM
+			  , CONVERT(VARCHAR(10),T1.MTRL_MAKE_DT,23) AS MTRL_MAKE_DT
+			  , T1.ITM_QTY
+			  , dbo.CD_SYS_CLSS_FNC(T2.CHNL_CD, 'L-003', T2.UOM_CD) AS UOM_NM
+			  , CONVERT(VARCHAR(10),T1.INSP_DT,23) AS INSP_DT
+			  , T1.INSP_NO
+			  , ISNULL(T1.MTRL_EXP_DY, 0) AS MTRL_EXP_DY
+			  , CONVERT(VARCHAR, T1.MTRL_MAKE_DT + T1.MTRL_EXP_DY, 23)  AS MTRL_EXP_DT
+			  <!--, (CASE WHEN DATEDIFF(DAY, GETDATE(), (T1.MTRL_MAKE_DT + T1.MTRL_EXP_DY)) > 0 THEN 'N' ELSE 'Y' END) AS GBN-->
+			  , ISNULL(T1.INSP_FLG, 'Z') AS INSP_FLG
+		      , (CASE WHEN T1.INSP_FLG = 'Y' THEN '적합' WHEN T1.INSP_FLG = 'N' THEN '부적합' ELSE  '시험중' END) AS GBN
+			  , T1.CRE_USR_ID AS MAKE_USR_ID
+			  , dbo.USR_NM_FNC(T1.CHNL_CD, T1.CRE_USR_ID) AS MAKE_USR_NM
+			  , T1.CO_MAKE_NO
+			  <!--, T1.BAD_RMK-->
+			  <!--, T1.INSP_RMK-->
+			  , T1.INAUD_TMP_NO
+			  , T1.INAUD_TMP_SEQ
+			  , T1.PUR_ORD_NO
+			  , T1.PUR_ORD_SEQ
+			  , T1.CHNL_CD
+			  , T1.ITM_RMK
+			  , T1.OK_FLG
+			  , T1.STK_SER_NO
+			  , T1.LOT_NO
+			  , T1.TMP_LOC_NM
+			  , T1.TMP_CONDI_NM
+		  FROM TB_INAUD_TMP T1
+			,TB_CD_ITM T2
+		  WHERE 1 = 1
+			AND T1.CHNL_CD   = T2.CHNL_CD
+			AND T1.ITM_CD    = T2.ITM_CD
+			AND T2.ITM_GRP_CLSS_CD = 'M'
+			AND T1.CHNL_CD   = #CHNL_CD#
+		  <isNotNull property="FM_DT">
+			  AND T1.INAUD_DT >= CAST(CONVERT(VARCHAR, #FM_DT#, 120) + ' 00:00:00' AS DATETIME)
+			  AND T1.INAUD_DT <![CDATA[ <= ]]> CAST(CONVERT(VARCHAR, #TO_DT#, 120) + ' 23:59:59' AS DATETIME)
+		  </isNotNull>
+		  <isNotNull property="OK_FLG">
+			  AND T1.OK_FLG = #OK_FLG#
+		  </isNotNull>
+	  </select>
+
+	  <update id="T8812UpdateMst" parameterClass="ModelsLibrary.Tec.TecVo">
+		  UPDATE TB_INAUD_TMP
+		  SET MTRL_MAKE_DT	  = #MTRL_MAKE_DT#
+			  , INSP_DT       = #INSP_DT#
+			  , INSP_NO       = #INSP_NO#
+			  , MTRL_EXP_DY   = #MTRL_EXP_DY#
+			  , INSP_FLG      = #INSP_FLG#
+			  , CO_MAKE_NO    = #CO_MAKE_NO#
+			  , ITM_RMK       = #ITM_RMK#
+			  , TMP_LOC_NM    = #TMP_LOC_NM#
+			  , TMP_CONDI_NM  = #TMP_CONDI_NM#
+			  <!--, BAD_RMK       = #BAD_RMK#-->
+			  <!--, INSP_RMK      = #INSP_RMK#-->
+			  , UPD_USR_ID    = #UPD_USR_ID#
+			  , UPD_DT        = GETDATE()
+			  , CO_CD		  = #CO_CD#
+		  WHERE CHNL_CD        = #CHNL_CD#
+			  AND INAUD_TMP_NO   = #INAUD_TMP_NO#
+			  AND INAUD_TMP_SEQ  = #INAUD_TMP_SEQ#
+	  </update>
+
+
+	  
+	   <!-- 품질검사 - 부재료 -->
+	  <select id="T8813SelectMstList" parameterClass="ModelsLibrary.Tec.TecVo" resultClass="ModelsLibrary.Tec.TecVo">
+		SELECT ROW_NUMBER() OVER (PARTITION BY T1.AREA_CD ORDER BY T1.INAUD_DT) AS RN
+              , CONVERT(VARCHAR(10),T1.INAUD_DT,23) AS INAUD_DT
+              , T1.ITM_CD
+              , T2.ITM_NM
+              , T2.ITM_SZ_NM
+							, dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T2.ITM_GRP_CLSS_CD , T2.N1ST_ITM_GRP_CD) AS N1ST_ITM_GRP_NM 
+							, T1.CO_CD
+              , dbo.CD_COMPANY_NM_FNC(T1.CHNL_CD, T1.CO_CD) AS CO_NM
+              , T1.BATCH_CD
+							, T1.ITM_QTY
+							, T1.INSP_QTY
+							, T1.BAD_QTY
+              , dbo.CD_SYS_CLSS_FNC(T2.CHNL_CD, 'L-003', T2.UOM_CD) AS UOM_NM
+              , CONVERT(VARCHAR(10),T1.INSP_DT,23) AS INSP_DT
+              , T1.INSP_NO
+							, CONVERT(VARCHAR(10),T1.MTRL_MAKE_DT,23) AS MTRL_MAKE_DT
+              , ISNULL(T1.MTRL_EXP_DY, 0) AS MTRL_EXP_DY
+							, CONVERT(VARCHAR, T1.MTRL_MAKE_DT + T1.MTRL_EXP_DY, 23)  AS MTRL_EXP_DT 
+              <!--, (CASE WHEN DATEDIFF(DAY, GETDATE(), (T1.MTRL_MAKE_DT + T1.MTRL_EXP_DY)) > 0 THEN 'N' ELSE 'Y' END) AS GBN--> 
+              , ISNULL(T1.INSP_FLG, 'Z') AS INSP_FLG
+							, (CASE WHEN T1.INSP_FLG = 'Y' THEN '적합' WHEN T1.INSP_FLG = 'N' THEN '부적합' ELSE  '시험중' END) AS GBN
+              , T1.CRE_USR_ID AS MAKE_USR_ID
+              , dbo.USR_NM_FNC(T1.CHNL_CD, T1.CRE_USR_ID) AS MAKE_USR_NM
+              <!--, T1.BAD_RMK-->
+              <!--, T1.INSP_RMK-->
+							, T1.INAUD_TMP_NO
+							, T1.INAUD_TMP_SEQ
+							, T1.PUR_ORD_NO
+							, T1.PUR_ORD_SEQ
+							, T1.CHNL_CD
+							, T1.ITM_RMK
+							, T1.OK_FLG
+							, T1.STK_SER_NO
+							, T1.LOT_NO
+							, ISNULL(T1.BOX_QTY , 0) AS BOX_QTY
+          FROM TB_INAUD_TMP T1
+              ,TB_CD_ITM T2
+					 WHERE 1 = 1 
+						 AND T1.CHNL_CD = T2.CHNL_CD
+						 AND T1.ITM_CD = T2.ITM_CD 
+						 AND T2.ITM_GRP_CLSS_CD = 'B'
+						 AND T1.CHNL_CD = #CHNL_CD#
+          <isNotNull property="FM_DT">
+							AND T1.INAUD_DT >= CAST(CONVERT(VARCHAR, #FM_DT#, 120) + ' 00:00:00' AS DATETIME)
+							AND T1.INAUD_DT <![CDATA[ <= ]]> CAST(CONVERT(VARCHAR, #TO_DT#, 120) + ' 23:59:59' AS DATETIME)
+          </isNotNull>
+		  <isNotNull property="OK_FLG">
+			  AND T1.OK_FLG = #OK_FLG#
+		  </isNotNull>
+	  </select>
+
+	  <update id="T8813UpdateMst" parameterClass="ModelsLibrary.Tec.TecVo">
+		  UPDATE TB_INAUD_TMP
+		  SET BATCH_CD      = #BATCH_CD#
+		    , INSP_QTY      = #INSP_QTY#
+			, BAD_QTY       = #BAD_QTY#
+			, INSP_DT       = #INSP_DT#
+		    , INSP_FLG      = #INSP_FLG#
+			, ITM_RMK       = #ITM_RMK#
+		    <!--, BAD_RMK       = #BAD_RMK#-->
+		    <!--, INSP_RMK      = #INSP_RMK#-->
+			, UPD_USR_ID    = #UPD_USR_ID#
+            , UPD_DT        = GETDATE()
+			, MTRL_MAKE_DT  = #MTRL_MAKE_DT#
+			, MTRL_EXP_DY   = #MTRL_EXP_DY#
+		  WHERE CHNL_CD        = #CHNL_CD#
+		    AND INAUD_TMP_NO   = #INAUD_TMP_NO#
+		    AND INAUD_TMP_SEQ  = #INAUD_TMP_SEQ#
+	  </update>
+    
+     <!-- 품질검사 - 부재료 -->
+	  <select id="T8813SelectDtlList" parameterClass="ModelsLibrary.Tec.TecVo" resultClass="ModelsLibrary.Tec.TecVo">
+			SELECT 
+						MIN(T5.INAUD_DT) AS INAUD_DT
+					, MIN(T5.ITM_CD)  AS ITM_CD
+					, MIN(T5.ITM_NM)  AS ITM_NM
+					, MIN(T5.ITM_SZ_NM) AS ITM_SZ_NM
+					, MIN(T5.N1ST_ITM_GRP_NM) AS N1ST_ITM_GRP_NM 
+					, MIN(T5.CO_CD) AS CO_CD
+					, MIN(T5.CO_NM) AS CO_NM
+					, MIN(T5.BATCH_CD) AS BATCH_CD
+					, SUM(T5.ITM_QTY) AS ITM_QTY
+					, MIN(T5.INSP_QTY) AS INSP_QTY
+					, MIN(T5.BAD_QTY) AS BAD_QTY
+					, MIN(T5.UOM_NM) AS UOM_NM
+					, MIN(T5.INSP_DT) AS INSP_DT
+					, MIN(T5.INSP_NO) AS INSP_NO
+					, MIN(T5.MTRL_MAKE_DT) AS MTRL_MAKE_DT
+					, MIN(T5.MTRL_EXP_DY) AS MTRL_EXP_DY
+					, MIN(T5.MTRL_EXP_DT) AS MTRL_EXP_DT
+					, MIN(T5.INSP_FLG) AS INSP_FLG
+					, MIN(T5.GBN) AS GBN
+					, MIN(T5.MAKE_USR_ID) AS MAKE_USR_ID
+					, MIN(T5.MAKE_USR_NM) AS MAKE_USR_NM
+					, MIN(T5.INAUD_TMP_NO) AS INAUD_TMP_NO
+					, MIN(T5.INAUD_TMP_SEQ) AS INAUD_TMP_SEQ
+					, MIN(T5.PUR_ORD_NO) AS PUR_ORD_NO
+					, MIN(T5.PUR_ORD_SEQ) AS PUR_ORD_SEQ
+					, MIN(T5.CHNL_CD) AS CHNL_CD
+					, MIN(T5.ITM_RMK) AS ITM_RMK
+					, MIN(T5.OK_FLG) AS OK_FLG
+					, MIN(T5.STK_SER_NO) AS STK_SER_NO
+					, MIN(T5.LOT_NO) AS LOT_NO
+					, MIN(ISNULL(T5.BOX_QTY , 0)) AS BOX_QTY
+				FROM (
+					SELECT ROW_NUMBER() OVER (PARTITION BY T1.AREA_CD ORDER BY T1.INAUD_DT) AS RN
+							, CONVERT(VARCHAR(10),T1.INAUD_DT,23) AS INAUD_DT
+							, T1.ITM_CD
+							, T2.ITM_NM
+							, T2.ITM_SZ_NM
+							, dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T2.ITM_GRP_CLSS_CD , T2.N1ST_ITM_GRP_CD) AS N1ST_ITM_GRP_NM 
+							, T1.CO_CD
+							, dbo.CD_COMPANY_NM_FNC(T1.CHNL_CD, T1.CO_CD) AS CO_NM
+							, T1.BATCH_CD
+							, T1.ITM_QTY
+							, T1.INSP_QTY
+							, T1.BAD_QTY
+							, dbo.CD_SYS_CLSS_FNC(T2.CHNL_CD, 'L-003', T2.UOM_CD) AS UOM_NM
+							, CONVERT(VARCHAR(10),T1.INSP_DT,23) AS INSP_DT
+							, T1.INSP_NO
+							, CONVERT(VARCHAR(10),T1.MTRL_MAKE_DT,23) AS MTRL_MAKE_DT
+							, ISNULL(T1.MTRL_EXP_DY, 0) AS MTRL_EXP_DY
+							, CONVERT(VARCHAR, T1.MTRL_MAKE_DT + T1.MTRL_EXP_DY, 23)  AS MTRL_EXP_DT 
+							, ISNULL(T1.INSP_FLG, 'Z') AS INSP_FLG
+							, (CASE WHEN T1.INSP_FLG = 'Y' THEN '적합' WHEN T1.INSP_FLG = 'N' THEN '부적합' ELSE  '시험중' END) AS GBN
+							, T1.CRE_USR_ID AS MAKE_USR_ID
+							, dbo.USR_NM_FNC(T1.CHNL_CD, T1.CRE_USR_ID) AS MAKE_USR_NM
+							, T1.INAUD_TMP_NO
+							, T1.INAUD_TMP_SEQ
+							, T1.PUR_ORD_NO
+							, T1.PUR_ORD_SEQ
+							, T1.CHNL_CD
+							, T1.ITM_RMK
+							, T1.OK_FLG
+							, T1.STK_SER_NO
+							, T1.LOT_NO
+							, ISNULL(T1.BOX_QTY , 0) AS BOX_QTY
+						FROM TB_INAUD_TMP T1
+							,TB_CD_ITM T2
+						WHERE 1 = 1 
+							AND T1.CHNL_CD					= T2.CHNL_CD
+							AND T1.ITM_CD						= T2.ITM_CD 
+							AND T2.ITM_GRP_CLSS_CD	= 'B'
+							AND T1.CHNL_CD					= #CHNL_CD#
+              AND ISNULL(T1.BATCH_CD, '') != ''
+						<isNotNull property="FM_DT">
+							AND T1.INAUD_DT >= CAST(CONVERT(VARCHAR, #FM_DT#, 120) + ' 00:00:00' AS DATETIME)
+							AND T1.INAUD_DT <![CDATA[ <= ]]> CAST(CONVERT(VARCHAR, #TO_DT#, 120) + ' 23:59:59' AS DATETIME)
+						</isNotNull>
+						<isNotNull property="OK_FLG">
+							AND T1.OK_FLG = #OK_FLG#
+						</isNotNull>
+					) AS T5
+				GROUP BY T5.BATCH_CD
+	  </select>
+    
+	  
+  
+	  
+	 <!-- 품질검사 - 벌크 -->
+	  <select id="T8814SelectMstList" parameterClass="ModelsLibrary.Tec.TecVo" resultClass="ModelsLibrary.Tec.TecVo">
+			SELECT 
+		            ROW_NUMBER() OVER (PARTITION BY T2.AREA_CD ORDER BY T2.INAUD_DT) AS RN
+	              ,	T1.LOT_NO AS LOT_NO
+                  , CONVERT(VARCHAR,T2.INAUD_DT,23) AS INAUD_DT
+                  , CONVERT(CHAR(8),T2.MAKE_ST_DT,24) AS MAKE_ST_DT
+                  , CONVERT(CHAR(8),T2.MAKE_END_DT,24) AS MAKE_END_DT 
+								, T2.CUST_ITM_CD AS ITM_CD
+								, dbo.CD_ITEM_NM_FNC(T1.CHNL_CD, T2.CUST_ITM_CD) AS ITM_NM
+	              <!--, (SELECT TOP 1 Y.ITM_NM FROM DZICUBE.dbo.LSO_D X, TB_CD_ITM Y WHERE 1 = 1 AND T1.SL_ORD_NO = X.SO_NB AND T1.SL_ORD_SEQ = X.SO_SQ AND T2.CHNL_CD = Y.CHNL_CD AND X.ITEM_CD = Y.ITM_CD)  AS ITM_NM-->        
+	              , dbo.CD_SYS_CLSS_FNC(T3.CHNL_CD, 'L-003', T3.UOM_CD) AS UOM_NM
+                  , T1.ASSY_ITM_CD AS CUST_ITM_CD
+                  , dbo.CD_ITEM_NM_FNC(T1.CHNL_CD, T1.ASSY_ITM_CD) AS CUST_ITM_NM
+								<!--, T3.ITM_SZ_NM        AS CUST_ITM_SZ_NM-->
+								, (SELECT TOP 1 X.ITM_SZ_NM FROM MV_TB_CD_ITM AS X WHERE 1=1 AND X.ITM_CD = T2.CUST_ITM_CD AND X.CHNL_CD = T2.CHNL_CD) AS CUST_ITM_SZ_NM
+                  , T2.INSP_NO AS INSP_NO
+                  , T2.CO_MAKE_NO AS CO_MAKE_NO
+                  , T2.INSP_QTY AS INSP_QTY
+                  , CONVERT(VARCHAR,T2.INSP_DT,23) AS INSP_DT
+                  , T1.MIX_WEIH_VAL AS MIX_WEIH_VAL
+                  , T2.ITM_QTY AS ITM_QTY
+                  , '벌크보관소' AS LOC_NM
+	              , ISNULL(T2.MTRL_EXP_DY, 0) AS MTRL_EXP_DY
+	              , CONVERT(VARCHAR, T2.MTRL_MAKE_DT + T2.MTRL_EXP_DY, 23)  AS MTRL_EXP_DT 
+                  <!--, (CASE WHEN DATEDIFF(DAY, GETDATE(), (T2.MTRL_MAKE_DT + T2.MTRL_EXP_DY)) > 0 THEN 'N' ELSE 'Y' END) AS GBN--> 
+                  , T1.INP_LOT_NO AS INP_LOT_NO
+	              , T2.EQ_NO
+                  , dbo.FF_EQ_NM_FNC(T2.CHNL_CD, T2.EQ_NO) AS EQ_NM
+								, T1.WRK_MAN_ID  AS MAKE_USR_ID
+                  , dbo.USR_NM_FNC(T2.CHNL_CD, T1.WRK_MAN_ID) AS MAKE_USR_NM
+	              , ISNULL(T2.INSP_FLG, 'Z') AS INSP_FLG
+								, (CASE WHEN T2.INSP_FLG = 'Y' THEN '적합' WHEN T2.INSP_FLG = 'N' THEN '부적합' ELSE  '시험중' END) AS GBN
+	              <!--, (CASE WHEN ISNULL(T2.INSP_FLG, 'N') = 'Y' THEN 1 ELSE  0 END) AS isCheckd-->  
+				  <!--, (CASE WHEN T2.INSP_FLG = 'Y' THEN 1 WHEN T2.INSP_FLG = 'N' THEN 0 ELSE  null END) AS isCheckd-->  
+							, T2.INAUD_TMP_NO
+              , T2.INAUD_TMP_SEQ
+							, T2.CHNL_CD
+							, T2.ITM_RMK
+							, T2.OK_FLG
+							<!--, T2.STK_SER_NO-->
+							, T2.BAD_QTY  AS IDLE_MNTS
+							, CONVERT(VARCHAR,T2.MTRL_MAKE_DT,23) AS MAKE_DT
+							, T2.LOT_NO AS STK_SER_NO
+              FROM  TB_PROD_WEIGH_WO T1
+                  , TB_INAUD_TMP T2 
+									, TB_CD_ITM T3
+             WHERE 1 = 1 
+               AND T1.CHNL_CD = T2.CHNL_CD
+               AND T1.CHNL_CD = #CHNL_CD#
+               AND T1.LOT_NO = T2.PUR_ORD_NO
+               AND T1.ASSY_ITM_CD = T2.ITM_CD 
+               AND T1.ASSY_ITM_CD = T3.ITM_CD
+               AND T3.ITM_GRP_CLSS_CD IN ('W', 'S')
+          <isNotNull property="FM_DT">
+			  AND T2.INAUD_DT >= CAST(CONVERT(VARCHAR, #FM_DT#, 120) + ' 00:00:00' AS DATETIME)
+			  AND T2.INAUD_DT <![CDATA[ <= ]]> CAST(CONVERT(VARCHAR, #TO_DT#, 120) + ' 23:59:59' AS DATETIME)
+          </isNotNull>
+		  <isNotNull property="OK_FLG">
+			  AND T2.OK_FLG = #OK_FLG#
+		  </isNotNull>
+	  </select>
+
+	  <update id="T8814UpdateMst" parameterClass="ModelsLibrary.Tec.TecVo">
+		UPDATE TB_INAUD_TMP
+			SET 
+				  ITM_QTY       = #ITM_QTY#
+				, ITM_RMK       = #ITM_RMK#
+				, UPD_USR_ID    = #UPD_USR_ID#
+				, UPD_DT        = GETDATE()
+				, INSP_NO       = #INSP_NO#
+				, INSP_DT       = #INSP_DT#
+				<!--, BAD_QTY       = #IDLE_MNTS#-->
+				, INSP_QTY      = #INSP_QTY#
+				, INSP_FLG      = #INSP_FLG#
+				, EQ_NO         = #EQ_NO#
+				, MTRL_MAKE_DT  = #MAKE_DT#
+				, MAKE_ST_DT    = #MAKE_ST_DT#
+				, MAKE_END_DT   = #MAKE_END_DT#
+				, MTRL_EXP_DY  =  #MTRL_EXP_DY#
+				, CUST_ITM_CD  =  #ITM_CD#
+				WHERE 1=1
+					AND CHNL_CD         = #CHNL_CD#
+					AND INAUD_TMP_NO    = #INAUD_TMP_NO# 
+					AND INAUD_TMP_SEQ   = #INAUD_TMP_SEQ#
+	  </update>  
+  
+
+	    <!-- 품질검사 - 반제품 -->
+	  <select id="T8815SelectMstList" parameterClass="ModelsLibrary.Tec.TecVo" resultClass="ModelsLibrary.Tec.TecVo">
+		  SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T2.INAUD_DT) AS RN
+		      , T1.PROD_ORD_NO AS PROD_ORD_NO
+		      , T1.PROD_ORD_SEQ AS PROD_ORD_SEQ
+			  , CONVERT(VARCHAR,T2.MAKE_ST_DT,23) AS MAKE_DT
+		      , CONVERT(CHAR(8),T2.MAKE_ST_DT,24) AS MAKE_ST_DT
+              , CONVERT(CHAR(8),T2.MAKE_END_DT,24) AS MAKE_END_DT 
+		      , CONVERT(VARCHAR,T2.INAUD_DT,23) AS INAUD_DT
+		      , dbo.FF_NM_ROUT(T1.CHNL_CD, LEFT(T1.ROUT_ITM_CD,3)) AS ROUT_NM
+		      , T1.ROUT_ITM_CD AS ROUT_ITM_CD
+		      , T3.ITM_NM AS CUST_ITM_NM
+		      , T3.ITM_SZ_NM AS CUST_ITM_SZ_NM
+		      , T3.UOM_CD
+		      , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-003', T3.UOM_CD) AS UOM_NM
+		      , dbo.CD_ITEM_NM_FNC(T1.CHNL_CD, T1.CUST_ITM_CD) AS ITM_NM
+		      , T1.ITM_QTY AS ITM_QTY
+		      , T2.INSP_QTY AS INSP_QTY
+		      , CONVERT(VARCHAR,T2.INSP_DT,23) AS INSP_DT
+		      , T2.INSP_NO AS INSP_NO
+		      , T2.INP_LOT_NO
+			  , ISNULL(T2.INSP_FLG, 'Z') AS INSP_FLG
+			  , (CASE WHEN T2.INSP_FLG = 'Y' THEN '적합' WHEN T2.INSP_FLG = 'N' THEN '부적합' ELSE  '시험중' END) AS GBN
+			  , T2.INAUD_TMP_NO
+              , T2.INAUD_TMP_SEQ
+			  , T2.CHNL_CD
+			  , T2.ITM_RMK
+			  , T2.OK_FLG
+			  , T2.STK_SER_NO
+		      , T2.BAD_QTY  AS IDLE_MNTS
+			  , CONVERT(VARCHAR,T2.MTRL_MAKE_DT,23) AS MAKE_DT
+			  , T2.LOT_NO
+		  FROM  TB_FPRF_N2ND_STEP_ROUT T1
+		  , TB_INAUD_TMP T2
+		  , TB_CD_ITM T3
+		  WHERE 1 = 1
+		  AND T1.CHNL_CD = #CHNL_CD#
+		  AND T1.CHNL_CD = T2.CHNL_CD
+		  AND T1.ROUT_ITM_CD = T3.ITM_CD
+		  AND T1.PROD_ORD_NO = T2.PUR_ORD_NO
+		  AND T1.PROD_ORD_SEQ = 1
+		  AND T3.ITM_GRP_CLSS_CD = 'H'
+		  <isNotNull property="FM_DT">
+			  AND T2.INAUD_DT >= CAST(CONVERT(VARCHAR, #FM_DT#, 120) + ' 00:00:00' AS DATETIME)
+			  AND T2.INAUD_DT <![CDATA[ <= ]]> CAST(CONVERT(VARCHAR, #TO_DT#, 120) + ' 23:59:59' AS DATETIME)
+          </isNotNull>
+		  <isNotNull property="OK_FLG">
+			  AND T2.OK_FLG = #OK_FLG#
+		  </isNotNull>
+	  </select>
+
+	  <update id="T8815UpdateMst" parameterClass="ModelsLibrary.Tec.TecVo">
+		  UPDATE TB_INAUD_TMP
+		  SET
+		  ITM_QTY       = #ITM_QTY#
+		  , ITM_RMK       = #ITM_RMK#
+		  , UPD_USR_ID    = #UPD_USR_ID#
+		  , UPD_DT        = GETDATE()
+		  , INSP_NO       = #INSP_NO#
+		  , INSP_DT       = #INSP_DT#
+		  <!--, BAD_QTY       = #IDLE_MNTS#-->
+		  , INSP_QTY      = #INSP_QTY#
+		  , INSP_FLG      = #INSP_FLG#
+		  , EQ_NO         = #EQ_NO#
+		  , MTRL_MAKE_DT  = #MAKE_DT#
+		  , MAKE_ST_DT    = #MAKE_ST_DT#
+		  , MAKE_END_DT   = #MAKE_END_DT#
+		  WHERE 1=1
+		  AND CHNL_CD         = #CHNL_CD#
+		  AND INAUD_TMP_NO    = #INAUD_TMP_NO#
+		  AND INAUD_TMP_SEQ   = #INAUD_TMP_SEQ#
+	  </update>
+
+	  
+	  
+	  
+	    <!-- 품질검사 - 반제품 -->
+	  <select id="T91100SelectMstList" parameterClass="ModelsLibrary.Tec.TecVo" resultClass="ModelsLibrary.Tec.TecVo">
+		   SELECT ROW_NUMBER() OVER (PARTITION BY T2.AREA_CD ORDER BY T2.INAUD_DT) AS RN
+		    , CONVERT(VARCHAR,T2.INAUD_DT,23) AS INAUD_DT
+		    , T1.SCM_RLSE_NO
+		    , T1.SCM_PUR_CO_CD AS CO_CD
+				, dbo.CD_COMPANY_NM_FNC(T1.CHNL_CD, T1.SCM_PUR_CO_CD) AS CO_NM
+				, T1.SCM_ROUT_CD AS ROUT_CD
+		    , dbo.FF_PROD_ROUT_NM_FNC(T1.CHNL_CD, T1.SCM_ROUT_CD) AS ROUT_NM
+		    , T1.SCM_PUR_ITM_CD AS SCM_PUR_ITM_CD
+		    , T3.ITM_NM AS SCM_PUR_ITM_NM
+		    , T1.SCM_PUR_ITM_QTY AS IN_QTY
+		    , T2.ITM_QTY AS ITM_QTY
+		    , T2.INSP_QTY AS INSP_QTY
+		    <!--, T2.BAD_QTY AS BAD_QTY-->
+		    <!--, ((T2.BAD_QTY / T2.INSP_QTY ) * 100 ) AS BAD_RATE-->
+		    <!--, T2.BAD_RMK AS BAD_RMK-->
+				, T2.INSP_NO
+		    , CONVERT(VARCHAR(10),T2.INSP_DT,23) AS INSP_DT
+				, ISNULL(T2.INSP_FLG, 'N') AS INSP_FLG
+		    , (CASE WHEN ISNULL(T2.INSP_FLG, 'N') = 'Y' THEN 1 ELSE  0 END) AS isCheckd
+		    , T2.CRE_USR_ID AS MAKE_USR_ID
+		    , dbo.USR_NM_FNC(T2.CHNL_CD, T2.CRE_USR_ID) AS MAKE_USR_NM
+        , (CASE WHEN T2.INSP_FLG = 'Y' THEN '적합' WHEN T2.INSP_FLG = 'N' THEN '부적합' ELSE  '시험중' END) AS GBN
+				, T2.INAUD_TMP_NO
+				, T2.INAUD_TMP_SEQ
+				, T2.PUR_ORD_NO
+				, T2.PUR_ORD_SEQ
+				, T2.CHNL_CD
+				, T2.ITM_RMK
+				, T2.OK_FLG
+				, T4.ITM_CD
+		    , T4.ITM_NM
+		    , T4.ITM_SZ_NM
+				, T2.GRP_SER_NO AS GRP_SER_NO
+				, T2.STK_SER_NO AS STK_SER_NO
+			<!--, dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'Q-002', T2.BAD_CD) AS BAD_NM
+					, T2.BAD_CD-->
+			<!--, T2.BAD_RMK-->
+		    , (SELECT ISNULL(SUM(X.BAD_QTY), 0) FROM TB_PROD_CD_BAD AS X WHERE 1=1 AND X.CHNL_CD = T2.CHNL_CD AND X.LOT_DIV_NO = T2.GRP_SER_NO) AS BAD_QTY
+		  FROM TB_INAUD_TMP T2
+			, TB_SCM_PUR T1 LEFT OUTER JOIN 
+            (
+              SELECT X1.ITM_CD, X3.ITM_NM, X3.ITM_SZ_NM ,X1.SCM_RLSE_NO
+               FROM TB_SCM_ORD_RLSE X1, TB_CD_ITM X3 
+              WHERE 1 = 1 
+                AND X1.CHNL_CD = #CHNL_CD#
+                AND X1.CHNL_CD = X3.CHNL_CD
+                AND X1.ITM_CD = X3.ITM_CD 
+            ) T4 ON (T1.SCM_RLSE_NO = T4.SCM_RLSE_NO )
+		    , TB_CD_ITM T3
+		  WHERE 1 = 1
+		      AND T2.CHNL_CD		 = T1.CHNL_CD
+		      AND T2.CHNL_CD		 = T3.CHNL_CD
+		      AND T2.CHNL_CD		 = #CHNL_CD#
+		      AND T2.PUR_ORD_NO		 = T1.SCM_PUR_NO
+		      AND T2.PUR_ORD_SEQ	 = T1.SCM_PUR_SEQ 
+		      AND T1.SCM_PUR_ITM_CD  = T3.ITM_CD
+		      AND T3.ITM_GRP_CLSS_CD = 'W'
+			  <!--AND T1.SCM_PUR_CO_CD ='ANP01'-->
+        <isNotNull property="FM_DT">
+					AND T2.INAUD_DT >= CAST(CONVERT(VARCHAR, #FM_DT#, 120) + ' 00:00:00' AS DATETIME)
+					AND T2.INAUD_DT <![CDATA[ <= ]]> CAST(CONVERT(VARCHAR, #TO_DT#, 120) + ' 23:59:59' AS DATETIME)
+        </isNotNull>
+				<isNotNull property="OK_FLG">
+					AND T2.OK_FLG = #OK_FLG#
+				</isNotNull>
+	  </select>
+
+	  <update id="T91100UpdateMst" parameterClass="ModelsLibrary.Tec.TecVo">
+		  UPDATE TB_INAUD_TMP
+		  SET
+				<!-- ITM_QTY       = #ITM_QTY# -->
+			    ITM_RMK       = #ITM_RMK#
+			  , UPD_USR_ID    = #UPD_USR_ID#
+			  , UPD_DT        = GETDATE()
+			  , INSP_NO       = #INSP_NO#
+			  , INSP_DT       = GETDATE()
+			  <!--, BAD_QTY       = #IDLE_MNTS#-->
+			  , INSP_QTY      = #INSP_QTY#
+			  , INSP_FLG      = #INSP_FLG#
+			  , EQ_NO         = #EQ_NO#
+			  , MTRL_MAKE_DT  = #MTRL_MAKE_DT#
+			  , MTRL_EXP_DY   = #MTRL_EXP_DY#
+			  , MAKE_ST_DT    = #MAKE_ST_DT#
+			  , MAKE_END_DT   = #MAKE_END_DT#
+			  <!--, BAD_QTY		  = #BAD_QTY#
+			  , BAD_CD		  = #BAD_CD#
+			  , BAD_RMK		  = #BAD_RMK#-->
+		  WHERE 1=1
+			AND CHNL_CD         = #CHNL_CD#
+			AND INAUD_TMP_NO    = #INAUD_TMP_NO#
+			AND INAUD_TMP_SEQ   = #INAUD_TMP_SEQ#
+	  </update>
+
+	  
+	    <!-- 품질검사 - 반제품 -->
+	  <select id="T91100SelectDtlList" parameterClass="ModelsLibrary.Tec.TecVo" resultClass="ModelsLibrary.Tec.TecVo">
+		  SELECT  
+				 ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.CRE_DT) AS RN
+			   , T1.BAD_CD AS BAD_CD
+			   , T2.BAD_NM AS BAD_NM
+			   , T1.BAD_QTY AS BAD_QTY
+			   , T1.BAD_RSN	AS BAD_RMK
+         , T1.ROUT_ITM_CD
+			   , dbo.USR_NM_FNC(T1.CHNL_CD, T1.CRE_USR_ID) AS CRE_USR_NM
+			   , T1.CHNL_CD
+			   , T1.CRE_USR_ID
+			   , T1.UPD_USR_ID
+			   , #ROUT_CD# AS ROUT_CD
+			   , #GRP_SER_NO# AS GRP_SER_NO
+         , #SCM_PUR_ITM_CD# AS SCM_PUR_ITM_CD
+         , #INAUD_TMP_NO# AS INAUD_TMP_NO
+         , #INAUD_TMP_SEQ# AS INAUD_TMP_SEQ
+		  FROM  TB_PROD_CD_BAD T1 LEFT OUTER JOIN TB_CD_ROUT_BAD T2 ON(T1.BAD_CD = T2.BAD_CD AND T1.CHNL_CD = T2.CHNL_CD)
+			WHERE 1 = 1 
+				AND T1.CHNL_CD		= #CHNL_CD#
+				AND T1.LOT_DIV_NO	= #GRP_SER_NO#
+	  </select>
+
+	  <insert id="T91103InsertDetail" parameterClass="ModelsLibrary.Tec.TecVo">
+		INSERT INTO TB_PROD_CD_BAD
+		(
+					CHNL_CD
+				, ROUT_CD
+				, LOT_DIV_NO
+				, LOT_DIV_SEQ
+				, BAD_CD
+				, BAD_QTY
+				, CRE_USR_ID
+				, CRE_DT
+				, UPD_USR_ID
+				, UPD_DT
+				, BAD_RSN
+				, ROUT_ITM_CD
+       ) 
+	   VALUES
+	   (
+	  			#CHNL_CD#
+				, #ROUT_CD#
+        , #INAUD_TMP_NO#
+				, #INAUD_TMP_SEQ#
+				, #BAD_CD#
+				, #BAD_QTY#
+				, #CRE_USR_ID#
+				, GETDATE()
+				, #UPD_USR_ID#
+				, GETDATE()
+				, #BAD_RMK#
+				, #SCM_PUR_ITM_CD#
+       )
+    </insert>
+	  
+	<delete id="T91103DeleteDetail" parameterClass="ModelsLibrary.Tec.TecVo">
+      DELETE FROM TB_PROD_CD_BAD
+        WHERE 1 = 1
+					AND CHNL_CD		= #CHNL_CD#
+					AND LOT_DIV_NO	= #GRP_SER_NO#
+					AND LOT_DIV_SEQ	= 1
+      		AND ROUT_ITM_CD	= #SCM_PUR_ITM_CD#
+    </delete>
+
+	<!-- 시료수 == 적합판정 -->
+	<select id="T91100SelectPopupOk" parameterClass="ModelsLibrary.Tec.TecVo" resultClass="ModelsLibrary.Tec.TecVo">
+		SELECT TOP 1
+				CHR_CD    AS GBN  
+			  , LOT_SZ_NO AS INSP_QTY  
+			  , INSP_FLG   
+		  FROM (
+				SELECT CHR_CD
+				  FROM TB_QC_AQL_CHR T1
+				 WHERE 1 = 1
+				   AND T1.CHNL_CD =  #CHNL_CD#
+				   AND FM_LOT_SZ_NO <![CDATA[ <= ]]> #ITM_QTY#
+				   AND TO_LOT_SZ_NO >= #ITM_QTY#
+				   AND INSP_CD      = 'N2'
+				) T1           
+		, (
+			  SELECT LOT_SZ_NO
+				   , MAX(CASE WHEN #BAD_QTY# = 0 THEN 'N'  
+							  WHEN AQL_CD = 'RE' AND AQL_VAL > #BAD_QTY# THEN 'Y' ELSE 'N' END) AS INSP_FLG
+				FROM TB_QC_AQL
+			   WHERE 1 = 1
+				 AND CHNL_CD      = #CHNL_CD#
+				 AND INSP_SMPL_CD = 'B2'  
+				 AND CHR_CD       IN (SELECT MAX(CHR_CD)
+										FROM TB_QC_AQL_CHR T1
+									   WHERE 1 = 1
+										 AND T1.CHNL_CD = #CHNL_CD#
+										 AND FM_LOT_SZ_NO <![CDATA[ <= ]]> #ITM_QTY#
+										 AND TO_LOT_SZ_NO >= #ITM_QTY#
+										 AND INSP_CD      = 'N2'
+									)
+			  GROUP BY LOT_SZ_NO   
+			) T2
+		WHERE 1 = 1    
+	</select>
+
+
+
+		  <!-- 공정별 불량코드 관리 -->
+	<select id="T91103SelectMstList" parameterClass="ModelsLibrary.Tec.TecVo" resultClass="ModelsLibrary.Tec.TecVo">
+		  SELECT
+			  ROW_NUMBER() OVER (PARTITION BY T1.ROUT_CD ORDER BY T1.BAD_CD) AS RN
+			, T1.CHNL_CD
+			, T1.BAD_CD
+			, T1.BAD_NM
+			, T1.ROUT_CD
+			, T2.ROUT_NM
+			, (CASE WHEN T1.DELT_FLG = 'N' THEN '사용' ELSE '미사용' END) AS DELT_FLG
+			, T1.BAD_RMK
+		FROM TB_CD_ROUT_BAD AS T1 LEFT OUTER JOIN  TB_PROD_ROUT T2 ON( T1.ROUT_CD = T2.ROUT_CD AND T1.CHNL_CD = T2.CHNL_CD)
+			WHERE 1=1
+				AND T1.CHNL_CD = #CHNL_CD#
+		<isNotNull property="ROUT_CD">
+			AND T1.ROUT_CD = #ROUT_CD#
+		</isNotNull>
+		<isNotNull property="DELT_FLG">
+			AND T1.DELT_FLG = #DELT_FLG#
+		</isNotNull>
+	</select>
+	  
+	<insert id="T91103InsertMaster" parameterClass="ModelsLibrary.Tec.TecVo">
+      INSERT INTO TB_CD_ROUT_BAD 
+	  (
+            BAD_CD
+          , BAD_NM
+          , ROUT_CD
+          , DELT_FLG
+          , BAD_RMK
+          , CRE_USR_ID
+          , CRE_DT
+          , UPD_USR_ID
+          , UPD_DT
+          , CHNL_CD
+      ) 
+	  VALUES 
+	  (
+            #BAD_CD#
+          , #BAD_NM#
+          , #ROUT_CD#
+          , #DELT_FLG#
+          , #BAD_RMK#
+          , #CRE_USR_ID#
+          , GETDATE()
+          , #UPD_USR_ID#
+          , GETDATE()
+          , #CHNL_CD#
+      )
+    </insert>
+
+    <update id="T91103UpdateMaster" parameterClass="ModelsLibrary.Tec.TecVo">
+      UPDATE TB_CD_ROUT_BAD
+       SET ROUT_CD		= #ROUT_CD#
+         , DELT_FLG     = #DELT_FLG#
+         , BAD_RMK      = #BAD_RMK#
+         , UPD_USR_ID   = #UPD_USR_ID#
+         , UPD_DT       = GETDATE()
+     WHERE 1 = 1
+       AND CHNL_CD = #CHNL_CD#
+       AND BAD_CD = #BAD_CD#
+    </update>
+    
+    <delete id="T91103DeleteMaster" parameterClass="ModelsLibrary.Tec.TecVo">
+      DELETE FROM TB_CD_ROUT_BAD
+        WHERE 1 = 1
+         AND CHNL_CD = #CHNL_CD#
+         AND BAD_CD = #BAD_CD#
+    </delete>
+
+	  
+	  
+  
+	  
+		<!-- 협력업체 반품 -->
+		<select id="T91104SelectMstList" parameterClass="ModelsLibrary.Tec.TecVo" resultClass="ModelsLibrary.Tec.TecVo">
+				SELECT 
+								 T7.CO_NM         
+							 , dbo.FF_NM_ROUT(T1.CHNL_CD , T3.SCM_ROUT_CD) AS ROUT_NM
+							 , CONVERT(VARCHAR, T1.INSP_DT, 23) AS INSP_DT      
+							 , CONVERT(VARCHAR, T4.DUE_DT, 23) AS  MTRL_EXP_DT  
+							 , T5.ITM_NM       
+							 , T5.ITM_SZ_NM    
+							 , T1.ITM_CD					AS CUST_ITM_CD
+							 , T6.ITM_NM          AS CUST_ITM_NM
+							 , T3.SCM_PUR_ITM_QTY AS INSP_QTY 
+							 , T1.ITM_QTY    
+							 , T2.BAD_QTY     
+							 , T1.INAUD_TMP_NO
+							 , T1.INAUD_TMP_SEQ
+							 , T1.CHNL_CD
+               , T1.CRE_USR_ID
+						FROM TB_INAUD_TMP  T1
+								 CROSS APPLY 
+                 (
+											SELECT ISNULL(SUM(BAD_QTY), 0) AS BAD_QTY 
+												FROM TB_PROD_CD_BAD X
+											 WHERE 1 = 1
+												 AND X.CHNL_CD      = #CHNL_CD#
+												 AND X.LOT_DIV_NO   = T1.INAUD_TMP_NO
+												 AND X.LOT_DIV_SEQ  = T1.INAUD_TMP_SEQ
+												 AND X.ROUT_ITM_CD  = T1.ITM_CD
+								 ) T2
+							 , TB_SCM_PUR       T3
+							 , MV_TB_CD_ITM     T6
+							 , TB_SCM_ORD_RLSE  T4
+							 , MV_TB_CD_ITM     T5
+							 , TB_CD_CO         T7
+					 WHERE 1 = 1
+						 AND T1.CHNL_CD         = #CHNL_CD# 
+						 AND T1.CHNL_CD         = T3.CHNL_CD
+						 AND T1.CHNL_CD         = T4.CHNL_CD
+						 AND T1.CHNL_CD         = T5.CHNL_CD   
+						 AND T1.CHNL_CD         = T6.CHNL_CD      
+						 AND T1.CHNL_CD         = T7.CHNL_CD         
+						 AND T4.ITM_CD          = T5.ITM_CD
+						 AND T3.SCM_PUR_ITM_CD  = T6.ITM_CD
+						 AND T1.PUR_ORD_NO      = T3.SCM_PUR_NO
+						 AND T1.PUR_ORD_SEQ     = T3.SCM_PUR_SEQ
+						 AND T3.SCM_RLSE_NO     = T4.SCM_RLSE_NO
+						 AND T1.CO_CD           = T7.CO_NO
+						 AND T2.BAD_QTY         > 0 
+						 AND T1.INSP_DT         >= CAST(#FM_DT# + ' 00:00:00' AS DATETIME)
+						 AND T1.INSP_DT         <![CDATA[ <= ]]> CAST(#TO_DT# + ' 23:59:59' AS DATETIME)
+						 AND NOT EXISTS (
+															SELECT 'X'
+																FROM TB_INAUD_DTL X
+																	WHERE 1 = 1
+																		AND X.CHNL_CD  = #CHNL_CD# 
+																		AND X.ORD_NO   = T1.INAUD_TMP_NO 
+																		AND X.ORD_SEQ  = T1.INAUD_TMP_SEQ
+																		AND X.INAUD_CD = 'IBH'
+														)
+		</select>
+
+    <statement id="ProcT91104" parameterClass="ModelsLibrary.Tec.TecVo" resultClass="int">
+      declare @RTN VARCHAR(MAX)
+      exec @RTN = sp_InaudTempHis_O #CHNL_CD#, #INSP_DT#, 'IBH', #INAUD_TMP_NO#, #INAUD_TMP_SEQ#, #BAD_QTY#, #CRE_USR_ID#
+      select @RTN AS R_value
+    </statement>
+
+
+    
+    
+	    <!-- 품질검사 - 반제품 -->
+	  <select id="T91101SelectMstList" parameterClass="ModelsLibrary.Tec.TecVo" resultClass="ModelsLibrary.Tec.TecVo">
+		 SELECT   ROW_NUMBER() OVER (PARTITION BY T2.AREA_CD ORDER BY T2.INAUD_DT) AS RN
+            , CONVERT(VARCHAR,T2.INAUD_DT,23) AS INAUD_DT
+            , T1.PUR_ORD_NO     AS PUR_ORD_NO       
+            , T1.PUR_ORD_SEQ    AS PUR_ORD_SEQ
+            , T4.PUR_CO_CD      AS CO_CD
+            , T4.PUR_CO_NM      AS CO_NM
+            , T3.ITM_CD         AS ITM_CD
+            , T3.ITM_NM         AS ITM_NM  
+            , T3.ITM_SZ_NM      AS ITM_SZ_NM
+            , T1.PUR_QTY        AS IN_QTY 
+            , T2.ITM_QTY        AS ITM_QTY
+            , T2.INSP_QTY       AS INSP_QTY
+          <!--, T2.BAD_QTY AS BAD_QTY-->
+          <!--, ((T2.BAD_QTY / T2.INSP_QTY ) * 100 ) AS BAD_RATE-->
+          <!--, T2.BAD_RMK AS BAD_RMK-->
+            , CONVERT(VARCHAR(10),T2.INSP_DT,23) AS INSP_DT
+            , ISNULL(T2.INSP_FLG, 'N')           AS INSP_FLG
+            , (CASE WHEN ISNULL(T2.INSP_FLG, 'N') = 'Y' THEN 1 ELSE  0 END) AS isCheckd
+            , T2.CRE_USR_ID AS MAKE_USR_ID
+            , dbo.USR_NM_FNC(T2.CHNL_CD, T2.CRE_USR_ID) AS MAKE_USR_NM
+            , (CASE WHEN T2.INSP_FLG = 'Y' THEN '합격' WHEN T2.INSP_FLG = 'N' THEN '불합격' ELSE  '시험중' END) AS GBN
+            , T2.INAUD_TMP_NO
+            , T2.INAUD_TMP_SEQ
+            , T2.CHNL_CD
+            , T2.ITM_RMK
+            , T2.OK_FLG
+            , T2.GRP_SER_NO AS GRP_SER_NO
+            , T2.STK_SER_NO AS STK_SER_NO
+            , 'PU' AS ROUT_CD
+						, '구매' AS ROUT_NM
+         <!--, dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'Q-002', T2.BAD_CD) AS BAD_NM
+               , T2.BAD_CD-->
+         <!--, T2.BAD_RMK-->
+        FROM TB_PUR_ORD_DTL T1
+					OUTER APPLY 
+          ( 
+								 SELECT  PUR_CO_CD AS PUR_CO_CD
+											 , dbo.CD_COMPANY_NM_FNC(X.CHNL_CD, X.PUR_CO_CD) AS PUR_CO_NM
+									 FROM TB_PUR_ORD X 
+										WHERE 1 = 1 
+											AND X.CHNL_CD = T1.CHNL_CD 
+											AND X.PUR_ORD_NO = T1.PUR_ORD_NO	
+          ) T4
+           , TB_INAUD_TMP T2
+           , TB_CD_ITM T3
+        WHERE 1 = 1
+          AND T1.CHNL_CD					=  T2.CHNL_CD 
+          AND T1.CHNL_CD					=  T3.CHNL_CD 
+          AND T2.CHNL_CD					=  T3.CHNL_CD
+          AND T2.ITM_CD						=  T3.ITM_CD
+          AND T1.CHNL_CD					=  #CHNL_CD#
+          AND T1.PUR_ORD_NO				=  T2.PUR_ORD_NO
+          AND T1.PUR_ORD_SEQ			=  T2.PUR_ORD_SEQ 
+          AND T3.ITM_GRP_CLSS_CD	=  'P'
+			  <!--AND T1.SCM_PUR_CO_CD ='ANP01'-->
+        <isNotNull property="FM_DT">
+					AND T2.INAUD_DT >= CAST(CONVERT(VARCHAR, #FM_DT#, 120) + ' 00:00:00' AS DATETIME)
+					AND T2.INAUD_DT <![CDATA[ <= ]]> CAST(CONVERT(VARCHAR, #TO_DT#, 120) + ' 23:59:59' AS DATETIME)
+        </isNotNull>
+				<isNotNull property="OK_FLG">
+					AND T2.OK_FLG = #OK_FLG#
+				</isNotNull>
+	  </select>
+
+    <update id="T91101UpdateMst" parameterClass="ModelsLibrary.Tec.TecVo">
+		  UPDATE TB_INAUD_TMP
+		  SET
+				<!-- ITM_QTY       = #ITM_QTY# -->
+			    ITM_RMK       = #ITM_RMK#
+			  , UPD_USR_ID    = #UPD_USR_ID#
+			  , UPD_DT        = GETDATE()
+			  , INSP_NO       = #INSP_NO#
+			  , INSP_DT       = GETDATE()
+			  <!--, BAD_QTY       = #IDLE_MNTS#-->
+			  , INSP_QTY      = #INSP_QTY#
+			  , INSP_FLG      = #INSP_FLG#
+			  , EQ_NO         = #EQ_NO#
+			  , MTRL_MAKE_DT  = #MTRL_MAKE_DT#
+			  , MTRL_EXP_DY   = #MTRL_EXP_DY#
+			  , MAKE_ST_DT    = #MAKE_ST_DT#
+			  , MAKE_END_DT   = #MAKE_END_DT#
+			  <!--, BAD_QTY		  = #BAD_QTY#
+			  , BAD_CD		  = #BAD_CD#
+			  , BAD_RMK		  = #BAD_RMK#-->
+		  WHERE 1=1
+				AND CHNL_CD         = #CHNL_CD#
+				AND INAUD_TMP_NO    = #INAUD_TMP_NO#
+				AND INAUD_TMP_SEQ   = #INAUD_TMP_SEQ#
+	  </update>
+
+	  
+	    <!-- 품질검사 - 부자재 -->
+	  <select id="T91101SelectDtlList" parameterClass="ModelsLibrary.Tec.TecVo" resultClass="ModelsLibrary.Tec.TecVo">
+		  SELECT  
+					 ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.CRE_DT) AS RN
+			   , T1.BAD_CD AS BAD_CD
+			   , T2.BAD_NM AS BAD_NM
+			   , T1.BAD_QTY AS BAD_QTY
+			   , T1.BAD_RSN	AS BAD_RMK
+         , T1.ROUT_ITM_CD
+			   , dbo.USR_NM_FNC(T1.CHNL_CD, T1.CRE_USR_ID) AS CRE_USR_NM
+			   , T1.CHNL_CD
+			   , T1.CRE_USR_ID
+			   , T1.UPD_USR_ID
+			   , 'PU' AS ROUT_CD
+			   , #STK_SER_NO# AS STK_SER_NO
+         , #ITM_CD# AS PUR_ITM_CD
+		  FROM  TB_PROD_CD_BAD T1 LEFT OUTER JOIN TB_CD_ROUT_BAD T2 ON(T1.BAD_CD = T2.BAD_CD AND T1.CHNL_CD = T2.CHNL_CD)
+				WHERE 1 = 1 
+					AND T1.CHNL_CD		= #CHNL_CD#
+					<!--AND T1.LOT_DIV_NO	= #GRP_SER_NO#-->
+					AND T1.LOT_DIV_NO		= #INAUD_TMP_NO#
+					AND T1.LOT_DIV_SEQ	= #INAUD_TMP_SEQ#
+	  </select>
+    
+    
+  <insert id="T91101InsertDetail" parameterClass="ModelsLibrary.Tec.TecVo">
+		INSERT INTO TB_PROD_CD_BAD
+		(
+					CHNL_CD
+				, ROUT_CD
+				, LOT_DIV_NO
+				, LOT_DIV_SEQ
+				, BAD_CD
+				, BAD_QTY
+				, CRE_USR_ID
+				, CRE_DT
+				, UPD_USR_ID
+				, UPD_DT
+				, BAD_RSN
+				, ROUT_ITM_CD
+       ) 
+	   VALUES
+	   (
+	  			#CHNL_CD#
+				, #ROUT_CD#
+				, #INAUD_TMP_NO#
+				, #INAUD_TMP_SEQ#
+				, #BAD_CD#
+				, #BAD_QTY#
+				, #CRE_USR_ID#
+				, GETDATE()
+				, #UPD_USR_ID#
+				, GETDATE()
+				, #BAD_RMK#
+				, #ITM_CD#
+       )
+    </insert>
+
+    <delete id="T91101DeleteDetail" parameterClass="ModelsLibrary.Tec.TecVo">
+      DELETE FROM TB_PROD_CD_BAD
+				WHERE 1 = 1
+					AND CHNL_CD		= #CHNL_CD#
+					AND LOT_DIV_NO	= #INAUD_TMP_NO#
+					AND LOT_DIV_SEQ	= #INAUD_TMP_SEQ#
+					<!--AND ROUT_ITM_CD	= #SCM_PUR_ITM_CD#-->
+    </delete>
+
+
+  </statements>
+</sqlMap>

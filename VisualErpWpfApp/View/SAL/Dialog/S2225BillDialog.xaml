@@ -1,0 +1,145 @@
+﻿<dx:DXWindow
+    x:Class="AquilaErpWpfApp3.View.SAL.Dialog.S2225BillDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+    xmlns:mvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    mc:Ignorable="d" 
+    WindowStartupLocation="CenterScreen"
+    Title="MasterDialog" WindowState="Normal" Height="508" Width="900" Icon="{dx:DXImage Image=Add_16x16.png}" ResizeMode="CanResize"
+    >
+    <mvvm:Interaction.Behaviors>
+        <mvvm:CurrentWindowService />
+    </mvvm:Interaction.Behaviors>
+    <Window.Resources>
+        <dx:ImageDataConverter x:Key="ImageDataConverter" />
+        <ControlTemplate x:Key="checkTemplate">
+            <Image Name="PART_Editor" Height="18" Width="18"/>
+            <ControlTemplate.Triggers>
+                <DataTrigger Binding="{Binding Path=(dxe:BaseEdit.OwnerEdit).IsChecked}" Value="True">
+                    <Setter TargetName="PART_Editor" Property="Source" Value="/Images/check_box_T.png"></Setter>
+                    <Setter TargetName="PART_Editor" Property="ToolTip" Value="True"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=(dxe:BaseEdit.OwnerEdit).IsChecked}" Value="False">
+                    <Setter TargetName="PART_Editor" Property="Source" Value="/Images/check_box_F.png"></Setter>
+                    <Setter TargetName="PART_Editor" Property="ToolTip" Value="False"></Setter>
+                </DataTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <DataTemplate x:Key="ReadOnlyHeaderTemplate">
+            <dxe:CheckEdit IsChecked="{Binding ReadOnly, Mode=TwoWay}" Unchecked="CheckEdit_Checked" Checked="CheckEdit_Checked"  />
+        </DataTemplate>
+        <Style TargetType="dxe:CheckEdit" x:Key="checkEditStyle">
+            <Setter Property="DisplayTemplate"  Value="{StaticResource checkTemplate}"/>
+            <Setter Property="EditTemplate"  Value="{StaticResource checkTemplate}"/>
+        </Style>
+        
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="5"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="90"></RowDefinition>
+            <RowDefinition Height="3"></RowDefinition>
+        </Grid.RowDefinitions>
+        <!--<dxdo:DockLayoutManager Grid.Column="1" Grid.Row="1">
+            <dxdo:LayoutGroup Orientation="Vertical" >
+                --><!--레이아웃판넬--><!--
+                <dxdo:LayoutPanel ItemHeight="300" dxdo:AutoHideGroup.AutoHideType="Top" Caption="#" ShowCaption="False" CaptionImage="{dx:DXImageGrayscale Image=ListBullets_16x16.png}" Padding="1" AllowClose="False">-->
+                    <!--그리드컨트롤-->
+        <dxg:GridControl Grid.Column="1" Grid.Row="1" x:Name="MasterGrid" AutoExpandAllGroups="True"  EnableSmartColumnsGeneration="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectionMode="Row"   >
+                        <dxg:GridControl.View>
+                            <dxg:TableView x:Name="MasterView" AllowPerPixelScrolling="True" ShowTotalSummary="False" ShowFixedTotalSummary="True" SearchDelay="0" ShowVerticalLines="True" NavigationStyle="Cell" ShowIndicator="True" ShowHorizontalLines="True" AutoWidth="True" ShowGroupPanel="False" SearchString="{Binding ElementName=MsearchControl, Path=Text}"  />
+                        </dxg:GridControl.View>
+                        <dxg:GridControl.Columns>
+
+                <dxg:GridColumn FieldName="isCheckd" Header="" Width="50"  AllowAutoFilter="False" AllowColumnFiltering="True" AllowSorting="False"  AllowSearchPanel="False" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" AllowMoving="False" HeaderTemplate="{StaticResource ReadOnlyHeaderTemplate}" >
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:CheckEdit Name="PART_Editor" HorizontalContentAlignment="Center" Style="{StaticResource checkEditStyle}" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <!--<dxg:GridColumn FieldName="CHK_FLG" Header="" Width="50"  AllowAutoFilter="False" AllowColumnFiltering="True" AllowSorting="False"  AllowSearchPanel="False" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" AllowMoving="False"  HeaderTemplate="{StaticResource ReadOnlyHeaderTemplate}" >
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <dxe:CheckEdit Name="PART_Editor" HorizontalContentAlignment="Center" Style="{StaticResource checkEditStyle}" />
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>-->
+                            <dxg:GridColumn FieldName="AREA_NM" Header="사업장" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="True" AllowDrop="True" FilterPopupMode="CheckedList">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="SL_AREA_NM" Header="지역구분" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="True" AllowDrop="True" FilterPopupMode="CheckedList">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="PAY_TP_NM" Header="거래구분" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="True" AllowDrop="True" FilterPopupMode="CheckedList">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="CO_NO" Header="코드" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="True" AllowDrop="True" FilterPopupMode="CheckedList">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="CO_NM" Header="거래처" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="True" AllowDrop="True" FilterPopupMode="CheckedList">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="BIL_KNT" Header="건수" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="True" AllowDrop="True" FilterPopupMode="CheckedList">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="N1ST_FLG" Header="일반" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="True" AllowDrop="True" FilterPopupMode="CheckedList">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="N2ND_FLG" Header="수금" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="True" AllowDrop="True" FilterPopupMode="CheckedList">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+
+                        </dxg:GridControl.Columns>
+                        <dxg:GridControl.TotalSummary>
+                            <dxg:GridSummaryItem SummaryType="Count" Alignment="Right"/>
+                        </dxg:GridControl.TotalSummary>
+                    </dxg:GridControl>
+                <!--</dxdo:LayoutPanel>
+            </dxdo:LayoutGroup>
+        </dxdo:DockLayoutManager>-->
+
+        <dxwui:AppBar Grid.Column="1" Grid.Row="2" IsOpen="True" IsCompact="False"  IsSticky="True" HideMode="Manual" >
+            <dxwui:AppBarButton Label="계산서생성(일괄)" HorizontalAlignment="Center" AllowGlyphTheming="True"  x:Name="btn_search" Click="btn_search_Click" >
+                <Image Stretch="Fill" Width="25" Height="25" Source="{dx:DXImageGrayscale Image=Add_32x32.png}"/>
+            </dxwui:AppBarButton>
+
+            <dxwui:AppBarButton Label="취소" HorizontalAlignment="Center" AllowGlyphTheming="True" IsEnabled="True" Click="CancelButton_Click" >
+                <Image Stretch="Fill" Width="25" Height="25" Source="{dx:DXImageGrayscale Image=Cancel_32x32.png}"/>
+            </dxwui:AppBarButton>
+            <!--<dxwui:AppBarSeparator HorizontalContentAlignment="Center" HorizontalAlignment="Right" />
+            <dxe:TextEdit x:Name="MsearchControl" AllowNullInput="True" NullText="Search" VerticalAlignment="Center" Height="40" Width="150" FontSize="15" HorizontalContentAlignment="Center" HorizontalAlignment="Right" MaxLength="40" Margin="0,0,10,0" />-->
+
+        </dxwui:AppBar>
+    </Grid>
+</dx:DXWindow>

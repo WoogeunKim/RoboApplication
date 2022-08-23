@@ -1,0 +1,231 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxd="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+    xmlns:dxpg="http://schemas.devexpress.com/winfx/2008/xaml/pivotgrid"
+    xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" x:Class="AquilaErpWpfApp3.View.SAL.S2281" FontFamily="Arial" FontSize="12"
+        d:DesignHeight="768" d:DesignWidth="1024" >
+
+    <Grid>
+        <dxb:BarManager>
+            <dxb:BarManager.Items>
+                <dxb:BarButtonItem x:Name="Master_ref" Content="조회" Command="{Binding RefreshCommand}" KeyGesture="F5" Glyph="{dx:DXImage Image=Refresh2_16x16.png}" LargeGlyph="{dx:DXImage Image=Refresh2_32x32.png}" />
+                <dxb:BarButtonItem x:Name="Master_pri" Content="출력" ItemClick="print_ItemClick"  Glyph="{dx:DXImage Image=Preview_16x16.png}" LargeGlyph="{dx:DXImage Image=Preview_32x32.png}" IsEnabled="{Binding isM_UPDATE}" />
+                <dxb:BarButtonItem x:Name="Master_excel" Content="엑셀저장" ItemClick="excel_ItemClick"  Glyph="{dx:DXImage Image=ExportToXLS_16x16.png}" LargeGlyph="{dx:DXImage Image=ExportToXLS_32x32.png}" IsEnabled="{Binding isM_UPDATE}" />
+                <dxb:BarButtonItem x:Name="Master_filter" Content="필터" ItemClick="filter_ItemClick" Glyph="{dx:DXImage Image=Filter_16x16.png}" LargeGlyph="{dx:DXImage Image=Filter_32x32.png}" />
+
+                <dxb:BarEditItem x:Name="M_FM_DT" Content="일자 (From) : " EditValue="{Binding StartDt, Mode=TwoWay}" >
+                    <dxb:BarEditItem.EditSettings>
+                        <dxe:DateEditSettings IsTextEditable="false" />
+                    </dxb:BarEditItem.EditSettings>
+                </dxb:BarEditItem>
+
+                <dxb:BarEditItem x:Name="M_TO_DT" Content="~ (To) : " EditValue="{Binding EndDt, Mode=TwoWay}">
+                    <dxb:BarEditItem.EditSettings>
+                        <dxe:DateEditSettings IsTextEditable="false" />
+                    </dxb:BarEditItem.EditSettings>
+                </dxb:BarEditItem>
+
+                <dxb:BarEditItem x:Name="M_AREA_NM" Content="사  업  장 : " EditValue="{Binding M_SL_AREA_NM, Mode=TwoWay}">
+                    <dxb:BarEditItem.EditSettings>
+                        <dxg:LookUpEditSettings ItemsSource="{Binding AreaList}" DisplayMember="CLSS_DESC" ImmediatePopup="True" IsPopupAutoWidth="True" AutoPopulateColumns ="False"  IsTextEditable="False" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" >
+                            <dxg:LookUpEditSettings.PopupContentTemplate>
+                                <ControlTemplate>
+                                    <dxg:GridControl Name="PART_GridControl" >
+                                        <dxg:GridControl.Columns>
+                                            <dxg:GridColumn FieldName="CLSS_CD" Header="코드" Width="10" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="2">
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
+
+                                            <dxg:GridColumn FieldName="CLSS_DESC" Header="설명" Width="30" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="2">
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
+                                        </dxg:GridControl.Columns>
+                                        <dxg:GridControl.View>
+                                            <dxg:TableView Name="View_ITM_GRP_CLSS_CD" ShowColumnHeaders="False" SearchDelay="0" NewItemRowPosition="None" ShowGroupedColumns="True" AutoWidth="True" AllowPerPixelScrolling="True" ScrollAnimationDuration="0" ShowAutoFilterRow="False" ShowTotalSummary="False" IsSynchronizedWithCurrentItem="True" />
+                                        </dxg:GridControl.View>
+                                    </dxg:GridControl>
+                                </ControlTemplate>
+                            </dxg:LookUpEditSettings.PopupContentTemplate>
+                            <dxg:LookUpEditSettings.StyleSettings>
+                                <dxg:SearchLookUpEditStyleSettings />
+                            </dxg:LookUpEditSettings.StyleSettings>
+                        </dxg:LookUpEditSettings>
+                    </dxb:BarEditItem.EditSettings>
+                </dxb:BarEditItem>
+                <dxb:BarEditItem x:Name="M_BLANK" Content="" />
+
+            </dxb:BarManager.Items>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <dxr:RibbonControl x:Name="paintRibbon" AllowCustomization="False" Visibility="Visible" Grid.Row="0" ToolbarShowMode="ShowBelow" RibbonHeaderVisibility="Collapsed">
+                    <dxr:RibbonDefaultPageCategory>
+                        <dxr:RibbonPage Caption="매출 상세(기간별)">
+                            <dxr:RibbonPageGroup Caption="분석">
+                                <dxb:BarEditItemLink BarItemName="M_FM_DT" EditWidth="120" EditHeight="28" />
+                                <dxb:BarEditItemLink BarItemName="M_AREA_NM" EditWidth="120" EditHeight="28" />
+                                <dxb:BarEditItemLink BarItemName="M_TO_DT" EditWidth="120" EditHeight="28" />
+                            </dxr:RibbonPageGroup>
+                            <dxr:RibbonPageGroup Caption="관리">
+                                <dxb:BarItemLinkSeparator/>
+                                <dxb:BarButtonItemLink BarItemName="Master_ref"/>
+                                <dxb:BarItemLinkSeparator/>
+                                <dxb:BarButtonItemLink BarItemName="Master_pri"/>
+                                <dxb:BarButtonItemLink BarItemName="Master_filter"/>
+                                <dxb:BarButtonItemLink BarItemName="Master_excel"/>
+                            </dxr:RibbonPageGroup>
+                        </dxr:RibbonPage>
+                    </dxr:RibbonDefaultPageCategory>
+                </dxr:RibbonControl>
+                <dxd:DockLayoutManager x:Name="CodeManager" Grid.Row="1">
+
+                    <dxd:LayoutGroup>
+                        <dxd:LayoutPanel Caption="Master" AllowContextMenu="False" AllowClose="False" ShowCaption="False" ItemWidth="310">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150" />
+                                    <ColumnDefinition Width="929*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="0" />
+                                    <RowDefinition Height="15*" />
+                                    <RowDefinition Height="8*"/>
+                                </Grid.RowDefinitions>
+
+
+                                <dxe:ImageEdit HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Source="{dx:DXImage Image=Preview_16x16.png}" Grid.Row="0" ShowMenu="False" BorderBrush="#00000000" ShowBorder="False"  Margin="20,0,0,0" />
+                                <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" FontSize="15" Grid.Column="0" Grid.ColumnSpan="2" Margin="37,0,0,0"  >
+                                    <Run Text="조회 조건 : "></Run>
+                                    <Run Text="{Binding Title}" Foreground="#2BA5BA" FontWeight="Bold" ></Run>
+                                </TextBlock>
+
+                                <!--Grid.RowSpan="1"-->
+                                <dxlc:LayoutGroup Grid.Row="2" Grid.ColumnSpan="2"  >
+                                    <dxlc:LayoutGroup Orientation="Vertical" VerticalAlignment="Stretch" Width="180">
+                                        <dxlc:LayoutGroup View="GroupBox" Header="Hidden Fields" IsCollapsible="True" Padding="0" ItemSpace="0" >
+                                            <dxlc:LayoutGroup.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <Grid SnapsToDevicePixels="True" Height="16" Margin="-6,0,0,0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Image VerticalAlignment="Center" Source="{dx:DXImage Image=Add_16x16.png}" Width="16" Height="16" >
+                                                            <RenderOptions.BitmapScalingMode>NearestNeighbor</RenderOptions.BitmapScalingMode>
+                                                        </Image>
+                                                        <dxe:TextEdit Grid.Column="1" EditMode="InplaceInactive" VerticalAlignment="Center"
+                                                      HorizontalAlignment="Left" EditValue="Hidden Fields"  />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </dxlc:LayoutGroup.HeaderTemplate>
+                                            <dxlc:LayoutGroup.GroupBoxStyle>
+                                                <Style TargetType="{x:Type dxlc:GroupBox}">
+                                                    <Setter Property="Padding" Value="0" />
+                                                </Style>
+                                            </dxlc:LayoutGroup.GroupBoxStyle>
+
+                                            <dxpg:PivotFieldListControl Area="All" Owner="{Binding ElementName=pivotGrid}" Orientation="Auto" ShowBorder="False" Background="#0fff" EmptyTextVisibility="Collapsed" />
+                                        </dxlc:LayoutGroup>
+
+                                    </dxlc:LayoutGroup>
+                                    <dxlc:LayoutGroup Orientation="Vertical" VerticalAlignment="Stretch">
+                                        <dxlc:LayoutItem>
+                                            <dxlc:LayoutGroup Orientation="Vertical">
+                                                <dxlc:GroupBox TitleVisibility="Collapsed" Padding="5,0,5,0">
+                                                    <dxpg:PivotFieldListControl Area="ColumnArea" Owner="{Binding ElementName=pivotGrid}" Orientation="Auto" ShowBorder="False" LabelVisibility="Visible" Background="#0fff" >
+                                                    </dxpg:PivotFieldListControl>
+                                                </dxlc:GroupBox>
+                                                <dxlc:GroupBox TitleVisibility="Collapsed" Padding="5,0,5,0">
+                                                    <dxpg:PivotFieldListControl Area="RowArea" Owner="{Binding ElementName=pivotGrid}" Orientation="Auto"  ShowBorder="False" LabelVisibility="Visible" Background="#0fff" />
+                                                </dxlc:GroupBox>
+                                                <dxlc:GroupBox TitleVisibility="Collapsed" Padding="5,0,5,0">
+                                                    <dxpg:PivotFieldListControl Area="DataArea" Owner="{Binding ElementName=pivotGrid}" Orientation="Auto"  ShowBorder="False" LabelVisibility="Visible" Background="#0fff" />
+                                                </dxlc:GroupBox>
+                                            </dxlc:LayoutGroup>
+                                        </dxlc:LayoutItem>
+                                        <dxlc:LayoutItem VerticalAlignment="Stretch">
+                                            <dxlc:GroupBox TitleVisibility="Collapsed" Padding="0">
+                                                <dxpg:PivotGridControl x:Name="pivotGrid" RowTreeWidth="180" CustomCellAppearance="OnCustomAppearance" RowTotalsLocation="Far" ShowBorder="False" ShowFilterHeaders="False" IsPrefilterVisible="False" ShowDataHeaders="False" ShowColumnHeaders="True" ShowRowHeaders="True" ChartProvideDataByColumns="False" ChartSelectionOnly="True" ChartProvideColumnGrandTotals="False" ChartProvideRowGrandTotals="False" ChartDataProvideMode="UseCustomSettings" CustomChartDataSourceData="pivotGrid_CustomChartDataSourceData" DataSource="{Binding Path=SelectMstList}" ShowColumnTotals="False" ShowColumnGrandTotalHeader="False" ShowColumnGrandTotals="False" ShowRowGrandTotalHeader="False" ShowRowGrandTotals="False" ShowRowTotals="False" ShowGrandTotalsForSingleValues="False" ShowTotalsForSingleValues="False" >
+                                                    <dxpg:PivotGridControl.Fields>
+                                                        <!-- DataArea -->
+                                                        <dxpg:PivotGridField Area="DataArea" x:Name="DA_ITM_QTY" FieldName="ITM_QTY" Width="100" Caption="수량" CellFormat="n0" AllowDragInCustomizationForm="True" AllowDrag="True" AllowDrop="True" />
+                                                        <!--<dxpg:PivotGridField Area="DataArea" x:Name="DA_MD_QTY" FieldName="MD_QTY" Width="100" Caption="마대" CellFormat="n0" AllowDragInCustomizationForm="True" AllowDrag="True" AllowDrop="True" />-->
+                                                        <dxpg:PivotGridField Area="DataArea" x:Name="DA_ITM_WGT" FieldName="ITM_WGT" Width="100" Caption="중량" CellFormat="n2" AllowDragInCustomizationForm="True" AllowDrag="True" AllowDrop="True" />
+                                                        <dxpg:PivotGridField Area="DataArea" x:Name="DA_ITM_AMT" FieldName="ITM_AMT" Width="120" Caption="금액" CellFormat="c0" AllowDragInCustomizationForm="True" AllowDrag="True" AllowDrop="True" />
+                                                        
+                                                        <!-- DataArea -->
+                                                        <dxpg:PivotGridField Area="RowArea" x:Name="RA_AREA_NM" FieldName="AREA_NM" Width="120" Caption="사업장" />
+                                                        <dxpg:PivotGridField Area="RowArea" x:Name="RA_N1ST_ITM_GRP_NM" FieldName="N1ST_ITM_GRP_NM" Width="170" Caption="품명" />
+                                                        <dxpg:PivotGridField Area="RowArea" x:Name="RA_SL_ITM_CD" FieldName="SL_ITM_CD" Width="170" Caption="품번" />
+
+                                                        <!-- DataArea -->
+                                                        <dxpg:PivotGridField Area="ColumnArea" x:Name="RA_SL_YY" FieldName="SL_YY" Width="100" Caption="판매 년" />
+                                                        <dxpg:PivotGridField Area="ColumnArea" x:Name="RA_SL_MM" FieldName="SL_MM" Width="80" Caption="판매 월" />
+
+                                                        <!-- OtherArea -->
+                                                        <!--<dxpg:PivotGridField x:Name="RA_SL_MM" FieldName="SL_MM" Width="80" Caption="판매 월" Visible="False" />-->
+                                                        <dxpg:PivotGridField x:Name="RA_SL_DD" FieldName="SL_DD" Width="80" Caption="판매 일" Visible="False" />
+
+                                                        <dxpg:PivotGridField x:Name="RA_SL_AREA_NM" FieldName="SL_AREA_NM" Width="130" Caption="지역" Visible="False" />
+                                                        <dxpg:PivotGridField x:Name="RA_TEAM_NM" FieldName="TEAM_NM" Width="130" Caption="팀" Visible="False" />
+                                                        <dxpg:PivotGridField x:Name="RA_CO_NM" FieldName="CO_NM" Width="200" Caption="거래처" Visible="False" />
+
+                                                        <dxpg:PivotGridField x:Name="RA_N2ND_ITM_GRP_NM" FieldName="N2ND_ITM_GRP_NM" Width="170" Caption="재질" Visible="False" />
+                                                        <dxpg:PivotGridField x:Name="RA_ITM_SZ_NM" FieldName="ITM_SZ_NM" Width="170" Caption="규격" Visible="False" />
+                                                        <dxpg:PivotGridField x:Name="RA_PROD_LOC_NM" FieldName="PROD_LOC_NM" Width="170" Caption="품목출처" Visible="False" />
+
+                                                    </dxpg:PivotGridControl.Fields>
+                                                </dxpg:PivotGridControl>
+                                            </dxlc:GroupBox>
+                                        </dxlc:LayoutItem>
+
+                                    </dxlc:LayoutGroup>
+                                </dxlc:LayoutGroup>
+
+                                <dxlc:LayoutGroup Grid.Row="3" Grid.ColumnSpan="2" >
+                                    <Grid Margin="0,4,0,0">
+                                        <dxc:ChartControl Name="chartControl" DataSource="{Binding ElementName=pivotGrid, Path=ChartDataSource}" BoundDataChanged="chartControl_BoundDataChanged" AnimationMode="OnLoad">
+                                            <dxc:ChartControl.CrosshairOptions>
+                                                <dxc:CrosshairOptions ShowArgumentLine="False"/>
+                                            </dxc:ChartControl.CrosshairOptions>
+
+                                            <dxc:ChartControl.Legend>
+                                                <dxc:Legend HorizontalPosition="Center" VerticalPosition="BottomOutside" Orientation="Horizontal" UseCheckBoxes="True"/>
+                                            </dxc:ChartControl.Legend>
+                                        </dxc:ChartControl>
+                                    </Grid>
+
+                                </dxlc:LayoutGroup>
+                            </Grid>
+                        </dxd:LayoutPanel>
+                    </dxd:LayoutGroup>
+                </dxd:DockLayoutManager>
+
+            </Grid>
+        </dxb:BarManager>
+    </Grid>
+
+
+
+
+
+
+</UserControl>

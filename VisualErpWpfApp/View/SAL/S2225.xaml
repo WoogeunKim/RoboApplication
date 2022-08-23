@@ -1,0 +1,394 @@
+﻿<UserControl 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" 
+	xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+	xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxd="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+    xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
+    xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+    x:Class="AquilaErpWpfApp3.View.SAL.S2225" FontFamily="Arial" FontSize="12"
+    d:DesignHeight="768" d:DesignWidth="1024" mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <dx:ImageDataConverter x:Key="ImageDataConverter" />
+        <Style x:Key="GridCellStyle" TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RowData.Row.CLZ_FLG}" Value="Y">
+                    <Setter Property="Foreground" Value="DarkGray"/>
+                    <!--<Setter Property="FontWeight" Value="Bold"/>-->
+                    <!--<Setter Property="Foreground" Value="#2BA5BA"/>
+                    <Setter Property="FontWeight" Value="Bold"/>-->
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    
+    <!--<Style x:Key="customCellStyle" TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}" >
+            <Setter Property="Background" Value="#fffacd" />
+            <Style.Triggers>
+                <Trigger Property="SelectionState" Value="Focused">
+                    <Setter Property="Background" Value="#afeeee" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+
+        <ControlTemplate x:Key="checkTemplate">
+            <Image Name="PART_Editor" Height="16" Width="16"/>
+            <ControlTemplate.Triggers>
+                <DataTrigger Binding="{Binding Path=(dxe:BaseEdit.OwnerEdit).IsChecked}" Value="True">
+                    <Setter TargetName="PART_Editor" Property="Source" Value="/Images/check_box_T.png"></Setter>
+                    <Setter TargetName="PART_Editor" Property="ToolTip" Value="True"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=(dxe:BaseEdit.OwnerEdit).IsChecked}" Value="False">
+                    <Setter TargetName="PART_Editor" Property="Source" Value="/Images/check_box_F.png"></Setter>
+                    <Setter TargetName="PART_Editor" Property="ToolTip" Value="False"></Setter>
+                </DataTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <Style TargetType="dxe:CheckEdit" x:Key="checkEditStyle">
+            <Setter Property="DisplayTemplate"  Value="{StaticResource checkTemplate}"/>
+            <Setter Property="EditTemplate"  Value="{StaticResource checkTemplate}"/>
+        </Style>
+
+        <DataTemplate x:Key="ReadOnlyHeaderTemplate">
+            <dxe:CheckEdit IsChecked="{Binding ReadOnly, Mode=TwoWay}" Unchecked="CheckEdit_Checked" Checked="CheckEdit_Checked"  />
+        </DataTemplate>
+
+        <Style x:Key="GridCellStyle" TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RowData.Row.CLZ_FLG}" Value="Y">
+                    <Setter Property="Foreground" Value="DarkGray"/>
+                    --><!--<Setter Property="FontWeight" Value="Bold"/>-->
+                    <!--<Setter Property="Foreground" Value="#2BA5BA"/>
+                    <Setter Property="FontWeight" Value="Bold"/>--><!--
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <local:GroupRowSelectionStateConverter x:Key="GroupRowSelectionStateConverter"/>
+
+        --><!--<DataTemplate x:Key="GroupTemplate">
+            <StackPanel Orientation="Horizontal">
+                <dxe:CheckEdit x:Name="GroupRowCheckEditor" Margin="7,0,0,0"
+                               EditValueChanged="CheckEdit_EditValueChanged">
+                    <dxe:CheckEdit.IsChecked>
+                        <MultiBinding Converter="{StaticResource GroupRowSelectionStateConverter}" Mode="OneWay">
+                            <Binding Path="View.Grid.(local:GroupRowSelectionHelper.GroupRowSelectionHelper).SelectedGroupRows" Mode="OneWay"/>
+                            <Binding Path="RowData.RowHandle.Value" Mode="OneWay"/>
+                            <Binding RelativeSource="{RelativeSource Self}"/>
+                        </MultiBinding>
+                    </dxe:CheckEdit.IsChecked>
+                </dxe:CheckEdit>
+
+                <TextBlock Padding="5"  >
+                    <Run Text="출하 요청 번호 : " />
+                    <Run Text="{Binding Path=Value}" />
+                </TextBlock>
+            </StackPanel>
+        </DataTemplate>-->
+
+    </UserControl.Resources>
+
+    <Grid>
+        <dxb:BarManager>
+            <dxb:BarManager.Items>
+                <dxb:BarEditItem x:Name="M_FM_DT" Content="발행월 : " EditValue="{Binding StartDt}" >
+                    <dxb:BarEditItem.EditSettings>
+                        <dxe:DateEditSettings IsTextEditable="True" AllowDefaultButton="True" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ShowWeekNumbers="True"  MaskUseAsDisplayFormat="True" MaskType="DateTime" Mask="y" >
+                            <dxe:DateEditSettings.StyleSettings>
+                                <dxe:DateEditPickerStyleSettings  />
+                            </dxe:DateEditSettings.StyleSettings>
+                        </dxe:DateEditSettings>
+                    </dxb:BarEditItem.EditSettings>
+                </dxb:BarEditItem>
+
+                <!--<dxb:BarEditItem x:Name="M_TO_DT" Content="~ (To) : " EditValue="{Binding EndDt}">
+                    <dxb:BarEditItem.EditSettings>
+                        <dxe:DateEditSettings IsTextEditable="false" />
+                    </dxb:BarEditItem.EditSettings>
+                </dxb:BarEditItem>-->
+
+
+                <dxb:BarEditItem x:Name="M_AREA_NM" Content="사업장 : "  EditValue="{Binding M_SL_AREA_NM, Mode=TwoWay}" IsEnabled="False" >
+                    <dxb:BarEditItem.EditSettings>
+                        <dxg:LookUpEditSettings ItemsSource="{Binding AreaList}" DisplayMember="CLSS_DESC" ImmediatePopup="True" IsPopupAutoWidth="True" AutoPopulateColumns ="False"  IsTextEditable="False" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" >
+                            <dxg:LookUpEditSettings.PopupContentTemplate>
+                                <ControlTemplate>
+                                    <dxg:GridControl Name="PART_GridControl" >
+                                        <dxg:GridControl.Columns>
+                                            <dxg:GridColumn FieldName="CLSS_CD" Header="코드" Width="10" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="2">
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
+
+                                            <dxg:GridColumn FieldName="CLSS_DESC" Header="설명" Width="30" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="2">
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
+                                        </dxg:GridControl.Columns>
+                                        <dxg:GridControl.View>
+                                            <dxg:TableView Name="View_ITM_GRP_CLSS_CD" ShowColumnHeaders="False" SearchDelay="0" NewItemRowPosition="None" ShowGroupedColumns="True" AutoWidth="True" AllowPerPixelScrolling="True" ScrollAnimationDuration="0" ShowAutoFilterRow="False" ShowTotalSummary="False" IsSynchronizedWithCurrentItem="True" />
+                                        </dxg:GridControl.View>
+                                    </dxg:GridControl>
+                                </ControlTemplate>
+                            </dxg:LookUpEditSettings.PopupContentTemplate>
+                            <dxg:LookUpEditSettings.StyleSettings>
+                                <dxg:SearchLookUpEditStyleSettings />
+                            </dxg:LookUpEditSettings.StyleSettings>
+                        </dxg:LookUpEditSettings>
+                    </dxb:BarEditItem.EditSettings>
+                </dxb:BarEditItem>
+
+                <dxb:BarEditItem x:Name="M_SEARCH_TEXT" Content="검        색 : "  EditValue="{Binding M_SEARCH_TEXT, Mode=TwoWay}" >
+                    <dxb:BarEditItem.EditTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit Width="120" Height="25" FontSize="14" Text="{Binding DataContext.M_SEARCH_TEXT, RelativeSource={RelativeSource AncestorType=dxb:BarEditItemLinkControl}, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </dxb:BarEditItem.EditTemplate>
+                </dxb:BarEditItem>
+
+                <dxb:BarEditItem x:Name="M_RLSE_PRT_FLG" Content="발행 유무 : "  EditValue="{Binding M_RLSE_PRT_FLG, Mode=TwoWay}" >
+                    <dxb:BarEditItem.EditSettings>
+                        <dxg:LookUpEditSettings ItemsSource="{Binding RlsePrtFlgList}" DisplayMember="CLSS_DESC" ImmediatePopup="True" IsPopupAutoWidth="True" AutoPopulateColumns ="False"  IsTextEditable="False" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" >
+                            <dxg:LookUpEditSettings.PopupContentTemplate>
+                                <ControlTemplate>
+                                    <dxg:GridControl Name="PART_GridControl" >
+                                        <dxg:GridControl.Columns>
+                                            <dxg:GridColumn FieldName="CLSS_CD" Header="코드" Width="10" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="2">
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
+
+                                            <dxg:GridColumn FieldName="CLSS_DESC" Header="설명" Width="30" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="2">
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
+                                        </dxg:GridControl.Columns>
+                                        <dxg:GridControl.View>
+                                            <dxg:TableView Name="View_ITM_GRP_CLSS_CD" ShowColumnHeaders="False" SearchDelay="0" NewItemRowPosition="None" ShowGroupedColumns="True" AutoWidth="True" AllowPerPixelScrolling="True" ScrollAnimationDuration="0" ShowAutoFilterRow="False" ShowTotalSummary="False" IsSynchronizedWithCurrentItem="True" />
+                                        </dxg:GridControl.View>
+                                    </dxg:GridControl>
+                                </ControlTemplate>
+                            </dxg:LookUpEditSettings.PopupContentTemplate>
+                            <dxg:LookUpEditSettings.StyleSettings>
+                                <dxg:SearchLookUpEditStyleSettings />
+                            </dxg:LookUpEditSettings.StyleSettings>
+                        </dxg:LookUpEditSettings>
+                    </dxb:BarEditItem.EditSettings>
+                </dxb:BarEditItem>
+                <!--<dxb:BarEditItem x:Name="M_DC_FLG" Content="에누리 : " EditValue="{Binding M_DC_FLG, Mode=TwoWay}" >
+                    <dxb:BarEditItem.EditTemplate>
+                        <DataTemplate>
+                            <dxe:ComboBoxEdit Width="120" Height="25" FontSize="14" IsTextEditable="False" ShowSizeGrip="False">
+                                <dxe:ComboBoxEditItem Content="사용" IsSelected="True" />
+                                <dxe:ComboBoxEditItem Content="미사용" />
+                            </dxe:ComboBoxEdit>
+                        </DataTemplate>
+                    </dxb:BarEditItem.EditTemplate>
+
+                </dxb:BarEditItem>-->
+
+                <dxb:BarEditItem x:Name="M_BLANK" Content="" >
+                </dxb:BarEditItem>
+
+                <dxb:BarButtonItem x:Name="M_MST_REFRESH" Content="조회" KeyGesture="F5" Glyph="{dx:DXImage Image=Refresh2_16x16.png}" LargeGlyph="{dx:DXImage Image=Refresh2_32x32.png}" RibbonStyle="Large" Command="{Binding RefreshCommand}" />
+                <dxb:BarButtonItem x:Name="M_MST_DELETE" Content="삭제" KeyGesture="F8" Glyph="{dx:DXImage Image=RemoveItem_16x16.png}" LargeGlyph="{dx:DXImage Image=RemoveItem_32x32.png}" RibbonStyle="Large" IsEnabled="{Binding isM_DELETE}" Command="{Binding DelContactCommand}" />
+                <dxb:BarButtonItem x:Name="M_MST_INSERT" Content="일괄발행" KeyGesture="F6" Glyph="{dx:DXImage Image=ExportToXLS_16x16.png}" LargeGlyph="{dx:DXImage Image=ExportToXLS_32x32.png}" RibbonStyle="Large" IsEnabled="True" Command="{Binding NewContactCommand}" />
+                <dxb:BarButtonItem x:Name="M_MST_REPORT" Content="보고서" KeyGesture="F9" Glyph="{dx:DXImage Image=PrintDialog_16x16.png}" LargeGlyph="{dx:DXImage Image=PrintDialog_32x32.png}" ItemClick="M_PRINT_ItemClick" RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" />
+
+                <dxb:BarButtonItem x:Name="M_MST_BILL" Content="계산서생성" KeyGesture="F7" Glyph="{dx:DXImage Image=Report_16x16.png}" LargeGlyph="{dx:DXImage Image=Report_32x32.png}" RibbonStyle="Large" Command="{Binding BillCommand}" />
+                <dxb:BarButtonItem x:Name="M_MST_BILLHISTORTY" Content="거래내역확인" KeyGesture="F8" Glyph="{dx:DXImage Image=Preview_16x16.png}" LargeGlyph="{dx:DXImage Image=Preview_32x32.png}" RibbonStyle="Large" Command="{Binding BillHistoryCommand}" />
+            </dxb:BarManager.Items>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <dxr:RibbonControl x:Name="paintRibbon" AllowCustomization="False" Visibility="Visible" Grid.Row="0" ToolbarShowMode="ShowBelow" RibbonHeaderVisibility="Collapsed">
+                    <dxr:RibbonDefaultPageCategory>
+                        <dxr:RibbonPage Caption="세금계산서발행 - 일괄(Home Tax)">
+                            <dxr:RibbonPageGroup Caption="조회 조건">
+                                <dxb:BarEditItemLink BarItemName="M_FM_DT" EditWidth="120" EditHeight="28" />
+                                <dxb:BarEditItemLink BarItemName="M_AREA_NM" EditWidth="120" EditHeight="25" />
+                                <dxb:BarEditItemLink BarItemName="M_SEARCH_TEXT" EditWidth="120" EditHeight="25" />
+                                <dxb:BarEditItemLink BarItemName="M_RLSE_PRT_FLG" EditWidth="120" EditHeight="25" />
+                            </dxr:RibbonPageGroup>
+
+                            <dxr:RibbonPageGroup Caption="관리">
+                                <dxb:BarButtonItemLink BarItemName="M_MST_REFRESH"/>
+                                <dxb:BarButtonItemLink BarItemName="M_MST_DELETE"/>
+                                <dxb:BarItemLinkSeparator />
+                                <dxb:BarButtonItemLink BarItemName="M_MST_INSERT"/>
+                                <!--<dxb:BarButtonItemLink BarItemName="M_MST_UPDATE"/>-->
+                                <dxb:BarItemLinkSeparator />
+                                <dxb:BarButtonItemLink BarItemName="M_MST_REPORT"/>
+                            </dxr:RibbonPageGroup>
+
+                            <dxr:RibbonPageGroup Caption="발행">
+                                <dxb:BarButtonItemLink BarItemName="M_MST_BILL"/>
+                                <dxb:BarButtonItemLink BarItemName="M_MST_BILLHISTORTY"/>
+                                
+                                <dxb:BarItemLinkSeparator />
+
+                            </dxr:RibbonPageGroup>
+                            <!--<dxr:RibbonPageGroup Caption="수금관리">
+                                <dxb:BarButtonItemLink BarItemName="M_MST_INSERT"/>
+                                <dxb:BarButtonItemLink BarItemName="M_MST_UPDATE"/>
+                                <dxb:BarButtonItemLink BarItemName="M_MST_DELETE"/>
+                            </dxr:RibbonPageGroup>-->
+                        </dxr:RibbonPage>
+                    </dxr:RibbonDefaultPageCategory>
+                </dxr:RibbonControl>
+
+                <dxd:DockLayoutManager x:Name="JobManager" Grid.Row="1">
+                    <dxd:LayoutGroup >
+                        <dxd:LayoutPanel Caption="Search" AllowContextMenu="False" AllowClose="False" ShowCaption="False" >
+                            <!-- 조회 조건 -->
+                            <!--<GroupBox Header="JOB 등록" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.ColumnSpan="3" Margin="5,0,0,0">-->
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="37"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <!-- 제조 일자-->
+                                <dxe:ImageEdit HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Source="{dx:DXImage Image=Preview_16x16.png}" Grid.Row="0" ShowMenu="False" BorderBrush="#00000000" ShowBorder="False"  Margin="20,0,0,0" />
+                                <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" FontSize="15" Grid.Column="0" Margin="37,0,0,0"  >
+                                    <Run Text="조회 조건 : "></Run>
+                                    <Run Text="{Binding Title}" Foreground="#2BA5BA" FontWeight="Bold" ></Run>
+                                </TextBlock>
+
+                                <Separator HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Foreground="LightGray"  />
+
+                                <Grid Grid.Row="1">
+                                    <dxd:DockLayoutManager x:Name="CodeManager" Grid.Row="1" FloatingMode="Desktop">
+                                        <dxd:LayoutGroup  Orientation="Vertical" ItemHeight="*" >
+                                            <dxd:LayoutPanel Caption="물품 리스트" AllowContextMenu="False" AllowClose="False" ShowCaption="False" CaptionImage="{dx:DXImage Image=Zoom100_16x16.png}" AllowMaximize="True">
+                                                <dxg:GridControl x:Name="ViewGridMst" AutoExpandAllGroups="False" ItemsSource="{Binding Path=SelectMstList}" SelectedItem="{Binding Path=SelectedMstItem, Mode=TwoWay}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="1" >
+                                                    <dxg:GridControl.View>
+                                                        <dxg:TableView x:Name="ViewTableMst" FontSize="13" ShowTotalSummary="True" AutoWidth="False" ShowFixedTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Default" AllowPerPixelScrolling="True" ShowGroupPanel="True" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Cell" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False" CellStyle="{StaticResource GridCellStyle}" SearchString="{Binding ElementName=M_SEARCH_TEXT, Path=EditValue}" />
+                                                    </dxg:GridControl.View>
+                                                    
+                                                    <dxg:GridControl.Columns>
+                                                        <!--<dxg:GridColumn FieldName="DC_CHK" Header="" Width="15"  AllowAutoFilter="False" AllowColumnFiltering="True" AllowSorting="False"  AllowSearchPanel="False" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" AllowMoving="False"  HeaderTemplate="{StaticResource ReadOnlyHeaderTemplate}">
+                                                            <dxg:GridColumn.CellTemplate>
+                                                                <DataTemplate>
+                                                                    --><!-- Style="{StaticResource checkEditStyle}" Checked="isCheckEdit_DtlClzFlg" Unchecked="isCheckEdit_DtlClzFlg" --><!--
+                                                                    <dxe:CheckEdit x:Name="PART_Editor" HorizontalContentAlignment="Center" Style="{StaticResource checkEditStyle}" Checked="PART_Editor_Checked"   />
+                                                                </DataTemplate>
+                                                            </dxg:GridColumn.CellTemplate>
+                                                        </dxg:GridColumn>-->
+
+                                                        <dxg:GridColumn FieldName="GBN" Header="구분" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                                            <dxg:GridColumn.EditSettings>
+                                                                <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                                            </dxg:GridColumn.EditSettings>
+                                                        </dxg:GridColumn>
+
+                                                        <dxg:GridColumn FieldName="CO_CD" Header="코드" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                                            <dxg:GridColumn.EditSettings>
+                                                                <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                                            </dxg:GridColumn.EditSettings>
+                                                        </dxg:GridColumn>
+
+                                                        <dxg:GridColumn FieldName="CO_NM" Header="거래처" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                                            <dxg:GridColumn.EditSettings>
+                                                                <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                                            </dxg:GridColumn.EditSettings>
+                                                        </dxg:GridColumn>
+
+                                                        <dxg:GridColumn FieldName="SL_SUM_AMT" Header="판매 금액" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                                            <dxg:GridColumn.EditSettings>
+                                                                <dxe:TextEditSettings   HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True" />
+                                                            </dxg:GridColumn.EditSettings>
+                                                        </dxg:GridColumn>
+
+                                                        <dxg:GridColumn FieldName="SL_DC_AMT" Header="D/C 금액" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                                            <dxg:GridColumn.EditSettings>
+                                                                <dxe:TextEditSettings   HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True" />
+                                                            </dxg:GridColumn.EditSettings>
+                                                        </dxg:GridColumn>
+
+                                                        <dxg:GridColumn FieldName="SL_AMT" Header="공급가" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                                            <dxg:GridColumn.EditSettings>
+                                                                <dxe:TextEditSettings    HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True" />
+                                                            </dxg:GridColumn.EditSettings>
+                                                        </dxg:GridColumn>
+
+                                                        <dxg:GridColumn FieldName="SL_TAX_AMT" Header="부가세" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                                            <dxg:GridColumn.EditSettings>
+                                                                <dxe:TextEditSettings    HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True" />
+                                                            </dxg:GridColumn.EditSettings>
+                                                        </dxg:GridColumn>
+
+                                                        <dxg:GridColumn FieldName="CRE_DT" Header="계산서일자" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                                            <dxg:GridColumn.EditSettings>
+                                                                <dxe:TextEditSettings    HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                                            </dxg:GridColumn.EditSettings>
+                                                        </dxg:GridColumn>
+
+                                                        <dxg:GridColumn FieldName="SL_BIL_RMK" Header="비고" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                                            <dxg:GridColumn.EditSettings>
+                                                                <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
+                                                            </dxg:GridColumn.EditSettings>
+                                                        </dxg:GridColumn>
+                                                        <dxg:GridColumn FieldName="CLZ_FLG" Header="발행유무" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                                            <dxg:GridColumn.EditSettings>
+                                                                <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                                            </dxg:GridColumn.EditSettings>
+                                                        </dxg:GridColumn>
+                                                    </dxg:GridControl.Columns>
+
+                                                    <dxb:BarManager.DXContextMenu>
+                                                        <dxb:PopupMenu>
+                                                            <dxb:BarButtonItemLink BarItemName="M_MST_REFRESH"/>
+                                                            <!--<dxb:BarItemLinkSeparator/>
+                                                            <dxb:BarButtonItemLink BarItemName="M_MST_INSERT"/>
+                                                            <dxb:BarButtonItemLink BarItemName="M_MST_UPDATE"/>
+                                                            <dxb:BarButtonItemLink BarItemName="M_MST_DELETE"/>-->
+                                                        </dxb:PopupMenu>
+                                                    </dxb:BarManager.DXContextMenu>
+
+                                                    <dxg:GridControl.TotalSummary>
+                                                        <dxg:GridSummaryItem SummaryType="Count" Alignment="Right"/>
+                                                        <dxg:GridSummaryItem FieldName="SL_SUM_AMT" SummaryType="Sum" DisplayFormat="###,###,###,###,##0" />
+                                                        <dxg:GridSummaryItem FieldName="SL_MON_DC_AMT" SummaryType="Sum" DisplayFormat="###,###,###,###,##0" />
+                                                        <dxg:GridSummaryItem FieldName="SL_MON_AMT" SummaryType="Sum" DisplayFormat="###,###,###,###,##0" />
+                                                        <dxg:GridSummaryItem FieldName="SL_MON_TAX_AMT" SummaryType="Sum" DisplayFormat="###,###,###,###,##0" />
+                                                    </dxg:GridControl.TotalSummary>
+                                                    <!--<dxg:GridControl.GroupSummary>
+                                                        <dxg:GridSummaryItem FieldName="S_GRD_RT" SummaryType="Sum" DisplayFormat="S급=###,###,###,###,##0" />
+                                                        <dxg:GridSummaryItem FieldName="K_GRD_RT" SummaryType="Sum" DisplayFormat="K급=###,###,###,###,##0" />
+                                                        <dxg:GridSummaryItem FieldName="A_GRD_RT" SummaryType="Sum" DisplayFormat="A급=###,###,###,###,##0" />
+                                                        <dxg:GridSummaryItem FieldName="B_GRD_RT" SummaryType="Sum" DisplayFormat="B급=###,###,###,###,##0" />
+                                                        <dxg:GridSummaryItem FieldName="C_GRD_RT" SummaryType="Sum" DisplayFormat="C급=###,###,###,###,##0" />
+                                                        <dxg:GridSummaryItem FieldName="D_GRD_RT" SummaryType="Sum" DisplayFormat="D급=###,###,###,###,##0" />
+                                                        <dxg:GridSummaryItem FieldName="F_GRD_RT" SummaryType="Sum" DisplayFormat="F급=###,###,###,###,##0" />
+                                                        <dxg:GridSummaryItem FieldName="G_GRD_RT" SummaryType="Sum" DisplayFormat="G급=###,###,###,###,##0" />
+                                                        <dxg:GridSummaryItem SummaryType="Count" Alignment="Right"/>
+                                                    </dxg:GridControl.GroupSummary>-->
+
+                                                </dxg:GridControl>
+                                            </dxd:LayoutPanel>
+                                        </dxd:LayoutGroup>
+                                    </dxd:DockLayoutManager>
+                                </Grid>
+                            </Grid>
+                        </dxd:LayoutPanel>
+                    </dxd:LayoutGroup>
+                </dxd:DockLayoutManager>
+            </Grid>
+
+
+        </dxb:BarManager>
+    </Grid>
+</UserControl>
