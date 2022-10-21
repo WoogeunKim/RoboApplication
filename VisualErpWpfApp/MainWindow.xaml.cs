@@ -16,6 +16,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using AquilaErpWpfApp3.Util;
 using AquilaErpWpfApp3.View.S.Dialog;
+using System.Net;
+using System.Web;
+using System.Net.Sockets;
+using System.Text;
 
 namespace AquilaErpWpfApp3
 {
@@ -190,6 +194,40 @@ namespace AquilaErpWpfApp3
                         }
                     }
 
+                    //// API KEY 종료 로그 남기기
+                    //using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.GetAsync("s136/login/" + Properties.Settings.Default.SettingChnl + "/" + SystemProperties.USER))
+                    //{
+                    //    if (response.IsSuccessStatusCode)
+                    //    {
+                    //        GroupUserVo usrVo = JsonConvert.DeserializeObject<GroupUserVo>(await response.Content.ReadAsStringAsync());
+
+                    //        if (usrVo.API_KEY != null)
+                    //        {
+                    //            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+                    //            string LocalIP = string.Empty;
+
+                    //            for (int i = 0; i < host.AddressList.Length; i++)
+                    //            {
+                    //                if (host.AddressList[i].AddressFamily == AddressFamily.InterNetwork)
+                    //                {
+                    //                    LocalIP = host.AddressList[i].ToString();
+                    //                    break;
+                    //                }
+                    //            }
+
+                    //            // 인증키 + 시간 + 접속 + 아이디 + IP + 크기(0) 
+                    //            string dataApiKey = "{\"crtfcKey\":\"" + usrVo.API_KEY + "\",\"logDt\":\"" + usrVo.API_DT + "\",\"useSe\":\"쫑료\",\"sysUser\":\"" + usrVo.USR_N1ST_NM + "\",\"conectIp\":\"" + LocalIP + "\",\"dataUsgqty\":\"0\"}";
+
+                    //            string getdata = HttpUtility.UrlEncode(dataApiKey, Encoding.UTF8);
+                    //            HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create("https://log.smart-factory.kr/apisvc/sendLogDataJSON.do?logData=" + getdata);
+                    //            myReq.Method = "GET";
+                    //            HttpWebResponse wRes = (HttpWebResponse)myReq.GetResponse();
+                    //            Stream respGetStream = wRes.GetResponseStream();
+                    //            StreamReader readerGet = new StreamReader(respGetStream, Encoding.UTF8);
+                    //            string resultGet = readerGet.ReadToEnd();
+                    //        }
+                    //    }
+                    //}
 
                     //메모리 정리
                     SystemProperties.PROGRAM_HTTP.Dispose();

@@ -1,6 +1,7 @@
 ﻿using AquilaErpWpfApp3.Util;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Dialogs;
+using DevExpress.Xpf.Grid;
 using DevExpress.Xpf.WindowsUI;
 using ModelsLibrary.Code;
 using ModelsLibrary.Pur;
@@ -338,6 +339,7 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                         {
                             masterDomain.DE_CO_NM = e.Value.ToString();
                             masterDomain.isCheckd = true;
+                            CHTR_NM_Changed(e.Value.ToString());
                         }
                     }
                 }
@@ -388,16 +390,34 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
         public async void SYSTEM_CODE_VO()
         {
 
-            using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s11479/mst", new StringContent(JsonConvert.SerializeObject(new SystemCodeVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD, DELT_FLG = "N"}), System.Text.Encoding.UTF8, "application/json")))
+            using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s11479/mst", new StringContent(JsonConvert.SerializeObject(new SystemCodeVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD, DELT_FLG = "N" }), System.Text.Encoding.UTF8, "application/json")))
             {
                 if (response.IsSuccessStatusCode)
                 {
                     this.lue_DE_CO_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().Where<SystemCodeVo>(x => Convert.ToInt32(x.DE_PRNT_NO) == 0).ToList();
+                    //lue_CNTR_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().Where<SystemCodeVo>(x => Convert.ToInt32(x.DE_PRNT_NO) != 0).ToList();
+                }
+            }
+
+        }
+
+        // 수정필요함.....
+        private async void CHTR_NM_Changed(string _txtValue)
+        {
+            int num = Convert.ToInt32((this.lue_DE_CO_NM.ItemsSource as List<SystemCodeVo>).Where<SystemCodeVo>(x => x.DE_CO_NM == _txtValue).LastOrDefault().DE_CHD_NO);
+
+            SystemCodeVo CntrVo = new SystemCodeVo();
+            CntrVo.DE_PRNT_NO = num;
+            CntrVo.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
+            CntrVo.DELT_FLG = "N";
+
+            using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s11479/mst", new StringContent(JsonConvert.SerializeObject(CntrVo), System.Text.Encoding.UTF8, "application/json")))
+            {
+                if (response.IsSuccessStatusCode)
+                {
                     this.lue_CNTR_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().Where<SystemCodeVo>(x => Convert.ToInt32(x.DE_PRNT_NO) != 0).ToList();
                 }
             }
-         
         }
-
     }
 }

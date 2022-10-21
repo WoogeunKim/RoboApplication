@@ -236,6 +236,40 @@
 		  </isNotNull>
 	  </select>
 	  
+	<!--20221021 품목 마스터 등록 MST/DTL 수정-->
+	  <select id="S141SelectItemMstList" parameterClass="ModelsLibrary.Code.SystemCodeVo" resultClass="ModelsLibrary.Code.SystemCodeVo">
+		  SELECT
+		        T1.ITM_CD
+		      , T1.PROD_LOC_CD
+		      , T1.PROD_LOC_NM
+		      , T1.ITM_NM
+		      , T1.ITM_SZ_NM
+		      , T1.ITM_GRP_CLSS_CD
+		      , T1.ITM_GRP_CLSS_NM
+		      , T1.UOM_CD
+		      , T1.UOM_NM
+		      , ISNULL(T1.N1ST_ITM_GRP_CD, '') AS N1ST_ITM_GRP_CD
+		      , T1.N1ST_ITM_GRP_NM
+		      , T1.N2ND_ITM_GRP_CD
+		      , T1.N2ND_ITM_GRP_NM
+		      , (CASE WHEN T1.DELT_FLG = 'N' THEN '사용' ELSE '미사용' END) AS DELT_FLG
+		      , T1.CHNL_CD
+		  FROM MV_TB_CD_ITM      T1
+		       LEFT OUTER JOIN TB_CD_ITM_IMG  T2
+		                    ON (T1.ITM_CD  = T2.ITM_CD AND T1.CHNL_CD = T2.CHNL_CD)
+		           OUTER APPLY (
+		                      SELECT CAR_TP_NM
+		                        FROM TB_CD_CAR_TP AS X
+		                       WHERE 1=1
+		                         AND X.CHNL_CD     = T1.CHNL_CD
+		                         AND X.CAR_TP_CD   = T1.MTRL_NM_CD
+		                        ) T3   
+		  WHERE 1 = 1
+		    AND T1.CHNL_CD =  #CHNL_CD#
+		  <isNotNull property="ITM_GRP_CLSS_CD" >
+			  AND T1.ITM_GRP_CLSS_CD = #ITM_GRP_CLSS_CD#
+		  </isNotNull>
+	  </select>
 	  
     <!-- 품목 마스터 등록 -->
     <select id="S141SelectItemList" parameterClass="ModelsLibrary.Code.SystemCodeVo" resultClass="ModelsLibrary.Code.SystemCodeVo">
@@ -261,7 +295,7 @@
 		    , T1.N1ST_ITM_GRP_NM
 		    , T1.N2ND_ITM_GRP_CD
 		    , T1.N2ND_ITM_GRP_NM
-        , T1.N2ND_ITM_GRP_CD + ' / ' + dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-026', T1.N2ND_ITM_GRP_CD) AS GBN
+            , T1.N2ND_ITM_GRP_CD + ' / ' + T4.CLSS_DESC AS GBN
 		    , T1.ITM_ORD_CD
 		    , ISNULL(T1.SFSTK_QTY, 0) AS  SFSTK_QTY
 		    , T2.IMG
@@ -288,9 +322,16 @@
 		    , T1.N2ND_SUB_ITM_NM
 		    , T1.ACT_INSP_FLG
 		    , ISNULL(T1.PK_PER_QTY, 0) AS PK_PER_QTY
-        , dbo.FN_splitValue(T1.ITM_CD, '-', 2) AS ITM_LEN_NM
-		    <!--, T1.SFSTK_QTY-->
-		FROM MV_TB_CD_ITM      T1
+            , dbo.FN_splitValue(T1.ITM_CD, '-', 2) AS ITM_LEN_NM
+		FROM MV_TB_CD_ITM      T1		
+          OUTER APPLY ( 
+                SELECT X.CLSS_DESC
+                  FROM TB_SYS_CLSS_CD  X
+                 WHERE 1 = 1
+                   AND X.CLSS_TP_CD = 'L-026'
+                   AND X.CHNL_CD = T1.CHNL_CD
+                   AND X.CLSS_CD = T1.N2ND_ITM_GRP_CD
+          )  T4
 		LEFT OUTER JOIN TB_CD_ITM_IMG  T2
 		ON (T1.ITM_CD  = T2.ITM_CD AND T1.CHNL_CD = T2.CHNL_CD)
 		OUTER APPLY (
@@ -930,30 +971,32 @@
     <!-- 거래처 관리 -->
     <select id="S143SelectCodeList" parameterClass="ModelsLibrary.Code.SystemCodeVo" resultClass="ModelsLibrary.Code.SystemCodeVo">
       SELECT
-        T1.CO_NO
-      , T1.CO_NM
-      , (CASE WHEN T1.DELT_FLG = 'N' THEN '사용' ELSE '미사용' END) AS DELT_FLG
-      , T1.CHNL_CD
-      FROM TB_CD_CO T1
+            T1.CO_NO
+          , T1.CO_NM
+          , (CASE WHEN T1.DELT_FLG = 'N' THEN '사용' ELSE '미사용' END) AS DELT_FLG
+          , T1.CHNL_CD
+       FROM TB_CD_CO T1
       WHERE 1 = 1
-      AND T1.CHNL_CD = #CHNL_CD#
+        AND T1.CHNL_CD = #CHNL_CD#
+		AND T1.DELT_FLG = 'N'
       <isNotNull property="SEEK">
         AND (T1.CO_NO IN (
-        SELECT CO_NO
-        FROM TB_CD_CO_TP
-        WHERE CO_TP_CD = #SEEK_AP#
-        UNION ALL
-        SELECT CO_NO
-        FROM TB_CD_CO_TP
-        WHERE CO_TP_CD = #SEEK_AR#
-        UNION ALL
-        SELECT CO_NO
-        FROM TB_CD_CO_TP
-        WHERE CO_TP_CD = #SEEK_OR#
-        UNION ALL
-        SELECT CO_NO
-        FROM TB_CD_CO_TP
-        WHERE CO_TP_CD = #SEEK_SU#
+            SELECT CO_NO
+              FROM TB_CD_CO_TP
+             WHERE CO_TP_CD = #SEEK_AP#
+			   AND CHNL_CD =  #CHNL_CD#
+         UNION ALL
+            SELECT CO_NO
+              FROM TB_CD_CO_TP
+             WHERE CO_TP_CD = #SEEK_AR#
+         UNION ALL
+            SELECT CO_NO
+              FROM TB_CD_CO_TP
+             WHERE CO_TP_CD = #SEEK_OR#
+         UNION ALL
+            SELECT CO_NO
+              FROM TB_CD_CO_TP
+             WHERE CO_TP_CD = #SEEK_SU#
         ) OR  NOT EXISTS (SELECT 'X' FROM TB_CD_CO_TP Z WHERE Z.CO_NO = T1.CO_NO))
       </isNotNull>
       <isNotNull property="CO_NO">

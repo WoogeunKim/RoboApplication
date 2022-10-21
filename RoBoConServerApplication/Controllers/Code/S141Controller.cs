@@ -38,6 +38,16 @@ namespace VisualServerApplication.Controllers.Code
         //} 
         #endregion
 
+        /// <summary>
+        /// 품목 마스터 등록 MST - 조회  2022-10-21 생성 MST/DTL 따로 조회
+        /// </summary>
+        [Route("mst")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetMstNewSelect([FromBody] SystemCodeVo vo)
+        {
+            return Ok<IEnumerable<SystemCodeVo>>(Properties.EntityMapper.QueryForList<SystemCodeVo>("S141SelectItemMstList", vo));
+        }
 
         /// <summary>
         /// 품목 마스터 등록 MST - 조회

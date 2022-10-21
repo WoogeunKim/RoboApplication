@@ -331,7 +331,8 @@ namespace AquilaErpWpfApp3.ViewModel
             bool isDialog = (bool)DetailDialog.ShowDialog();
             if (isDialog)
             {
-                Refresh(DetailDialog.resultDomain.DE_CHD_NO.ToString());
+                //Refresh(DetailDialog.resultDomain.DE_CHD_NO.ToString());
+                Refresh(DetailDialog.resultDomain.DE_PRNT_NO.ToString());
             }
         }
 
@@ -399,7 +400,8 @@ namespace AquilaErpWpfApp3.ViewModel
             bool isDialog = (bool)DetailDialog.ShowDialog();
             if (isDialog)
             {
-                Refresh(DetailDialog.resultDomain.DE_CHD_NO.ToString());
+                //Refresh(DetailDialog.resultDomain.DE_CHD_NO.ToString());
+                Refresh(DetailDialog.resultDomain.DE_PRNT_NO.ToString());
             }
         }
 

@@ -7,6 +7,11 @@ using System.Text;
 using System.Windows;
 using AquilaErpWpfApp3.Util;
 using AquilaErpWpfApp3.ViewModel;
+using DevExpress.Xpf.Core;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AquilaErpWpfApp3.View.S
 {
@@ -542,5 +547,37 @@ namespace AquilaErpWpfApp3.View.S
             }
         }
 
+        private async void ConfigViewPage1Edit_Master_SelectedItemChanged(object sender, DevExpress.Xpf.Grid.SelectedItemChangedEventArgs e)
+        {
+            try
+            {
+                if (ConfigViewPage1Edit_Master.SelectedItem == null) return;
+
+                SystemCodeVo mstVo = new SystemCodeVo();
+                mstVo = ConfigViewPage1Edit_Master.SelectedItem as SystemCodeVo;
+                mstVo.DELT_FLG = "N";
+
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s141", new StringContent(JsonConvert.SerializeObject(mstVo), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    IList<SystemCodeVo> _selectedList = new List<SystemCodeVo>();
+                    if (response.IsSuccessStatusCode)
+                    {
+                        _selectedList = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
+                    }
+
+                    if (_selectedList.Count > 0)
+                    {
+                        mstVo = _selectedList[0];
+                    }
+
+                    DetailView.Content = mstVo;
+                }
+            }
+            catch (System.Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+        }
     }
 }

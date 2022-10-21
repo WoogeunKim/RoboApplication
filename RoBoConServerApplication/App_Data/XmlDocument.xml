@@ -947,6 +947,11 @@
             이형봉강 조견표 MST - 조회
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Code.S141Controller.GetMstNewSelect(ModelsLibrary.Code.SystemCodeVo)">
+            <summary>
+            품목 마스터 등록 MST - 조회  2022-10-21 생성 MST/DTL 따로 조회
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Code.S141Controller.GetMstSelect(ModelsLibrary.Code.SystemCodeVo)">
             <summary>
             품목 마스터 등록 MST - 조회

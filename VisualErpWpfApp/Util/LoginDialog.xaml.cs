@@ -5,10 +5,13 @@ using ModelsLibrary.Code;
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -544,6 +547,33 @@ namespace AquilaErpWpfApp3.Util
 
                                     }
                                 }
+
+                                //// API KEY 기록 남기기
+                                //if (usrVo.API_KEY != null)
+                                //{
+                                //    IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+                                //    string LocalIP = string.Empty;
+
+                                //    for (int i = 0; i < host.AddressList.Length; i++)
+                                //    {
+                                //        if (host.AddressList[i].AddressFamily == AddressFamily.InterNetwork)
+                                //        {
+                                //            LocalIP = host.AddressList[i].ToString();
+                                //            break;
+                                //        }
+                                //    }
+
+                                //    // 인증키 + 시간 + 접속 + 아이디 + IP + 크기(0) 
+                                //    string dataApiKey = "{\"crtfcKey\":\"" + usrVo.API_KEY + "\",\"logDt\":\"" + usrVo.API_DT + "\",\"useSe\":\"접속\",\"sysUser\":\"" + usrVo.USR_N1ST_NM + "\",\"conectIp\":\"" + LocalIP + "\",\"dataUsgqty\":\"0\"}";
+
+                                //    string getdata = HttpUtility.UrlEncode(dataApiKey, Encoding.UTF8);
+                                //    HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create("https://log.smart-factory.kr/apisvc/sendLogDataJSON.do?logData=" + getdata);
+                                //    myReq.Method = "GET";
+                                //    HttpWebResponse wRes = (HttpWebResponse)myReq.GetResponse();
+                                //    Stream respGetStream = wRes.GetResponseStream();
+                                //    StreamReader readerGet = new StreamReader(respGetStream, Encoding.UTF8);
+                                //    string resultGet = readerGet.ReadToEnd();
+                                //}
                             }
 
                             //main_Img 다시 저장 하기

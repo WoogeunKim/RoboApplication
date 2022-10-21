@@ -498,7 +498,7 @@
                                     </StackPanel>
                                 </Button>-->
 
-                                <dxg:GridControl x:Name="ConfigViewPage1Edit_Master" ItemsSource="{Binding Path=SelectedMenuViewList}" SelectedItem="{Binding Path=SelectedMenuItem, Mode=TwoWay}" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="4" Margin="0,5,0,0">
+                                <dxg:GridControl x:Name="ConfigViewPage1Edit_Master" ItemsSource="{Binding Path=SelectedMenuViewList}" SelectedItem="{Binding Path=SelectedMenuItem, Mode=TwoWay}" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="4" Margin="0,5,0,0" SelectedItemChanged="ConfigViewPage1Edit_Master_SelectedItemChanged">
                                     <dxb:BarManager.DXContextMenu>
                                         <dxb:PopupMenu>
                                             <dxb:BarButtonItemLink BarItemName="M_ref"/>
@@ -553,7 +553,8 @@
                         <dxd:LayoutGroup Orientation="Vertical">
                             <dxd:LayoutPanel Caption="" ItemHeight="40*" AllowContextMenu="False" AllowClose="False" ShowCaption="False">
                                 <Grid>
-                                    <ContentPresenter x:Name="DetailView" Content="{Binding Path=SelectedItem, ElementName=ConfigViewPage1Edit_Master}"  ContentTemplate="{StaticResource rowDetailTemplateExp}" HorizontalAlignment="Stretch" Margin="-1,0,0,-4" />
+                                    <!--<ContentPresenter x:Name="DetailView" Content="{Binding Path=SelectedItem, ElementName=ConfigViewPage1Edit_Master}"  ContentTemplate="{StaticResource rowDetailTemplateExp}" HorizontalAlignment="Stretch" Margin="-1,0,0,-4" />-->
+                                    <ContentPresenter x:Name="DetailView" ContentTemplate="{StaticResource rowDetailTemplateExp}" HorizontalAlignment="Stretch" Margin="-1,0,0,-4" />
                                 </Grid>
                             </dxd:LayoutPanel>
                         </dxd:LayoutGroup>

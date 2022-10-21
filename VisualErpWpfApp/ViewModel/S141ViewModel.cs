@@ -83,7 +83,7 @@ namespace AquilaErpWpfApp3.ViewModel
             {
                 DXSplashScreen.Show<ProgressWindow>();
 
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s141", new StringContent(JsonConvert.SerializeObject(new SystemCodeVo() { ITM_GRP_CLSS_CD = M_SL_AREA_NM.CLSS_CD, CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s141/mst", new StringContent(JsonConvert.SerializeObject(new SystemCodeVo() { ITM_GRP_CLSS_CD = M_SL_AREA_NM.CLSS_CD, CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
@@ -357,55 +357,73 @@ namespace AquilaErpWpfApp3.ViewModel
 
             try
             {
+                SystemCodeVo mstVo = new SystemCodeVo();
+                mstVo = SelectedMenuItem;
+                mstVo.DELT_FLG = "N";
 
-                MessageBoxResult result = WinUIMessageBox.Show("[" + SelectedMenuItem.ITM_CD + " / " + SelectedMenuItem.ITM_NM + "]" + Convert.ToInt32(this.M_BARCODE_TEXT) + "장 - 출력 하시겠습니까?", title, MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s141", new StringContent(JsonConvert.SerializeObject(mstVo), System.Text.Encoding.UTF8, "application/json")))
                 {
-
-
-                    //
-                    if (string.IsNullOrEmpty(Properties.Settings.Default.str_PrnNm))
+                    IList<SystemCodeVo> _selectedList = new List<SystemCodeVo>();
+                    if (response.IsSuccessStatusCode)
                     {
-                        System.Windows.Controls.PrintDialog dialogue = new System.Windows.Controls.PrintDialog();
-                        if (dialogue.ShowDialog() == true)
+                        _selectedList = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
+                    }
+
+                    if (_selectedList.Count > 0)
+                    {
+                        mstVo = _selectedList[0];
+
+
+                        MessageBoxResult result = WinUIMessageBox.Show("[" + mstVo.ITM_CD + " / " + mstVo.ITM_NM + "]" + Convert.ToInt32(this.M_BARCODE_TEXT) + "장 - 출력 하시겠습니까?", title, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        if (result == MessageBoxResult.Yes)
                         {
-                            Properties.Settings.Default.str_PrnNm = dialogue.PrintQueue.FullName;
-                            Properties.Settings.Default.Save();
+
+
+                            //
+                            if (string.IsNullOrEmpty(Properties.Settings.Default.str_PrnNm))
+                            {
+                                System.Windows.Controls.PrintDialog dialogue = new System.Windows.Controls.PrintDialog();
+                                if (dialogue.ShowDialog() == true)
+                                {
+                                    Properties.Settings.Default.str_PrnNm = dialogue.PrintQueue.FullName;
+                                    Properties.Settings.Default.Save();
+                                }
+                            }
+
+                            BarPrint _print = new BarPrint();
+
+
+                            ////
+                            ////
+                            if (mstVo.ITM_GRP_CLSS_CD.Equals("M"))
+                            {
+                                //SelectedMenuItem.RPT_CD = "BAR100";
+                                _print.M_Godex(mstVo, Convert.ToInt32(this.M_BARCODE_TEXT));
+                            }
+                            else if (mstVo.ITM_GRP_CLSS_CD.Equals("B"))
+                            {
+                                //SelectedMenuItem.RPT_CD = "BAR200";
+                                _print.B_Godex(mstVo, Convert.ToInt32(this.M_BARCODE_TEXT));
+                            }
+                            else
+                            {
+                                //기타
+                                _print.M_Godex(mstVo);
+                            }
+
+                            ////
+                            //
+                            //barCodeDialog = new S141BarPrintDialog(SelectedMenuItem);
+                            //barCodeDialog.Title = "품목 마스터 관리 - 바코드";
+                            //barCodeDialog.Owner = Application.Current.MainWindow;
+                            //barCodeDialog.BorderEffect = BorderEffect.Default;
+                            //barCodeDialog.BorderEffectActiveColor = new SolidColorBrush(Color.FromRgb(255, 128, 0));
+                            //barCodeDialog.BorderEffectInactiveColor = new SolidColorBrush(Color.FromRgb(255, 170, 170));
+                            //bool isDialog = (bool)barCodeDialog.ShowDialog();
                         }
                     }
 
-                    BarPrint _print = new BarPrint();
-
-
-                    ////
-                    ////
-                    if (SelectedMenuItem.ITM_GRP_CLSS_CD.Equals("M"))
-                    {
-                        //SelectedMenuItem.RPT_CD = "BAR100";
-                        _print.M_Godex(SelectedMenuItem, Convert.ToInt32(this.M_BARCODE_TEXT));
-                    }
-                    else if (SelectedMenuItem.ITM_GRP_CLSS_CD.Equals("B"))
-                    {
-                        //SelectedMenuItem.RPT_CD = "BAR200";
-                        _print.B_Godex(SelectedMenuItem, Convert.ToInt32(this.M_BARCODE_TEXT));
-                    }
-                    else
-                    {
-                        //기타
-                        _print.M_Godex(SelectedMenuItem);
-                    }
-
-                    ////
-                    //
-                    //barCodeDialog = new S141BarPrintDialog(SelectedMenuItem);
-                    //barCodeDialog.Title = "품목 마스터 관리 - 바코드";
-                    //barCodeDialog.Owner = Application.Current.MainWindow;
-                    //barCodeDialog.BorderEffect = BorderEffect.Default;
-                    //barCodeDialog.BorderEffectActiveColor = new SolidColorBrush(Color.FromRgb(255, 128, 0));
-                    //barCodeDialog.BorderEffectInactiveColor = new SolidColorBrush(Color.FromRgb(255, 170, 170));
-                    //bool isDialog = (bool)barCodeDialog.ShowDialog();
                 }
-
             }
             catch (System.Exception eLog)
             {

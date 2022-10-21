@@ -67,7 +67,7 @@
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
 
-                <dxg:GridColumn FieldName="DE_CO_NM" Header="납품처*"  Width="150"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate">
+                <dxg:GridColumn FieldName="DE_CO_NM" Header="납품처*"  Width="150"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate" >
                     <dxg:GridColumn.EditSettings>
                         <dxg:LookUpEditSettings Name="lue_DE_CO_NM" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsSynchronizedWithCurrentItem="False" DisplayMember="DE_CO_NM" ValueMember="DE_CO_NM" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True" >
                             <dxg:LookUpEditSettings.PopupContentTemplate>
@@ -78,16 +78,16 @@
                                             <dxg:TableView Name="View"  ShowColumnHeaders="False" NewItemRowPosition="None" ShowGroupedColumns="True" AutoWidth="True" AllowPerPixelScrolling="True" ScrollAnimationDuration="0" ShowAutoFilterRow="False" ShowTotalSummary="False" />
                                         </dxg:GridControl.View>
                                         <dxg:GridControl.Columns>
-                                            <dxg:GridColumn FieldName="DE_CO_NM" Width="150" HorizontalHeaderContentAlignment="Center" FilterPopupMode="CheckedList" ToolTip="" >
+                                            <dxg:GridColumn FieldName="DE_CHD_NO" Width="50" HorizontalHeaderContentAlignment="Center"  FilterPopupMode="CheckedList" SortIndex="1" >
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
+                                            <dxg:GridColumn FieldName="DE_CO_NM" Width="130" HorizontalHeaderContentAlignment="Center" FilterPopupMode="CheckedList" SortIndex="2">
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
-                                            <!--<dxg:GridColumn FieldName="CLSS_DESC" Width="130" HorizontalHeaderContentAlignment="Center"  FilterPopupMode="CheckedList" ToolTip="" >
-                                                <dxg:GridColumn.EditSettings>
-                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
-                                                </dxg:GridColumn.EditSettings>
-                                            </dxg:GridColumn>-->
                                         </dxg:GridControl.Columns>
                                     </dxg:GridControl>
                                 </ControlTemplate>
@@ -107,7 +107,7 @@
                                     <dxg:GridControl Name="PART_GridControl">
                                         <!--CurrentItemChanged="PART_GridControl_CurrentItemChanged" SelectedItem="{Binding SelectedItmCd,Mode=TwoWay, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Window}}}" >-->
                                         <dxg:GridControl.View>
-                                            <dxg:TableView Name="View"  ShowColumnHeaders="False" NewItemRowPosition="None" ShowGroupedColumns="True" AutoWidth="True" AllowPerPixelScrolling="True" ScrollAnimationDuration="0" ShowAutoFilterRow="False" ShowTotalSummary="False"  SearchString="{Binding RowData.Row.DE_CO_NM}" SearchDelay="0" />
+                                            <dxg:TableView Name="View"  ShowColumnHeaders="False" NewItemRowPosition="None" ShowGroupedColumns="True" AutoWidth="True" AllowPerPixelScrolling="True" ScrollAnimationDuration="0" ShowAutoFilterRow="False" ShowTotalSummary="False"  SearchDelay="0" />
                                         </dxg:GridControl.View>
                                         <dxg:GridControl.Columns>
                                             <dxg:GridColumn FieldName="DE_CO_NM" Width="100" HorizontalHeaderContentAlignment="Center" FilterPopupMode="CheckedList" ToolTip="" >
@@ -147,7 +147,7 @@
 
                 <dxg:GridColumn FieldName="PUR_WGT" Header="도면중량*" Width="80"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate">
                     <dxg:GridColumn.EditSettings>
-                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0.00"  MaskUseAsDisplayFormat="True" />
+                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0.0000"  MaskUseAsDisplayFormat="True" />
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
 

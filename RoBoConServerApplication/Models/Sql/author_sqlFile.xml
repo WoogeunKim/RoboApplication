@@ -84,40 +84,40 @@
     <!-- 해당 그룹안에 사용자가 없으면 삭제처리 되게끔 제약 조건 정의 하였음. -->
     <select id="S136SelectUserList" resultClass="ModelsLibrary.Auth.GroupUserVo" parameterClass="ModelsLibrary.Auth.GroupUserVo">
       SELECT  USR_ID
-        , USR_PWD
-        , USR_N1ST_NM
-        , USR_LST_NM
-        , GRP_ID
-        , ISNULL((SELECT GRP_NM FROM TB_SYS_GRP AS A WHERE 1=1 AND A.CHNL_CD = #CHNL_CD# AND  A.GRP_ID = B.GRP_ID), '')  AS GRP_NM
-        , PHN_NO
-        , CELL_PHN_NO
-        , EML_ID
-        , ADDR
-        , DTL_ADDR
-        , LST_LGN_IP
-        , LST_LGN_DT
-        , DELT_FLG
-        , CRE_USR_ID
-        , CRE_DT
-        , UPD_USR_ID
-        , UPD_DT
-        , EMPE_NO
-        , RESDNT_RGST_NO
-        , OFC_PSN_CD
-        , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'G-001', OFC_PSN_CD) AS OFC_PSN_NM
-        , CONVERT(VARCHAR, JOIN_CO_DT, 23) AS JOIN_CO_DT
-        , CONVERT(VARCHAR, RESGN_CO_DT, 23) AS RESGN_CO_DT
-        , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-002', EMPE_PLC_NM) AS EMPE_PLC_CD
-        , EMPE_PLC_NM
-        , LAST_ORD_NO
-        , USR_IMG
-        , SGN_NM
-        , CHNL_CD
-        , (SELECT x.CHNL_NM FROM TB_CHNL_CD AS x WHERE DELT_FLG  = 'N' AND CHNL_CD   = #CHNL_CD#) AS CHNL_NM
-        , CASE WHEN ISNULL(TM_PAY_FLG, 'N') = 'Y' THEN 1 ELSE 0 END AS TM_PAY_FLG
-        , TM_PAY_AMT
-        , EMP_LOC_CD
-        , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-051', EMP_LOC_CD) AS EMP_LOC_NM
+            , USR_PWD
+            , USR_N1ST_NM
+            , USR_LST_NM
+            , GRP_ID
+            , ISNULL((SELECT GRP_NM FROM TB_SYS_GRP AS A WHERE 1=1 AND A.CHNL_CD = #CHNL_CD# AND  A.GRP_ID = B.GRP_ID), '')  AS GRP_NM
+            , PHN_NO
+            , CELL_PHN_NO
+            , EML_ID
+            , ADDR
+            , DTL_ADDR
+            , LST_LGN_IP
+            , LST_LGN_DT
+            , DELT_FLG
+            , CRE_USR_ID
+            , CRE_DT
+            , UPD_USR_ID
+            , UPD_DT
+            , EMPE_NO
+            , RESDNT_RGST_NO
+            , OFC_PSN_CD
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'G-001', OFC_PSN_CD) AS OFC_PSN_NM
+            , CONVERT(VARCHAR, JOIN_CO_DT, 23) AS JOIN_CO_DT
+            , CONVERT(VARCHAR, RESGN_CO_DT, 23) AS RESGN_CO_DT
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-002', EMPE_PLC_NM) AS EMPE_PLC_CD
+            , EMPE_PLC_NM
+            , LAST_ORD_NO
+            , USR_IMG
+            , SGN_NM
+            , CHNL_CD
+            , (SELECT x.CHNL_NM FROM TB_CHNL_CD AS x WHERE DELT_FLG  = 'N' AND CHNL_CD   = #CHNL_CD#) AS CHNL_NM
+            , CASE WHEN ISNULL(TM_PAY_FLG, 'N') = 'Y' THEN 1 ELSE 0 END AS TM_PAY_FLG
+            , TM_PAY_AMT
+            , EMP_LOC_CD
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-051', EMP_LOC_CD) AS EMP_LOC_NM
       FROM TB_SYS_USR AS B
       WHERE 1=1
       <isNotNull property="USR_ID" >

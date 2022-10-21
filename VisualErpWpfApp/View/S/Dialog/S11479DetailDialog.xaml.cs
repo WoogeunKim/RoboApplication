@@ -51,7 +51,8 @@ namespace AquilaErpWpfApp3.View.S.Dialog
             };
 
             //수정
-            if (copyDao.DE_PRNT_NO != null)
+            //if (copyDao.DE_PRNT_NO != null)
+            if (copyDao.DE_CHD_NO != null)
             {
                 //this.combo_DE_PRNT_NO.IsReadOnly = true;
                 this.isEdit = true;
