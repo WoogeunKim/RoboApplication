@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using ModelsLibrary.Auth;
 using ModelsLibrary.Code;
+using ModelsLibrary.Mobile;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -112,6 +113,7 @@ namespace AquilaErpWpfApp3.Util
                     HttpClient client;
                     HttpResponseMessage response;
 
+                    
                     ////URL Check & CHNL Check
                     using (client = new HttpClient())
                     {

@@ -49,6 +49,7 @@
     <Compile Include="Fproof\FproofVo.cs" />
     <Compile Include="Inv\InvVo.cs" />
     <Compile Include="Man\ManVo.cs" />
+    <Compile Include="Mobile\MobileVo.cs" />
     <Compile Include="Pda\PdaVo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Pur\PurVo.cs" />

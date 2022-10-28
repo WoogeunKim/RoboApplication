@@ -2607,6 +2607,11 @@
             설비 관리 - 삭제
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetMobileLoginSelect(ModelsLibrary.Mobile.MobileVo)">
+            <summary>
+            로그인 - 조회
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Pda.PdaController.GetUsrSelect(ModelsLibrary.Pda.PdaVo)">
             <summary>
             로그인 - 조회
