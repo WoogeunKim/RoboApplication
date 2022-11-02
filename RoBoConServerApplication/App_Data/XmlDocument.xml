@@ -2612,6 +2612,11 @@
             로그인 - 조회
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetMobileVerSelect(ModelsLibrary.Mobile.MobileVo)">
+            <summary>
+            프로그램 버전 - 조회
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Pda.PdaController.GetUsrSelect(ModelsLibrary.Pda.PdaVo)">
             <summary>
             로그인 - 조회

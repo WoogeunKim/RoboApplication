@@ -528,7 +528,7 @@ namespace AquilaErpWpfApp3.View.S.Dialog
         {
             if (string.IsNullOrEmpty(this.text_CO_NO.Text))
             {
-                WinUIMessageBox.Show("[거래처 코드] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
+               WinUIMessageBox.Show("[거래처 코드] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
                 this.text_CO_NO.IsTabStop = true;
                 this.text_CO_NO.Focus();
                 return false;

@@ -1065,6 +1065,8 @@
 	  , BANK_CD
 	  , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-014', BANK_CD) AS BANK_NM
 	  , HMPG_ADDR
+	  , PAY_TP_CD
+	  , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-011', PAY_TP_CD) AS PAY_TP_NM
       FROM TB_CD_CO
       WHERE 1=1
       AND CO_NO = #CO_NO#
@@ -1126,7 +1128,8 @@
 	  ACCT_NO,
 	  BILL_CD,
 	  BANK_CD,
-	  HMPG_ADDR
+	  HMPG_ADDR,
+	  PAY_TP_CD
 	  )
       VALUES
 	  (
@@ -1183,7 +1186,8 @@
 	  #ACCT_NO#,
 	  #BILL_CD#,
 	  #BANK_CD#,
-	  #HMPG_ADDR#
+	  #HMPG_ADDR#,
+	  #PAY_TP_CD#
       )
     </insert>
 
@@ -1241,6 +1245,7 @@
 	  ,BILL_CD = #BILL_CD#
 	  ,BANK_CD = #BANK_CD#
 	  ,HMPG_ADDR = #HMPG_ADDR#
+	  ,PAY_TP_CD = #PAY_TP_CD#
       WHERE CO_NO = #CO_NO#
       AND CHNL_CD = #CHNL_CD#
     </update>
