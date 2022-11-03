@@ -285,9 +285,11 @@
     <Compile Include="Controllers\Man\M6625Controller.cs" />
     <Compile Include="Controllers\Man\M6623Controller.cs" />
     <Compile Include="Controllers\Man\M6622Controller.cs" />
+    <Compile Include="Controllers\Mobile\MobileController.cs" />
     <Compile Include="Controllers\Pda\PdaController.cs" />
     <Compile Include="Controllers\PurRegController.cs" />
     <Compile Include="Controllers\Pur\P414101Controller.cs" />
+    <Compile Include="Controllers\Pur\P4402Controller.cs" />
     <Compile Include="Controllers\Pur\P441101Controller.cs" />
     <Compile Include="Controllers\Pur\P441100Controller.cs" />
     <Compile Include="Controllers\Pur\P4401Controller.cs" />
@@ -419,6 +421,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Models\Sql\author_sqlFile.xml" />
+    <Content Include="Models\Sql\mobile_sqlFile.xml" />
     <Content Include="Models\Sql\tec_sqlFile.xml" />
     <Content Include="Models\Sql\pur_sqlFile.xml" />
     <Content Include="Models\Sql\sale_sqlFile.xml" />

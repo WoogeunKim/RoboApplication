@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="mobile" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  <statements>
+	  
+	  <!-- 사용자 조회-->
+    <select id="MobileLoginSelect" resultClass="ModelsLibrary.Mobile.MobileVo" parameterClass="ModelsLibrary.Mobile.MobileVo">
+      SELECT  TOP 1
+	          T1.USR_ID
+            , T1.USR_PWD
+            , T1.USR_N1ST_NM AS USR_NM
+            , T1.DELT_FLG
+            , T1.CHNL_CD
+      FROM TB_SYS_USR AS T1
+      WHERE 1=1
+        AND USR_ID = #USR_ID#
+        AND DELT_FLG = #DELT_FLG#
+        AND CHNL_CD = #CHNL_CD#
+    </select>
+	  
+	  <!-- 프로그램 버전 조회-->
+	  <select id="MobileVerSelect" resultClass="ModelsLibrary.Mobile.MobileVo" parameterClass="ModelsLibrary.Mobile.MobileVo">
+		  SELECT TOP 1
+			    VER_NM
+			  , FL_NM
+			  , ST_NM
+			  , USE_FLG AS DELT_FLG
+		  FROM TB_SYS_MOB_UPD_VER
+		  WHERE 1 = 1
+		  ORDER BY CRE_DT DESC
+	  </select>
+
+  </statements>
+</sqlMap>

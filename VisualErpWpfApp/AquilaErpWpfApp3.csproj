@@ -35,7 +35,7 @@
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -247,6 +247,7 @@
     <Compile Include="ViewModel\M6641ViewModel.cs" />
     <Compile Include="ViewModel\M66521ViewModel.cs" />
     <Compile Include="ViewModel\M66531ViewModel.cs" />
+    <Compile Include="ViewModel\P4402ViewModel.cs" />
     <Compile Include="ViewModel\P4412ViewModel.cs" />
     <Compile Include="ViewModel\P4423ViewModel.cs" />
     <Compile Include="ViewModel\S11472ViewModel.cs" />
@@ -924,6 +925,9 @@
     <Compile Include="View\PUR\Dialog\P4401DetailDialog.xaml.cs">
       <DependentUpon>P4401DetailDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\PUR\Dialog\P4402ExcelDialog.xaml.cs">
+      <DependentUpon>P4402ExcelDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PUR\Dialog\P441100DetailDialog.xaml.cs">
       <DependentUpon>P441100DetailDialog.xaml</DependentUpon>
     </Compile>
@@ -1013,6 +1017,9 @@
     </Compile>
     <Compile Include="View\PUR\Dialog\P4422MasterDialog.xaml.cs">
       <DependentUpon>P4422MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P4402.xaml.cs">
+      <DependentUpon>P4402.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PUR\P4412.xaml.cs">
       <DependentUpon>P4412.xaml</DependentUpon>
@@ -2288,6 +2295,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\PUR\Dialog\P4402ExcelDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\PUR\Dialog\P441100DetailDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -2405,6 +2416,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\PUR\Dialog\P4422MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P4402.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -2217,6 +2217,56 @@ namespace ModelsLibrary.Pur
             get;
             set;
         }
+        public int? ROW_NUMBER
+        {
+            get;
+            set;
+        }
+        public string CO_TP
+        {
+            get;
+            set;
+        }
+        public string APLY_PRC_DT
+        {
+            get;
+            set;
+        }
+        public byte[] PRC_FILE
+        {
+            get;
+            set;
+        }
+        public string N2ND_ITM_GRP_CD
+        {
+            get;
+            set;
+        }
 
+        public int? BSS_WGT
+        {
+            get;
+            set;
+        }
+        public int? PPR_KNT_PER_WGT
+        {
+            get;
+            set;
+        }
+        public object WGT_PER_PRC
+        {
+            get;
+            set;
+        }
+        public object ROLL_PER_PRC
+        {
+            get;
+            set;
+        }
+        public string PAY_TP_CD
+        {
+            get;
+            set;
+        }
     }
 }

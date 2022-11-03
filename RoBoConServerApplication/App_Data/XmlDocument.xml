@@ -2607,6 +2607,16 @@
             설비 관리 - 삭제
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetMobileLoginSelect(ModelsLibrary.Mobile.MobileVo)">
+            <summary>
+            로그인 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetMobileVerSelect(ModelsLibrary.Mobile.MobileVo)">
+            <summary>
+            프로그램 버전 - 조회
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Pda.PdaController.GetUsrSelect(ModelsLibrary.Pda.PdaVo)">
             <summary>
             로그인 - 조회
@@ -2810,6 +2820,31 @@
         <member name="M:VisualServerApplication.Controllers.Pur.P414101Controller.GetDtlDelete(ModelsLibrary.Pur.PurVo)">
             <summary>
             부자재 BOM등록 DTL - 삭제
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Pur.P4402Controller.GetMstSelect(ModelsLibrary.Pur.PurVo)">
+            <summary>
+            원자재 원가표 MST - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Pur.P4402Controller.GetDtlSelect(ModelsLibrary.Pur.PurVo)">
+            <summary>
+            원자재 원가표 DTL - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Pur.P4402Controller.GetDtlInsert(ModelsLibrary.Pur.PurVo[])">
+            <summary>
+            원자재 원가표 DTL - 추가 및 수정
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Pur.P4402Controller.CoNmSelect(ModelsLibrary.Pur.PurVo)">
+            <summary>
+            원자재 원가표 DTL 추가 페이지 - 매입처명 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Pur.P4402Controller.GetFileSelect(ModelsLibrary.Pur.PurVo)">
+            <summary>
+            원자재 원가표 파일 - 조회
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Pur.P441101Controller.GetMstSelect(ModelsLibrary.Pur.PurVo)">
