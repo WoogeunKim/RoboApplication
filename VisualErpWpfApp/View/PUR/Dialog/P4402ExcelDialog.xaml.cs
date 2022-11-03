@@ -149,19 +149,19 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                             PurVo _vo = new PurVo();
 
                             int i = 0;
+
+                            // 평량(BSS_WGT), 연량(PPR_KNT_PER_WGT), 대분류(N1ST_ITM_GRP_CD), 중분류(N2ND_ITM_GRP_CD)
+                            _vo.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
+                            _vo.CO_NO = (this.combo_CO_NO.SelectedItem as PurVo).CO_NO;
+                            _vo.CRE_USR_ID = SystemProperties.USER;
+                            _vo.UPD_USR_ID = SystemProperties.USER;
+                            _vo.N1ST_ITM_GRP_CD = worksheet.Cells[_xTtxt + _xTxt + "1"].Value.ToString();
+                            _vo.N2ND_ITM_GRP_CD = worksheet.Cells[_xTtxt + _xTxt + "2"].Value.ToString();
+                            _vo.BSS_WGT = int.Parse(worksheet.Cells["A" + (_nCnt + x)].Value.ToString());
+                            _vo.PPR_KNT_PER_WGT = int.Parse(worksheet.Cells["B" + (_nCnt + x)].Value.ToString());
+
                             if (int.TryParse(worksheet.Cells[_xTtxt + _xTxt + (_nCnt + x)].Value.ToString(), out i))
                             {
-                                // 평량(BSS_WGT), 연량(PPR_KNT_PER_WGT), 대분류(N1ST_ITM_GRP_CD), 중분류(N2ND_ITM_GRP_CD)
-
-                                _vo.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
-                                _vo.CO_NO = (this.combo_CO_NO.SelectedItem as PurVo).CO_NO;
-                                _vo.CRE_USR_ID = SystemProperties.USER;
-                                _vo.UPD_USR_ID = SystemProperties.USER;
-                                _vo.N1ST_ITM_GRP_CD = worksheet.Cells[_xTtxt + _xTxt + "1"].Value.ToString();
-                                _vo.N2ND_ITM_GRP_CD = worksheet.Cells[_xTtxt + _xTxt + "2"].Value.ToString();
-                                _vo.BSS_WGT = int.Parse(worksheet.Cells["A" + (_nCnt + x)].Value.ToString());
-                                _vo.PPR_KNT_PER_WGT = int.Parse(worksheet.Cells["B" + (_nCnt + x)].Value.ToString());
-
                                 //평량 당 가격 (원/kg) (WGT_PER_PRC)
                                 _vo.WGT_PER_PRC = int.Parse(worksheet.Cells[_xTtxt + _xTxt + (_nCnt + x)].Value.ToString());
                                 if (_vo.WGT_PER_PRC.Equals(0)) 
