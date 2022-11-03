@@ -163,7 +163,8 @@ namespace AquilaErpWpfApp3.ViewModel
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                        fileVo = JsonConvert.DeserializeObject<PurVo>(await response.Content.ReadAsStringAsync());
+                        fileVo = this.selectmstItm;
+                        fileVo.PRC_FILE = JsonConvert.DeserializeObject<PurVo>(await response.Content.ReadAsStringAsync()).PRC_FILE;
 
                         if (fileVo != null)
                         {

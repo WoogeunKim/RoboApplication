@@ -55,7 +55,15 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    this.combo_CO_NO.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<PurVo>>(await response.Content.ReadAsStringAsync()).Cast<PurVo>().ToList();
+                    if (purVo.CO_NO != null)
+                    {
+                        this.combo_CO_NO.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<PurVo>>(await response.Content.ReadAsStringAsync()).Cast<PurVo>().ToList().Where(w => w.CO_NO.Equals(purVo.CO_NO)).ToList<PurVo>();
+                        this.combo_CO_NO.SelectedItem = (this.combo_CO_NO.ItemsSource as List<PurVo>)[0];
+                    }
+                    else
+                    {
+                        this.combo_CO_NO.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<PurVo>>(await response.Content.ReadAsStringAsync()).Cast<PurVo>().ToList();
+                    }
                 }
             }
 

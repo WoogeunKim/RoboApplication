@@ -32,7 +32,7 @@
         <StackPanel Orientation="Horizontal">
             <TextBlock Width="10" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="0" />
             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="0" Text="매입처명 : " TextAlignment="Center" />
-            <dxg:LookUpEdit HorizontalContentAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Stretch" x:Name="combo_CO_NO" Text="{Binding CO_NM}" IsSynchronizedWithCurrentItem="True" DisplayMember="CO_NM" ValueMember="CO_NM" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="280" PopupWidth="650" Width="150">
+            <dxg:LookUpEdit HorizontalContentAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Stretch" x:Name="combo_CO_NO" IsSynchronizedWithCurrentItem="True" DisplayMember="CO_NM" ValueMember="CO_NM" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="280" PopupWidth="650" Width="150">
                 <dxg:LookUpEdit.PopupContentTemplate>
                     <ControlTemplate>
                         <dxg:GridControl x:Name="PART_GridControl" >
