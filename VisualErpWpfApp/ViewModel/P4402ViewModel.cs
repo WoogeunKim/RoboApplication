@@ -77,7 +77,7 @@ namespace AquilaErpWpfApp3.ViewModel
         {
             try
             {
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("p4402/file", new StringContent(JsonConvert.SerializeObject(this.SelectedMstItem), System.Text.Encoding.UTF8, "application/json")))
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("p4402/file", new StringContent(JsonConvert.SerializeObject(new PurVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
