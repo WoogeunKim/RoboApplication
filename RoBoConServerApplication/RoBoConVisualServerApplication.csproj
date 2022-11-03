@@ -289,6 +289,7 @@
     <Compile Include="Controllers\Pda\PdaController.cs" />
     <Compile Include="Controllers\PurRegController.cs" />
     <Compile Include="Controllers\Pur\P414101Controller.cs" />
+    <Compile Include="Controllers\Pur\P4402Controller.cs" />
     <Compile Include="Controllers\Pur\P441101Controller.cs" />
     <Compile Include="Controllers\Pur\P441100Controller.cs" />
     <Compile Include="Controllers\Pur\P4401Controller.cs" />
