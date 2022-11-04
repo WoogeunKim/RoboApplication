@@ -16,7 +16,7 @@ using System.Windows;
 using System.Windows.Input;
 using AquilaErpWpfApp3.Util;
 using AquilaErpWpfApp3.View.INV.Report;
-
+using DevExpress.Xpf.Core;
 
 namespace AquilaErpWpfApp3.ViewModel
 {
@@ -33,7 +33,6 @@ namespace AquilaErpWpfApp3.ViewModel
             EndDt = System.DateTime.Now;
 
             Refresh();
-
         }
 
 
@@ -47,8 +46,6 @@ namespace AquilaErpWpfApp3.ViewModel
                     if (response.IsSuccessStatusCode)
                     {
                         this.SelectMstList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
-
-
                     }
                     //Title = "[기간]" + (StartDt).ToString("yyyy-MM");
                 }
@@ -65,18 +62,25 @@ namespace AquilaErpWpfApp3.ViewModel
         {
             try
             {
+                DXSplashScreen.Show<ProgressWindow>();
+
                 using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66333/dtl", new StringContent(JsonConvert.SerializeObject(SelectedMstItem), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
                         this.SelectDtlList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
-
-
                     }
+
+                    DXSplashScreen.Close();
                 }
             }
             catch (System.Exception eLog)
             {
+                if (DXSplashScreen.IsActive == true)
+                {
+                    DXSplashScreen.Close();
+                }
+
                 WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }

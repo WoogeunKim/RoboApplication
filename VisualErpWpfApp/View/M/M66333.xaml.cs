@@ -63,7 +63,6 @@ namespace AquilaErpWpfApp3.View.M
             sb.Append("</DataTemplate>");
             DataTemplate templateFooter = (DataTemplate)System.Windows.Markup.XamlReader.Parse(sb.ToString());
 
-
             using (PrintableControlLink prtLink = new PrintableControlLink(this.ViewDetail))
             {
                 //prtLink.PageHeaderData = "인쇄 일자 : " + Convert.ToDateTime(this.txt_stDate.Text).ToString("yyyy-MM-dd");
@@ -87,7 +86,7 @@ namespace AquilaErpWpfApp3.View.M
                 prtLink.Landscape = true;
                 prtLink.PrintingSystem.ShowPrintStatusDialog = true;
 
-                prtLink.PaperKind = System.Drawing.Printing.PaperKind.A3;
+                prtLink.PaperKind = System.Drawing.Printing.PaperKind.A4;
                 prtLink.CreateDocument(true);
                 prtLink.ShowPrintPreviewDialog(Application.Current.MainWindow, "수동수주출력");
             }
