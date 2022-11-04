@@ -8971,7 +8971,91 @@
 		        AND T1.CNTR_NM IS NOT NULL
 		        AND T1.IN_REQ_DT IS NOT NULL         
 	  </select>
+	  
 
+	  <!--수동수주출력-생산활용 - MST-->
+	  <select id="M66333SelectMst" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
+		  SELECT 
+		        T1.SL_RLSE_NO
+		      , CONVERT(CHAR(10), T1.SL_RLSE_DT, 23) AS SL_RLSE_DT
+		      , T2.CO_NM
+		      , T1.SL_RMK
+		      , T1.CHNL_CD
+		  FROM TB_SL_RLSE  T1
+		      OUTER APPLY (
+		             SELECT X.CO_NM
+		               FROM TB_CD_CO X
+		              WHERE 1 = 1
+		                AND X.CHNL_CD = T1.CHNL_CD
+		                AND X.CO_NO   = T1.SL_CO_CD
+		       ) T2
+		  WHERE 1 = 1
+		    AND T1.CHNL_CD      = #CHNL_CD#
+		    AND T1.SL_RLSE_DT   >= CAST(#FM_DT# + ' 00:00:00' AS DATETIME)
+		    AND T1.SL_RLSE_DT   <![CDATA[<=]]> CAST(#TO_DT# + ' 23:59:59' AS DATETIME)
+	  </select>
+
+	  <!--수동수주출력-생산활용 - DTL-->
+	  <select id="M66333SelectDtl" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
+		  SELECT
+		        T2.SL_RLSE_SEQ
+		      , T2.SL_ITM_QTY
+		      , T2.SL_ITM_WGT
+		      , T2.ITM_SHP_CD
+		      , T3.ITM_IMG
+		      , T2.ITM_STL_CD
+		      , T2.ITM_STL_SZ_CD
+		      , T2.ITM_STL_LENG
+		      , T2.ITM_STL_PRD_DESC
+		      , T2.CNTR_NM
+		      , T2.CNTR_PSN_NM
+		      , T2.CNTR_DE_NM
+		      , CONVERT(CHAR(10), T2.IN_REQ_DT, 23) AS IN_REQ_DT
+		      , T4.A_LEN
+		      , T4.A_VAL
+		      , T4.B_LEN
+		      , T4.B_VAL
+		      , T4.C_LEN
+		      , T4.C_VAL
+		      , T4.D_LEN
+		      , T4.D_VAL
+		      , T4.E_LEN
+		      , T4.E_VAL
+		      , T4.F_LEN
+		      , T4.F_VAL
+		  FROM TB_SL_RLSE       T1
+		     , TB_SL_RLSE_DTL   T2
+		       OUTER APPLY (
+		          SELECT X.A_LEN, X.B_LEN, X.C_LEN, X.D_LEN, X.E_LEN, X.F_LEN, X.A_VAL, X.B_VAL, X.C_VAL, X.D_VAL, X.E_VAL, X.F_VAL
+		            FROM TB_MES_PROD_DESC  X
+		          WHERE 1 = 1
+		            AND X.SL_RLSE_NO   = T2.SL_RLSE_NO
+		            AND X.SL_RLSE_SEQ  = T2.SL_RLSE_SEQ
+		      ) T4
+		       OUTER APPLY (
+		             SELECT X.ITM_NM   AS ITM_SHP_NM
+		                  , X.ITM_CD AS SHP_CD
+		                  , Z.ITM_IMG
+		                FROM TB_CD_ITM  X
+		                  OUTER APPLY (
+		                      SELECT Z.IMG  AS ITM_IMG
+		                        FROM TB_CD_ITM_IMG Z
+		                       WHERE 1 = 1
+		                         AND X.CHNL_CD = Z.CHNL_CD
+		                         AND X.ITM_CD  = Z.ITM_CD
+		                  ) Z
+		    WHERE 1 = 1
+		      AND X.CHNL_CD           = #CHNL_CD#
+		      AND X.ITM_GRP_CLSS_CD   = 'P'
+		      AND X.DELT_FLG          = 'N'
+		      AND X.ITM_CD           = T2.ITM_SHP_CD
+		  ) T3
+		  WHERE 1 = 1
+		    AND T1.CHNL_CD      = T2.CHNL_CD
+		    AND T1.CHNL_CD      = #CHNL_CD#
+		    AND T1.SL_RLSE_NO   = T2.SL_RLSE_NO
+		    AND T1.SL_RLSE_NO   = #SL_RLSE_NO#
+	  </select>
 
 
   </statements>

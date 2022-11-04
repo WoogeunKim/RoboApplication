@@ -2255,6 +2255,131 @@
             get;
             set;
         }
+        public string SL_RMK
+        {
+            get;
+            set;
+        }
+
+        public string ITM_SHP_CD
+        {
+            get;
+            set;
+        }
+
+        public byte[] ITM_IMG
+        {
+            get;
+            set;
+        }
+
+        public string ITM_STL_CD
+        {
+            get;
+            set;
+        }
+
+        public string ITM_STL_SZ_CD
+        {
+            get;
+            set;
+        }
+
+        public object ITM_STL_LENG
+        {
+            get;
+            set;
+        }
+
+        public string ITM_STL_PRD_DESC
+        {
+            get;
+            set;
+        }
+
+        public string CNTR_DE_NM
+        {
+            get;
+            set;
+        }
+
+        public int? A_LEN
+        {
+            get;
+            set;
+        }
+
+        public int? A_VAL
+        {
+            get;
+            set;
+        }
+
+        public int? B_LEN
+        {
+            get;
+            set;
+        }
+
+        public int? B_VAL
+        {
+            get;
+            set;
+        }
+
+        public int? C_LEN
+        {
+            get;
+            set;
+        }
+
+        public int? C_VAL
+        {
+            get;
+            set;
+        }
+
+        public int? D_LEN
+        {
+            get;
+            set;
+        }
+
+        public int? D_VAL
+        {
+            get;
+            set;
+        }
+
+        public int? E_LEN
+        {
+            get;
+            set;
+        }
+
+        public int? E_VAL
+        {
+            get;
+            set;
+        }
+
+        public int? F_LEN
+        {
+            get;
+            set;
+        }
+
+        public int? F_VAL
+        {
+            get;
+            set;
+        }
+
+        public byte[] IMG
+        {
+            get;
+            set;
+        }
 
     }
 }

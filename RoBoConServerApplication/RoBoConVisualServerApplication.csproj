@@ -233,6 +233,7 @@
     <Compile Include="Controllers\Inv\I6613Controller.cs" />
     <Compile Include="Controllers\Inv\I6610Controller.cs" />
     <Compile Include="Controllers\Inv\I66210Controller.cs" />
+    <Compile Include="Controllers\Man\M66333Controller.cs" />
     <Compile Include="Controllers\Man\M6638Controller.cs" />
     <Compile Include="Controllers\Man\M6521Controller.cs" />
     <Compile Include="Controllers\Man\M5210Controller.cs" />

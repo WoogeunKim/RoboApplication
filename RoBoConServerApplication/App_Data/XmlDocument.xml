@@ -1387,6 +1387,16 @@
             품목 출고  - 삭제
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66333Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+             수동수주출력 / 생산 활용 - MST 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66333Controller.GetDtlSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+             수동수주출력 / 생산 활용 - DTL 조회
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Man.M6638Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
             <summary>
             LOC 관리 MST  - 조회

@@ -43,7 +43,7 @@
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
-                                            <dxg:GridColumn FieldName="CLSS_DESC" Header="설명" Width="30" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="2">
+                                            <dxg:GridColumn FieldName="CLSS_DESC" Header="설명" Width="25" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="2">
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
                                                 </dxg:GridColumn.EditSettings>
@@ -140,25 +140,25 @@
                                         </dxg:GridControl.InputBindings>
                                         <!-- 원자재 원가표 마스터 표 열 구성 -->
                                         <dxg:GridControl.Columns>
-                                            <dxg:GridColumn FieldName="RN" Header="순번" Width="10" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center">
+                                            <dxg:GridColumn FieldName="RN" Header="순번" Width="12" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center">
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
-                                            <dxg:GridColumn FieldName="CO_NM" Header="매입처" Width="15" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center">
+                                            <dxg:GridColumn FieldName="CO_NM" Header="매입처" Width="20" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center">
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
+
+                                            <dxg:GridColumn FieldName="CO_TP" Header="구분" Width="10" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center">
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
-                                            <dxg:GridColumn FieldName="CO_TP" Header="구분" Width="13" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center">
-                                                <dxg:GridColumn.EditSettings>
-                                                    <dxe:TextEditSettings HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                                                </dxg:GridColumn.EditSettings>
-                                            </dxg:GridColumn>
-
-                                            <dxg:GridColumn FieldName="APLY_PRC_DT" Header="등록일자" Width="17" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center">
+                                            <dxg:GridColumn FieldName="APLY_PRC_DT" Header="등록일자" Width="15" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center">
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                                 </dxg:GridColumn.EditSettings>
