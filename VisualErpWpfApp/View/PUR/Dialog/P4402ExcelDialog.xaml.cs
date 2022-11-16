@@ -50,22 +50,40 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
 
         public async void SYSTEM_CODE_VO()
         {
-            //CO_NO
-            using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("p4402/dig/co", new StringContent(JsonConvert.SerializeObject(new PurVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+            // 원지 판지 구분 조회
+            using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.GetAsync("S131/dtl/" + Properties.Settings.Default.SettingChnl + "/" + "L-011"))
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    if (purVo.CO_NO != null)
+                    if (purVo.CO_TP != null)
                     {
-                        this.combo_CO_NO.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<PurVo>>(await response.Content.ReadAsStringAsync()).Cast<PurVo>().ToList().Where(w => w.CO_NO.Equals(purVo.CO_NO)).ToList<PurVo>();
-                        this.combo_CO_NO.SelectedItem = (this.combo_CO_NO.ItemsSource as List<PurVo>)[0];
+                        this.combo_CO_TP.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList().Where(w => w.CLSS_CD.Equals(purVo.PAY_TP_CD)).ToList<SystemCodeVo>();
+                        this.combo_CO_TP.SelectedItem = (this.combo_CO_TP.ItemsSource as List<SystemCodeVo>)[0];
                     }
                     else
                     {
-                        this.combo_CO_NO.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<PurVo>>(await response.Content.ReadAsStringAsync()).Cast<PurVo>().ToList();
+                        this.combo_CO_TP.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
                     }
+
                 }
             }
+
+            //CO_NO
+            //using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("p4402/dig/co", new StringContent(JsonConvert.SerializeObject(new PurVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+            //{
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        if (purVo.CO_NO != null)
+            //        {
+            //            this.combo_CO_NO.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<PurVo>>(await response.Content.ReadAsStringAsync()).Cast<PurVo>().ToList().Where(w => w.CO_NO.Equals(purVo.CO_NO)).ToList<PurVo>();
+            //            this.combo_CO_NO.SelectedItem = (this.combo_CO_NO.ItemsSource as List<PurVo>)[0];
+            //        }
+            //        else
+            //        {
+            //            this.combo_CO_NO.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<PurVo>>(await response.Content.ReadAsStringAsync()).Cast<PurVo>().ToList();
+            //        }
+            //    }
+            //}
 
             // 파일 넣기
             Stream streamFile;
@@ -159,8 +177,9 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                             int i = 0;
 
                             // 평량(BSS_WGT), 연량(PPR_KNT_PER_WGT), 대분류(N1ST_ITM_GRP_CD), 중분류(N2ND_ITM_GRP_CD)
-                            _vo.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
-                            _vo.CO_NO = (this.combo_CO_NO.SelectedItem as PurVo).CO_NO;
+                            _vo.CHNL_CD = SystemProperties.USER_VO.CHNL_CD; 
+                            _vo.PAY_TP_CD = (this.combo_CO_TP.SelectedItem as SystemCodeVo).CLSS_CD;
+                            //_vo.CO_NO = (this.combo_CO_NO.SelectedItem as PurVo).CO_NO;
                             _vo.CRE_USR_ID = SystemProperties.USER;
                             _vo.UPD_USR_ID = SystemProperties.USER;
                             _vo.N1ST_ITM_GRP_CD = worksheet.Cells[_xTtxt + _xTxt + "1"].Value.ToString();
@@ -252,13 +271,22 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
 
         public Boolean ValueCheckd()
         {
-            if (string.IsNullOrEmpty(this.combo_CO_NO.Text))
+            //if (string.IsNullOrEmpty(this.combo_CO_NO.Text))
+            //{
+            //    WinUIMessageBox.Show("매입처명을 선택하세요.", "[유효검사]" + Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+            //    this.combo_CO_NO.IsTabStop = true;
+            //    this.combo_CO_NO.Focus();
+            //    return false;
+            //}
+
+            if (string.IsNullOrEmpty(this.combo_CO_TP.Text))
             {
-                WinUIMessageBox.Show("매입처명을 선택하세요.", "[유효검사]" + Title, MessageBoxButton.OK, MessageBoxImage.Warning);
-                this.combo_CO_NO.IsTabStop = true;
-                this.combo_CO_NO.Focus();
+                WinUIMessageBox.Show("업체 구분을 선택하세요.", "[유효검사]" + Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                this.combo_CO_TP.IsTabStop = true;
+                this.combo_CO_TP.Focus();
                 return false;
             }
+
             return true;
         }
 

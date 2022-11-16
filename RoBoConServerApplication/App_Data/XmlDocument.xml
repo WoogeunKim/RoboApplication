@@ -2627,6 +2627,16 @@
             프로그램 버전 - 조회
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetMInCoListSelect(ModelsLibrary.Mobile.MobileVo)">
+            <summary>
+            원자재 입고 거래처 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetMInOrdListSelect(ModelsLibrary.Mobile.MobileVo)">
+            <summary>
+            원자재 입고 발주 - 조회
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Pda.PdaController.GetUsrSelect(ModelsLibrary.Pda.PdaVo)">
             <summary>
             로그인 - 조회
@@ -2845,11 +2855,6 @@
         <member name="M:VisualServerApplication.Controllers.Pur.P4402Controller.GetDtlInsert(ModelsLibrary.Pur.PurVo[])">
             <summary>
             원자재 원가표 DTL - 추가 및 수정
-            </summary>
-        </member>
-        <member name="M:VisualServerApplication.Controllers.Pur.P4402Controller.CoNmSelect(ModelsLibrary.Pur.PurVo)">
-            <summary>
-            원자재 원가표 DTL 추가 페이지 - 매입처명 조회
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Pur.P4402Controller.GetFileSelect(ModelsLibrary.Pur.PurVo)">
@@ -3301,6 +3306,56 @@
         <member name="M:VisualServerApplication.Controllers.Sale.S2218Controller.GetMstSelect(ModelsLibrary.Sale.SaleVo)">
             <summary>
             반품현황 MST - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2219Controller.GetMstSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            견적서 MST - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2219Controller.GetMstInsert(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            견적서 MST - 추가
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2219Controller.GetMstUpdate(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            견적서 MST - 수정
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2219Controller.GetMstDelete(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            견적서 MST - 삭제
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2219Controller.GetDtlSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            견적서 DTL - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2219Controller.GetEstmSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            견적서 내역 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2219Controller.GetEstmInsert(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            견적서 내역 - 추가
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2219Controller.GetEstmUpdate(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            견적서 내역 - 수정
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2219Controller.GetEstmDelete(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            견적서 내역 - 삭제
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2219Controller.GetProdSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            공정과정 선택 - 조회
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Sale.S22223Controller.GetMstSelect(ModelsLibrary.Sale.SaleVo)">

@@ -3265,6 +3265,27 @@
     <!--원자재 원가표 관리 MST 조회-->
     <select id="P4402SelectMstList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
       SELECT
+              ROW_NUMBER() OVER (PARTITION BY 0 ORDER BY T10.PAY_TP_CD) AS RN
+            , T10.PAY_TP_CD
+            , T10.CO_TP
+            , T10.APLY_PRC_DT
+            , T10.CHNL_CD
+        FROM (
+                     SELECT
+                            ROW_NUMBER() OVER (PARTITION BY T1.CHNL_CD, T1.PAY_TP_CD ORDER BY T1.APLY_PRC_DT DESC) AS RN
+                          , T1.PAY_TP_CD
+                          , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-011', T1.PAY_TP_CD) AS CO_TP
+                          , CONVERT(CHAR(10), T1.APLY_PRC_DT, 102) AS APLY_PRC_DT
+                          , T1.CHNL_CD
+                       FROM TB_CD_CO_PPR_PRC_MST T1
+                      WHERE 1 = 1
+                        AND T1.CHNL_CD = #CHNL_CD#
+               ) T10
+           WHERE 1 = 1
+             AND T10.RN = 1
+           ORDER BY T10.PAY_TP_CD
+
+		<!--SELECT
               ROW_NUMBER() OVER (PARTITION BY 0 ORDER BY T10.APLY_PRC_DT DESC) AS RN
             , T10.CO_NO
                   , T10.CO_NM
@@ -3289,7 +3310,7 @@
                      ) T10
            WHERE 1 = 1
              AND T10.RN = 1
-           ORDER BY T10.APLY_PRC_DT DESC
+           ORDER BY T10.APLY_PRC_DT DESC-->
     </select>
 
     <!--DTL 조회-->
@@ -3298,86 +3319,92 @@
          FROM TB_CD_CO_PPR_PRC_MST
         WHERE 1 = 1
           AND CHNL_CD      = #CHNL_CD#
-          AND CO_NO        = #CO_NO#
-        ORDER BY APLY_PRC_DT DESC
-    </select>
+          <!--AND CO_NO        = #CO_NO#-->
+		  AND PAY_TP_CD    = #PAY_TP_CD#
+		ORDER BY APLY_PRC_DT DESC
+	</select>
 
     <!--추가 및 수정-->
     <insert id="P4402InsertMst" parameterClass="ModelsLibrary.Pur.PurVo">
       INSERT INTO TB_CD_CO_PPR_PRC_MST
             (
                CHNL_CD
-            , CO_NO
-            , APLY_PRC_DT
-            , PRC_FILE
-            , CRE_USR_ID
-            , CRE_DT
-            , UPD_USR_ID
-            , UPD_DT
+             , PAY_TP_CD
+             <!--, CO_NO-->
+             , APLY_PRC_DT
+             , PRC_FILE
+             , CRE_USR_ID
+             , CRE_DT
+             , UPD_USR_ID
+             , UPD_DT
             )
       VALUES
             (
                #CHNL_CD#
-            , #CO_NO#
-            , GETDATE()
-            , #PRC_FILE#
-            , #CRE_USR_ID#
-            , GETDATE()
-            , #UPD_USR_ID#
-            , GETDATE()
+             , #PAY_TP_CD#
+             <!--, #CO_NO#-->
+             , GETDATE()
+             , #PRC_FILE#
+             , #CRE_USR_ID#
+             , GETDATE()
+             , #UPD_USR_ID#
+             , GETDATE()
             )
     </insert>
 
     <delete id="P4402DeleteDtl" parameterClass="ModelsLibrary.Pur.PurVo">
       DELETE FROM TB_CD_CO_PPR_PRC_DTL
             WHERE 1 = 1
-               AND CHNL_CD = #CHNL_CD#
-               AND CO_NO   = #CO_NO#
+               AND CHNL_CD   = #CHNL_CD#
+			   AND PAY_TP_CD = #PAY_TP_CD#
+               <!--AND CO_NO   = #CO_NO#-->
     </delete>
 
     <insert id="P4402InsertDtl" parameterClass="ModelsLibrary.Pur.PurVo">
       INSERT INTO TB_CD_CO_PPR_PRC_DTL
             (
-               CHNL_CD
-            , CO_NO
-            , N1ST_ITM_GRP_CD
-            , N2ND_ITM_GRP_CD
-            , BSS_WGT
-            , PPR_KNT_PER_WGT
-            , WGT_PER_PRC
-            , ROLL_PER_PRC
-            , CRE_USR_ID
-            , CRE_DT
-            , UPD_USR_ID
-            , UPD_DT
+               CHNL_CD            
+			 , PAY_TP_CD
+             <!--, CO_NO-->
+             , N1ST_ITM_GRP_CD
+             , N2ND_ITM_GRP_CD
+             , BSS_WGT
+             , PPR_KNT_PER_WGT
+             , WGT_PER_PRC
+             , ROLL_PER_PRC
+             , CRE_USR_ID
+             , CRE_DT
+             , UPD_USR_ID
+             , UPD_DT
             )
       VALUES
             (
                #CHNL_CD#
-            , #CO_NO#
-            , #N1ST_ITM_GRP_CD#
-            , #N2ND_ITM_GRP_CD#
-            , #BSS_WGT#
-            , #PPR_KNT_PER_WGT#
-            , #WGT_PER_PRC#
-            , #ROLL_PER_PRC#
-            , #CRE_USR_ID#
-            , GETDATE()
-            , #UPD_USR_ID#
-            , GETDATE()
+             , #PAY_TP_CD#
+             <!--, #CO_NO#-->
+             , #N1ST_ITM_GRP_CD#
+             , #N2ND_ITM_GRP_CD#
+             , #BSS_WGT#
+             , #PPR_KNT_PER_WGT#
+             , #WGT_PER_PRC#
+             , #ROLL_PER_PRC#
+             , #CRE_USR_ID#
+             , GETDATE()
+             , #UPD_USR_ID#
+             , GETDATE()
             )
     </insert>
 
     <!--DTL 추가 다이얼로그 매입처명 조회-->
-      <select id="P4402SelectCoNmList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
-      SELECT
-                  CO_NO
+      <!--<select id="P4402SelectCoNmList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+         SELECT
+                 CO_NO
                , CO_NM
-          FROM TB_CD_CO
+           FROM TB_CD_CO
           WHERE 1 = 1
-             AND CHNL_CD = #CHNL_CD#
-             AND PAY_TP_CD IS NOT NULL
-     </select>
+            AND CHNL_CD = #CHNL_CD#
+            AND PAY_TP_CD IS NOT NULL
+     </select>-->
 
      <!--원자재 원가표 원본 조회-->
       <select id="P4402SelectFile" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">

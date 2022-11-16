@@ -30,7 +30,7 @@
                     </dxb:BarEditItem.EditTemplate>
                 </dxb:BarEditItem>
                 <!-- 업체 구분 콤보박스 -->
-                <dxb:BarEditItem x:Name="M_CO_TP" Content="업 체  구 분 : " EditValue="{Binding CO_TP_OBJ, Mode=TwoWay}">
+                <!--<dxb:BarEditItem x:Name="M_CO_TP" Content="업 체  구 분 : " EditValue="{Binding CO_TP_OBJ, Mode=TwoWay}">
                     <dxb:BarEditItem.EditSettings>
                         <dxg:LookUpEditSettings ItemsSource="{Binding CO_TP_List}" DisplayMember="CLSS_DESC" ImmediatePopup="True" IsPopupAutoWidth="True" AutoPopulateColumns ="False"  IsTextEditable="False" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" >
                             <dxg:LookUpEditSettings.PopupContentTemplate>
@@ -60,7 +60,7 @@
                             </dxg:LookUpEditSettings.StyleSettings>
                         </dxg:LookUpEditSettings>
                     </dxb:BarEditItem.EditSettings>
-                </dxb:BarEditItem>
+                </dxb:BarEditItem>-->
                 <!-- 조회, 추가, 수정, 삭제 아이콘 -->
                 <dxb:BarButtonItem x:Name="M_MST_REFRESH" Content="조회" KeyGesture="F5" Glyph="{dx:DXImage Image=Refresh2_16x16.png}" LargeGlyph="{dx:DXImage Image=Refresh2_32x32.png}" RibbonStyle="Large" Command="{Binding RefreshCommand}" />
                 <dxb:BarButtonItem x:Name="M_MST_INSERT" Content="추가" KeyGesture="F6" Glyph="{dx:DXImage Image=AddItem_16x16.png}" LargeGlyph="{dx:DXImage Image=AddItem_32x32.png}" RibbonStyle="Large" Command="{Binding NewContactCommand}" />
@@ -77,7 +77,7 @@
                         <!-- 검색, 업체구분, 조회, 추가, 수정 연결 -->
                         <dxr:RibbonPage Caption="보고서 관리">
                             <dxr:RibbonPageGroup Caption="조회 조건">
-                                <dxb:BarEditItemLink BarItemName="M_CO_TP" EditWidth="140" EditHeight="25"/>
+                                <!--<dxb:BarEditItemLink BarItemName="M_CO_TP" EditWidth="140" EditHeight="25"/>-->
                                 <dxb:BarEditItemLink BarItemName="M_SEARCH_TEXT" EditWidth="140" EditHeight="25" />
                                 <dxb:BarButtonItemLink BarItemName="M_MST_REFRESH"/>
                             </dxr:RibbonPageGroup>
@@ -146,11 +146,11 @@
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
-                                            <dxg:GridColumn FieldName="CO_NM" Header="매입처" Width="20" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center">
+                                            <!--<dxg:GridColumn FieldName="CO_NM" Header="매입처" Width="20" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center">
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
                                                 </dxg:GridColumn.EditSettings>
-                                            </dxg:GridColumn>
+                                            </dxg:GridColumn>-->
 
                                             <dxg:GridColumn FieldName="CO_TP" Header="구분" Width="10" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center">
                                                 <dxg:GridColumn.EditSettings>

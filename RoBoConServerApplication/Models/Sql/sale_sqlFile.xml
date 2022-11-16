@@ -6426,7 +6426,246 @@
             GROUP BY T1.SL_ITM_CD,SL_RTN_ITM_QTY,T1.SL_ITM_CD, T2.ITM_NM,T2.ITM_SZ_NM, T1.CRE_DT
      </select>
     
+        <!-- S2219 견적서 발행-->
     
+    <!--견적서 MST 조회-->
+    <select id="S2219SelectMstList" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+      SELECT ESTM_NO 
+           , CO_NM 
+           , CONVERT(VARCHAR,ESTM_DT,23) AS ESTM_DT 
+           , CHNL_CD
+        FROM TB_ESTM_MST
+       WHERE 1 = 1 
+         AND CHNL_CD = #CHNL_CD#
+         AND ESTM_DT >= CAST(#FM_DT# + ' 00:00:00' AS DATETIME) 
+         AND ESTM_DT <![CDATA[ <= ]]> CAST(#TO_DT# + ' 23:59:59' AS DATETIME)      
+    
+     </select>
+
+    <!--견적서 DTL 조회-->
+    <select id="S2219SelectDtlList" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+      SELECT  ESTM_NO 
+            , CONVERT(VARCHAR,ESTM_DT,23) AS ESTM_DT 
+            , CO_NM 
+            , MGR_NM
+            , PHN_NO
+            , FAX_NO 
+            , CONVERT(VARCHAR,EXP_DT,23) AS EXP_DT
+            , CLZ_FLG 
+            , ESTM_RMK
+            , ITM_FILE
+            , ITM_FILE_NM
+            , CHNL_CD
+       FROM TB_ESTM_MST
+      WHERE 1 = 1
+        AND CHNL_CD = #CHNL_CD#
+        AND ESTM_NO = #ESTM_NO#
+     </select>  
+    
+    <!--견적서 내역 조회-->
+    <select id="S2219SelectEstmList" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+      SELECT ESTM_SEQ
+           , ESTM_ITM_NM
+           , ESTM_ITM_SZ_NM
+           , ESTM_ITM_QTY
+           , ITM_UT
+           , ITM_PER_PRC 
+           , ITM_DC_RT
+           , (ITM_PER_PRC * ((100-ITM_DC_RT)/100)) AS ITM_DC_PER_PRC
+           , ITM_PRC
+           , (ESTM_ITM_QTY * ITM_PRC) AS ITM_AMT 
+           , ITM_RMK
+           , CHNL_CD
+           , ESTM_NO
+       FROM TB_ESTM_DTL
+      WHERE 1 = 1 
+        AND CHNL_CD = #CHNL_CD#
+        AND ESTM_NO = #ESTM_NO#
+     </select>  
+
+    <!--공정과정 선택 조회-->
+    <select id="S2219SelectProdList" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+      SELECT ROUT_CD
+           , ROUT_NM
+        FROM TB_PROD_ROUT  
+       WHERE 1 = 1
+         AND CHNL_CD = #CHNL_CD#
+     </select>  
+
+    <!--견적서 MST - 추가-->
+    <select id="S2219SelectEstmNo" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="string">
+         SELECT dbo.FF_NO_FMT(#CHNL_CD#, 'ES', '001') AS ESTM_NO FROM CPY_T WHERE NO = 1
+    </select>  
+      
+    <insert id="S2219InsertPopupMst" parameterClass="ModelsLibrary.Sale.SaleVo">
+        INSERT INTO TB_ESTM_MST
+           (
+              CHNL_CD    
+            , ESTM_NO  
+            , CO_NM      
+            , ESTM_DT     
+            , MGR_NM      
+            , PHN_NO    
+            , FAX_NO      
+            , EXP_DT       
+            , ESTM_RMK    
+            , ITM_FILE  
+            , ITM_FILE_NM  
+            , CLZ_FLG      
+            , CRE_USR_ID
+            , CRE_DT
+            , UPD_USR_ID
+            , UPD_DT
+           )
+        VALUES
+          (
+             #CHNL_CD#
+           , #ESTM_NO#
+           , #CO_NM#
+           , #ESTM_DT#
+           , #MGR_NM#
+           , #PHN_NO#
+           , #FAX_NO#
+           , #EXP_DT#
+           , #ESTM_RMK#
+           , #ITM_FILE#
+           , #ITM_FILE_NM#
+           , 'N'
+           , #CRE_USR_ID#
+           , GETDATE()
+           , #UPD_USR_ID#
+           , GETDATE()
+          )
+    </insert>  
+    
+    <update id="S2219UpdateEstmNo" parameterClass="ModelsLibrary.Sale.SaleVo">
+        UPDATE TB_SYS_NO_FMT
+           SET LST_FMT_NO = #ESTM_NO#
+         WHERE TBL_ID     = 'ES'
+           AND CHNL_CD    = #CHNL_CD#
+           AND AREA_CD    = '001'     
+      </update>
+
+    <!--견적서 MST - 수정-->
+    <update id="S2219UpdateMst" parameterClass="ModelsLibrary.Sale.SaleVo">
+        UPDATE TB_ESTM_MST
+          SET 
+                CO_NM = #CO_NM#
+              , ESTM_DT = #ESTM_DT#
+              , MGR_NM = #MGR_NM#
+              , PHN_NO = #PHN_NO#
+              , FAX_NO = #PHN_NO#
+              , EXP_DT = #EXP_DT#
+              , ESTM_RMK = #ESTM_RMK#
+              , ITM_FILE = #ITM_FILE#
+              , ITM_FILE_NM = #ITM_FILE_NM#
+              , CLZ_FLG = #CLZ_FLG#
+              , UPD_USR_ID = #UPD_USR_ID#
+              , UPD_DT = GETDATE()
+          WHERE 1 = 1
+            AND CHNL_CD = #CHNL_CD#
+            AND ESTM_NO = #ESTM_NO#
+      </update>
+
+    <!--견적서 MST - 삭제-->
+    <delete id="S2219DeleteMst" parameterClass="ModelsLibrary.Sale.SaleVo">
+      DELETE 
+        FROM TB_ESTM_MST
+       WHERE 1 = 1 
+         AND CHNL_CD = #CHNL_CD#
+         AND ESTM_NO = #ESTM_NO#
+    </delete> 
+    
+    <delete id="S2219DeleteDtl" parameterClass="ModelsLibrary.Sale.SaleVo">
+      DELETE
+        FROM TB_ESTM_DTL
+       WHERE 1 = 1
+         AND CHNL_CD = #CHNL_CD#
+         AND ESTM_NO = #ESTM_NO#
+    </delete> 
+
+    <!--견적서 내역  - 원자재 / 공정과정 추가-->
+    <insert id="S2219InsertEstm" parameterClass="ModelsLibrary.Sale.SaleVo">
+      INSERT INTO TB_ESTM_DTL
+          (
+              CHNL_CD        
+            , ESTM_NO       
+            , ESTM_SEQ      
+            , ESTM_ITM_NM     
+            , ESTM_ITM_SZ_NM  
+            , ESTM_ITM_QTY    
+            , ITM_UT          
+            , ITM_PER_PRC     
+            , ITM_DC_RT       
+            , ITM_PRC         
+            , ITM_RMK         
+            , CRE_USR_ID     
+            , CRE_DT
+            , UPD_USR_ID
+            , UPD_DT
+          )
+       VALUES
+          (
+              #CHNL_CD#
+            , #ESTM_NO#  
+            , #ESTM_SEQ#
+            , #ESTM_ITM_NM#
+            , #ESTM_ITM_SZ_NM#
+            , #ESTM_ITM_QTY#
+            , #ITM_UT#
+            , #ITM_PER_PRC#
+            , #ITM_DC_RT#
+            , #ITM_PRC#
+            , #ITM_RMK#
+            , #CRE_USR_ID#
+            , GETDATE()
+            , #UPD_USR_ID#
+            , GETDATE()
+          )
+    </insert>
+  
+    <!--견적서 내역 - 수정-->
+    <update id="S2219UpdateEstm" parameterClass="ModelsLibrary.Sale.SaleVo">
+        UPDATE TB_ESTM_DTL
+          SET 
+               CHNL_CD = #CHNL_CD#
+             , ESTM_NO = #ESTM_NO#  
+             , ESTM_SEQ = #ESTM_SEQ#
+             , ESTM_ITM_NM = #ESTM_ITM_NM#
+             , ESTM_ITM_SZ_NM = #ESTM_ITM_SZ_NM#
+             , ESTM_ITM_QTY = #ESTM_ITM_QTY#
+             , ITM_UT = #ITM_UT#
+             , ITM_PER_PRC = #ITM_PER_PRC#
+             , ITM_DC_RT = #ITM_DC_RT#
+             , ITM_PRC = #ITM_PRC#
+             , ITM_RMK = #ITM_RMK#
+             , UPD_USR_ID = #UPD_USR_ID#
+             , UPD_DT = GETDATE()
+         WHERE 1 = 1
+           AND CHNL_CD = #CHNL_CD#
+           AND ESTM_NO = #ESTM_NO#  
+           AND ESTM_SEQ = #ESTM_SEQ#
+      </update>
+
+    <!--견적서 내역 - 삭제-->
+    <delete id="S2219DeleteEstm" parameterClass="ModelsLibrary.Sale.SaleVo">
+      DELETE 
+        FROM TB_ESTM_DTL
+       WHERE 1 = 1 
+         AND CHNL_CD = #CHNL_CD#
+         AND ESTM_NO = #ESTM_NO#  
+         AND ESTM_SEQ = #ESTM_SEQ#
+    </delete> 
+
+    <update id="S2219UpdateEstmSeq" parameterClass="ModelsLibrary.Sale.SaleVo">
+        UPDATE TB_ESTM_DTL
+          SET
+              ESTM_SEQ = ESTM_SEQ - 1
+         WHERE 1 = 1
+           AND CHNL_CD = #CHNL_CD#
+           AND ESTM_NO = #ESTM_NO#
+           AND ESTM_SEQ > #ESTM_SEQ#
+      </update>  
     
 
   </statements>

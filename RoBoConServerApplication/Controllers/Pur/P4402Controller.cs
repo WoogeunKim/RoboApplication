@@ -89,20 +89,20 @@ namespace VisualServerApplication.Controllers.Pur
         /// <summary>
         /// 원자재 원가표 DTL 추가 페이지 - 매입처명 조회
         /// </summary>
-        [Route("dig/co")]
-        [HttpPost]
-        // GET api/<controller>
-        public async Task<IHttpActionResult> CoNmSelect([FromBody] PurVo vo)
-        {
-            try
-            {
-                return Ok<IEnumerable<PurVo>>(Properties.EntityMapper.QueryForList<PurVo>("P4402SelectCoNmList", vo));
-            }
-            catch (System.Exception eLog)
-            {
-                return Ok<string>(eLog.Message);
-            }
-        }
+        //[Route("dig/co")]
+        //[HttpPost]
+        //// GET api/<controller>
+        //public async Task<IHttpActionResult> CoNmSelect([FromBody] PurVo vo)
+        //{
+        //    try
+        //    {
+        //        return Ok<IEnumerable<PurVo>>(Properties.EntityMapper.QueryForList<PurVo>("P4402SelectCoNmList", vo));
+        //    }
+        //    catch (System.Exception eLog)
+        //    {
+        //        return Ok<string>(eLog.Message);
+        //    }
+        //}
 
         /// <summary>
         /// 원자재 원가표 파일 - 조회

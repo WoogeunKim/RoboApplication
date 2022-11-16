@@ -77,5 +77,41 @@ namespace VisualServerApplication.Controllers.Mobile
                 return Ok<string>(eLog.Message);
             }
         }
+
+        /// <summary>
+        /// 원자재 입고 거래처 - 조회
+        /// </summary>
+        [Route("m/co")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetMInCoListSelect([FromBody] MobileVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<MobileVo>>(Properties.EntityMapper.QueryForList<MobileVo>("MInCoSelectList", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+        /// <summary>
+        /// 원자재 입고 발주 - 조회
+        /// </summary>
+        [Route("m/ord")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetMInOrdListSelect([FromBody] MobileVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<MobileVo>>(Properties.EntityMapper.QueryForList<MobileVo>("MInOrdSelectList", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
     }
 }

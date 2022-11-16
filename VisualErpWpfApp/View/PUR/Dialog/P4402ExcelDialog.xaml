@@ -31,20 +31,20 @@
 
         <StackPanel Orientation="Horizontal">
             <TextBlock Width="10" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="0" />
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="0" Text="매입처명 : " TextAlignment="Center" />
-            <dxg:LookUpEdit HorizontalContentAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Stretch" x:Name="combo_CO_NO" IsSynchronizedWithCurrentItem="True" DisplayMember="CO_NM" ValueMember="CO_NM" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="200" PopupWidth="250" Width="150">
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="0" Text="업체 구분 : " TextAlignment="Center" />
+            <dxg:LookUpEdit HorizontalContentAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Stretch" x:Name="combo_CO_TP" IsSynchronizedWithCurrentItem="True" DisplayMember="CLSS_DESC" ValueMember="CLSS_DESC" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="200" PopupWidth="250" Width="150">
                 <dxg:LookUpEdit.PopupContentTemplate>
                     <ControlTemplate>
                         <dxg:GridControl x:Name="PART_GridControl" >
                             <dxg:GridControl.View>
-                                <dxg:TableView x:Name="View_CO_NM" SearchDelay="0" ShowColumnHeaders="False" ShowGroupedColumns="True" AutoWidth="True" AllowPerPixelScrolling="True" ScrollAnimationDuration="0" ShowAutoFilterRow="False" ShowTotalSummary="False" IsSynchronizedWithCurrentItem="True" />
+                                <dxg:TableView x:Name="View_CO_TP" SearchDelay="0" ShowColumnHeaders="False" ShowGroupedColumns="True" AutoWidth="True" AllowPerPixelScrolling="True" ScrollAnimationDuration="0" ShowAutoFilterRow="False" ShowTotalSummary="False" IsSynchronizedWithCurrentItem="True" />
                             </dxg:GridControl.View>
-                            <dxg:GridColumn FieldName="CO_NO" Width="50" HorizontalHeaderContentAlignment="Center" FilterPopupMode="CheckedList" >
+                            <dxg:GridColumn FieldName="CLSS_CD" Width="50" HorizontalHeaderContentAlignment="Center" FilterPopupMode="CheckedList" >
                                 <dxg:GridColumn.EditSettings>
                                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                 </dxg:GridColumn.EditSettings>
                             </dxg:GridColumn>
-                            <dxg:GridColumn FieldName="CO_NM" Width="80" HorizontalHeaderContentAlignment="Center"  FilterPopupMode="CheckedList" >
+                            <dxg:GridColumn FieldName="CLSS_DESC" Width="80" HorizontalHeaderContentAlignment="Center"  FilterPopupMode="CheckedList" >
                                 <dxg:GridColumn.EditSettings>
                                     <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
                                 </dxg:GridColumn.EditSettings>

@@ -35,7 +35,7 @@
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>10</ApplicationRevision>
+    <ApplicationRevision>12</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -259,6 +259,7 @@
     <Compile Include="ViewModel\S22111ViewModel.cs" />
     <Compile Include="ViewModel\S2218ViewModel.cs" />
     <Compile Include="ViewModel\M6638ViewModel.cs" />
+    <Compile Include="ViewModel\S2219ViewModel.cs" />
     <Compile Include="ViewModel\S22226ViewModel.cs" />
     <Compile Include="ViewModel\S2257ViewModel.cs" />
     <Compile Include="ViewModel\S22225ViewModel.cs" />
@@ -1133,6 +1134,9 @@
     <Compile Include="View\SAL\Dialog\S22111NextMonthDialog.xaml.cs">
       <DependentUpon>S22111NextMonthDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SAL\Dialog\S2219MasterDialog.xaml.cs">
+      <DependentUpon>S2219MasterDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SAL\Dialog\S22226ExcelOutputDialog.xaml.cs">
       <DependentUpon>S22226ExcelOutputDialog.xaml</DependentUpon>
     </Compile>
@@ -1213,6 +1217,9 @@
     </Compile>
     <Compile Include="View\SAL\S2218.xaml.cs">
       <DependentUpon>S2218.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2219.xaml.cs">
+      <DependentUpon>S2219.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SAL\S22226.xaml.cs">
       <DependentUpon>S22226.xaml</DependentUpon>
@@ -2511,6 +2518,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\SAL\Dialog\S2219MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\SAL\Dialog\S22226ExcelOutputDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -2616,6 +2627,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\SAL\S2218.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2219.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

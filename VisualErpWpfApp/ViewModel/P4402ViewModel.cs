@@ -31,31 +31,37 @@ namespace AquilaErpWpfApp3.ViewModel
 
         public P4402ViewModel()
         {
-            SYSTEM_CODE_VO();
+            //SYSTEM_CODE_VO();
+            //Refresh();
         }
 
         [Command]
-        public async void Refresh()
+        public async void Refresh(int ordNo = 0)
         {
             try
             {
                 DXSplashScreen.Show<ProgressWindow>();
 
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("p4402/mst", new StringContent(JsonConvert.SerializeObject(new PurVo() { PAY_TP_CD = CO_TP_OBJ.CLSS_CD , CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("p4402/mst", new StringContent(JsonConvert.SerializeObject(new PurVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
                         this.SelectMstList = JsonConvert.DeserializeObject<IEnumerable<PurVo>>(await response.Content.ReadAsStringAsync()).Cast<PurVo>().ToList();
                     }
 
-                    if (SelectMstList.Count >= 1)
+                    if (ordNo.Equals(0))
                     {
-                        //isM_UPDATE = true;
-                        //SelectedMstItem = SelectMstList[0];
+                        if (SelectMstList.Count >= 1)
+                        {
+                            SelectedMstItem = SelectMstList[0];
+                        }
                     }
                     else
                     {
-                        //isM_UPDATE = false;
+                        if (SelectMstList.Count >= 1)
+                        {
+                            SelectedMstItem = SelectMstList.Where(x => x.RN.Equals(ordNo)).LastOrDefault<PurVo>();
+                        }
                     }
 
                     DXSplashScreen.Close();
@@ -124,7 +130,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 bool isDialog = (bool)excelDialog.ShowDialog();
                 if (isDialog)
                 {
-                    Refresh();
+                    Refresh((int)SelectedMstItem.RN);
                 }
             }
             catch (System.Exception eLog)
@@ -134,18 +140,18 @@ namespace AquilaErpWpfApp3.ViewModel
             }
         }
 
-        public async void SYSTEM_CODE_VO()
-        {
-            using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.GetAsync("S131/dtl/" + Properties.Settings.Default.SettingChnl + "/" + "L-011"))
-            {
-                if (response.IsSuccessStatusCode)
-                {
-                    this.CO_TP_List = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
-                    // 업체 구분 리스트 첫 번째 항목 기본값 설정
-                    this.CO_TP_OBJ = this.CO_TP_List[0];
-                }
-            }
-        }
+        //public async void SYSTEM_CODE_VO()
+        //{
+        //    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.GetAsync("S131/dtl/" + Properties.Settings.Default.SettingChnl + "/" + "L-011"))
+        //    {
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            this.CO_TP_List = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
+        //            // 업체 구분 리스트 첫 번째 항목 기본값 설정
+        //            this.CO_TP_OBJ = this.CO_TP_List[0];
+        //        }
+        //    }
+        //}
 
         public async void DetailView()
         {

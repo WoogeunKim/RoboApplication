@@ -5170,6 +5170,118 @@
 
 
 
+        public string ESTM_NO
+        {
+            get;
+            set;
+        }
 
+        public string ESTM_DT
+        {
+            get;
+            set;
+        }
+
+        public string MGR_NM
+        {
+            get;
+            set;
+        }
+
+        public string PHN_NO
+        {
+            get;
+            set;
+        }
+
+        public string FAX_NO
+        {
+            get;
+            set;
+        }
+
+        public string EXP_DT
+        {
+            get;
+            set;
+        }
+
+        public string ESTM_RMK
+        {
+            get;
+            set;
+        }
+
+        public byte[] ITM_FILE
+        {
+            get;
+            set;
+        }
+
+        public int? ESTM_SEQ
+        {
+            get;
+            set;
+        }
+
+        public string ESTM_ITM_NM
+        {
+            get;
+            set;
+        }
+
+        public string ESTM_ITM_SZ_NM
+        {
+            get;
+            set;
+        }
+
+        public object ESTM_ITM_QTY
+        {
+            get;
+            set;
+        }
+
+        public string ITM_UT
+        {
+            get;
+            set;
+        }
+
+        public object ITM_PER_PRC
+        {
+            get;
+            set;
+        }
+
+        public string ROUT_CD
+        {
+            get;
+            set;
+        }
+
+        public string ROUT_NM
+        {
+            get;
+            set;
+        }
+
+        public string ITM_FILE_NM
+        {
+            get;
+            set;
+        }
+
+        public object ITM_DC_PER_PRC
+        {
+            get;
+            set;
+        }
+
+        public object ITM_FILE_BIT
+        {
+            get;
+            set;
+        }
     }
 }

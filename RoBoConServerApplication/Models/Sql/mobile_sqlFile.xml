@@ -28,6 +28,93 @@
 		  WHERE 1 = 1
 		  ORDER BY CRE_DT DESC
 	  </select>
+	  
+  
+     <!--원자재 입고-->
+	 <select id="MInCoSelectList" resultClass="ModelsLibrary.Mobile.MobileVo" parameterClass="ModelsLibrary.Mobile.MobileVo">
+		  SELECT 
+			   CO_NO
+			 , CO_NM
+			 , CHNL_CD
+		  FROM TB_CD_CO 
+		 WHERE 1 = 1 
+		   AND CHNL_CD  = #CHNL_CD#
+		   AND DELT_FLG = #DELT_FLG#
+	 </select>
+	  
+	   <!--원자재 입고 발주-->
+	 <select id="MInOrdSelectList" resultClass="ModelsLibrary.Mobile.MobileVo" parameterClass="ModelsLibrary.Mobile.MobileVo">
+		  SELECT    
+		         CHNL_CD
+               , RN
+               , PUR_ORD_NO
+               , PUR_ORD_SEQ
+               , N1ST_ITM_GRP_NM
+               , N2ND_ITM_GRP_NM  
+               , CO_CD
+               , CO_NM 
+               , PUR_DUE_DT
+               , ITM_CD
+               , ITM_NM
+               , ITM_SZ_NM
+               , UOM_NM 
+               , ITM_QTY  AS TMP_RMK_QTY
+               , PUR_QTY  
+               , ITM_MD_QTY
+               , RMN_QTY
+               , CO_UT_PRC     
+               , ITM_QTY * CO_UT_PRC AS PUR_AMT
+               , PUR_RMK
+               , ITM_QTY
+               , INAUD_ORG_NO
+               , INAUD_ORG_NM
+          FROM (       
+                SELECT 
+				     ROW_NUMBER() OVER (PARTITION BY T1.AREA_CD ORDER BY T3.N1ST_ITM_GRP_CD, T3.ITM_CD, T1.PUR_DT ) AS RN
+                   , T2.PUR_ORD_NO
+                   , T2.PUR_ORD_SEQ
+                   , dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T3.ITM_GRP_CLSS_CD, T3.N1ST_ITM_GRP_CD)                    AS N1ST_ITM_GRP_NM
+                   , dbo.PUR_N2ST_GRP_NM_FNC(T1.CHNL_CD, T3.ITM_GRP_CLSS_CD, T3.N1ST_ITM_GRP_CD,  N2ND_ITM_GRP_CD) AS N2ND_ITM_GRP_NM  
+                   , T1.PUR_CO_CD                         AS CO_CD
+                   , dbo.CD_COMPANY_NM_FNC(T1.CHNL_CD, T1.PUR_CO_CD)  AS CO_NM 
+                   , CONVERT(CHAR(10),T1.PUR_DUE_DT,23) AS PUR_DUE_DT
+                   , T3.ITM_CD
+                   , T3.ITM_NM
+                   , T3.ITM_SZ_NM
+                   , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-003', T3.UOM_CD) AS UOM_NM 
+                   , T2.PUR_QTY  
+                   , (T2.PUR_QTY * T2.BUN_WGT)  AS ITM_MD_QTY
+                   , 0 AS RMN_QTY
+                   , T2.CO_UT_PRC     
+                   , T2.PUR_AMT     
+                   , T2.PUR_ITM_RMK AS PUR_RMK
+                   , (T2.PUR_QTY  - ISNULL(dbo.FF_INV_ORD_QTY(T1.CHNL_CD, T2.PUR_ORD_NO, T2.PUR_ORD_SEQ), 0))  AS ITM_QTY
+                   , '100' AS INAUD_ORG_NO
+                   , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'P-008', '100') AS INAUD_ORG_NM
+                   , T1.CHNL_CD
+                FROM TB_PUR_ORD       T1
+                   , TB_PUR_ORD_DTL   T2 
+                   , TB_CD_ITM        T3
+               WHERE 1 = 1
+                 AND T1.CHNL_CD    = #CHNL_CD#
+                 AND T1.CHNL_CD    = T2.CHNL_CD
+                 AND T1.CHNL_CD    = T3.CHNL_CD
+                 AND T1.PUR_ORD_NO = T2.PUR_ORD_NO
+                 AND T2.ITM_CD     = T3.ITM_CD
+                 AND T2.PUR_QTY - ISNULL(dbo.FF_INV_ORD_QTY(T1.CHNL_CD, T2.PUR_ORD_NO, T2.PUR_ORD_SEQ), 0)  > 0  
+                 AND T1.PUR_CLZ_FLG = 'N'          
+                 AND NOT EXISTS (SELECT 'X'
+                                   FROM TB_PUR_CTRT_CLZ  X 
+                                  WHERE 1 = 1
+                                    AND X.CHNL_CD   = T1.CHNL_CD
+                                    AND X.ORD_NO    = T2.PUR_ORD_NO
+                                    AND X.ORD_SEQ   = T2.PUR_ORD_SEQ
+                     )
+                 AND T1.PUR_CO_CD   = #CO_NO#  
+              ) T10        
+        ORDER BY RN 
+	 </select>
+	  
 
   </statements>
 </sqlMap>
