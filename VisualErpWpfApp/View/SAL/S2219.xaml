@@ -307,7 +307,7 @@
 
                                     <dxg:GridControl x:Name="ViewGridDtl" Grid.Row="2" AutoExpandAllGroups="True" ItemsSource="{Binding Path=SelectEstmList}" SelectedItem="{Binding Path=SelectedEstmItem, Mode=TwoWay}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.ColumnSpan="2">
                                         <dxg:GridControl.View>
-                                            <dxg:TableView x:Name="ViewTableDtl" EditorButtonShowMode="ShowForFocusedRow" FontSize="12" ShowTotalSummary="True" ShowFixedTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Default" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupPanel="False" AllowFilterEditor="False" ShowGroupedColumns="True" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Cell" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False">
+                                            <dxg:TableView x:Name="ViewTableDtl" EditorButtonShowMode="ShowForFocusedRow" FontSize="12" ShowTotalSummary="True" ShowFixedTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Default" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupPanel="False" AllowFilterEditor="False" ShowGroupedColumns="True" BestFitArea="All" ShowHorizontalLines="True" AllowEditing="False" NavigationStyle="Cell" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False" CellValueChanged="ViewTableDtl_CellValueChanged">
                                                 <dxg:TableView.FormatConditions>
                                                     <dxg:FormatCondition FieldName="ESTM_ITM_NM" Expression="Not IsNullOrEmpty([ESTM_ITM_NM])" PredefinedFormatName="BoldText"/>
                                                     <dxg:FormatCondition FieldName="ESTM_ITM_NM" Expression="IsNullOrEmpty([ESTM_ITM_NM])" PredefinedFormatName="YellowFillWithDarkYellowText"/>
@@ -353,13 +353,13 @@
                                         </dxg:GridControl.View>
 
 
-                                        <dxg:GridColumn FieldName="ESTM_ITM_NM" Header="품목명*" Width="150" AllowColumnFiltering="True" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" AllowMoving="False" FilterPopupMode="CheckedList" VisibleIndex="1">
+                                        <dxg:GridColumn FieldName="ESTM_ITM_NM" Header="품목명*" Width="110" AllowColumnFiltering="True" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" AllowMoving="False" FilterPopupMode="CheckedList" VisibleIndex="1">
                                             <dxg:GridColumn.EditSettings>
                                                 <dxe:TextEditSettings HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
                                             </dxg:GridColumn.EditSettings>
                                         </dxg:GridColumn>
 
-                                        <dxg:GridColumn FieldName="ESTM_ITM_SZ_NM" Header="규격*" Width="100" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True"  VisibleIndex="2">
+                                        <dxg:GridColumn FieldName="ESTM_ITM_SZ_NM" Header="규격*" Width="130" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True"  VisibleIndex="2">
                                             <dxg:GridColumn.EditSettings>
                                                 <dxe:TextEditSettings HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                             </dxg:GridColumn.EditSettings>
@@ -383,9 +383,9 @@
                                             </dxg:GridColumn.EditSettings>
                                         </dxg:GridColumn>
 
-                                        <dxg:GridColumn FieldName="ITM_DC_RT" Header="DC율*" Width="70" AllowColumnFiltering="True" AllowAutoFilter="False" AllowSearchPanel="False" AllowSorting="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" VisibleIndex="6">
+                                        <dxg:GridColumn FieldName="ITM_DC_RT" Header="DC율(%)*" Width="70" AllowColumnFiltering="True" AllowAutoFilter="False" AllowSearchPanel="False" AllowSorting="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" VisibleIndex="6">
                                             <dxg:GridColumn.EditSettings>
-                                                <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True"/>
+                                                <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="##0%"  MaskUseAsDisplayFormat="True"/>
                                             </dxg:GridColumn.EditSettings>
                                         </dxg:GridColumn>
 
@@ -442,8 +442,8 @@
                                         <RowDefinition Height="50" />
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
-                                    <dx:SimpleButton  Glyph="{dx:DXImage Image=DoublePrev_32x32.png}" Grid.Row="1" Margin="2" ToolTip="추가"  IsEnabled="{Binding isM_DELETE}" Command="{Binding NewEstmContactCommand}" CommandParameter="I"/>
-                                    <dx:SimpleButton  Glyph="{dx:DXImage Image=DoubleNext_32x32.png}" Grid.Row="3" Margin="2" ToolTip="삭제" IsEnabled="{Binding isM_DELETE}" Command="{Binding DownMasterContactCommand}"/>
+                                    <dx:SimpleButton  Glyph="{dx:DXImage Image=DoublePrev_32x32.png}" Grid.Row="1" Margin="2" ToolTip="추가"  IsEnabled="{Binding isM_Insert}" Command="{Binding NewEstmContactCommand}" CommandParameter="P"/>
+                                    <dx:SimpleButton  Glyph="{dx:DXImage Image=DoubleNext_32x32.png}" Grid.Row="3" Margin="2" ToolTip="삭제" IsEnabled="{Binding isM_DELETE}" Command="{Binding DelEstmContactCommand}"/>
 
                                 </Grid>
 

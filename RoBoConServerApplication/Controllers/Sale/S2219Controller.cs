@@ -188,9 +188,7 @@ namespace VisualServerApplication.Controllers.Sale
         {
             try
             {
-                Properties.EntityMapper.Update("S2219UpdateEstm", vo);
-
-                return Ok<IEnumerable<SaleVo>>(Properties.EntityMapper.QueryForList<SaleVo>("S2219SelectEstmList", vo));
+                return Ok<int>(Properties.EntityMapper.Update("S2219UpdateEstm", vo));
             }
             catch (System.Exception eLog)
             {

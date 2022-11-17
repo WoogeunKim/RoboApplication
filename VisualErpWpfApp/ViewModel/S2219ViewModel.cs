@@ -26,10 +26,8 @@ namespace AquilaErpWpfApp3.ViewModel
 
         private IList<SaleVo> selectedMstList = new List<SaleVo>();
 
-        private IList<SaleVo> selectedDtlList = new List<SaleVo>();
-
         private IList<SaleVo> selectedEstmList = new List<SaleVo>();
-        
+
         private IList<SaleVo> selectedProdList = new List<SaleVo>();
 
         private S2219MasterDialog masterDialog;
@@ -70,16 +68,16 @@ namespace AquilaErpWpfApp3.ViewModel
             try
             {
                 //SelectMstList - 견적서 MST List 불러오기
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s2219/mst", new StringContent(JsonConvert.SerializeObject(new SaleVo() { FM_DT = StartDt.ToString("yyyy-MM-dd"), TO_DT = EndDt.ToString("yyyy-MM-dd") , CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s2219/mst", new StringContent(JsonConvert.SerializeObject(new SaleVo() { FM_DT = StartDt.ToString("yyyy-MM-dd"), TO_DT = EndDt.ToString("yyyy-MM-dd"), CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
                         this.SelectMstList = JsonConvert.DeserializeObject<IEnumerable<SaleVo>>(await response.Content.ReadAsStringAsync()).Cast<SaleVo>().ToList();
-                        
+
                         //SelectedMstItem - 견적서 MST 항목 선택시 발생
                         if (this.SelectMstList.Count >= 1)
                         {
-                            if (string.IsNullOrEmpty(_ESTM_NO)) 
+                            if (string.IsNullOrEmpty(_ESTM_NO))
                             {
                                 this.SelectedMstItem = this.SelectMstList[0]; // 기본값 = 첫 번째 항목
                             }
@@ -125,7 +123,7 @@ namespace AquilaErpWpfApp3.ViewModel
             }
             catch (System.Exception eLog)
             {
-                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + "견적서 추가", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }
         }
@@ -155,7 +153,7 @@ namespace AquilaErpWpfApp3.ViewModel
             catch (System.Exception eLog)
             {
                 //DXSplashScreen.Close();
-                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + "견적서 수정", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }
         }
@@ -170,7 +168,7 @@ namespace AquilaErpWpfApp3.ViewModel
                     return;
                 }
 
-                MessageBoxResult result = WinUIMessageBox.Show("[견적 번호 : " + SelectedDtlItem.ESTM_NO + "]" + " 정말로 삭제 하시겠습니까?", "[삭제]" + title, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = WinUIMessageBox.Show("[견적 번호 : " + SelectedDtlItem.ESTM_NO + "]" + " 정말로 삭제 하시겠습니까?", "[삭제]" + "견적서 삭제", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s2219/mst/d", new StringContent(JsonConvert.SerializeObject(SelectedDtlItem), System.Text.Encoding.UTF8, "application/json")))
@@ -186,7 +184,7 @@ namespace AquilaErpWpfApp3.ViewModel
                                 return;
                             }
 
-                            WinUIMessageBox.Show("삭제가 완료되었습니다.", "[삭제]" + title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
+                            WinUIMessageBox.Show("삭제가 완료되었습니다.", "[삭제]" + "견적서 삭제", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
                             Refresh();
                         }
                     }
@@ -195,32 +193,110 @@ namespace AquilaErpWpfApp3.ViewModel
             catch (System.Exception eLog)
             {
                 //DXSplashScreen.Close();
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + "견적서 삭제", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+        }
+
+        [Command]
+        public async void NewEstmContact(string _obj)
+        {
+            try
+            {
+                if (SelectedDtlItem == null)
+                {
+                    WinUIMessageBox.Show("견적 마스터 정보를 선택하세요", "견적 마스터 정보 미선택", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                SaleVo estmvo = new SaleVo();
+                if (_obj.Equals("I"))
+                {
+                    estmvo = SelectedDtlItem;
+                    estmvo.CRE_USR_ID = SystemProperties.USER;
+                    estmvo.UPD_USR_ID = SystemProperties.USER;
+                }
+                else if (_obj.Equals("P"))
+                {
+                    //SelectedProdItem
+                    if (SelectedProdItem == null)
+                    {
+                        WinUIMessageBox.Show("공정 과정을 선택하세요", "공정 과정 미선택", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    estmvo = SelectedDtlItem;
+                    estmvo.ESTM_ITM_NM = SelectedProdItem.ROUT_NM;
+                    estmvo.CRE_USR_ID = SystemProperties.USER;
+                    estmvo.UPD_USR_ID = SystemProperties.USER;
+                }
+
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s2219/estm/i", new StringContent(JsonConvert.SerializeObject(estmvo), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        int _Num = 0;
+                        string resultMsg = await response.Content.ReadAsStringAsync();
+                        if (int.TryParse(resultMsg, out _Num) == false)
+                        {
+                            //실패
+                            WinUIMessageBox.Show(resultMsg, "품목 추가", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        Refresh(SelectedDtlItem.ESTM_NO);
+                    }
+                }
+            }
+            catch (System.Exception eLog)
+            {
                 WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }
         }
 
         [Command]
-        public void NewEstmContact(string _obj)
+        public async void DelEstmContact()
         {
             try
             {
-                if (_obj.Equals("I"))
+                if (SelectedEstmItem == null)
                 {
-
+                    WinUIMessageBox.Show("삭제할 품목을 선택하세요", "삭제 품목 미선택", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
                 }
-                else if (_obj.Equals(""))
+
+                MessageBoxResult result = WinUIMessageBox.Show(SelectedEstmItem.ESTM_NO + "(" + SelectedEstmItem.ESTM_ITM_NM + ") 정말로 삭제 하시겠습니까?", "품목 삭제", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
                 {
+                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s2219/estm/d", new StringContent(JsonConvert.SerializeObject(SelectedEstmItem), System.Text.Encoding.UTF8, "application/json")))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            int _Num = 0;
+                            string resultMsg = await response.Content.ReadAsStringAsync();
+                            if (int.TryParse(resultMsg, out _Num) == false)
+                            {
+                                //실패
+                                WinUIMessageBox.Show(resultMsg, "품목 삭제", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                        }
+                        WinUIMessageBox.Show("완료 되었습니다", "품목 삭제", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                        Refresh(SelectedEstmItem.ESTM_NO);
+                        return;
+                    }
                 }
+
             }
             catch (System.Exception eLog)
             {
-                //DXSplashScreen.Close();
                 WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }
         }
+
 
 
         // 견적서 MST 항목 선택 시 조회될 것들
@@ -233,7 +309,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 // 견적서 Dtl 조회
                 using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s2219/dtl", new StringContent(JsonConvert.SerializeObject(this.SelectedMstItem), System.Text.Encoding.UTF8, "application/json")))
                 {
-                    if (response.IsSuccessStatusCode) 
+                    if (response.IsSuccessStatusCode)
                     {
                         SaleVo dtlVo = new SaleVo();
                         dtlVo = JsonConvert.DeserializeObject<SaleVo>(await response.Content.ReadAsStringAsync());
@@ -258,13 +334,13 @@ namespace AquilaErpWpfApp3.ViewModel
                 // 견적서 내역 조회
                 using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s2219/estm", new StringContent(JsonConvert.SerializeObject(this.SelectedMstItem), System.Text.Encoding.UTF8, "application/json")))
                 {
-                    if (response.IsSuccessStatusCode) 
+                    if (response.IsSuccessStatusCode)
                     {
                         this.SelectEstmList = JsonConvert.DeserializeObject<IEnumerable<SaleVo>>(await response.Content.ReadAsStringAsync()).Cast<SaleVo>().ToList();
                     }
                 }
             }
-            catch(Exception eLog)
+            catch (Exception eLog)
             {
                 MessageBox.Show(eLog.Message, title, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -371,4 +447,4 @@ namespace AquilaErpWpfApp3.ViewModel
         #endregion
 
     }
- }
+}

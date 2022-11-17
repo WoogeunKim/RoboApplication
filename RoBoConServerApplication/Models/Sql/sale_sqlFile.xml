@@ -6470,8 +6470,8 @@
            , ESTM_ITM_QTY
            , ITM_UT
            , ITM_PER_PRC 
-           , ITM_DC_RT
-           , (ITM_PER_PRC * ((100-ITM_DC_RT)/100)) AS ITM_DC_PER_PRC
+           , ITM_DC_RT           
+		   , (ITM_PER_PRC * (1-ITM_DC_RT)) AS ITM_DC_PER_PRC
            , ITM_PRC
            , (ESTM_ITM_QTY * ITM_PRC) AS ITM_AMT 
            , ITM_RMK
@@ -6608,7 +6608,7 @@
           (
               #CHNL_CD#
             , #ESTM_NO#  
-            , #ESTM_SEQ#
+            , (SELECT COUNT(ESTM_SEQ) FROM TB_ESTM_DTL WHERE CHNL_CD = #CHNL_CD# AND ESTM_NO = #ESTM_NO#) + 1
             , #ESTM_ITM_NM#
             , #ESTM_ITM_SZ_NM#
             , #ESTM_ITM_QTY#
