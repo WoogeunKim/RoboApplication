@@ -113,5 +113,37 @@ namespace VisualServerApplication.Controllers.Mobile
                 return Ok<string>(eLog.Message);
             }
         }
+
+
+        /// <summary>
+        /// 품목 가입고  - 추가
+        /// </summary>
+        [Route("m/i")]
+        [HttpPost]
+        // POST api/<controller>
+        public async Task<IHttpActionResult> GetMstInsert([FromBody] MobileVo vo)
+        {
+            try
+            {
+                Properties.EntityMapper.BeginTransaction();
+
+                voList[0].INAUD_TMP_NO = Properties.EntityMapper.QueryForObject<string>("I6610SelectNo", voList[0]);
+                Properties.EntityMapper.Update("I6610UpdateNo", voList[0]);
+
+                foreach (InvVo item in voList)
+                {
+                    item.INAUD_TMP_NO = voList[0].INAUD_TMP_NO;
+                    Properties.EntityMapper.Insert("I6610InsertPurMst", item);
+                }
+                //return Ok<int>(Properties.EntityMapper.Insert("I6610InsertPurMst", vo) == null ? 1 : 0);
+                Properties.EntityMapper.CommitTransaction();
+                return Ok<int>(1);
+            }
+            catch (System.Exception eLog)
+            {
+                Properties.EntityMapper.RollBackTransaction();
+                return Ok<string>(eLog.Message);
+            }
+        }
     }
 }
