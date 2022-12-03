@@ -2637,6 +2637,11 @@
             원자재 입고 발주 - 조회
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetMstInsert(ModelsLibrary.Mobile.MobileVo)">
+            <summary>
+            품목 가입고  - 추가
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Pda.PdaController.GetUsrSelect(ModelsLibrary.Pda.PdaVo)">
             <summary>
             로그인 - 조회
@@ -3401,6 +3406,56 @@
         <member name="M:VisualServerApplication.Controllers.Sale.S22225Controller.GetMstInsert(System.Collections.Generic.List{ModelsLibrary.Sale.SaleVo})">
             <summary>
             GR번호 확정 MST - 추가
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2223Controller.GetMstSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            수주 등록 MST - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2223Controller.GetMstInsert(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            수주 등록 MST - 추가
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2223Controller.GetMstUpdate(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            수주 등록 MST - 수정
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2223Controller.GetMstDelete(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            수주 등록 MST - 삭제
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2223Controller.GetDtlSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            수주 등록 DTL - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2223Controller.GetDtlInsert(System.Collections.Generic.IList{ModelsLibrary.Sale.SaleVo})">
+            <summary>
+            수주 등록 DTL - 추가
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2223Controller.GetDtlUpdate(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            수주 등록 DTL - 수정
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2223Controller.GetDtlDelete(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            수주 등록 DTL - 삭제
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2223Controller.GetPopupSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            수주 등록 POPUP(Right2) - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S2223Controller.GetPopupItemsSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            수주 등록 POPUP 선택 Items(Right1) - 조회
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Sale.S22320Controller.GetMstSelect(ModelsLibrary.Sale.SaleVo)">

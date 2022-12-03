@@ -35,7 +35,7 @@
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>13</ApplicationRevision>
+    <ApplicationRevision>14</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -74,7 +74,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>AquilaErpWpfApp3.App</StartupObject>
@@ -261,6 +261,7 @@
     <Compile Include="ViewModel\M6638ViewModel.cs" />
     <Compile Include="ViewModel\S2219ViewModel.cs" />
     <Compile Include="ViewModel\S22226ViewModel.cs" />
+    <Compile Include="ViewModel\S2223ViewModel.cs" />
     <Compile Include="ViewModel\S2257ViewModel.cs" />
     <Compile Include="ViewModel\S22225ViewModel.cs" />
     <Compile Include="ViewModel\T6325ViewModel.cs" />
@@ -729,6 +730,9 @@
     <Compile Include="View\M\M66333.xaml.cs">
       <DependentUpon>M66333.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\M\M6721.xaml.cs">
+      <DependentUpon>M6721.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\M\M7711.xaml.cs">
       <DependentUpon>M7711.xaml</DependentUpon>
     </Compile>
@@ -1140,6 +1144,9 @@
     <Compile Include="View\SAL\Dialog\S22226ExcelOutputDialog.xaml.cs">
       <DependentUpon>S22226ExcelOutputDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SAL\Dialog\S2223DetailDialog.xaml.cs">
+      <DependentUpon>S2223DetailDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SAL\Dialog\S3311MasterDialog.xaml.cs">
       <DependentUpon>S3311MasterDialog.xaml</DependentUpon>
     </Compile>
@@ -1223,6 +1230,9 @@
     </Compile>
     <Compile Include="View\SAL\S22226.xaml.cs">
       <DependentUpon>S22226.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S2223.xaml.cs">
+      <DependentUpon>S2223.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SAL\S2257.xaml.cs">
       <DependentUpon>S2257.xaml</DependentUpon>
@@ -2090,6 +2100,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\M\M6721.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\M\M7711.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -2526,6 +2540,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\SAL\Dialog\S2223DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\SAL\Dialog\S3311MasterDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -2635,6 +2653,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\SAL\S22226.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S2223.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

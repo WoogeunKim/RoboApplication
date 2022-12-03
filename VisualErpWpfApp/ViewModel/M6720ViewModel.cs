@@ -52,7 +52,19 @@ namespace AquilaErpWpfApp3.ViewModel
         {
             try
             {
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m6720/mst", new StringContent(JsonConvert.SerializeObject(new ManVo() { FM_DT = (StartDt).ToString("yyyy-MM-dd"), TO_DT = (EndDt).ToString("yyyy-MM-dd"), CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+
+                if (DXSplashScreen.IsActive == false)
+                {
+                    DXSplashScreen.Show<ProgressWindow>();
+                }
+
+                ManVo vo = new ManVo();
+                vo.FM_DT = (StartDt).ToString("yyyy-MM-dd");
+                vo.TO_DT = (EndDt).ToString("yyyy-MM-dd");
+                vo.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
+                if (M_PROD_ROUT_NM != null) vo.ROUT_CD = M_PROD_ROUT_NM.ROUT_CD;
+
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m6720/mst", new StringContent(JsonConvert.SerializeObject(vo), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
@@ -81,11 +93,21 @@ namespace AquilaErpWpfApp3.ViewModel
 
                             // isM_REPORT = false;
                         }
+
+
+                        if (DXSplashScreen.IsActive == true)
+                        {
+                            DXSplashScreen.Close();
+                        }
                     }
                 }
             }
             catch (System.Exception eLog)
             {
+                if (DXSplashScreen.IsActive == true)
+                {
+                    DXSplashScreen.Close();
+                }
                 WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }
@@ -573,6 +595,21 @@ namespace AquilaErpWpfApp3.ViewModel
                 }
             }
 
+            // 공정
+            using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m6611", new StringContent(JsonConvert.SerializeObject(new ManVo() { DELT_FLG = "N", CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    IList<ManVo> _tempRoutList = new List<ManVo>();
+                    _tempRoutList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+                    _tempRoutList.Insert(0, new ManVo() { ROUT_NM = "전체" });
+
+                    this.PROD_ROUT_LIST = _tempRoutList;
+                    this.M_PROD_ROUT_NM = _tempRoutList[0];
+                }
+            }
+
+
             //using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("M665100", new StringContent(JsonConvert.SerializeObject(new ManVo() { DELT_FLG = "N", CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
             //{
             //    if (response.IsSuccessStatusCode)
@@ -619,6 +656,18 @@ namespace AquilaErpWpfApp3.ViewModel
             set { SetProperty(ref _M_SL_AREA_NM, value, () => M_SL_AREA_NM); }
         }
 
+        private IList<ManVo> _RoutCdList = new List<ManVo>();
+        public IList<ManVo> PROD_ROUT_LIST
+        {
+            get { return _RoutCdList; }
+            set { SetProperty(ref _RoutCdList, value, () => PROD_ROUT_LIST); }
+        }
+        private ManVo _M_PROD_ROUT_NM;
+        public ManVo M_PROD_ROUT_NM
+        {
+            get { return _M_PROD_ROUT_NM; }
+            set { SetProperty(ref _M_PROD_ROUT_NM, value, () => M_PROD_ROUT_NM); }
+        }
 
         private bool? _isM_UPDATE = false;
         public bool? isM_UPDATE

@@ -6044,8 +6044,7 @@
          AND T1.CHNL_CD    = T2.CHNL_CD
          AND T1.LOT_DIV_NO = T2.LOT_DIV_NO
          AND T2.LOT_DIV_NO = #LOT_DIV_NO# 
-      
-      
+		 
             <!--SELECT    
                 ROW_NUMBER() OVER (PARTITION BY T1.LOT_DIV_NO ORDER BY T6.MAKE_ST_DT) AS RN
 			        , T1.LOT_DIV_NO          AS LOT_DIV_NO
@@ -7995,7 +7994,8 @@
     <select id="M6720SelectMst" parameterClass="ModelsLibrary.Man.ManVo" resultClass="ModelsLibrary.Man.ManVo">
       SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T2.ROUT_END_DT, T2.PROD_EQ_NO ,  T2.DY_NGT_FLG) AS RN 
            , CONVERT(VARCHAR,T2.ROUT_END_DT,23) AS MAKE_END_DT    
-           , T10.ROUT_NM                    AS ROUT_CD
+           , T2.ROUT_CD
+           , T10.ROUT_NM                    AS ROUT_NM
            , T2.PROD_EQ_NO                  AS EQ_NO   
            , CASE WHEN T2.DY_NGT_FLG = 'D' THEN '주간' ELSE '야간' END AS   DY_NGT_NM  
            , T2.MOLD_CD     
@@ -8088,7 +8088,12 @@
          <!--AND T3.MTRL_NM_CD    = T4.CAR_TP_CD-->
          AND T2.ROUT_END_DT  >= CAST(#FM_DT# + ' 00:00:00' AS DATETIME)
          AND T2.ROUT_END_DT  <![CDATA[<=]]> CAST(#TO_DT# + ' 23:59:59' AS DATETIME)
-      </select>
+	<isNotNull property="ROUT_CD" >
+	     AND T2.ROUT_CD = #ROUT_CD#
+	</isNotNull>
+
+
+	</select>
 
 
 

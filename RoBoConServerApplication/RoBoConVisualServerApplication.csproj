@@ -310,6 +310,7 @@
     <Compile Include="Controllers\Sale\S2215Controller.cs" />
     <Compile Include="Controllers\Sale\S22226Controller.cs" />
     <Compile Include="Controllers\Sale\S22225Controller.cs" />
+    <Compile Include="Controllers\Sale\S2223Controller.cs" />
     <Compile Include="Controllers\Sale\S22320Controller.cs" />
     <Compile Include="Controllers\Sale\S2230Controller.cs" />
     <Compile Include="Controllers\Sale\S3311Controller.cs" />

@@ -510,13 +510,13 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
             //    this.text_JB_CTRT_DT.Focus();
             //    return false;
             //}
-            //else if (string.IsNullOrEmpty(this.combo_SL_CO_NM.Text))
-            //{
-            //    WinUIMessageBox.Show("[수주처] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
-            //    this.combo_SL_CO_NM.IsTabStop = true;
-            //    this.combo_SL_CO_NM.Focus();
-            //    return false;
-            //}
+            if (string.IsNullOrEmpty(this.combo_SL_CO_NM.Text))
+            {
+                WinUIMessageBox.Show("[거래처] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                this.combo_SL_CO_NM.IsTabStop = true;
+                this.combo_SL_CO_NM.Focus();
+                return false;
+            }
             //else if (string.IsNullOrEmpty(this.text_SL_DUE_DT.Text))
             //{
             //    WinUIMessageBox.Show("[납기일] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -538,20 +538,20 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
             //    this.text_CLZ_FLG.Focus();
             //    return false;
             //}
-                //else if (string.IsNullOrEmpty(this.combo_RQST_EMPE_ID.Text))
-                //{
-                //    WinUIMessageBox.Show("[요청자] 입력 값이 맞지 않습니다.", "[유효검사]창고간 이동", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //    this.combo_RQST_EMPE_ID.IsTabStop = true;
-                //    this.combo_RQST_EMPE_ID.Focus();
-                //    return false;
-                //}
-                //else if (string.IsNullOrEmpty(this.text_CAR_NO.Text))
-                //{
-                //    WinUIMessageBox.Show("[차량 넘버] 입력 값이 맞지 않습니다.", "[유효검사]창고간 이동", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //    this.text_CAR_NO.IsTabStop = true;
-                //    this.text_CAR_NO.Focus();
-                //    return false;
-                //}
+            //else if (string.IsNullOrEmpty(this.combo_RQST_EMPE_ID.Text))
+            //{
+            //    WinUIMessageBox.Show("[요청자] 입력 값이 맞지 않습니다.", "[유효검사]창고간 이동", MessageBoxButton.OK, MessageBoxImage.Warning);
+            //    this.combo_RQST_EMPE_ID.IsTabStop = true;
+            //    this.combo_RQST_EMPE_ID.Focus();
+            //    return false;
+            //}
+            //else if (string.IsNullOrEmpty(this.text_CAR_NO.Text))
+            //{
+            //    WinUIMessageBox.Show("[차량 넘버] 입력 값이 맞지 않습니다.", "[유효검사]창고간 이동", MessageBoxButton.OK, MessageBoxImage.Warning);
+            //    this.text_CAR_NO.IsTabStop = true;
+            //    this.text_CAR_NO.Focus();
+            //    return false;
+            //}
             //else
             //{
             //    //서버와 날짜 체크

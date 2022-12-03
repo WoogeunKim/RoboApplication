@@ -290,7 +290,58 @@
     
     <!--right2List -->
     <select id="S2211SelectSubDtlList" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
-        SELECT RN
+	 SELECT RN
+          , CASE WHEN DC_PRC_VAL  <![CDATA[<>]]>  SL_ITM_PRC_VAL THEN 1 ELSE 0 END AS DC_CHK
+          , SL_ITM_CD
+          , SL_ITM_CD AS ITM_CD
+          , ITM_NM
+          , ITM_SZ_NM
+          , CONVERT(BIGINT, ISNULL(SL_ITM_QTY, '0')) AS SL_ITM_QTY
+          , CONVERT(BIGINT, ROUND(ISNULL(SL_ITM_QTY, 0) * UOM_WGT, 0) ) AS SL_ITM_WGT
+          , CONVERT(FLOAT, ISNULL(SL_ITM_PRC_VAL, 0)) AS SL_ITM_PRC_VAL
+          , CONVERT(FLOAT, ISNULL(DC_PRC_VAL, 0)) AS DC_PRC_VAL
+          , CONVERT(BIGINT, ISNULL(SL_ITM_AMT, 0)) AS  SL_ITM_AMT
+          , SL_ITM_RMK
+          , UOM_WGT
+          , SL_ITM_WGT
+          , SL_RLSE_SEQ
+          , SL_RLSE_NO
+          , T1.N1ST_ITM_SZ_NM
+          , T1.N2ND_ITM_SZ_NM
+          , T1.N3RD_ITM_SZ_NM
+          , CHNL_CD
+          , CRE_USR_ID
+          , UPD_USR_ID
+        FROM (
+            SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.SL_RLSE_SEQ) AS RN
+                , T1.SL_ITM_CD
+                , T2.ITM_NM
+                , T2.ITM_SZ_NM
+                , T1.SL_ITM_QTY
+                , T1.SL_ITM_PRC_VAL
+                , T1.SL_ITM_PRC_DC_VAL AS DC_PRC_VAL
+                , T1.SL_ITM_AMT
+                , T1.SL_ITM_RMK
+                , T1.SL_RLSE_SEQ
+                , T1.SL_RLSE_NO
+                , T1.N1ST_ITM_SZ_NM
+                , T1.N2ND_ITM_SZ_NM
+                , T1.N3RD_ITM_SZ_NM
+                , T2.UOM_WGT
+                , T1.SL_ITM_WGT
+                , T1.CHNL_CD
+                , T1.CRE_USR_ID
+                , T1.UPD_USR_ID
+            FROM TB_SL_RLSE_DTL T1
+                , TB_CD_ITM      T2
+            WHERE 1 = 1
+                AND T1.CHNL_CD    = #CHNL_CD#
+                AND T1.CHNL_CD    = T2.CHNL_CD
+                AND SL_RLSE_NO    = #SL_RLSE_NO#
+                AND T1.SL_ITM_CD  = T2.ITM_CD
+                AND T1.SL_ITM_QTY > 0
+        ) T1
+        <!--SELECT RN
           , CASE WHEN DC_PRC_VAL  <![CDATA[<>]]>  SL_ITM_PRC_VAL THEN 1 ELSE 0 END AS DC_CHK
           , SL_ITM_CD
           , SL_ITM_CD AS ITM_CD
@@ -332,7 +383,7 @@
                 AND SL_RLSE_NO    = #SL_RLSE_NO#
                 AND T1.SL_ITM_CD  = T2.ITM_CD
                 AND T1.SL_ITM_QTY > 0
-        ) T1
+        ) T1-->
       </select>
 
       <!--ViewGridRight1-->
@@ -6665,8 +6716,205 @@
            AND CHNL_CD = #CHNL_CD#
            AND ESTM_NO = #ESTM_NO#
            AND ESTM_SEQ > #ESTM_SEQ#
-      </update>  
-    
+      </update>
+
+
+	  <!--수주등록 (편리사)-->
+	  <!--수주등록(편리사) DTL 조회-->
+	  <select id="S2223SelectDtlList" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+		  SELECT
+		  ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.SL_RLSE_SEQ) AS RN
+		  , CASE WHEN DC_PRC_VAL  <![CDATA[<>]]>  SL_ITM_PRC_VAL THEN 1 ELSE 0 END AS DC_CHK
+		  , OK_FLG
+		  , SL_ITM_CD
+		  , ITM_NM
+		  , (N1ST_ITM_SZ_NM + '*' + N2ND_ITM_SZ_NM + '*' + N3RD_ITM_SZ_NM) AS ITM_SZ_NM
+		  , CONVERT(BIGINT, ISNULL(SL_ITM_QTY, 0))      AS SL_ITM_QTY
+		  , SL_ITM_WGT
+		  , CONVERT(FLOAT, ISNULL(SL_ITM_PRC_VAL, 0.0)) AS SL_ITM_PRC_VAL
+		  , CONVERT(FLOAT, ISNULL(DC_PRC_VAL, 0.0))     AS DC_PRC_VAL
+		  , CONVERT(BIGINT, ISNULL(SL_ITM_AMT, 0))      AS SL_ITM_AMT
+		  , SL_ITM_RMK
+		  , CHNL_CD
+		  , N1ST_ITM_GRP_NM
+		  , SL_RLSE_NO
+		  , SL_RLSE_SEQ
+		  , SL_ITM_PRC_DC_RT
+		  FROM (
+		  SELECT T1.SL_ITM_CD
+		  , T2.ITM_NM
+		  , T1.OK_FLG
+		  , T1.N1ST_ITM_SZ_NM
+		  , T1.N2ND_ITM_SZ_NM
+		  , T1.N3RD_ITM_SZ_NM
+		  , T1.SL_ITM_QTY
+		  , T1.SL_ITM_PRC_VAL
+		  , T1.SL_ITM_PRC_DC_VAL AS DC_PRC_VAL
+		  , T1.SL_ITM_AMT
+		  , T1.SL_ITM_RMK
+		  , T1.SL_RLSE_NO
+		  , T1.SL_RLSE_SEQ
+		  <!--, ROUND(T1.SL_ITM_QTY * T2.UOM_WGT, 0) AS SL_ITM_WGT-->
+		  , ROUND(T1.SL_ITM_QTY * T1.SL_ITM_WGT, 0) AS SL_ITM_WGT
+		  , T1.CHNL_CD
+		  , dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T2.ITM_GRP_CLSS_CD, T2.N1ST_ITM_GRP_CD) AS N1ST_ITM_GRP_NM
+		  , T1.SL_ITM_PRC_DC_RT
+		  FROM TB_SL_RLSE_DTL T1
+		  , TB_CD_ITM      T2
+		  WHERE 1 = 1
+		  AND T1.SL_RLSE_NO = #SL_RLSE_NO#
+		  AND T1.CHNL_CD    = #CHNL_CD#
+		  AND T1.CHNL_CD    = T2.CHNL_CD
+		  AND T1.SL_ITM_CD = T2.ITM_CD
+		  AND T1.SL_ITM_QTY <![CDATA[<>]]>  0
+		  <isNotNull property="SL_RLSE_SEQ">
+			  AND T1.SL_RLSE_SEQ = #SL_RLSE_SEQ#
+		  </isNotNull>
+		  ) T1
+	  </select>
+
+
+	  <!--수주등록(편리사) DTL 다이얼로그 수주물품 추가-->
+	  <insert id="S2223InsertDtl" parameterClass="ModelsLibrary.Sale.SaleVo">
+		  INSERT INTO TB_SL_RLSE_DTL
+		  (
+		  CHNL_CD
+		  , SL_RLSE_NO
+		  , SL_RLSE_SEQ
+		  , OK_FLG
+		  , SL_ITM_CD
+		  , SL_ITM_PRC_VAL
+		  , SL_ITM_PRC_DC_VAL
+		  , N1ST_ITM_SZ_NM
+		  , N2ND_ITM_SZ_NM
+		  , N3RD_ITM_SZ_NM
+		  , SL_ITM_QTY
+		  , SL_ITM_AMT
+		  , SL_ITM_TAX_AMT
+		  , SL_ITM_RMK
+		  , SL_ITM_WGT
+		  , CRE_USR_ID
+		  , CRE_DT
+		  , UPD_USR_ID
+		  , UPD_DT
+		  )
+		  SELECT
+		  T1.CHNL_CD
+		  , #SL_RLSE_NO#
+		  , T2.SL_RLSE_SEQ
+		  , #OK_FLG#
+		  , T1.ITM_CD
+		  , dbo.FF_SL_RLSE_PRC(T1.CHNL_CD, T2.SL_AREA_CD, T1.ITM_CD, T2.SL_RLSE_DT)
+		  , 0
+		  , #N1ST_ITM_SZ_NM#
+		  , #N2ND_ITM_SZ_NM#
+		  , #N3RD_ITM_SZ_NM#
+		  , #SL_ITM_QTY#
+		  , ROUND(#SL_ITM_QTY# * dbo.FF_SL_RLSE_PRC(T1.CHNL_CD, T2.SL_AREA_CD, T1.ITM_CD, T2.SL_RLSE_DT), 0)
+		  , ROUND(ROUND(#SL_ITM_QTY# * dbo.FF_SL_RLSE_PRC(T1.CHNL_CD, T2.SL_AREA_CD, T1.ITM_CD, T2.SL_RLSE_DT), 1) * 0.1, 0)
+		  , #SL_ITM_RMK#
+		  , #SL_ITM_WGT#
+		  , #CRE_USR_ID#
+		  , GETDATE()
+		  , #UPD_USR_ID#
+		  , GETDATE()
+		  FROM TB_CD_ITM T1
+		  , (
+		  SELECT SL_AREA_CD
+		  , SL_CO_CD
+		  , SL_RLSE_DT
+		  , ISNULL(MAX(T2.SL_RLSE_SEQ) + 1, 1)  AS SL_RLSE_SEQ
+		  FROM TB_SL_RLSE T1 LEFT OUTER JOIN TB_SL_RLSE_DTL T2
+		  ON ( T1.SL_RLSE_NO = T2.SL_RLSE_NO
+		  AND T2.CHNL_CD    = #CHNL_CD#)
+		  WHERE 1 = 1
+		  AND T1.SL_RLSE_NO = #SL_RLSE_NO#
+		  AND T1.CHNL_CD    = #CHNL_CD#
+		  GROUP BY SL_AREA_CD
+		  , SL_CO_CD
+		  , SL_RLSE_DT
+		  ) T2
+		  WHERE T1.ITM_CD = #ITM_CD#
+		  AND T1.CHNL_CD = #CHNL_CD#
+	  </insert>
+
+	  <!--수주등록(편리사) DTL 다이얼로그 수주물품 추가 상단 조회 쿼리-->
+	  <select id="S2223SelectSubItmDtlList" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+		  SELECT  T1.ITM_CD
+		  , T1.ITM_NM
+		  , T1.STK_A_QTY
+		  , T1.UOM_NM
+		  , T1.CHNL_CD
+		  FROM (
+		  SELECT T1.ITM_CD
+		  , T2.ITM_NM
+		  , T2.ITM_SZ_NM
+		  , T2.UOM_CD
+		  , T3.UOM_NM
+		  , ISNULL(MAX(CASE WHEN T1.AREA_CD = '001' THEN T1.ITM_QTY END), 0) AS STK_A_QTY
+		  , T1.CHNL_CD
+		  FROM TB_INVT_DLY_STK  T1
+		  , TB_CD_ITM     T2
+		  OUTER APPLY
+		  (
+		  SELECT X.CLSS_CD
+		  , X.CLSS_DESC AS UOM_NM
+		  FROM TB_SYS_CLSS_CD X
+		  WHERE 1 = 1
+		  AND X.CLSS_TP_CD ='L-003'
+		  AND X.CLSS_CD = T2.UOM_CD
+		  AND X.CHNL_CD = T2.CHNL_CD
+		  )T3
+		  WHERE 1 = 1
+		  AND T1.CHNL_CD    = #CHNL_CD#
+		  AND T1.ITM_CD     = T2.ITM_CD
+		  AND T1.CHNL_CD    = T2.CHNL_CD
+		  <isNotNull property="ITM_GRP_CLSS_CD" >
+			  AND T2.ITM_GRP_CLSS_CD = #ITM_GRP_CLSS_CD#
+		  </isNotNull>
+		  <isNotNull property="N1ST_ITM_GRP_CD" >
+			  AND T2.N1ST_ITM_GRP_CD = #N1ST_ITM_GRP_CD#
+		  </isNotNull>
+		  <isNotNull property="N2ND_ITM_GRP_CD" >
+			  AND T2.N2ND_ITM_GRP_CD = #N2ND_ITM_GRP_CD#
+		  </isNotNull>
+		  <isNotNull property="HD_LEN_CD" >
+			  AND T2.HD_LEN_CD       = #HD_LEN_CD#
+		  </isNotNull>
+		  <isNotNull property="ITM_CD" >
+			  AND T2.ITM_CD           LIKE  #ITM_CD# + '%'
+		  </isNotNull>
+		  GROUP BY T1.CHNL_CD
+		  , T1.ITM_CD
+		  , T2.ITM_NM
+		  , T2.ITM_SZ_NM
+		  , T2.UOM_CD
+		  , T3.UOM_NM
+		  ) T1
+		  ORDER BY T1.ITM_CD
+	  </select>
+
+	  <!--수주등록(편리사) DTL 수정 쿼리-->
+	  <update id="S2223UpdateDtl" parameterClass="ModelsLibrary.Sale.SaleVo">
+		  UPDATE TB_SL_RLSE_DTL
+		  SET
+		  UPD_USR_ID          = #UPD_USR_ID#
+		  , UPD_DT            = GETDATE()
+		  , SL_ITM_PRC_DC_RT = #SL_ITM_PRC_DC_RT#
+		  , SL_ITM_RMK        = #SL_ITM_RMK#
+		  <isNotNull property="SL_ITM_PRC_VAL">
+			  , SL_ITM_PRC_VAL = #SL_ITM_PRC_VAL#
+			  , SL_ITM_AMT        = #SL_ITM_AMT#
+			  , SL_ITM_TAX_AMT    = ROUND(ROUND(SL_ITM_QTY * CAST(SL_ITM_PRC_DC_VAL AS FLOAT), 1) * 0.1, 0)
+		  </isNotNull>
+		  WHERE  1 = 1
+		  AND SL_RLSE_NO  = #SL_RLSE_NO#
+		  AND SL_RLSE_SEQ = #SL_RLSE_SEQ#
+		  AND CHNL_CD     = #CHNL_CD#
+	  </update>
+
+
+
 
   </statements>
 </sqlMap>

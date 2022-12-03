@@ -505,7 +505,7 @@
             set;
         }
         
-        public long? SL_ITM_AMT
+        public object SL_ITM_AMT
         {
             get;
             set;
@@ -5279,6 +5279,23 @@
         }
 
         public object ITM_FILE_BIT
+        {
+            get;
+            set;
+        }
+        public string CLSS_CD
+        {
+            get;
+            set;
+        }
+
+        public string CLSS_DESC
+        {
+            get;
+            set;
+        }
+
+        public string CLSS_TP_CD
         {
             get;
             set;

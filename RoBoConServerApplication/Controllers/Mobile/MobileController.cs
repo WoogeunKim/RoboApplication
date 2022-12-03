@@ -127,15 +127,14 @@ namespace VisualServerApplication.Controllers.Mobile
             {
                 Properties.EntityMapper.BeginTransaction();
 
-                voList[0].INAUD_TMP_NO = Properties.EntityMapper.QueryForObject<string>("I6610SelectNo", voList[0]);
-                Properties.EntityMapper.Update("I6610UpdateNo", voList[0]);
+                //voList[0].INAUD_TMP_NO = Properties.EntityMapper.QueryForObject<string>("I6610SelectNo", voList[0]);
+                //Properties.EntityMapper.Update("I6610UpdateNo", voList[0]);
 
-                foreach (InvVo item in voList)
-                {
-                    item.INAUD_TMP_NO = voList[0].INAUD_TMP_NO;
-                    Properties.EntityMapper.Insert("I6610InsertPurMst", item);
-                }
-                //return Ok<int>(Properties.EntityMapper.Insert("I6610InsertPurMst", vo) == null ? 1 : 0);
+                //foreach (InvVo item in voList)
+                //{
+                //    item.INAUD_TMP_NO = voList[0].INAUD_TMP_NO;
+                //    Properties.EntityMapper.Insert("I6610InsertPurMst", item);
+                //}
                 Properties.EntityMapper.CommitTransaction();
                 return Ok<int>(1);
             }
