@@ -2268,5 +2268,68 @@ namespace ModelsLibrary.Pur
             get;
             set;
         }
+
+        // 2022-12-03 
+        public object PUR_ITM_QTY
+        {
+            get;
+            set;
+        }
+        public object DC_RT
+        {
+            get;
+            set;
+        }
+        public object ITM_GRP_NM
+        {
+            get;
+            set;
+        }
+        public object ITM_GRP_CD
+        {
+            get;
+            set;
+        }
+
+        public string SL_RLSE_NO
+        {
+            get;
+            set;
+        }
+
+        public int? SL_RLSE_SEQ
+        {
+            get;
+            set;
+        }
+
+        public string SL_RLSE_DT
+        {
+            get;
+            set;
+        }
+
+        public string SL_ITM_CD
+        {
+            get;
+            set;
+        }
+
+        public string N1ST_ITM_SZ_NM
+        {
+            get;
+            set;
+        }
+        public string N2ND_ITM_SZ_NM
+        {
+            get;
+            set;
+        }
+
+        public object TOT_QTY
+        {
+            get;
+            set;
+        }
     }
 }

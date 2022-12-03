@@ -3414,8 +3414,241 @@
               AND CHNL_CD = #CHNL_CD# 
               AND RPT_CD  = 'PPR001' 
      </select>
-    
-    
+
+
+
+	  <!--발주서 등록 MST 조회-->
+
+	  <select id="P4430SelectMstList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT
+			    T1.CHNL_CD
+			  , T1.PUR_ORD_NO
+			  , T1.AREA_CD
+			  , T1.PUR_CO_CD
+			  , T2.CO_NM
+			  , ISNULL((SELECT SUM(X.PUR_AMT) FROM TB_PUR_ORD_DTL X WHERE 1 = 1 AND X.CHNL_CD = T1.CHNL_CD AND X.PUR_ORD_NO = T1.PUR_ORD_NO), 0) AS PUR_SUM_AMT
+		   FROM TB_PUR_ORD T1
+		      , TB_CD_CO   T2
+		  WHERE 1 = 1
+		    AND T1.CHNL_CD = #CHNL_CD#
+		    AND T1.CHNL_CD = T2.CHNL_CD
+		    AND T1.PUR_CO_CD = T2.CO_NO
+		    AND T1.AREA_CD = #AREA_CD#
+		<isNotNull property="FM_DT">
+			AND T1.PUR_DT >= CAST( #FM_DT# + ' 00:00:00' AS DATETIME)
+			AND T1.PUR_DT <![CDATA[<=]]> CAST( #TO_DT# + ' 23:59:59' AS DATETIME)
+		</isNotNull>
+	  </select>
+
+	  <select id="P4430SelectMstObject" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT
+		        T1.CHNL_CD  AS CHNL_CD
+			  , T1.PUR_ORD_NO
+			  , T1.PUR_CO_CD
+			  , T2.CO_NM
+			  , T1.AREA_CD
+			  , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD , 'L-002', T1.AREA_CD) AS AREA_NM
+			  , CONVERT(VARCHAR, T1.PUR_DT, 23) AS PUR_DT
+			  , T1.PUR_ITM_CD
+			  , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD , 'L-111', T1.PUR_ITM_CD) AS PUR_ITM_NM
+			  , CONVERT(VARCHAR, T1.PUR_DUE_DT, 23) AS PUR_DUE_DT
+			  , T1.PUR_CLZ_FLG
+			  , T1.PUR_RMK
+			  , T1.CRE_USR_ID
+			  , dbo.USR_NM_FNC(T1.CHNL_CD , T1.CRE_USR_ID) AS  CRE_USR_NM
+			  , CONVERT(VARCHAR, T1.CRE_DT, 121) AS CRE_DT
+			  , T1.UPD_USR_ID
+			  , (SELECT CONVERT(VARCHAR, X.UPD_DT, 121) AS UPD_DT FROM TB_PUR_ORD_DTL X  WHERE 1=1 AND X.CHNL_CD = T1.CHNL_CD AND X.PUR_ORD_NO = T1.PUR_ORD_NO AND X.PUR_ORD_SEQ = (SELECT MAX(Y.PUR_ORD_SEQ) FROM TB_PUR_ORD_DTL Y  WHERE 1=1 AND Y.PUR_ORD_NO = T1.PUR_ORD_NO) ) AS UPD_DT
+			  , T2.HDQTR_PHN_NO
+			  , T2.HDQTR_FAX_NO
+		      , ( SELECT ISNULL(SUM(PUR_AMT), 0)  AS PUR_AMT FROM TB_PUR_ORD_DTL WHERE 1=1 AND CHNL_CD=T1.CHNL_CD AND PUR_ORD_NO=T1.PUR_ORD_NO ) AS PUR_SUM_AMT
+		      , T1.PUR_WK_CD
+		   FROM TB_PUR_ORD T1
+		      , TB_CD_CO   T2
+		  WHERE 1 = 1
+		    AND T1.CHNL_CD     = #CHNL_CD#
+		    AND T1.CHNL_CD     = T2.CHNL_CD
+		    AND T1.PUR_CO_CD   = T2.CO_NO
+		    AND T1.AREA_CD     = #AREA_CD#
+		    AND T1.PUR_ORD_NO  = #PUR_ORD_NO#
+	  </select>
+
+	  <!--발주서 등록 DTL 조회-->
+
+	  <select id="P4430SelectDtlList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT
+			    #CHNL_CD#   AS CHNL_CD
+			  , T1.PUR_ORD_NO
+			  , T1.PUR_ORD_SEQ
+			  , T1.ITM_CD
+			  , T2.ITM_NM
+			  , T1.N1ST_ITM_SZ_NM + '*' + T1.N2ND_ITM_SZ_NM AS ITM_SZ_NM
+			  , T1.BSS_WGT
+			  , T1.UOM_CD
+			  , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-003', T1.UOM_CD)  AS UOM_NM
+			  , T1.PUR_QTY * 500 AS PUR_ITM_QTY
+			  , T1.PUR_QTY
+			  , T1.CO_UT_PRC
+			  , T1.DC_RT
+			  , T1.PUR_AMT
+			  , T1.PUR_ITM_RMK
+			  , T1.CRE_USR_ID
+			  , T1.UPD_USR_ID
+			  , ROW_NUMBER() OVER (PARTITION BY  NULL ORDER BY  T2.ITM_CD  ) AS RN
+			  , dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T2.ITM_GRP_CLSS_CD, T2.N1ST_ITM_GRP_CD) AS N1ST_ITM_GRP_NM
+			  , T4.N2ND_ITM_GRP_NM
+			  , #CO_NM# AS CO_NM
+			  , T1.PUR_ORD_NO + '-' + DBO.F_RPAD( CONVERT(VARCHAR, T1.PUR_ORD_SEQ), 3, '0') AS GBN
+			  , T2.CAR_ITM_NM
+			  , dbo.FN_splitValue(T1.ITM_CD, '-', 2) AS ITM_LEN_NM
+			  , T1.BUN_WGT
+			  , (T1.PUR_QTY * T1.BUN_WGT) AS TOT_USE_QTY
+			  , CONVERT(VARCHAR, T3.PUR_DUE_DT, 23) AS PUR_DUE_DT	
+		   FROM TB_PUR_ORD_DTL  T1
+		      , TB_CD_ITM       T2
+		        OUTER APPLY
+						  (
+							  SELECT X.ITM_GRP_NM AS N2ND_ITM_GRP_NM
+							    FROM TB_CD_ITM_GRP X
+							   WHERE 1 = 1
+							     AND X.CHNL_CD    = T2.CHNL_CD
+							     AND X.ITM_GRP_CD = T2.N2ND_ITM_GRP_CD
+						  )T4
+		      ,TB_PUR_ORD          T3
+		 WHERE 1 = 1
+		   AND T1.CHNL_CD     = #CHNL_CD#
+		   AND T1.CHNL_CD     = T2.CHNL_CD
+		   AND T1.CHNL_CD     = T3.CHNL_CD
+		   AND T1.ITM_CD      = T2.ITM_CD
+		   AND T1.PUR_ORD_NO  = T3.PUR_ORD_NO
+		   AND T1.PUR_ORD_NO  = #PUR_ORD_NO#
+	  </select>
+
+	  <!--발주서등록 DTL 추가-->
+	  <insert id="P4430InsertDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+		  INSERT INTO TB_PUR_ORD_DTL
+		  (
+			    PUR_ORD_NO
+			  , PUR_ORD_SEQ
+			  , ITM_CD
+			  , N1ST_ITM_SZ_NM
+			  , N2ND_ITM_SZ_NM
+			  , BSS_WGT
+			  , UOM_CD
+			  , CO_UT_PRC
+			  , DC_RT
+			  , PUR_QTY
+			  , PUR_AMT
+			  , PUR_ITM_RMK
+			  , CRE_USR_ID
+			  , CRE_DT
+			  , UPD_USR_ID
+			  , UPD_DT
+			  , CHNL_CD
+			  , ORD_NO
+			  , ORD_SEQ
+		  )
+		  VALUES
+		  (
+			    #PUR_ORD_NO#
+			  , ISNULL((SELECT MAX(PUR_ORD_SEQ) + 1 FROM TB_PUR_ORD_DTL WHERE PUR_ORD_NO = #PUR_ORD_NO#), 1)
+			  , #ITM_CD#
+			  , #N1ST_ITM_SZ_NM#
+			  , #N2ND_ITM_SZ_NM#
+			  , #BSS_WGT#
+			  , #UOM_CD#
+			  , #CO_UT_PRC#
+			  , #DC_RT#
+			  , #PUR_QTY#
+			  , ROUND(#PUR_AMT#, 0)
+			  , #PUR_ITM_RMK#
+			  , #CRE_USR_ID#
+			  , GETDATE()
+			  , #UPD_USR_ID#
+			  , GETDATE()
+			  , #CHNL_CD#
+			  , #SL_ORD_NO#
+			  , #SL_ORD_SEQ#
+		  )
+	  </insert>
+
+	  <!--발주서 등록 DTL 추가 - 수주정보 조회-->
+	  <select id="P4430SelectSlRlseList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT    
+				T1.SL_RLSE_NO
+		      , T2.SL_RLSE_SEQ
+			  , CONVERT(VARCHAR,T1.SL_RLSE_DT,23) AS SL_RLSE_DT
+			  , T4.CO_NM
+			  , T2.SL_ITM_CD
+			  , T3.ITM_NM
+			  , T2.SL_ITM_QTY
+			  , (T2.N1ST_ITM_SZ_NM + '*' + T2.N2ND_ITM_SZ_NM + '*' + T2.N3RD_ITM_SZ_NM) AS ITM_SZ_NM
+		   FROM TB_SL_RLSE T1
+		        OUTER APPLY(
+						  SELECT  X.CO_NO AS CO_CD
+						        , X.CO_NM AS CO_NM
+							FROM TB_CD_CO X
+					       WHERE 1 = 1
+							 AND X.CO_NO = T1.SL_CO_CD
+							 AND X.CHNL_CD = T1.CHNL_CD
+						   )T4
+		      , TB_SL_RLSE_DTL T2
+		      , TB_CD_ITM      T3
+		  WHERE 1 = 1
+		    AND T1.CHNL_CD    = #CHNL_CD#
+		    AND T1.CHNL_CD    = T2.CHNL_CD
+		    AND T1.SL_RLSE_NO = T2.SL_RLSE_NO
+		    AND T2.SL_ITM_CD  = T3.ITM_CD
+		    AND T1.CLZ_FLG    = 'N'
+	  </select>
+
+	  <!--발주서 등록 DTL 추가 - CO_UT_PRC 단가-->
+	  <select id="P4430SelectCoUtPrc" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT CONVERT(NUMERIC(13, 4), (CONVERT(NUMERIC(13, 4), #N1ST_ITM_SZ_NM#) * CONVERT(NUMERIC(13, 4), #N2ND_ITM_SZ_NM#) * #BSS_WGT#)/1000000000 * WGT_PER_PRC * 500) AS CO_UT_PRC
+		    FROM TB_CD_CO_PPR_PRC_DTL T1
+		       , MV_TB_CD_ITM       T2
+		   WHERE 1 = 1
+		     AND T1.CHNL_CD = #CHNL_CD#
+		     AND T1.CHNL_CD = T2.CHNL_CD
+		     AND T1.N2ND_ITM_GRP_CD = T2.N2ND_ITM_GRP_NM
+		     AND T1.BSS_WGT = #BSS_WGT#
+	  </select>
+
+	  <!--발주서등록 DTL 수정-->
+	  <update id="P4430UpdateDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+		  UPDATE TB_PUR_ORD_DTL
+		  SET
+				ITM_CD         = #ITM_CD#
+			  , N1ST_ITM_SZ_NM = #N1ST_ITM_SZ_NM#
+			  , N2ND_ITM_SZ_NM = #N2ND_ITM_SZ_NM#
+			  , BSS_WGT        = #BSS_WGT#
+			  , UOM_CD         = #UOM_CD#
+			  , PUR_QTY        = #PUR_QTY#
+			  , CO_UT_PRC      = #CO_UT_PRC#
+			  , DC_RT          = #DC_RT#
+			  , PUR_AMT        = ROUND(#PUR_AMT#, 0)
+			  , PUR_ITM_RMK    = #PUR_ITM_RMK#
+			  , UPD_USR_ID     = #UPD_USR_ID#
+			  , UPD_DT         = GETDATE()
+			  , ORD_NO         = #SL_ORD_NO#
+			  , ORD_SEQ        = #SL_ORD_SEQ#
+			  , COLR_CD          = #COLR_CD#
+		  WHERE 1 = 1
+		    AND CHNL_CD    = #CHNL_CD#
+		    AND PUR_ORD_NO = #PUR_ORD_NO#
+		    AND PUR_ORD_SEQ= #PUR_ORD_SEQ#
+	  </update>
+
+	  <!--발주서등록 DTL 삭제-->
+	  <delete id="P4430DeleteDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+		  DELETE FROM TB_PUR_ORD_DTL
+		   WHERE 1 = 1
+		     AND CHNL_CD       = #CHNL_CD#
+		     AND PUR_ORD_NO    = #PUR_ORD_NO#
+		  <isNotNull property="PUR_ORD_SEQ">
+		     AND PUR_ORD_SEQ   = #PUR_ORD_SEQ#
+		  </isNotNull>
+	  </delete>
     
 
   </statements>

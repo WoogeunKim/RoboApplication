@@ -35,7 +35,7 @@
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>14</ApplicationRevision>
+    <ApplicationRevision>15</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -251,6 +251,7 @@
     <Compile Include="ViewModel\P4402ViewModel.cs" />
     <Compile Include="ViewModel\P4412ViewModel.cs" />
     <Compile Include="ViewModel\P4423ViewModel.cs" />
+    <Compile Include="ViewModel\P4430ViewModel.cs" />
     <Compile Include="ViewModel\S11472ViewModel.cs" />
     <Compile Include="ViewModel\S11479ViewModel.cs" />
     <Compile Include="ViewModel\S1148ViewModel.cs" />
@@ -1027,6 +1028,9 @@
     <Compile Include="View\PUR\Dialog\P4422MasterDialog.xaml.cs">
       <DependentUpon>P4422MasterDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\PUR\Dialog\P4430DetailDtlDialog.xaml.cs">
+      <DependentUpon>P4430DetailDtlDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PUR\P4402.xaml.cs">
       <DependentUpon>P4402.xaml</DependentUpon>
     </Compile>
@@ -1077,6 +1081,9 @@
     </Compile>
     <Compile Include="View\PUR\P4426.xaml.cs">
       <DependentUpon>P4426.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\P4430.xaml.cs">
+      <DependentUpon>P4430.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PUR\Report\P4412Report.cs">
       <SubType>Component</SubType>
@@ -2448,6 +2455,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\PUR\Dialog\P4430DetailDtlDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\PUR\P4402.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -2513,6 +2524,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\PUR\P4426.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\P4430.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
