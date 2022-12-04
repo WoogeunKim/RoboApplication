@@ -43,7 +43,7 @@ namespace AquilaErpWpfApp3.ViewModel
         private M6710DetailBadItmDialog badItmDialog;
         private M6710DetailInItmDialog inItmDialog;
 
-        public M6710ViewModel() 
+        public M6710ViewModel()
         {
             StartDt = System.DateTime.Now;
             EndDt = System.DateTime.Now;
@@ -72,9 +72,9 @@ namespace AquilaErpWpfApp3.ViewModel
                             isM_DELETE = false;
 
                             //isM_REPORT = true;
-                            
+
                             SelectedItem = SelectedViewList[0];
-                         
+
                         }
                         else
                         {
@@ -96,8 +96,8 @@ namespace AquilaErpWpfApp3.ViewModel
         }
 
 
-       [Command]
-       public async void MstRefresh(string _LOT_DIV_NO = null)
+        [Command]
+        public async void MstRefresh(string _LOT_DIV_NO = null)
         {
             try
             {
@@ -267,6 +267,14 @@ namespace AquilaErpWpfApp3.ViewModel
             private set { SetProperty(ref selectedMoldViewList, value, () => MoldList); }
         }
 
+        //금형
+        private IList<ManVo> selectedRoutViewList;
+        public IList<ManVo> RoutList
+        {
+            get { return selectedRoutViewList; }
+            private set { SetProperty(ref selectedRoutViewList, value, () => RoutList); }
+        }
+
 
         //public IList<ManVo> SelectedPopupViewList
         //{
@@ -410,10 +418,10 @@ namespace AquilaErpWpfApp3.ViewModel
                     return;
                 }
 
-                MessageBoxResult result = WinUIMessageBox.Show("(지시 일자 : " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm")  + ")  추가 하시겠습니까?", _title, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = WinUIMessageBox.Show("(지시 일자 : " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm") + ")  추가 하시겠습니까?", _title, MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m6710/mst/m", new StringContent(JsonConvert.SerializeObject(new List<ManVo>() { new ManVo() {UPD_USR_ID = SystemProperties.USER, CRE_USR_ID = SystemProperties.USER, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, LOT_DIV_NO = this.SelectedItem.LOT_DIV_NO, ROUT_CD = this.SelectedItem.ROUT_CD , EQ_NO = this.SelectedItem.EQ_NO, MOLD_CD = this.SelectedItem.MOLD_CD, ITM_MOLD_SEQ = this.SelectedItem.ITM_MOLD_SEQ } }), System.Text.Encoding.UTF8, "application/json")))
+                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m6710/mst/m", new StringContent(JsonConvert.SerializeObject(new List<ManVo>() { new ManVo() { UPD_USR_ID = SystemProperties.USER, CRE_USR_ID = SystemProperties.USER, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, LOT_DIV_NO = this.SelectedItem.LOT_DIV_NO, ROUT_CD = this.SelectedItem.ROUT_CD, EQ_NO = this.SelectedItem.EQ_NO, MOLD_CD = this.SelectedItem.MOLD_CD, ITM_MOLD_SEQ = this.SelectedItem.ITM_MOLD_SEQ } }), System.Text.Encoding.UTF8, "application/json")))
                     {
                         int _Num;
                         if (response.IsSuccessStatusCode)
@@ -586,7 +594,7 @@ namespace AquilaErpWpfApp3.ViewModel
         //    }
         //}
 
-     
+
 
         //불량 현황
         [Command]
@@ -665,7 +673,7 @@ namespace AquilaErpWpfApp3.ViewModel
                         {
                             if (response.IsSuccessStatusCode)
                             {
-                                MstRefresh(_LOT_DIV_NO + "_" +_LOT_DIV_SEQ);
+                                MstRefresh(_LOT_DIV_NO + "_" + _LOT_DIV_SEQ);
                                 //  this.SelectedMasterItem.WRK_HRS = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
 
                                 //int _Num = 0;
@@ -680,7 +688,7 @@ namespace AquilaErpWpfApp3.ViewModel
                         }
 
                         //Refresh(_LOT_DIV_NO);
-                        
+
 
                         //        //Refresh(masterDialog.resultDomain.PCK_PLST_CLSS_CD + "_" + masterDialog.resultDomain.PCK_PLST_CD);
                         //        //if (masterDialog.IsEdit == false)
@@ -932,6 +940,15 @@ namespace AquilaErpWpfApp3.ViewModel
                 if (response.IsSuccessStatusCode)
                 {
                     this.MoldList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+                }
+            }
+
+            //금형
+            using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m6611", new StringContent(JsonConvert.SerializeObject(new ManVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    this.RoutList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
                 }
             }
 

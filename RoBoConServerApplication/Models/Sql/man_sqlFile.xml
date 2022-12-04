@@ -5895,7 +5895,7 @@
 
 	  <!-- 사출 작업실적보고-->
     <select id="M6710Select" parameterClass="ModelsLibrary.Man.ManVo" resultClass="ModelsLibrary.Man.ManVo">
-      SELECT 
+     SELECT 
               ROW_NUMBER() OVER (PARTITION BY T1.LOT_DIV_NO ORDER BY T1.PROD_PLN_DT) AS RN
             , CONVERT(VARCHAR, T1.PROD_PLN_DT, 23)  AS PROD_PLN_DT
             , T1.LOT_DIV_NO         AS LOT_DIV_NO
@@ -5912,32 +5912,41 @@
             , T1.ROUT_ITM_CD
             , dbo.CD_ITEM_NM_FNC(T1.CHNL_CD, T1.ROUT_ITM_CD)  AS ROUT_ITM_NM    
             , T1.CHNL_CD
-        FROM TB_PROD_LOT_DIV T1
-        OUTER APPLY
-             (
-                SELECT X.ROUT_CD    AS ROUT_CD
-                      ,X.ROUT_NM    AS ROUT_NM
-                  FROM TB_PROD_ROUT X
-                 WHERE 1 = 1 
-                  AND  X.CHNL_CD     =  T1.CHNL_CD
-		              AND  X.CHNL_CD     = #CHNL_CD#
-		              AND  X.ROUT_CD     =  T1.ROUT_CD
-              )T3
-        OUTER APPLY
-		         (
-		            SELECT X.PROD_EQ_NO    AS PROD_EQ_NO
-		                  ,X.EQ_NM         AS EQ_NM
-		              FROM  TB_PROD_EQ X
-		             WHERE  1 = 1
-		               AND  X.CHNL_CD     =  T1.CHNL_CD
-		               AND  X.CHNL_CD     = #CHNL_CD#
-		               AND  X.PROD_EQ_NO  =  T1.EQ_NO 
-              )T4        
-            ,MV_TB_CD_ITM    T2 
-       WHERE 1 = 1 
-         AND T1.CHNL_CD = #CHNL_CD#
-         AND T1.CHNL_CD = T2.CHNL_CD 
-         AND T1.ITM_CD = T2.ITM_CD 
+            , T5.ITM_SZ_NM
+         FROM TB_PROD_LOT_DIV T1
+            OUTER APPLY
+                 (
+                    SELECT X.ROUT_CD    AS ROUT_CD
+                          ,X.ROUT_NM    AS ROUT_NM
+                      FROM TB_PROD_ROUT X
+                     WHERE 1 = 1 
+                      AND  X.CHNL_CD     =  T1.CHNL_CD
+		                  AND  X.CHNL_CD     = #CHNL_CD#
+		                  AND  X.ROUT_CD     =  T1.ROUT_CD
+                  )T3
+            OUTER APPLY
+		             (
+		                SELECT X.PROD_EQ_NO    AS PROD_EQ_NO
+		                      ,X.EQ_NM         AS EQ_NM
+		                  FROM  TB_PROD_EQ X
+		                 WHERE  1 = 1
+		                   AND  X.CHNL_CD     =  T1.CHNL_CD
+		                   AND  X.CHNL_CD     = #CHNL_CD#
+		                   AND  X.PROD_EQ_NO  =  T1.EQ_NO 
+                  )T4        
+            OUTER APPLY 
+                 (
+                  SELECT X.N1ST_ITM_SZ_NM + '*' + X.N2ND_ITM_SZ_NM + '*' + X.N3RD_ITM_SZ_NM AS ITM_SZ_NM
+                    FROM TB_SL_RLSE_DTL X
+                   WHERE 1 = 1 
+                     AND X.SL_RLSE_NO   = T1.ORD_NO
+                     AND X.SL_RLSE_SEQ  = T1.ORD_SEQ
+                  )T5
+            , MV_TB_CD_ITM    T2 
+        WHERE 1 = 1 
+          AND T1.CHNL_CD = #CHNL_CD#
+          AND T1.CHNL_CD = T2.CHNL_CD 
+          AND T1.ITM_CD  = T2.ITM_CD 
       <!--SELECT  
               CONVERT(VARCHAR, T1.MAKE_ST_DT,  23) AS  PROD_PLN_DT 
             , T1.LOT_DIV_NO   
@@ -6037,6 +6046,7 @@
              , (CASE WHEN T1.DY_NGT_FLG = 'N' THEN '야간' ELSE '주간' END) AS DY_NGT_FLG
              , T2.ROUT_ITM_CD
              , T1.PROD_GD_QTY         AS SL_ITM_QTY
+             , T1.TMP_NO
         FROM  TB_PROD_JB_ORD T1
             , TB_PROD_LOT_DIV T2
        WHERE 1 = 1 
@@ -6194,35 +6204,37 @@
 	  </insert>
 
 	   <update id="M6710UpdateMst" parameterClass="ModelsLibrary.Man.ManVo">
-		 UPDATE TB_PROD_JB_ORD
+		UPDATE TB_PROD_JB_ORD
            SET
-               UPD_USR_ID       = #UPD_USR_ID#
-      <isNotNull property="UPD_DT" >
-            , UPD_DT           = #UPD_DT#
-      </isNotNull>
-		   <isNotNull property="MOLD_CD" >
-             , MOLD_CD          = #MOLD_CD#
-             , MOLD_SEQ         = #WEIH_SEQ#
-		   </isNotNull>
+                UPD_USR_ID       = #UPD_USR_ID#
+          <isNotNull property="UPD_DT" >
+              , UPD_DT           = #UPD_DT#
+          </isNotNull>
+		  <isNotNull property="ROUT_CD" >
+		      , ROUT_CD          = #ROUT_CD#
+		  </isNotNull>
+		  <isNotNull property="MOLD_CD" >
+              , MOLD_CD          = #MOLD_CD#
+              , MOLD_SEQ         = #WEIH_SEQ#
+		  </isNotNull>
 		   <isNotNull property="DY_NGT_FLG" >
-			      , DY_NGT_FLG     = (CASE WHEN #DY_NGT_FLG# = '야간' THEN 'N' ELSE 'D' END)
+		      , DY_NGT_FLG     = (CASE WHEN #DY_NGT_FLG# = '야간' THEN 'N' ELSE 'D' END)
 		   </isNotNull>
 		   <isNotNull property="SL_ITM_QTY" >
-			   , PROD_GD_QTY        = #SL_ITM_QTY#
+			  , PROD_GD_QTY        = #SL_ITM_QTY#
 		   </isNotNull>
 		   <isNotNull property="INP_STAFF_VAL" >
-			   , INTO_WRK_MAN_VAL = #INP_STAFF_VAL#
+			  , INTO_WRK_MAN_VAL = #INP_STAFF_VAL#
 		   </isNotNull>
 		   <isNotNull property="WRK_HRS" >
-			   , ROUT_ST_DT     = #MAKE_ST_DT#
-			   , ROUT_END_DT    = #MAKE_END_DT#
-		     , WRK_HRS        = #WRK_HRS#
+			  , ROUT_ST_DT     = #MAKE_ST_DT#
+			  , ROUT_END_DT    = #MAKE_END_DT#
+		      , WRK_HRS        = #WRK_HRS#
 		   </isNotNull>
           WHERE 1 = 1
-		        AND CHNL_CD     = #CHNL_CD#
-				    AND ROUT_CD     = #ROUT_CD#
-		        AND LOT_DIV_NO  = #LOT_DIV_NO#
-		        AND LOT_DIV_SEQ = #LOT_DIV_SEQ#
+		    AND CHNL_CD     = #CHNL_CD#
+		    AND LOT_DIV_NO  = #LOT_DIV_NO#
+		    AND LOT_DIV_SEQ = #LOT_DIV_SEQ#
 	 </update>
 		  
 	  <delete id="M6710DeleteMst" parameterClass="ModelsLibrary.Man.ManVo">

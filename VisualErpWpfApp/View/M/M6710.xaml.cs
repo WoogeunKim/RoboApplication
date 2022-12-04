@@ -573,6 +573,7 @@ namespace AquilaErpWpfApp3.View.M
                 bool wrkEndDt = (e.Column.FieldName.ToString().Equals("WRK_END_DT") ? true : false);
                 bool moldCd = (e.Column.FieldName.ToString().Equals("GBN") ? true : false);
                 bool dyNgtFlg = (e.Column.FieldName.ToString().Equals("DY_NGT_FLG") ? true : false);
+                bool routCd = (e.Column.FieldName.ToString().Equals("ROUT_CD") ? true : false);
 
                 bool updDt = (e.Column.FieldName.ToString().Equals("UPD_DT") ? true : false);
 
@@ -631,6 +632,61 @@ namespace AquilaErpWpfApp3.View.M
                                 return;
                             }
 
+                        }
+                    }
+                }
+                else if (routCd)
+                {
+                    if (e.IsValid)
+                    {
+                        if (masterDomain.ROUT_CD == null)
+                        {
+                            return;
+                        }
+                        if (!masterDomain.ROUT_CD.Equals((e.Value == null ? "" : e.Value.ToString())))
+                        {
+                            ManVo routVo = this.combo_ROUT_CD.GetItemFromValue(e.Value) as ManVo;
+                            //
+                            if (routVo != null)
+                            {
+                                masterDomain.ROUT_CD = routVo.ROUT_CD;
+                            }
+                            try
+                            {
+
+                                masterDomain.UPD_USR_ID = SystemProperties.USER_VO.USR_ID;
+                                masterDomain.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
+
+                                //
+                                int _Num = 0;
+                                string resultMsg = "";
+                                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m6710/mst/u", new StringContent(JsonConvert.SerializeObject(masterDomain), System.Text.Encoding.UTF8, "application/json")))
+                                {
+                                    if (response.IsSuccessStatusCode)
+                                    {
+                                        resultMsg = await response.Content.ReadAsStringAsync();
+                                        if (int.TryParse(resultMsg, out _Num) == false)
+                                        {
+                                            //실패
+                                            e.ErrorType = DevExpress.XtraEditors.DXErrorProvider.ErrorType.Critical;
+                                            e.ErrorContent = resultMsg;
+                                            e.SetError(e.ErrorContent, e.ErrorType);
+                                            return;
+                                        }
+
+                                        this.ConfigViewPage1Edit_Master.RefreshData();
+                                    }
+                                }
+                            }
+                            catch (System.Exception eLog)
+                            {
+                                e.ErrorType = DevExpress.XtraEditors.DXErrorProvider.ErrorType.Critical;
+                                e.ErrorContent = eLog.Message;
+                                e.SetError(e.ErrorContent, e.ErrorType);
+                                return;
+                            }
+
+                            masterDomain.isCheckd = true;
                         }
                     }
                 }

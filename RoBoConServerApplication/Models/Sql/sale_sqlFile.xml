@@ -6916,5 +6916,177 @@
 
 
 
+	  <!-- 판매출고내역 MST - 조회 -->
+	  <select id="S2233SelectMstList" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+		  SELECT
+		  ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T4.SL_RLSE_DT, T1.SL_RLSE_NO, T2.SL_RLSE_SEQ) AS RN
+		  , T1.SL_CO_CD
+		  , T5.CO_NM
+		  , T4.RLSE_CMD_NO
+		  , T4.RLSE_CMD_SEQ
+		  , T2.SL_RLSE_NO
+		  , CONVERT(VARCHAR, T4.SL_RLSE_DT, 120) AS SL_RLSE_DT
+		  , T3.N1ST_ITM_GRP_NM
+		  , T3.ITM_CD
+		  , T3.ITM_NM
+		  <!--, T3.ITM_SZ_NM-->
+		  , T2.N1ST_ITM_SZ_NM + '*' + T2.N2ND_ITM_SZ_NM + '*' + T2.N3RD_ITM_SZ_NM AS ITM_SZ_NM
+		  , T4.ITM_QTY
+		  , T4.ITM_PRC
+		  , T4.ITM_AMT
+		  , T4.SL_ITM_RMK
+		  , T6.CLZ_FLG
+		  FROM  TB_SL_RLSE          T1
+		  , TB_SL_RLSE_DTL      T2
+		  , MV_TB_CD_ITM        T3
+		  , TB_SL_RLSE_CMD_DTL  T4
+		  OUTER APPLY (
+		  SELECT CASE WHEN COUNT(*) = 0 THEN 'N' ELSE 'Y' END AS CLZ_FLG
+		  FROM TB_SL_RLSE_MAP X
+		  WHERE 1 = 1
+		  AND X.SL_RLSE_NO   = T4.RLSE_CMD_NO
+		  AND X.SL_RLSE_SEQ  = T4.RLSE_CMD_SEQ
+		  ) T6
+		  , TB_CD_CO            T5
+		  WHERE 1 = 1
+		  AND T1.CHNL_CD         = #CHNL_CD#
+		  AND T1.CHNL_CD         = T2.CHNL_CD
+		  AND T1.CHNL_CD         = T3.CHNL_CD
+		  AND T1.CHNL_CD         = T4.CHNL_CD
+		  AND T1.CHNL_CD         = T5.CHNL_CD
+		  AND T2.SL_RLSE_NO      = T4.SL_RLSE_NO
+		  AND T2.SL_RLSE_SEQ     = T4.SL_RLSE_SEQ
+		  AND T1.SL_AREA_CD      = #AREA_CD#
+		  AND T1.SL_CO_CD        = T5.CO_NO
+		  AND T1.SL_RLSE_NO      = T2.SL_RLSE_NO
+		  AND T2.SL_ITM_CD       = T3.ITM_CD
+		  AND T1.SL_RLSE_DT >= CAST(#FM_DT# + ' 00:00:00' AS DATETIME)
+		  AND T1.SL_RLSE_DT <![CDATA[ <= ]]> CAST(#TO_DT# + ' 23:59:59' AS DATETIME)
+	  </select>
+
+	  <!--판매출고내역  MST - 삭제-->
+	  <delete id="S2233DeleteMst" parameterClass="ModelsLibrary.Sale.SaleVo">
+		  DELETE FROM TB_SL_RLSE_CMD_DTL
+		  WHERE CHNL_CD       = #CHNL_CD#
+		  AND RLSE_CMD_NO   = #RLSE_CMD_NO#
+		  AND RLSE_CMD_SEQ  = #RLSE_CMD_SEQ#
+	  </delete>
+
+
+	  <!-- 판매출고내역 Dialog - 조회 -->
+	  <select id="S2233SelectDialogList" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+		  SELECT
+		  ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.SL_RLSE_DT, T1.SL_RLSE_NO, T2.SL_RLSE_SEQ) AS RN
+		  , T1.SL_CO_CD
+		  , T5.CO_NM
+		  , T2.SL_RLSE_NO
+		  , T2.SL_RLSE_SEQ
+		  , CONVERT(VARCHAR, T1.SL_RLSE_DT, 120) AS SL_RLSE_DT
+		  , T3.N1ST_ITM_GRP_NM
+		  , T3.ITM_CD
+		  , T3.ITM_NM
+		  <!--, T3.ITM_SZ_NM-->
+		  , T2.N1ST_ITM_SZ_NM + '*' + T2.N2ND_ITM_SZ_NM + '*' + T2.N3RD_ITM_SZ_NM AS ITM_SZ_NM
+		  , T4.ITM_QTY
+		  , T2.SL_ITM_QTY
+		  , T2.SL_ITM_QTY - T4.ITM_QTY  AS RMN_QTY
+		  , T2.SL_ITM_PRC_VAL  AS ITM_PRC
+		  , T2.SL_ITM_PRC_VAL
+		  , T2.SL_ITM_AMT
+		  , T2.SL_ITM_RMK
+		  FROM  TB_SL_RLSE      T1
+		  , TB_SL_RLSE_DTL  T2
+		  OUTER APPLY (
+		  SELECT
+		  ISNULL(SUM(X.ITM_QTY), 0)  AS ITM_QTY
+		  , MAX(X.ITM_PRC)  AS ITM_PRC
+		  FROM TB_SL_RLSE_CMD_DTL X
+		  WHERE 1 = 1
+		  AND X.SL_RLSE_NO  = T2.SL_RLSE_NO
+		  AND X.SL_RLSE_SEQ = T2.SL_RLSE_SEQ
+		  AND X.CHNL_CD     = #CHNL_CD#
+		  ) T4
+		  , MV_TB_CD_ITM    T3
+		  , TB_CD_CO        T5
+		  WHERE 1 = 1
+		  AND T1.CHNL_CD         = #CHNL_CD#
+		  AND T1.CHNL_CD         = T2.CHNL_CD
+		  AND T1.CHNL_CD         = T3.CHNL_CD
+		  AND T1.CHNL_CD         = T5.CHNL_CD
+		  AND T1.SL_AREA_CD      = #AREA_CD#
+		  AND T3.ITM_GRP_CLSS_CD = 'G'
+		  AND T1.SL_CO_CD        = T5.CO_NO
+		  AND T1.SL_RLSE_NO      = T2.SL_RLSE_NO
+		  AND T2.SL_ITM_CD       = T3.ITM_CD
+		  AND T1.CLZ_FLG         = 'N'
+		  AND T4.ITM_QTY        <![CDATA[<]]> T2.SL_ITM_QTY
+		  AND T1.SL_RLSE_DT >= CAST(#FM_DT# + ' 00:00:00' AS DATETIME)
+		  AND T1.SL_RLSE_DT <![CDATA[ <= ]]> CAST(#TO_DT# + ' 23:59:59' AS DATETIME)
+	  </select>
+
+	  <!--판매출고내역 Dialog - 추가-->
+	  <insert id="S2233InsertMst" parameterClass="ModelsLibrary.Sale.SaleVo">
+		  INSERT INTO TB_SL_RLSE_CMD_DTL
+		  (
+		  CHNL_CD
+		  , RLSE_CMD_NO
+		  , RLSE_CMD_SEQ
+		  , SL_RLSE_DT
+		  , SL_RLSE_NO
+		  , SL_RLSE_SEQ
+		  , ITM_QTY
+		  , ITM_PRC
+		  , ITM_AMT
+		  , SL_ITM_RMK
+		  , CRE_USR_ID
+		  , CRE_DT
+		  , UPD_USR_ID
+		  , UPD_DT
+		  )
+		  VALUES
+		  (
+		  #CHNL_CD#
+		  , 'DO' + SUBSTRING(CONVERT(VARCHAR(8), GETDATE(), 112), 3, 8)
+		  , (SELECT ISNULL(MAX(RLSE_CMD_SEQ), 0) + 1 FROM TB_SL_RLSE_CMD_DTL X WHERE 1 = 1 AND X.RLSE_CMD_NO = 'DO' + SUBSTRING(CONVERT(VARCHAR(8), GETDATE(), 112), 3, 8))
+		  , GETDATE()
+		  , #SL_RLSE_NO#
+		  , #SL_RLSE_SEQ#
+		  , #RMN_QTY#
+		  , #ITM_PRC#
+		  , #SL_ITM_AMT#
+		  , #SL_ITM_RMK#
+		  , #CRE_USR_ID#
+		  , GETDATE()
+		  , #UPD_USR_ID#
+		  , GETDATE()
+		  )
+	  </insert>
+
+
+
+	  <!-- 판매출고  -->
+	  <select id="S2233SelectNewInsertData" resultClass="ModelsLibrary.Sale.SaleVo">
+		  SELECT CHNL_CD
+		  , RLSE_CMD_NO
+		  , RLSE_CMD_SEQ
+		  , CRE_USR_ID
+		  FROM (
+		  SELECT TOP 1 *
+		  FROM TB_SL_RLSE_CMD_DTL
+		  WHERE 1=1
+		  AND CHNL_CD = #CHNL_CD#
+		  ORDER BY CRE_DT DESC
+		  ) T1
+	  </select>
+
+
+	  <statement id="ProcS2233INSERT" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="int">
+		  declare @RTN VARCHAR(MAX)
+		  exec @RTN = saleRlseYM  #CHNL_CD# , #RLSE_CMD_NO#, #RLSE_CMD_SEQ# , #CRE_USR_ID#
+		  select @RTN AS R_value
+	  </statement>
+
+
+
   </statements>
 </sqlMap>

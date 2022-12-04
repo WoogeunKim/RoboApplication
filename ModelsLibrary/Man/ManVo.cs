@@ -2411,6 +2411,11 @@
             get;
             set;
         }
+        public object TMP_NO
+        {
+            get;
+            set;
+        }
 
     }
 }

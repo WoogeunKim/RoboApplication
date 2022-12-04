@@ -213,6 +213,7 @@
     <Compile Include="Controllers\Code\S11315Controller.cs" />
     <Compile Include="Controllers\Code\S1431Controller.cs" />
     <Compile Include="Controllers\Code\S143Controller.cs" />
+    <Compile Include="Controllers\Code\S2233Controller.cs" />
     <Compile Include="Controllers\Fproof\PurRegController.cs" />
     <Compile Include="Controllers\Fproof\PurRegWebApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

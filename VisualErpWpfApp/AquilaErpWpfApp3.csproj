@@ -35,7 +35,7 @@
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>16</ApplicationRevision>
+    <ApplicationRevision>17</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -264,6 +264,7 @@
     <Compile Include="ViewModel\S2219ViewModel.cs" />
     <Compile Include="ViewModel\S22226ViewModel.cs" />
     <Compile Include="ViewModel\S2223ViewModel.cs" />
+    <Compile Include="ViewModel\M6722ViewModel.cs" />
     <Compile Include="ViewModel\S2257ViewModel.cs" />
     <Compile Include="ViewModel\S22225ViewModel.cs" />
     <Compile Include="ViewModel\T6325ViewModel.cs" />
@@ -729,6 +730,9 @@
     <Compile Include="View\M\Dialog\M6521MasterDialog.xaml.cs">
       <DependentUpon>M6521MasterDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\M\Dialog\M6722MasterDialog.xaml.cs">
+      <DependentUpon>M6722MasterDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\M\M6521.xaml.cs">
       <DependentUpon>M6521.xaml</DependentUpon>
     </Compile>
@@ -941,6 +945,9 @@
     </Compile>
     <Compile Include="View\M\M6638.xaml.cs">
       <DependentUpon>M6638.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M6722.xaml.cs">
+      <DependentUpon>M6722.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PUR\Dialog\P4401DetailDialog.xaml.cs">
       <DependentUpon>P4401DetailDialog.xaml</DependentUpon>
@@ -2113,6 +2120,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\M\Dialog\M6722MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\M\M6521.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -2346,6 +2357,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\M\M6638.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M6722.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
