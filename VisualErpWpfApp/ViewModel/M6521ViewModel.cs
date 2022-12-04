@@ -26,7 +26,7 @@ namespace AquilaErpWpfApp3.ViewModel
         //private static ManServiceClient manClient = SystemProperties.ManClient;
 
         private IList<ManVo> selectedMasterViewList;
-        private IList<ManVo> selectedDetailViewListt;
+        private IList<ManVo> _selectedDetailViewList;
 
         ////Master Dialog
         //private ICommand masterSearchDialogCommand;
@@ -35,16 +35,17 @@ namespace AquilaErpWpfApp3.ViewModel
         //private ICommand masterDelDialogCommand;
         ////
         private M6521MasterDialog masterDialog;
+        private M6521AddMasterDialog addMasterDialog;
 
 
-        public M6521ViewModel() 
+        public M6521ViewModel()
         {
             SYSTEM_CODE_VO();
             //Refresh();
         }
 
         [Command]
-       public async void Refresh()
+        public async void Refresh()
         {
             try
             {
@@ -124,8 +125,8 @@ namespace AquilaErpWpfApp3.ViewModel
 
         public IList<ManVo> SelectedDetailViewList
         {
-            get { return selectedDetailViewListt; }
-            private set { SetProperty(ref selectedDetailViewListt, value, () => SelectedDetailViewList); }
+            get { return _selectedDetailViewList; }
+            private set { SetProperty(ref _selectedDetailViewList, value, () => SelectedDetailViewList); }
         }
 
         ManVo _selectedDetailItem;
@@ -179,7 +180,7 @@ namespace AquilaErpWpfApp3.ViewModel
                             {
                                 SelectedDetailItem = SelectedDetailViewList.Where(x => (x.LOT_DIV_NO).Equals(_LOT_DIV_NO)).LastOrDefault<ManVo>();
                             }
-                            
+
                         }
                         else
                         {
@@ -247,14 +248,14 @@ namespace AquilaErpWpfApp3.ViewModel
         {
             if (this._selectMasterItem == null) { return; }
 
-            masterDialog = new M6521MasterDialog(new ManVo() { EQ_NO = this._selectMasterItem.EQ_NO, GBN = this._selectMasterItem.GBN, ITM_CD = this._selectMasterItem.ITM_CD, ITM_NM = this._selectMasterItem.ITM_NM, PCK_FLG = this._selectMasterItem.PCK_FLG, SL_ORD_NO = this._selectMasterItem.SL_ORD_NO, SL_ORD_SEQ = this._selectMasterItem.SL_ORD_SEQ, PROD_QTY = this._selectMasterItem.PROD_QTY, LOT_DIV_QTY = 0,  PROD_PLN_DT = this._selectMasterItem.WRK_DT, PROD_ORD_NO = this._selectMasterItem.PROD_ORD_NO, CHNL_CD = this._selectMasterItem.CHNL_CD, DY_NGT_NM ="주간", MAKE_ST_DT = System.DateTime.Now.ToString("yyyy-MM-dd"), SL_RLSE_NO = this._selectMasterItem.SL_RLSE_NO, SL_RLSE_SEQ = this._selectMasterItem.SL_RLSE_SEQ });
-            masterDialog.Title = _title + " - 추가";
-            masterDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            masterDialog.Owner = Application.Current.MainWindow;
-            masterDialog.BorderEffect = BorderEffect.Default;
-            masterDialog.BorderEffectActiveColor = new SolidColorBrush(Color.FromRgb(255, 128, 0));
-            masterDialog.BorderEffectInactiveColor = new SolidColorBrush(Color.FromRgb(255, 170, 170));
-            bool isDialog = (bool)masterDialog.ShowDialog();
+            addMasterDialog = new M6521AddMasterDialog(new ManVo() { EQ_NO = this._selectMasterItem.EQ_NO, GBN = this._selectMasterItem.GBN, ITM_CD = this._selectMasterItem.ITM_CD, ITM_NM = this._selectMasterItem.ITM_NM, PCK_FLG = this._selectMasterItem.PCK_FLG, SL_ORD_NO = this._selectMasterItem.SL_ORD_NO, SL_ORD_SEQ = this._selectMasterItem.SL_ORD_SEQ, PROD_QTY = this._selectMasterItem.PROD_QTY, LOT_DIV_QTY = this._selectMasterItem.SL_ITM_QTY, PROD_PLN_DT = this._selectMasterItem.WRK_DT, PROD_ORD_NO = this._selectMasterItem.PROD_ORD_NO, CHNL_CD = this._selectMasterItem.CHNL_CD, DY_NGT_NM = "주간", MAKE_ST_DT = System.DateTime.Now.ToString("yyyy-MM-dd"), SL_RLSE_NO = this._selectMasterItem.SL_RLSE_NO, SL_RLSE_SEQ = this._selectMasterItem.SL_RLSE_SEQ, ITM_SZ_NM = this._selectMasterItem.ITM_SZ_NM });
+            addMasterDialog.Title = _title + " - 추가";
+            addMasterDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            addMasterDialog.Owner = Application.Current.MainWindow;
+            addMasterDialog.BorderEffect = BorderEffect.Default;
+            addMasterDialog.BorderEffectActiveColor = new SolidColorBrush(Color.FromRgb(255, 128, 0));
+            addMasterDialog.BorderEffectInactiveColor = new SolidColorBrush(Color.FromRgb(255, 170, 170));
+            bool isDialog = (bool)addMasterDialog.ShowDialog();
             if (isDialog)
             {
                 OnSelectedMasterItemChanged();
@@ -269,22 +270,23 @@ namespace AquilaErpWpfApp3.ViewModel
         //            masterEditDialogCommand = new DelegateCommand(EditMasterContact);
         //        return masterEditDialogCommand;
         //    }
+
         //}
         [Command]
         public void EditMasterContact()
         {
             if (this._selectMasterItem == null) { return; }
-            masterDialog = new M6521MasterDialog(SelectedDetailItem);
-            masterDialog.Title = _title + " - 수정";
-            masterDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            masterDialog.BorderEffect = BorderEffect.Default;
-            masterDialog.Owner = Application.Current.MainWindow;
-            masterDialog.BorderEffectActiveColor = new SolidColorBrush(Color.FromRgb(255, 128, 0));
-            masterDialog.BorderEffectInactiveColor = new SolidColorBrush(Color.FromRgb(255, 170, 170));
-            bool isDialog = (bool)masterDialog.ShowDialog();
+            addMasterDialog = new M6521AddMasterDialog(SelectedDetailItem);
+            addMasterDialog.Title = _title + " - 수정";
+            addMasterDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            addMasterDialog.BorderEffect = BorderEffect.Default;
+            addMasterDialog.Owner = Application.Current.MainWindow;
+            addMasterDialog.BorderEffectActiveColor = new SolidColorBrush(Color.FromRgb(255, 128, 0));
+            addMasterDialog.BorderEffectInactiveColor = new SolidColorBrush(Color.FromRgb(255, 170, 170));
+            bool isDialog = (bool)addMasterDialog.ShowDialog();
             if (isDialog)
             {
-                OnSelectedMasterItemChanged(masterDialog.ResultDao.LOT_DIV_NO);
+                OnSelectedMasterItemChanged(addMasterDialog.ResultDao.LOT_DIV_NO);
             }
         }
 

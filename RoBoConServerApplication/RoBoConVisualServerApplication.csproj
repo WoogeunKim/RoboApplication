@@ -223,6 +223,7 @@
     <Compile Include="Controllers\Inv\I5521Controller.cs" />
     <Compile Include="Controllers\Inv\I6210Controller.cs" />
     <Compile Include="Controllers\Inv\I55121Controller.cs" />
+    <Compile Include="Controllers\Inv\I66101Controller.cs" />
     <Compile Include="Controllers\Inv\I66110Controller.cs" />
     <Compile Include="Controllers\Inv\I6611Controller.cs" />
     <Compile Include="Controllers\Inv\I6617Controller.cs" />

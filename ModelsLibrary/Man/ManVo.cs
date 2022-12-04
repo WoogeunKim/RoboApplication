@@ -2381,5 +2381,36 @@
             set;
         }
 
+        public object LOSS_VAL
+        {
+            get;
+            set;
+        }
+        public object PRT_VAL
+        {
+            get;
+            set;
+        }
+        public string CUT_SZ_NM
+        {
+            get;
+            set;
+        }
+        public object INAUD_QTY
+        {
+            get;
+            set;
+        }
+        public string PUR_ITM_SZ_NM
+        {
+            get;
+            set;
+        }
+        public string IN_ITM_SZ_NM
+        {
+            get;
+            set;
+        }
+
     }
 }

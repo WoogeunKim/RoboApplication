@@ -8657,7 +8657,8 @@
        , dbo.CD_COMPANY_NM_FNC(T1.CHNL_CD, T1.SL_CO_CD)  AS CO_NM
        , T2.SL_ITM_CD AS ITM_CD
        , T3.ITM_NM
-       , T3.ITM_SZ_NM
+       <!--, T3.ITM_SZ_NM-->
+       , T2.N1ST_ITM_SZ_NM + '*' + T2.N2ND_ITM_SZ_NM + '*' + T2.N3RD_ITM_SZ_NM AS ITM_SZ_NM
        , T2.SL_ITM_QTY
        , T1.CHNL_CD
      FROM TB_SL_RLSE       T1
@@ -8680,19 +8681,22 @@
 		      , CONVERT(VARCHAR, T1.PROD_PLN_DT , 23)  AS  PROD_PLN_DT
 		      , CONVERT(VARCHAR, T1.PROD_PLN_DT , 23)  AS  MAKE_ST_DT
 		      , T5.EQ_NM
-          , T5.PROD_EQ_NO AS EQ_NO
+              , T5.PROD_EQ_NO AS EQ_NO
 		      , T1.MOLD_CD
 		      , T1.MOLD_CD AS GBN
 		      , CASE WHEN T1.DY_NGT_FLG = 'D' THEN '주간' ELSE '야간' END AS DY_NGT_NM
 		      , T1.DY_NGT_FLG
 		      , T1.LOT_DIV_QTY
 		      , T1.LOT_DIV_RMK AS MM_RMK
-			    , T2.SL_RLSE_NO
-          , dbo.CD_ITEM_NM_FNC(T1.CHNL_CD, T1.ITM_CD) AS ITM_NM
-          , T1.ITM_CD
-          , T1.CHNL_CD
-          , T1.ROUT_CD
-          , dbo.FF_PROD_ROUT_NM_FNC(T1.CHNL_CD, T1.ROUT_CD) AS ROUT_NM
+			  , T2.SL_RLSE_NO
+              , dbo.CD_ITEM_NM_FNC(T1.CHNL_CD, T1.ITM_CD) AS ITM_NM
+              , T1.ITM_CD
+              , T1.CHNL_CD
+              , T1.ROUT_CD
+              , dbo.FF_PROD_ROUT_NM_FNC(T1.CHNL_CD, T1.ROUT_CD) AS ROUT_NM
+		      , T1.LOSS_VAL 
+              , T1.PRT_VAL
+			  , T3.N1ST_ITM_SZ_NM + '*' + T3.N2ND_ITM_SZ_NM + '*' + T3.N3RD_ITM_SZ_NM AS ITM_SZ_NM
 		  FROM TB_PROD_LOT_DIV T1
 		    OUTER APPLY
 		    (
@@ -8741,9 +8745,11 @@
 	     , ORD_SEQ
 	     , EQ_NO
 	     , LOT_DIV_RMK
-       , PROD_ORD_NO
-       , ROUT_CD
-       , ROUT_ITM_CD
+         , PROD_ORD_NO
+         , ROUT_CD
+         , ROUT_ITM_CD
+         , LOSS_VAL   
+         , PRT_VAL    
 	   )
 	   VALUES
 	   (
@@ -8763,9 +8769,11 @@
 	     ,  #SL_RLSE_SEQ#
 	     ,  #EQ_NO#
 	     ,  #MM_RMK#
-       ,  #SL_RLSE_NO#
-       ,  #ROUT_CD#
-       ,  (#ROUT_CD# + '-' + #ITM_CD#)
+         ,  #SL_RLSE_NO#
+         ,  #ROUT_CD#
+         ,  (#ROUT_CD# + '-' + #ITM_CD#)
+         ,  #LOSS_VAL#
+         ,  #PRT_VAL#
 	   )
    </insert>
 
@@ -8781,6 +8789,8 @@
           , UPD_DT       = GETDATE()
           , LOT_DIV_RMK  = #MM_RMK#
           , ROUT_CD      = #ROUT_CD#
+          , LOSS_VAL     = #LOSS_VAL# 
+          , PRT_VAL      = #PRT_VAL#
       WHERE 1 = 1
         AND CHNL_CD        = #CHNL_CD#
         AND LOT_DIV_NO     = #LOT_DIV_NO#
@@ -9062,6 +9072,214 @@
 		    AND T1.SL_RLSE_NO   = #SL_RLSE_NO#
 	  </select>
 
+	  <select id="M6521SelectRoutCd" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
+		  SELECT TOP 1 ROUT_CD
+            FROM TB_PROD_ROUT_ITM_MAP
+           WHERE 1 = 1 
+             AND CHNL_CD = #CHNL_CD#
+             AND ITM_CD  = #ITM_CD#
+             AND ROUT_SEQ = '1' 
+	  </select>
+
+	  <select id="M6521SelectMoldNo" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
+		  SELECT MOLD_NO
+               , CUT_SZ_NM
+               , MOLD_CAPA_QTY 
+            FROM TB_PROD_MOLD_CD 
+           WHERE 1 = 1 
+             AND CHNL_CD = #CHNL_CD#
+	  </select>
+
+	  <select id="M6521SelectPurItmSz" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
+		SELECT T2.ITM_CD
+             , T4.ITM_NM 
+             , T3.INAUD_QTY 
+             , T2.N1ST_ITM_SZ_NM + '*'+ T2.N2ND_ITM_SZ_NM AS PUR_ITM_SZ_NM
+             , T3.IN_ITM_SZ_NM 
+          FROM TB_SL_RLSE_DTL T1
+              ,TB_PUR_ORD_DTL T2
+         OUTER APPLY (
+                      SELECT X.ITM_CD
+                           , X.INAUD_QTY
+                           , X.N1ST_ITM_SZ_NM + '*' + X.N2ND_ITM_SZ_NM AS IN_ITM_SZ_NM
+                        FROM TB_INAUD_DTL X
+                       WHERE 1 = 1 
+                         AND X.CHNL_CD = #CHNL_CD#
+                         AND X.SL_ORD_NO = T2.PUR_ORD_NO
+                         AND X.SL_ORD_SEQ = T2.PUR_ORD_SEQ
+                         AND X.INAUD_CD = 'RGU' 
+                      )T3
+         OUTER APPLY (
+                      SELECT X.ITM_NM
+                        FROM TB_CD_ITM X
+                       WHERE 1 = 1 
+                         AND X.CHNL_CD = #CHNL_CD#
+                         AND X.ITM_CD  = T2.ITM_CD
+                      )T4
+         WHERE 1 = 1 
+           AND T1.CHNL_CD = #CHNL_CD#
+           AND T1.CHNL_CD = T2.CHNL_CD
+           AND T1.SL_RLSE_NO = T2.ORD_NO  
+           AND T1.SL_RLSE_NO = #SL_RLSE_NO#
+	  </select>
+
+
+	  <!-- 편리사 입고 쿼리 -->  
+	  <select id="I66101SelectDtlPurList" resultClass="ModelsLibrary.Inv.InvVo" parameterClass="ModelsLibrary.Inv.InvVo">
+	    SELECT   
+             CHNL_CD 
+           , RN
+           , PUR_ORD_NO
+           , PUR_ORD_SEQ
+           , N1ST_ITM_GRP_NM
+           , N2ND_ITM_GRP_NM  
+           , CO_CD
+           , CO_NM 
+           , ITM_CD
+           , ITM_NM
+           , N1ST_ITM_SZ_NM
+           , N2ND_ITM_SZ_NM
+           , ITM_SZ_NM
+           , BSS_WGT    
+           , UOM_NM 
+           , ITM_QTY        AS TMP_RMK_QTY
+           , PUR_QTY  
+           , PUR_QTY * 500  AS PUR_ITM_QTY
+           , ITM_MD_QTY
+           , RMN_QTY
+           , CO_UT_PRC     
+           , DC_RT 
+           , ITM_QTY * CO_UT_PRC AS PUR_AMT
+           , PUR_RMK
+           , ITM_QTY 
+           , ITM_QTY * 500       AS IN_PUR_ITM_QTY
+           , INAUD_ORG_NO
+           , INAUD_ORG_NM
+      FROM (       
+            SELECT 
+			     ROW_NUMBER() OVER (PARTITION BY T1.AREA_CD ORDER BY T3.N1ST_ITM_GRP_CD, T3.ITM_CD, T1.PUR_DT ) AS RN
+               , T1.CHNL_CD
+               , T2.PUR_ORD_NO
+               , T2.PUR_ORD_SEQ
+               , dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T3.ITM_GRP_CLSS_CD, T3.N1ST_ITM_GRP_CD)                    AS N1ST_ITM_GRP_NM
+               , dbo.PUR_N2ST_GRP_NM_FNC(T1.CHNL_CD, T3.ITM_GRP_CLSS_CD, T3.N1ST_ITM_GRP_CD,  N2ND_ITM_GRP_CD)  AS N2ND_ITM_GRP_NM  
+               , T1.PUR_CO_CD                         AS CO_CD
+               , dbo.CD_COMPANY_NM_FNC(T1.CHNL_CD, T1.PUR_CO_CD)  AS CO_NM 
+               , T3.ITM_CD
+               , T3.ITM_NM
+               , T2.N1ST_ITM_SZ_NM
+               , T2.N2ND_ITM_SZ_NM
+               , T2.N1ST_ITM_SZ_NM + '*' + T2.N2ND_ITM_SZ_NM AS ITM_SZ_NM
+               , T2.BSS_WGT 
+               , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-003', T3.UOM_CD) AS UOM_NM 
+               , T2.PUR_QTY  
+               , (T2.PUR_QTY * T2.BUN_WGT)  AS ITM_MD_QTY
+               , 0 AS RMN_QTY
+               , T2.CO_UT_PRC     
+               , T2.DC_RT 
+               , T2.PUR_AMT     
+               , T2.PUR_ITM_RMK AS PUR_RMK
+               , (T2.PUR_QTY  - ISNULL(dbo.FF_INV_ORD_QTY(T1.CHNL_CD, T2.PUR_ORD_NO, T2.PUR_ORD_SEQ), 0))  AS ITM_QTY
+               , '300' AS INAUD_ORG_NO 
+               , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'P-008', '300') AS INAUD_ORG_NM
+            FROM TB_PUR_ORD       T1
+               , TB_PUR_ORD_DTL   T2 
+               , TB_CD_ITM        T3
+           WHERE 1 = 1
+             AND T1.CHNL_CD    = #CHNL_CD#    
+             AND T1.CHNL_CD    = T2.CHNL_CD
+             AND T1.CHNL_CD    = T3.CHNL_CD
+             AND T1.PUR_ORD_NO = T2.PUR_ORD_NO
+             AND T2.ITM_CD     = T3.ITM_CD
+             AND T2.PUR_QTY  - ISNULL(dbo.FF_INV_ORD_QTY( #CHNL_CD# , T2.PUR_ORD_NO, T2.PUR_ORD_SEQ), 0)  > 0  
+             AND T1.PUR_CLZ_FLG = 'N'          
+             AND T1.PUR_DT   >= CAST(#FM_DT#+ ' 00:00:00' AS DATETIME) 
+             AND T1.PUR_DT <![CDATA[<=]]> CAST(#TO_DT#+ ' 23:59:59' AS DATETIME) 
+             AND NOT EXISTS (SELECT 'X'
+                               FROM TB_PUR_CTRT_CLZ  X 
+                             WHERE 1 = 1
+                               AND X.CHNL_CD   = T1.CHNL_CD  
+                               AND X.ORD_NO    = T2.PUR_ORD_NO
+                               AND X.ORD_SEQ   = T2.PUR_ORD_SEQ
+                    )
+            <isNotNull property="CO_NO">
+              AND T1.PUR_CO_CD   = #CO_NO#   
+            </isNotNull>
+          ) T1        
+          ORDER BY RN 
+	  </select>
+
+	  <select id="I66101SelectNo" resultClass="string">
+		  SELECT dbo.FF_NO_FMT(#CHNL_CD#, 'ST', #AREA_CD#) AS LST_FMT_NO FROM CPY_T WHERE NO = 1
+	  </select>
+	  
+	  <update id="I66101UpdateNo" parameterClass="ModelsLibrary.Inv.InvVo">
+		  UPDATE TB_SYS_NO_FMT
+		     SET LST_FMT_NO = #INAUD_TMP_NO#
+	 	   WHERE 1 = 1
+		     AND CHNL_CD   = #CHNL_CD#
+		     AND TBL_ID    = 'ST'
+		     AND AREA_CD   = #AREA_CD#
+	  </update>
+	  
+	  <insert id="I66101InsertPurMst" parameterClass="ModelsLibrary.Inv.InvVo">
+          INSERT INTO TB_INAUD_TMP
+          (
+                INAUD_TMP_NO  
+              , INAUD_TMP_SEQ  
+              , INAUD_DT      
+              , AREA_CD         
+              , PUR_ORD_NO      
+              , PUR_ORD_SEQ     
+              , CO_CD           
+              , LOC_CD         
+              , ITM_CD         
+              , ITM_QTY        
+              , ITM_RMK       
+              , CRE_USR_ID      
+              , CRE_DT          
+              , UPD_USR_ID      
+              , UPD_DT          
+              , ITM_PRC      
+              , ITM_AMT        
+              , CHNL_CD
+              , N1ST_ITM_SZ_NM 
+              , N2ND_ITM_SZ_NM
+          )
+          SELECT 
+		        #INAUD_TMP_NO#
+              , ISNULL((SELECT MAX(INAUD_TMP_SEQ) + 1 
+                          FROM TB_INAUD_TMP 
+                        WHERE INAUD_TMP_NO = #INAUD_TMP_NO# AND CHNL_CD = #CHNL_CD#
+                        ), 1) 
+              , GETDATE()
+              , #AREA_CD#
+              , #PUR_ORD_NO#
+              , #PUR_ORD_SEQ#
+              , #CO_CD#
+              , #LOC_CD#
+              , #ITM_CD#
+              , #ITM_QTY# 
+              , #ITM_RMK#
+              , #CRE_USR_ID#
+              , GETDATE()
+              , #UPD_USR_ID#
+              , GETDATE()             
+              , #CO_UT_PRC#
+              , ROUND(#ITM_QTY#  * #CO_UT_PRC#, 0)
+              , #CHNL_CD#
+              , #N1ST_ITM_SZ_NM#
+              , #N2ND_ITM_SZ_NM#
+        </insert>
+
+	      <delete id="I66101DeleteMst" parameterClass="ModelsLibrary.Inv.InvVo" >
+		      DELETE FROM TB_INAUD_TMP
+		       WHERE 1=1
+		         AND CHNL_CD      = #CHNL_CD#
+		        AND INAUD_TMP_NO  = #INAUD_TMP_NO#
+		        AND INAUD_TMP_SEQ = #INAUD_TMP_SEQ#
+	      </delete>
+	  
 
   </statements>
 </sqlMap>

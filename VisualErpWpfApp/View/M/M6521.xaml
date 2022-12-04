@@ -111,7 +111,7 @@
                 <dxb:BarButtonItem x:Name="M_ref" Content="조회" KeyGesture="F5" Glyph="{dx:DXImage Image=Refresh2_16x16.png}" LargeGlyph="{dx:DXImage Image=Refresh2_32x32.png}" Command="{Binding RefreshCommand}" />
 
                 <dxb:BarButtonItem x:Name="M_report_view" Content="작업지시서" KeyGesture="F11" Command="{Binding OpenReportViewContactCommand}" Glyph="{dx:DXImage SvgImages/DiagramIcons/Format/format1.svg}" LargeGlyph="{dx:DXImage SvgImages/DiagramIcons/Format/format1.svg}" IsEnabled="{Binding isM_REPORT}"  />
-                
+
             </dxb:BarManager.Items>
             <Grid>
                 <Grid.RowDefinitions>
@@ -129,20 +129,20 @@
                                 <dxb:BarButtonItemLink BarItemName="M_ref"/>
                                 <dxb:BarButtonItemLink BarItemName="M_report_view"/>
                             </dxr:RibbonPageGroup>
-                            
+
                             <dxr:RibbonPageGroup Caption="작업 지시서 발행">
                                 <dxb:BarButtonItemLink BarItemName="M_add"/>
                                 <dxb:BarButtonItemLink BarItemName="M_edit"/>
                                 <dxb:BarButtonItemLink BarItemName="M_del"/>
                             </dxr:RibbonPageGroup>
-                            
+
                         </dxr:RibbonPage>
                     </dxr:RibbonDefaultPageCategory>
                 </dxr:RibbonControl>
 
                 <dxd:DockLayoutManager x:Name="CodeManager" Grid.Row="1">
                     <dxd:LayoutGroup >
-                        <dxd:LayoutPanel Caption="Master" AllowContextMenu="False" AllowClose="False" ShowCaption="False" ItemWidth="1.5*">
+                        <dxd:LayoutPanel Caption="Master" AllowContextMenu="False" AllowClose="False" ShowCaption="False" ItemWidth="1.3*">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -184,7 +184,7 @@
                                         <!--<dxg:GridControl.InputBindings>
                                             <MouseBinding Gesture="LeftDoubleClick" Command="{Binding EditMasterContactCommand}" />
                                         </dxg:GridControl.InputBindings>-->
-                                        
+
                                         <dxg:GridControl.View>
                                             <dxg:TableView x:Name="configViewPage1EditView_Master" ShowFixedTotalSummary="True" FontSize="12"  ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="True" AutoWidth="False" AllowPerPixelScrolling="True" AllowFilterEditor="True" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="True"  IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT,Path=EditValue}" RowMinHeight="35"  >
                                                 <dxg:TableView.FormatConditions>
@@ -205,7 +205,7 @@
                                         <dxg:GridControl.GroupSummary>
                                             <dxg:GridSummaryItem SummaryType="Count" />
                                         </dxg:GridControl.GroupSummary>
-                                        
+
                                         <dxg:GridControl.TotalSummary>
                                             <dxg:GridSummaryItem SummaryType="Count" Alignment="Right"/>
                                         </dxg:GridControl.TotalSummary>
@@ -268,7 +268,7 @@
                                             </dxg:GridColumn>
 
                                         </dxg:GridControl.Columns>
-                                       
+
                                     </dxg:GridControl>
                                 </Grid>
                                 <!--</GroupBox>-->
@@ -285,7 +285,9 @@
                                                 <dxb:BarItemLinkSeparator/>
                                                 <dxb:BarButtonItemLink BarItemName="M_add"/>
                                                 <dxb:BarItemLinkSeparator/>
-                                                --><!--<dxb:BarButtonItemLink BarItemName="M_edit"/>--><!--
+                                                -->
+                                        <!--<dxb:BarButtonItemLink BarItemName="M_edit"/>-->
+                                        <!--
                                                 <dxb:BarButtonItemLink BarItemName="M_del"/>
                                             </dxb:PopupMenu>
                                         </dxb:BarManager.DXContextMenu>-->
@@ -302,7 +304,7 @@
                                                         <dxc:Format Foreground="DarkGray" FontWeight="Bold" />
                                                     </dxg:FormatCondition>
                                                     -->
-                                                    
+
                                                     <!--
                                                     <dxg:FormatCondition FieldName="PROD_PLN_DT" Expression="Not IsNullOrEmpty([PROD_PLN_DT])" PredefinedFormatName="BoldText"/>
                                                     <dxg:FormatCondition FieldName="PROD_PLN_DT" Expression="Not IsNullOrEmpty([PROD_PLN_DT])" PredefinedFormatName="GreenFillWithDarkGreenText"/>
@@ -357,7 +359,7 @@
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
-                                            
+
                                             <dxg:GridColumn FieldName="EQ_NO" Header="호기" Width="150" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="3" >
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
@@ -402,14 +404,25 @@
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>-->
 
-                                            <dxg:GridColumn FieldName="LOT_DIV_QTY" Header="수량" Width="90" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="6" >
+                                            <dxg:GridColumn FieldName="LOT_DIV_QTY" Header="수량" Width="130" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="6" >
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings   HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,##0" MaskUseAsDisplayFormat="True" />
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
+                                            <dxg:GridColumn FieldName="LOSS_VAL" Header="로스" Width="130" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="7" >
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,##0" MaskUseAsDisplayFormat="True"  />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
 
-                                            <dxg:GridColumn FieldName="MM_RMK" Header="비고" Width="180" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" AllowMoving="False"  VisibleIndex="7" >
+                                            <dxg:GridColumn FieldName="PRT_VAL" Header="인쇄통수" Width="130" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="8" >
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0" MaskUseAsDisplayFormat="True"  />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
+
+                                            <dxg:GridColumn FieldName="MM_RMK" Header="비고" Width="180" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" AllowMoving="False"  VisibleIndex="9" >
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
                                                 </dxg:GridColumn.EditSettings>

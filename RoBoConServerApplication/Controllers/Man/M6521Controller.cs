@@ -131,10 +131,74 @@ namespace VisualServerApplication.Controllers.Man
         // GET api/<controller>
         public async Task<IHttpActionResult> GetDtlSelect([FromBody] ManVo vo)
         {
-            return Ok<IEnumerable<ManVo>>(Properties.EntityMapper.QueryForList<ManVo>("M6521SelectDtl", vo));
+            try
+            {
+                return Ok<IEnumerable<ManVo>>(Properties.EntityMapper.QueryForList<ManVo>("M6521SelectDtl", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
         }
 
 
+        /// <summary>
+        /// 생산계획/작업지시 DIALOG 공정 - 조회
+        /// </summary>
+        [Route("rout")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetDlgRoutSelect([FromBody] ManVo vo)
+        {
+            try
+            {
+                return Ok<ManVo>(Properties.EntityMapper.QueryForObject<ManVo>("M6521SelectRoutCd", vo));
+
+            }
+            catch (Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+        /// <summary>
+        /// 생산계획/작업지시 DIALOG 목형 - 조회
+        /// </summary>
+        [Route("mold")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetDlgMoldSelect([FromBody] ManVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<ManVo>>(Properties.EntityMapper.QueryForList<ManVo>("M6521SelectMoldNo", vo));
+
+            }
+            catch (Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// 생산계획/작업지시 DIALOG 목형 - 조회
+        /// </summary>
+        [Route("pur/itm/sz")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetDlgPurItmSzSelect([FromBody] ManVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<ManVo>>(Properties.EntityMapper.QueryForList<ManVo>("M6521SelectPurItmSz", vo));
+
+            }
+            catch (Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
 
 
     }

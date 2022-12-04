@@ -722,7 +722,7 @@
         }
 
         
-        public int? PUR_QTY
+        public object PUR_QTY
         {
             get;
             set;
@@ -1938,38 +1938,27 @@
 
 
 
+        public int? BSS_WGT
+        {
+            get;
+            set;
+        }
 
-        //public string BAT_CD
-        //{
-        //    get;
-        //    set;
-        //}
-        //public string MST_LOT_NO
-        //{
-        //    get;
-        //    set;
-        //}
-        //public string SER_NO
-        //{
-        //    get;
-        //    set;
-        //}
-        //public string EXP_NO
-        //{
-        //    get;
-        //    set;
-        //}
-
-        //public object Quarantine
-        //{
-        //    get;
-        //    set;
-        //}
-        //public object TOTAL
-        //{
-        //    get;
-        //    set;
-        //}
+        public object PUR_ITM_QTY
+        {
+            get;
+            set;
+        }
+        public int? DC_RT
+        {
+            get;
+            set;
+        }
+        public object IN_PUR_ITM_QTY
+        {
+            get;
+            set;
+        }
 
     }
 }

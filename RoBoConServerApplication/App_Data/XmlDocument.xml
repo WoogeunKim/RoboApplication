@@ -1252,6 +1252,21 @@
             입고현황  - 조회
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Inv.I66101Controller.GetPurSelect(ModelsLibrary.Inv.InvVo)">
+            <summary>
+            품목 입고  - 발주 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Inv.I66101Controller.GetMstInsert(System.Collections.Generic.IList{ModelsLibrary.Inv.InvVo})">
+            <summary>
+            품목 입고  - 추가
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Inv.I66101Controller.GetMstDelete(System.Collections.Generic.IList{ModelsLibrary.Inv.InvVo})">
+            <summary>
+            품목 입고  - 삭제
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Inv.I66110Controller.GetMstSelect(ModelsLibrary.Inv.InvVo)">
              <summary>
             품목 입고  - 조회
@@ -1425,6 +1440,21 @@
         <member name="M:VisualServerApplication.Controllers.Man.M6521Controller.GetDtlSelect(ModelsLibrary.Man.ManVo)">
             <summary>
             생산계획/작업지시 DTL - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M6521Controller.GetDlgRoutSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            생산계획/작업지시 DIALOG 공정 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M6521Controller.GetDlgMoldSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            생산계획/작업지시 DIALOG 목형 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M6521Controller.GetDlgPurItmSzSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            생산계획/작업지시 DIALOG 목형 - 조회
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Man.M5210Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
