@@ -17,6 +17,8 @@ using AquilaErpWpfApp3.Util;
 using AquilaErpWpfApp3.View.SAL.Dialog;
 using System.IO;
 using System.Drawing;
+using AquilaErpWpfApp3.View.SAL.Report;
+using DevExpress.Xpf.Printing;
 
 namespace AquilaErpWpfApp3.ViewModel
 {
@@ -345,6 +347,116 @@ namespace AquilaErpWpfApp3.ViewModel
                 MessageBox.Show(eLog.Message, title, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+        }
+
+
+        //2022-12-06 견적서 출력 
+        [Command]
+        public async void PrintContact()
+        {
+            try
+            {
+                //견적서 품목내역이 없을 때
+                if (selectedEstmList == null)
+                {
+                    return;
+                }
+
+                IList<SaleVo> printlist = new List<SaleVo>();
+                printlist = selectedEstmList;
+                var linQueryResult = printlist.Count();
+
+                //printlist[printlist.Count - 1].Num_To_Kor = Number2Hangle(selectedEstmList.Sum<SaleVo>(s => Convert.ToDouble(s.ITM_AMT)));
+
+                for (int n = 0; n < linQueryResult; n++)
+                {
+                    printlist[n].ESTM_DT = SelectedDtlItem.ESTM_DT;
+                    printlist[n].CO_NM = SelectedDtlItem.CO_NM;
+                    printlist[n].MGR_NM = SelectedDtlItem.MGR_NM;
+                    printlist[n].EXP_DT = SelectedDtlItem.EXP_DT;
+                    printlist[n].Num_To_Kor = Number2Hangle(selectedEstmList.Sum<SaleVo>(s => Convert.ToDouble(s.ITM_AMT)));
+                    //printlist[n].Num_To_Kor += printlist[n].ITM_AMT;
+                }
+
+
+
+                //printlist[0].Num_To_Kor = Number2Hangle(printlist.Sum<ITM_AMT>);
+
+                S2219MstReport report = new S2219MstReport(printlist);
+                report.Landscape = false;
+                report.PrintingSystem.ShowPrintStatusDialog = true;
+                report.PaperKind = System.Drawing.Printing.PaperKind.A4;
+
+                report.Watermark.Text = Properties.Settings.Default.SettingCompany;
+                report.Watermark.TextDirection = DevExpress.XtraPrinting.Drawing.DirectionMode.ForwardDiagonal;
+                report.Watermark.Font = new System.Drawing.Font(report.PrintingSystem.Watermark.Font.FontFamily, 40);
+                report.Watermark.ForeColor = System.Drawing.Color.PaleTurquoise;
+                report.Watermark.TextTransparency = 150;
+
+
+                var window = new DocumentPreviewWindow();
+                window.PreviewControl.DocumentSource = report;
+                report.CreateDocument(true);
+                window.Title = "견적서 [" + printlist[0].ESTM_NO + "] ";
+                window.Owner = Application.Current.MainWindow;
+                window.ShowDialog();
+
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        // 금액을 한글로 표시
+        static public string Number2Hangle(object lngNumber)
+        {
+            bool UseDecimal = false;
+            string Sign = "";
+            int i = 0;
+            int Level = 0;
+
+            string[] NumberChar = new string[] { "", "일", "이", "삼", "사", "오", "육", "칠", "팔", "구" };
+            string[] LevelChar = new string[] { "", "십", "백", "천" };
+            string[] DecimalChar = new string[] { "", "만", "억", "조", "경" };
+
+            string strValue = string.Format("{0}", lngNumber);
+            string NumToKorea = Sign;
+            UseDecimal = false;
+
+            for (i = 0; i < strValue.Length; i++)
+            {
+                Level = strValue.Length - i;
+                if (strValue.Substring(i, 1) != "0")
+                {
+                    UseDecimal = true;
+                    if (((Level - 1) % 4) == 0)
+                    {
+                        NumToKorea = NumToKorea + NumberChar[int.Parse(strValue.Substring(i, 1))] + DecimalChar[(Level - 1) / 4];
+                        UseDecimal = false;
+                    }
+                    else
+                    {
+                        if (strValue.Substring(i, 1) == "1")
+                        {
+                            NumToKorea = NumToKorea + LevelChar[(Level - 1) % 4];
+                        }
+                        else
+                        {
+                            NumToKorea = NumToKorea + NumberChar[int.Parse(strValue.Substring(i, 1))] + LevelChar[(Level - 1) % 4];
+                        }
+                    }
+                }
+                else
+                {
+                    if ((Level % 4 == 0) && UseDecimal)
+                    {
+                        NumToKorea = NumToKorea + DecimalChar[Level / 4];
+                        UseDecimal = false;
+                    }
+                }
+            }
+            return NumToKorea;
         }
 
         #region Binding

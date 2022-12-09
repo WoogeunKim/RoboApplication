@@ -5300,5 +5300,11 @@
             get;
             set;
         }
+
+        public object Num_To_Kor
+        {
+            get;
+            set;
+        }
     }
 }

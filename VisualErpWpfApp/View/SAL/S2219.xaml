@@ -30,7 +30,7 @@
 
                     <!--도면 칼선 이미지-->
                     <TextBlock Grid.Column="1" Grid.Row="0" Text="[ 칼선 도면 ]" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
-                    <dxe:ImageEdit HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0" Height="150" Width="150" Source="{Binding Path=ITM_FILE_BIT, Converter={StaticResource ImageDataConverter}}" Grid.Column="1" ShowMenu="True" BorderBrush="#00000000" ShowBorder="False" IsReadOnly="True"/>
+                    <dxe:ImageEdit HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0" Height="150" Width="150" Source="{Binding Path=ITM_FILE, Converter={StaticResource ImageDataConverter}}" Grid.Column="1" ShowMenu="True" BorderBrush="#00000000" ShowBorder="False" IsReadOnly="True"/>
 
                     <!--<Border Background="#f78a09" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,20,0,0" Grid.Column="1">
                         <StackPanel Margin="10,0,10,1" Orientation="Horizontal">

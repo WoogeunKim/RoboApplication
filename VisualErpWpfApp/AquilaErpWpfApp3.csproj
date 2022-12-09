@@ -35,7 +35,7 @@
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>17</ApplicationRevision>
+    <ApplicationRevision>18</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -1236,6 +1236,12 @@
     </Compile>
     <Compile Include="View\SAL\Dialog\S2231MasterDialog.xaml.cs">
       <DependentUpon>S2231MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Report\S2219MstReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\SAL\Report\S2219MstReport.designer.cs">
+      <DependentUpon>S2219MstReport.cs</DependentUpon>
     </Compile>
     <Compile Include="View\SAL\S221111.xaml.cs">
       <DependentUpon>S221111.xaml</DependentUpon>
@@ -3287,6 +3293,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\SAL\Report\S2217Report.resx">
       <DependentUpon>S2217Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\SAL\Report\S2219MstReport.resx">
+      <DependentUpon>S2219MstReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\TEC\Report\T8812BarCodeReport.resx">
       <DependentUpon>T8812BarCodeReport.cs</DependentUpon>

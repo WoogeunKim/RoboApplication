@@ -200,7 +200,7 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
             try
             {
                 var fileDialog = new DXOpenFileDialog();
-                fileDialog.Filter = "Image Files|*.EMF;|All files|*.*";
+                fileDialog.Filter = "Image Files|*.JPG;|All files|*.*";
                 //fileDialog.FileName = "GGG";
 
                 bool? result = fileDialog.ShowDialog();
