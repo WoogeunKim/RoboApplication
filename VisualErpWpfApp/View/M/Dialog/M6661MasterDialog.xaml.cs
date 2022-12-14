@@ -21,7 +21,7 @@ namespace AquilaErpWpfApp3.M.View.Dialog
         private ManVo updateDao;
         //private IList<ManVo> saveList;
 
-        private string title = "금형코드관리";
+        private string title = "목형코드관리";
 
         public M6661MasterDialog(ManVo Dao)
         {
@@ -35,7 +35,7 @@ namespace AquilaErpWpfApp3.M.View.Dialog
             {
                 MOLD_NO = Dao.MOLD_NO,
                 MOLD_NM = Dao.MOLD_NM,
-                WEIH_SEQ = Dao.WEIH_SEQ,
+                MOLD_SEQ = Dao.MOLD_SEQ,
                 MOLD_SZ = Dao.MOLD_SZ,
                 ITM_CD = Dao.ITM_CD,
                 ITM_NM = Dao.ITM_NM,
@@ -58,13 +58,16 @@ namespace AquilaErpWpfApp3.M.View.Dialog
                 UOM_WGT = Dao.UOM_WGT,
                 UOM_RUN_WGT = Dao.UOM_RUN_WGT,
                 CRE_USR_ID = Dao.CRE_USR_ID,
-                UPD_USR_ID = Dao.UPD_USR_ID
+                UPD_USR_ID = Dao.UPD_USR_ID,
+                MTRL_SZ_NM = Dao.MTRL_SZ_NM,
+                BSS_WGT = Dao.BSS_WGT,
+                CUT_SZ_NM = Dao.CUT_SZ_NM
             };
 
             if (Dao.MOLD_NO != null)
             {
                 this.isEdit = true;
-                
+
                 //this.navigator.IsMultiSelect = false;
                 //this.navigator.FocusedDate = Convert.ToDateTime(copyDao.PROD_PLN_DT);
                 //this.combo_SL_PLN_NO.NullText = copyDao.SL_PLN_NO;
@@ -77,7 +80,7 @@ namespace AquilaErpWpfApp3.M.View.Dialog
             else
             {
                 this.isEdit = false;
-                copyDao.WEIH_SEQ = 0;
+                copyDao.MOLD_SEQ = 0;
                 //this.navigator.IsMultiSelect = true;
                 //copyDao.SL_PLN_QTY = 0;
                 copyDao.DELT_FLG = "사용";
@@ -89,7 +92,7 @@ namespace AquilaErpWpfApp3.M.View.Dialog
             this.CancelButton.Click += new RoutedEventHandler(CancelButton_Click);
         }
 
-      
+
 
         #region Functon (OKButton_Click, CancelButton_Click)
         private async void OKButton_Click(object sender, RoutedEventArgs e)
@@ -166,25 +169,25 @@ namespace AquilaErpWpfApp3.M.View.Dialog
         {
             if (string.IsNullOrEmpty(this.text_MOLD_NO.Text))
             {
-                WinUIMessageBox.Show("[금형 번호] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                WinUIMessageBox.Show("[목형 번호] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
                 this.text_MOLD_NO.IsTabStop = true;
                 this.text_MOLD_NO.Focus();
                 return false;
             }
             if (string.IsNullOrEmpty(this.text_MOLD_SEQ.Text))
             {
-                WinUIMessageBox.Show("[금형 번호] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
-                this.text_MOLD_NO.IsTabStop = true;
-                this.text_MOLD_NO.Focus();
+                WinUIMessageBox.Show("[차수] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                this.text_MOLD_SEQ.IsTabStop = true;
+                this.text_MOLD_SEQ.Focus();
                 return false;
             }
-            else if (string.IsNullOrEmpty(this.text_MOLD_NM.Text))
-            {
-                WinUIMessageBox.Show("[금형 명] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
-                this.text_MOLD_NM.IsTabStop = true;
-                this.text_MOLD_NM.Focus();
-                return false;
-            }
+            //else if (string.IsNullOrEmpty(this.text_ITM_CD.Text))
+            //{
+            //    WinUIMessageBox.Show("[편리사번호] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
+            //    this.text_ITM_CD.IsTabStop = true;
+            //    this.text_ITM_CD.Focus();
+            //    return false;
+            //}
             //else if (string.IsNullOrEmpty(this.combo_ITM_NM.Text))
             //{
             //    WinUIMessageBox.Show("[품명] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -245,21 +248,24 @@ namespace AquilaErpWpfApp3.M.View.Dialog
             //Dao.SL_PLN_YRMON = Convert.ToDateTime(this.text_SL_PLN_YRMON.Text + "-01").ToString("yyyyMM");
 
             Dao.MOLD_NO = this.text_MOLD_NO.Text;
-            Dao.MOLD_NM = this.text_MOLD_NM.Text;
+            //Dao.MOLD_NM = this.text_MOLD_NM.Text;
             Dao.MOLD_SZ = this.text_MOLD_SZ.Text;
-            Dao.WEIH_SEQ = Convert.ToInt16(this.text_MOLD_SEQ.Text);
+            Dao.MOLD_SEQ = Convert.ToInt16(this.text_MOLD_SEQ.Text);
 
             ////Dao.CAR_TP_SUB_NM = this.text_CAR_TP_SUB_NM.Text;
 
             //Dao.PROD_PLN_DT = this.navigator.FocusedDate.ToString("yyyy-MM-dd");
             //Dao.PROD_PLN_NO = this.orgDao.PROD_PLN_NO;
 
-            SystemCodeVo itmVo = this.combo_ITM_NM.SelectedItem as SystemCodeVo;
-            if (itmVo != null)
-            {
-                Dao.ITM_CD = itmVo.ITM_CD;
-                Dao.ITM_NM = itmVo.ITM_NM;
-            }
+            //SystemCodeVo itmVo = this.combo_ITM_CD.SelectedItem as SystemCodeVo;
+            //if (itmVo != null)
+            //{
+            //    Dao.ITM_CD = itmVo.ITM_CD;
+            //    Dao.ITM_NM = itmVo.ITM_NM;
+            //}
+
+            Dao.ITM_CD = this.text_ITM_CD.Text;
+            Dao.ITM_NM = this.text_ITM_NM.Text;
 
             SystemCodeVo coNoVo = this.combo_MAKE_CO_NM.SelectedItem as SystemCodeVo;
             if (coNoVo != null)
@@ -268,10 +274,15 @@ namespace AquilaErpWpfApp3.M.View.Dialog
                 Dao.MAKE_CO_NM = coNoVo.CO_NM;
             }
 
+            Dao.BSS_WGT = this.text_BSS_WGT.Text;
 
-            Dao.GNTE_SHOT_QTY = Convert.ToInt32(this.text_GNTE_SHOT_QTY.Text);
-            Dao.USE_SHOT_QTY = Convert.ToInt32(this.text_USE_SHOT_QTY.Text);
+            Dao.MTRL_SZ_NM = this.text_MTRL_SZ_NM.Text;
+
+            //Dao.GNTE_SHOT_QTY = Convert.ToInt32(this.text_GNTE_SHOT_QTY.Text);
+            //Dao.USE_SHOT_QTY = Convert.ToInt32(this.text_USE_SHOT_QTY.Text);
             Dao.MOLD_CAPA_QTY = Convert.ToInt32(this.text_MOLD_CAPA_QTY.Text);
+
+            Dao.CUT_SZ_NM = this.text_CUT_SZ_NM.Text;
 
             //L-009 이상함
             //SystemCodeVo prsNmVo = this.combo_PRS_NM.SelectedItem as SystemCodeVo;
@@ -280,21 +291,21 @@ namespace AquilaErpWpfApp3.M.View.Dialog
             //    Dao.PRS_CD = prsNmVo.CLSS_CD;
             //    Dao.PRS_NM = prsNmVo.CLSS_DESC;
             //}
-            Dao.PRSURE_VAL = Convert.ToInt32(this.text_PRSURE_VAL.Text);
+            //Dao.PRSURE_VAL = Convert.ToInt32(this.text_PRSURE_VAL.Text);
             Dao.DISCRD_DT = this.text_DISCRD_DT.Text;
 
             Dao.DISCRD_RSN = this.text_DISCRD_RSN.Text;
             Dao.MOLD_RMK = this.text_MOLD_RMK.Text;
-            Dao.CYC_TIME = this.text_CYC_TIME.Text;
+            //Dao.CYC_TIME = this.text_CYC_TIME.Text;
 
-            Dao.UOM_WGT = this.text_UOM_WGT.Text;
-            Dao.UOM_RUN_WGT = this.text_UOM_RUN_WGT.Text;
+            //Dao.UOM_WGT = this.text_UOM_WGT.Text;
+            //Dao.UOM_RUN_WGT = this.text_UOM_RUN_WGT.Text;
 
             //Dao.CLZ_FLG = "N";
             Dao.DELT_FLG = (this.combo_DELT_FLG.Text.Equals("사용") ? "N" : "Y");
             Dao.CRE_USR_ID = SystemProperties.USER;
             Dao.UPD_USR_ID = SystemProperties.USER;
-            Dao.CHNL_CD= SystemProperties.USER_VO.CHNL_CD;
+            Dao.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
 
             Dao.GBN = this.orgDao.GBN;
 
@@ -304,14 +315,14 @@ namespace AquilaErpWpfApp3.M.View.Dialog
 
         public async void SYSTEM_CODE_VO()
         {
-            ////품명
-            using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s141/mini", new StringContent(JsonConvert.SerializeObject(new SystemCodeVo() { DELT_FLG = "N", CHNL_CD = SystemProperties.USER_VO.CHNL_CD, GBN = "IN", ITM_GRP_CLSS_CD = "W" }), System.Text.Encoding.UTF8, "application/json")))
-            {
-                if (response.IsSuccessStatusCode)
-                {
-                    this.combo_ITM_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
-                }
-            }
+            ///품명
+            //using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s141/mst", new StringContent(JsonConvert.SerializeObject(new SystemCodeVo() { DELT_FLG = "N", CHNL_CD = SystemProperties.USER_VO.CHNL_CD, GBN = "IN", ITM_GRP_CLSS_CD = "G" }), System.Text.Encoding.UTF8, "application/json")))
+            //{
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        this.combo_ITM_CD.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
+            //    }
+            //}
 
             ////제작업체
             using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s143", new StringContent(JsonConvert.SerializeObject(new SystemCodeVo() { DELT_FLG = "N", SEEK_AP = null, SEEK = null, CO_TP_CD = null, AREA_CD = SystemProperties.USER_VO.EMPE_PLC_NM, CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
@@ -323,13 +334,13 @@ namespace AquilaErpWpfApp3.M.View.Dialog
             }
 
             //사용프레스 L-009
-            using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.GetAsync("s131/dtl/" + Properties.Settings.Default.SettingChnl + "/" + "L-009"))
-            {
-                if (response.IsSuccessStatusCode)
-                {
-                    this.combo_PRS_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
-                }
-            }
+            //using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.GetAsync("s131/dtl/" + Properties.Settings.Default.SettingChnl + "/" + "L-009"))
+            //{
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        this.combo_PRS_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
+            //    }
+            //}
 
         }
 
@@ -347,6 +358,6 @@ namespace AquilaErpWpfApp3.M.View.Dialog
             get;
             set;
         }
-        
+
     }
 }

@@ -9,7 +9,7 @@ namespace AquilaErpWpfApp3.View.M
 {
     public partial class M6661 : UserControl
     {
-        private string title = "금형코드관리";
+        private string title = "목형코드관리";
 
         public M6661()
         {

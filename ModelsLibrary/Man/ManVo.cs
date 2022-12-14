@@ -2416,6 +2416,23 @@
             get;
             set;
         }
+        public string MTRL_SZ_NM
+        {
+            get;
+            set;
+        }
+
+        public string BSS_WGT
+        {
+            get;
+            set;
+        }
+
+        public int? MOLD_SEQ
+        {
+            get;
+            set;
+        }
 
     }
 }
