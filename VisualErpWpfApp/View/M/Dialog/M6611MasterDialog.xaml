@@ -5,7 +5,7 @@
     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
     x:Class="AquilaErpWpfApp3.View.M.Dialog.M6611MasterDialog"
-    Title="Master Code" Height="290" Width="465" FontFamily="Arial" WindowStartupLocation="CenterOwner" ShowIcon="True" ResizeMode="NoResize" FontSize="13" Icon="{dx:DXImage Image=AddItem_16x16.png}">
+    Title="Master Code" Height="315" Width="465" FontFamily="Arial" WindowStartupLocation="CenterOwner" ShowIcon="True" ResizeMode="NoResize" FontSize="13" Icon="{dx:DXImage Image=AddItem_16x16.png}">
 
     <Grid Width="430" x:Name="configCode">
         <Grid.RowDefinitions>
@@ -29,9 +29,11 @@
         <TextBlock Height="22" Margin="0,65,0,0" VerticalAlignment="Top" Grid.Column="1" Text="비고 : " HorizontalAlignment="Left" Width="138" TextAlignment="Right"/>
         <dxe:TextEdit  x:Name="text_ROUT_MV_CTNT" Grid.Column="1" Margin="139,65,14,0" VerticalAlignment="Top" Text="{Binding ROUT_MV_CTNT}" MaxLength="90" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="90" />
 
-        <TextBlock Height="22" Margin="3,168,0,0" VerticalAlignment="Top" Text="정렬 순번 : " HorizontalAlignment="Left" Width="138" TextAlignment="Right" Grid.ColumnSpan="2"/>
-        <dxe:TextEdit x:Name="text_ROUT_ORD_SEQ" Grid.Column="1" Height="22" Margin="138,165,15,0" VerticalAlignment="Top" MaxLength="2" MaskType="RegEx" Mask="\d{1,2}" Text="{Binding ROUT_ORD_SEQ}" />
+        <TextBlock Height="22" Margin="3,168,0,0" VerticalAlignment="Top" Text="공정단가 : " HorizontalAlignment="Left" Width="138" TextAlignment="Right" Grid.ColumnSpan="2"/>
+        <dxe:TextEdit x:Name="text_ROUT_PRC" Grid.Column="1" Height="22" Margin="138,165,15,0" VerticalAlignment="Top" MaxLength="9" MaskType="Numeric" Mask="n" Text="{Binding ROUT_PRC}" />
 
+        <TextBlock Height="22" Margin="3,195,0,0" VerticalAlignment="Top" Text="정렬 순번 : " HorizontalAlignment="Left" Width="138" TextAlignment="Right" Grid.ColumnSpan="2"/>
+        <dxe:TextEdit x:Name="text_ROUT_ORD_SEQ" Grid.Column="1" Height="22" Margin="138,193,15,0" VerticalAlignment="Top" MaxLength="2" MaskType="RegEx" Mask="\d{1,2}" Text="{Binding ROUT_ORD_SEQ}" />
 
         <Button x:Name="OKButton" Height="30" Margin="207,0,0,0" Grid.Column="1" VerticalAlignment="Center" Width="100" HorizontalAlignment="Left" Grid.Row="1">
             <StackPanel HorizontalAlignment="Left" Width="62" Height="Auto" Orientation="Horizontal">

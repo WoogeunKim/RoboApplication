@@ -11,6 +11,7 @@
             , ROUT_NM
             , ROUT_MV_CTNT
             , CHNL_CD
+			, ROUT_PRC
         FROM TB_PROD_ROUT
          WHERE CHNL_CD = #CHNL_CD#
         <isNotNull property="ROUT_CD" >
@@ -30,6 +31,7 @@
           , UPD_USR_ID
           , UPD_DT
           , CHNL_CD
+		  , ROUT_PRC
       ) VALUES (
             #ROUT_ORD_SEQ#
           , #ROUT_CD#
@@ -41,6 +43,7 @@
           , #UPD_USR_ID#
           , GETDATE()
           , #CHNL_CD#
+		  , #ROUT_PRC#
       )
     </insert>
 
@@ -50,6 +53,7 @@
          , SUB_CD       = #SUB_CD#
          , ROUT_NM      = #ROUT_NM#
          , ROUT_MV_CTNT = #ROUT_MV_CTNT#
+		 , ROUT_PRC     = #ROUT_PRC#
          , UPD_USR_ID   = #UPD_USR_ID#
          , UPD_DT       = GETDATE()
      WHERE 1 = 1

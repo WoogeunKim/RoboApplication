@@ -17,7 +17,7 @@ namespace AquilaErpWpfApp3.ViewModel
 {
     public sealed class M6661ViewModel : ViewModelBase, INotifyPropertyChanged
     {
-        private string title = "陛屈内靛包府";
+        private string title = "格屈内靛包府";
 
         //private static SaleOrderServiceClient saleOrderClient = SystemProperties.SaleOrderClient;
         private IList<ManVo> selectedMstList = new List<ManVo>();

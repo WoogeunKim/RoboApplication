@@ -12,7 +12,7 @@
     xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
     x:Class="AquilaErpWpfApp3.View.M.M6611" FontFamily="Arial" FontSize="12"
     d:DesignHeight="768" d:DesignWidth="1024" mc:Ignorable="d">
-    
+
     <UserControl.Resources>
         <Style x:Key="GridCellStyle" TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}" >
             <Style.Triggers>
@@ -22,7 +22,7 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    
+
     <Grid>
         <dxb:BarManager>
             <dxb:BarManager.Items>
@@ -33,14 +33,14 @@
                         </DataTemplate>
                     </dxb:BarEditItem.EditTemplate>
                 </dxb:BarEditItem>
-                
+
                 <dxb:BarButtonItem x:Name="M_add" Content="추가" KeyGesture="F6" Glyph="{dx:DXImage Image=AddItem_16x16.png}" LargeGlyph="{dx:DXImage Image=AddItem_32x32.png}" Command="{Binding NewMasterContactCommand}" />
                 <dxb:BarButtonItem x:Name="M_edit" Content="수정" KeyGesture="F7" Glyph="{dx:DXImage Image=Edit_16x16.png}" LargeGlyph="{dx:DXImage Image=Edit_32x32.png}" IsEnabled="{Binding isM_UPDATE}" Command="{Binding EditMasterContactCommand}" />
                 <dxb:BarButtonItem x:Name="M_del" Content="삭제" KeyGesture="F8" Glyph="{dx:DXImage Image=RemoveItem_16x16.png}" LargeGlyph="{dx:DXImage Image=RemoveItem_32x32.png}"  IsEnabled="{Binding isM_DELETE}" Command="{Binding DelMasterContactCommand}" />
                 <dxb:BarButtonItem x:Name="M_ref" Content="조회" KeyGesture="F5" Glyph="{dx:DXImage Image=Refresh2_16x16.png}" LargeGlyph="{dx:DXImage Image=Refresh2_32x32.png}" Command="{Binding RefreshCommand}" />
             </dxb:BarManager.Items>
-            
-            
+
+
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -72,87 +72,92 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                  <!--<GroupBox Header="Master Code" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Grid.RowSpan="4" >-->
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="0" />
-                                                <ColumnDefinition Width="170*" />
-                                                <ColumnDefinition Width="75" />
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="338*" />
-                                            </Grid.RowDefinitions>
+                                <!--<GroupBox Header="Master Code" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Grid.RowSpan="4" >-->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0" />
+                                        <ColumnDefinition Width="170*" />
+                                        <ColumnDefinition Width="75" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="338*" />
+                                    </Grid.RowDefinitions>
 
-                                            <!--<dxe:TextEdit  Height="25" x:Name="txt_Master_Search" Margin="2,7,1,11" AllowNullInput="True" NullText="검색 단어를 입력 해주세요" MaxLength="50" FontSize="15" Grid.Column="1" />
+                                    <!--<dxe:TextEdit  Height="25" x:Name="txt_Master_Search" Margin="2,7,1,11" AllowNullInput="True" NullText="검색 단어를 입력 해주세요" MaxLength="50" FontSize="15" Grid.Column="1" />
                                             <Button Margin="4,6,0,10" Command="{Binding MasterSearchDialogCommand}" x:Name="btn_ConfigViewPage_Master_search" HorizontalAlignment="Left" Width="70" Height="25" Grid.Column="2">
                                                 <StackPanel HorizontalAlignment="Left" Width="60" Height="Auto" Orientation="Horizontal">
                                                     <Image  Width="20" Height="20"  Stretch="Fill" Source="/CpcErp;component/Images/btn/refresh_w.png" />
                                                     <TextBlock Margin="5,0,50,0" VerticalAlignment="Center" FontSize="11" Text="조회" TextWrapping="Wrap" Width="50"/>
                                                 </StackPanel>
                                             </Button>-->
-                                           
-                                            <dxg:GridControl x:Name="ConfigViewPage1Edit_Master" ItemsSource="{Binding Path=SelectedMasterViewList}" SelectedItem="{Binding Path=SelectedMasterItem, Mode=TwoWay}" Grid.Row="1" Grid.ColumnSpan="3">
-                                                <dxb:BarManager.DXContextMenu>
-                                                    <dxb:PopupMenu>
-                                                        <dxb:BarButtonItemLink BarItemName="M_ref"/>
-                                                        <dxb:BarItemLinkSeparator/>
-                                                        <dxb:BarButtonItemLink BarItemName="M_add"/>
-                                                        <dxb:BarItemLinkSeparator/>
-                                                        <dxb:BarButtonItemLink BarItemName="M_edit"/>
-                                                        <dxb:BarButtonItemLink BarItemName="M_del"/>
-                                                    </dxb:PopupMenu>
-                                                </dxb:BarManager.DXContextMenu>
-                                                
-                                                <dxg:GridControl.InputBindings>
-                                                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding EditMasterContactCommand}" />
-                                                </dxg:GridControl.InputBindings>
-                                                <dxg:GridControl.View>
-                                                    <dxg:TableView x:Name="configViewPage1EditView_Master" ShowFixedTotalSummary="True" CellStyle="{StaticResource GridCellStyle}"  ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="False" AutoWidth="True" AllowPerPixelScrolling="True" AllowFilterEditor="False" ShowGroupedColumns="True" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT, Path=EditValue}" />
-                                                </dxg:GridControl.View>
-                                                <dxg:GridControl.TotalSummary>
-                                                    <dxg:GridSummaryItem SummaryType="Count" Alignment="Right"/>
-                                                </dxg:GridControl.TotalSummary>
-                                                <dxg:GridControl.Columns>
-                                                    <!--<dxg:GridColumn FieldName="RN" Header="순번" Width="14" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" dxg:BandBase.GridColumn="1" VisibleIndex="0">
+
+                                    <dxg:GridControl x:Name="ConfigViewPage1Edit_Master" ItemsSource="{Binding Path=SelectedMasterViewList}" SelectedItem="{Binding Path=SelectedMasterItem, Mode=TwoWay}" Grid.Row="1" Grid.ColumnSpan="3">
+                                        <dxb:BarManager.DXContextMenu>
+                                            <dxb:PopupMenu>
+                                                <dxb:BarButtonItemLink BarItemName="M_ref"/>
+                                                <dxb:BarItemLinkSeparator/>
+                                                <dxb:BarButtonItemLink BarItemName="M_add"/>
+                                                <dxb:BarItemLinkSeparator/>
+                                                <dxb:BarButtonItemLink BarItemName="M_edit"/>
+                                                <dxb:BarButtonItemLink BarItemName="M_del"/>
+                                            </dxb:PopupMenu>
+                                        </dxb:BarManager.DXContextMenu>
+
+                                        <dxg:GridControl.InputBindings>
+                                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding EditMasterContactCommand}" />
+                                        </dxg:GridControl.InputBindings>
+                                        <dxg:GridControl.View>
+                                            <dxg:TableView x:Name="configViewPage1EditView_Master" ShowFixedTotalSummary="True" CellStyle="{StaticResource GridCellStyle}"  ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="False" AutoWidth="True" AllowPerPixelScrolling="True" AllowFilterEditor="False" ShowGroupedColumns="True" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT, Path=EditValue}" />
+                                        </dxg:GridControl.View>
+                                        <dxg:GridControl.TotalSummary>
+                                            <dxg:GridSummaryItem SummaryType="Count" Alignment="Right"/>
+                                        </dxg:GridControl.TotalSummary>
+                                        <dxg:GridControl.Columns>
+                                            <!--<dxg:GridColumn FieldName="RN" Header="순번" Width="14" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" dxg:BandBase.GridColumn="1" VisibleIndex="0">
                                                         <dxg:GridColumn.EditSettings>
                                                             <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                                         </dxg:GridColumn.EditSettings>
                                                     </dxg:GridColumn>-->
 
-                                                    <dxg:GridColumn FieldName="ROUT_CD" Header="코드명" Width="20" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" dxg:BandBase.GridColumn="2" VisibleIndex="1">
-                                                        <dxg:GridColumn.EditSettings>
+                                            <dxg:GridColumn FieldName="ROUT_CD" Header="코드명" Width="20" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" dxg:BandBase.GridColumn="2" VisibleIndex="1">
+                                                <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
-                                                        </dxg:GridColumn.EditSettings>
-                                                    </dxg:GridColumn>
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
 
-                                                <!--<dxg:GridColumn FieldName="SUB_CD" Header="고객코드" Width="20" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" dxg:BandBase.GridColumn="1" VisibleIndex="2">
-                                                        <dxg:GridColumn.EditSettings>
-                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
-                                                        </dxg:GridColumn.EditSettings>
-                                                    </dxg:GridColumn>-->
-
-                                                    <dxg:GridColumn FieldName="ROUT_NM" Header="공정명" Width="25" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" dxg:BandBase.GridColumn="1" VisibleIndex="3">
-                                                        <dxg:GridColumn.EditSettings>
-                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
-                                                        </dxg:GridColumn.EditSettings>
-                                                    </dxg:GridColumn>
-
-                                                    <dxg:GridColumn FieldName="ROUT_MV_CTNT" Header="비고" Width="45" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" dxg:BandBase.GridColumn="1" VisibleIndex="4">
+                                            <!--<dxg:GridColumn FieldName="SUB_CD" Header="고객코드" Width="20" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" dxg:BandBase.GridColumn="1" VisibleIndex="2">
                                                         <dxg:GridColumn.EditSettings>
                                                             <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
                                                         </dxg:GridColumn.EditSettings>
-                                                    </dxg:GridColumn>
+                                                    </dxg:GridColumn>-->
 
-                                                <dxg:GridColumn FieldName="ROUT_ORD_SEQ" Header="순서" Width="14" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" dxg:BandBase.GridColumn="1" VisibleIndex="5">
-                                                    <dxg:GridColumn.EditSettings>
-                                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-                                                    </dxg:GridColumn.EditSettings>
-                                                </dxg:GridColumn>
+                                            <dxg:GridColumn FieldName="ROUT_NM" Header="공정명" Width="25" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" dxg:BandBase.GridColumn="1" VisibleIndex="3">
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
 
+                                            <dxg:GridColumn FieldName="ROUT_MV_CTNT" Header="비고" Width="45" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" dxg:BandBase.GridColumn="1" VisibleIndex="4">
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
+
+                                            <dxg:GridColumn FieldName="ROUT_PRC" Header="공정단가" Width="18" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" dxg:BandBase.GridColumn="1" VisibleIndex="5">
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,##0.00" MaskUseAsDisplayFormat="True"  />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
+
+                                            <dxg:GridColumn FieldName="ROUT_ORD_SEQ" Header="순서" Width="14" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" dxg:BandBase.GridColumn="1" VisibleIndex="6">
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
                                         </dxg:GridControl.Columns>
-                                            </dxg:GridControl>
-                                        </Grid>
-                                    <!--</GroupBox>-->
+                                    </dxg:GridControl>
+                                </Grid>
+                                <!--</GroupBox>-->
                             </Grid>
                         </dxd:LayoutPanel>
                     </dxd:LayoutGroup>
@@ -161,9 +166,9 @@
             </Grid>
         </dxb:BarManager>
     </Grid>
-    
-    
-    
-    
-    
+
+
+
+
+
 </UserControl>

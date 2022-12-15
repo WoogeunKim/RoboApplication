@@ -35,7 +35,8 @@ namespace AquilaErpWpfApp3.View.M.Dialog
                 ROUT_MV_CTNT = Dao.ROUT_MV_CTNT,
                 CRE_USR_ID = Dao.CRE_USR_ID,
                 UPD_USR_ID = Dao.UPD_USR_ID,
-                CHNL_CD = Dao.CHNL_CD
+                CHNL_CD = Dao.CHNL_CD,
+                ROUT_PRC = Dao.ROUT_PRC
             };
 
             //수정
@@ -238,6 +239,7 @@ namespace AquilaErpWpfApp3.View.M.Dialog
             Dao.ROUT_NM = this.text_ROUT_NM.Text;
             Dao.ROUT_MV_CTNT = this.text_ROUT_MV_CTNT.Text;
             Dao.ROUT_ORD_SEQ = int.Parse(this.text_ROUT_ORD_SEQ.Text);
+            Dao.ROUT_PRC = this.text_ROUT_PRC.Text;
             //
             Dao.CRE_USR_ID = SystemProperties.USER;
             Dao.UPD_USR_ID = SystemProperties.USER;
