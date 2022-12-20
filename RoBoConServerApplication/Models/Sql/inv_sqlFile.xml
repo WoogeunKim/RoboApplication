@@ -3259,14 +3259,15 @@
 
 	  <!--발주 입고 - CO_UT_PRC 단가-->
 	  <select id="I66101SelectCoUtPrc" parameterClass="ModelsLibrary.Inv.InvVo" resultClass="ModelsLibrary.Inv.InvVo">
-		  SELECT CONVERT(NUMERIC(13, 4), (CONVERT(NUMERIC(13, 4), #N1ST_ITM_SZ_NM#) * CONVERT(NUMERIC(13, 4), #N2ND_ITM_SZ_NM#) * #BSS_WGT#)/1000000000 * WGT_PER_PRC * 500) AS CO_UT_PRC
-		  FROM TB_CD_CO_PPR_PRC_DTL T1
-		  , MV_TB_CD_ITM      T2
-		  WHERE 1 = 1
-		  AND T1.CHNL_CD = #CHNL_CD#
-		  AND T1.CHNL_CD = T2.CHNL_CD
-		  AND T1.N2ND_ITM_GRP_CD = T2.N2ND_ITM_GRP_NM
-		  AND T1.BSS_WGT = #BSS_WGT#
+		  SELECT TOP 1 CONVERT(NUMERIC(13, 4), (CONVERT(NUMERIC(13, 4), #N1ST_ITM_SZ_NM#) * CONVERT(NUMERIC(13, 4), #N2ND_ITM_SZ_NM#) * #BSS_WGT#)/1000000000 * WGT_PER_PRC * 500) AS CO_UT_PRC
+		    FROM TB_CD_CO_PPR_PRC_DTL T1
+		       <!--, MV_TB_CD_ITM       T2-->
+		   WHERE 1 = 1
+		     <!--AND T1.CHNL_CD         = T2.CHNL_CD-->
+		     <!--AND T1.N2ND_ITM_GRP_CD = T2.N2ND_ITM_GRP_NM-->
+		     AND T1.CHNL_CD         = #CHNL_CD#
+			 AND T1.N2ND_ITM_GRP_CD = #N2ND_ITM_GRP_NM#
+		     AND T1.BSS_WGT         = #BSS_WGT#
 	  </select>
 
 	  <select id="I66101SelectNo" resultClass="string">

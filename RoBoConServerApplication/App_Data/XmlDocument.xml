@@ -1922,6 +1922,11 @@
             품목 입고  - 발주 조회
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Inv.I66101Controller.GetPurPrcSelect(ModelsLibrary.Inv.InvVo)">
+            <summary>
+            품목 입고 - 단가 조회
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Inv.I66101Controller.GetMstInsert(System.Collections.Generic.IList{ModelsLibrary.Inv.InvVo})">
             <summary>
             품목 입고  - 추가

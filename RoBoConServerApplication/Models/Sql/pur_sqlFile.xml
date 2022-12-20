@@ -3604,14 +3604,15 @@
 
 	  <!--발주서 등록 DTL 추가 - CO_UT_PRC 단가-->
 	  <select id="P4430SelectCoUtPrc" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
-		  SELECT CONVERT(NUMERIC(13, 4), (CONVERT(NUMERIC(13, 4), #N1ST_ITM_SZ_NM#) * CONVERT(NUMERIC(13, 4), #N2ND_ITM_SZ_NM#) * #BSS_WGT#)/1000000000 * WGT_PER_PRC * 500) AS CO_UT_PRC
+		  SELECT TOP 1 CONVERT(NUMERIC(13, 4), (CONVERT(NUMERIC(13, 4), #N1ST_ITM_SZ_NM#) * CONVERT(NUMERIC(13, 4), #N2ND_ITM_SZ_NM#) * #BSS_WGT#)/1000000000 * WGT_PER_PRC * 500) AS CO_UT_PRC
 		    FROM TB_CD_CO_PPR_PRC_DTL T1
-		       , MV_TB_CD_ITM       T2
+		       <!--, MV_TB_CD_ITM       T2-->
 		   WHERE 1 = 1
-		     AND T1.CHNL_CD = #CHNL_CD#
-		     AND T1.CHNL_CD = T2.CHNL_CD
-		     AND T1.N2ND_ITM_GRP_CD = T2.N2ND_ITM_GRP_NM
-		     AND T1.BSS_WGT = #BSS_WGT#
+		     <!--AND T1.CHNL_CD         = T2.CHNL_CD-->
+		     <!--AND T1.N2ND_ITM_GRP_CD = T2.N2ND_ITM_GRP_NM-->
+		     AND T1.CHNL_CD         = #CHNL_CD#
+			 AND T1.N2ND_ITM_GRP_CD = #N2ND_ITM_GRP_NM#
+		     AND T1.BSS_WGT         = #BSS_WGT#
 	  </select>
 
 	  <!--발주서등록 DTL 수정-->

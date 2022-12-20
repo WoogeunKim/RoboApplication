@@ -102,6 +102,7 @@ namespace AquilaErpWpfApp3.View.INV.Dialog
                     // 저장값 설정
                     for (int x = 0; x < selectList.Count; x++)
                     {
+                        selectList[x].CO_UT_PRC = Convert.ToDouble(selectList[x].CO_UT_PRC) * ((100 - Convert.ToInt32(selectList[x].DC_RT)) * 0.01);
                         selectList[x].ITM_RMK = selectList[x].PUR_RMK;        // 비고
                         selectList[x].LOC_CD = selectList[x].INAUD_ORG_NO;    // 보관창고
                         selectList[x].AREA_CD = SystemProperties.USER_VO.EMPE_PLC_NM;
@@ -281,12 +282,20 @@ namespace AquilaErpWpfApp3.View.INV.Dialog
                 {
                     if (n2ndItmSzNm || n1stItmSzNm)
                     {
+                        if (masterDomain.N2ND_ITM_GRP_NM == null)
+                        {
+                            MessageBox.Show("원자재 [중분류]를 등록하세요.", "[유효검사]" + _title, MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                            masterDomain.isCheckd = false;
+                            return;
+                        }
 
                         InvVo vo = new InvVo();
                         vo.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
                         vo.BSS_WGT = masterDomain.BSS_WGT;
                         vo.N1ST_ITM_SZ_NM = masterDomain.N1ST_ITM_SZ_NM;
                         vo.N2ND_ITM_SZ_NM = masterDomain.N2ND_ITM_SZ_NM;
+                        vo.N2ND_ITM_GRP_NM = masterDomain.N2ND_ITM_GRP_NM;
 
                         using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("i66101/pur/prc", new StringContent(JsonConvert.SerializeObject(vo), System.Text.Encoding.UTF8, "application/json")))
                         {
