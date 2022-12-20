@@ -19,7 +19,6 @@ namespace AquilaErpWpfApp3.View.INV.Dialog
 {
     public partial class I66101DetailPurDialog : DXWindow
     {
-        //private static InvServiceClient invClient = SystemProperties.InvClient;
         private InvVo orgVo;
         private string _title = "입고 관리";
 
@@ -94,7 +93,7 @@ namespace AquilaErpWpfApp3.View.INV.Dialog
                     return;
                 }
 
-                IList<InvVo> selectList  = (this.ViewJOB_ITEMEdit.ItemsSource as IList<InvVo>).Where(w => w.isCheckd == true).ToList<InvVo>();
+                IList<InvVo> selectList = (this.ViewJOB_ITEMEdit.ItemsSource as IList<InvVo>).Where(w => w.isCheckd == true).ToList<InvVo>();
 
                 MessageBoxResult result = WinUIMessageBox.Show("구매입고 " + selectList.Count + "건 정말로 저장 하시겠습니까?", "[저장]" + _title, MessageBoxButton.YesNo, MessageBoxImage.Question);
 
@@ -147,63 +146,166 @@ namespace AquilaErpWpfApp3.View.INV.Dialog
         #endregion
 
 
-        private void GridColumn_Validate(object sender, DevExpress.Xpf.Grid.GridCellValidationEventArgs e)
+        private async void GridColumn_Validate(object sender, DevExpress.Xpf.Grid.GridCellValidationEventArgs e)
         {
             try
             {
+                //유효하지 않으면 리턴
                 if (!e.IsValid) return;
 
                 InvVo masterDomain = (InvVo)ViewJOB_ITEMEdit.GetFocusedRow();
 
+                bool bsswgt = (e.Column.FieldName.ToString().Equals("BSS_WGT") ? true : false);                 // 평량
                 bool n1stItmSzNm = (e.Column.FieldName.ToString().Equals("N1ST_ITM_SZ_NM") ? true : false);     // 가로
                 bool n2ndItmSzNm = (e.Column.FieldName.ToString().Equals("N2ND_ITM_SZ_NM") ? true : false);     // 세로
                 bool itmQty = (e.Column.FieldName.ToString().Equals("ITM_QTY") ? true : false);                 // 수량
-                bool purRmk = (e.Column.FieldName.ToString().Equals("PUR_RMK") ? true : false);                 // 비고  
+                bool purRmk = (e.Column.FieldName.ToString().Equals("PUR_RMK") ? true : false);                 // 비고
+                bool imdcrt = (e.Column.FieldName.ToString().Equals("DC_RT") ? true : false);                   // DC율
+                bool imutprc = (e.Column.FieldName.ToString().Equals("CO_UT_PRC") ? true : false);              // 단가
 
-                if (n1stItmSzNm)
+                //평량
+                if (bsswgt)
                 {
-                    if(e.Value != null)
+                    if (e.IsValid)
                     {
-                        masterDomain.N1ST_ITM_SZ_NM = e.Value.ToString();
-                        masterDomain.isCheckd = true;
-                    }
-                }
-                else if (n2ndItmSzNm)
-                {
-                    if (e.Value != null)
-                    {
-                        masterDomain.N2ND_ITM_SZ_NM = e.Value.ToString();
-                        masterDomain.isCheckd = true;
-                    }
-                }
-                else if (itmQty)
-                {
-                    if (e.Value != null)
-                    {
-                        if((double)e.Value > 0)
+                        if (string.IsNullOrEmpty(masterDomain.BSS_WGT + ""))
                         {
-                            masterDomain.ITM_QTY = e.Value;
-                            masterDomain.IN_PUR_ITM_QTY = ((double)e.Value * 500);
+                            masterDomain.BSS_WGT = 0;
+                        }
+                        if (!masterDomain.BSS_WGT.Equals((e.Value == null ? "" : e.Value.ToString())))
+                        {
+                            int? tmwgt = Convert.ToInt32(e.Value.ToString());
+
+                            masterDomain.BSS_WGT = tmwgt;
+                            masterDomain.isCheckd = true;
+                        }
+                        this.OKButton.IsEnabled = true;
+                    }
+                }
+                //가로
+                else if (n1stItmSzNm)
+                {
+                    if (e.IsValid)
+                    {
+                        if (string.IsNullOrEmpty(masterDomain.N1ST_ITM_SZ_NM))
+                        {
+                            masterDomain.N1ST_ITM_SZ_NM = "";
+                        }
+                        if (!masterDomain.N1ST_ITM_SZ_NM.Equals((e.Value == null ? "" : e.Value.ToString())))
+                        {
+                            masterDomain.N1ST_ITM_SZ_NM = e.Value.ToString();
                             masterDomain.isCheckd = true;
                             this.OKButton.IsEnabled = true;
                         }
-                        else
+                    }
+                }
+                //세로
+                else if (n2ndItmSzNm)
+                {
+                    if (e.IsValid)
+                    {
+                        if (string.IsNullOrEmpty(masterDomain.N2ND_ITM_SZ_NM))
                         {
-                            masterDomain.ITM_QTY = 0.0;
-                            masterDomain.IN_PUR_ITM_QTY = 0.0;
-                            masterDomain.isCheckd = false;
+                            masterDomain.N2ND_ITM_SZ_NM = "";
+                        }
+
+                        if (!masterDomain.N2ND_ITM_SZ_NM.Equals((e.Value == null ? "" : e.Value.ToString())))
+                        {
+                            masterDomain.N2ND_ITM_SZ_NM = e.Value.ToString();
+                            masterDomain.isCheckd = true;
+                            this.OKButton.IsEnabled = true;
                         }
                     }
                 }
-                else if (purRmk)
+                //수량
+                else if (itmQty)
                 {
-                    if (e.Value != null)
-                    {
-                        masterDomain.PUR_RMK = e.Value.ToString();
-                        masterDomain.isCheckd = true;
+                    if (e.IsValid)
+                    {   //빈 값이거나 없을 때 0
+                        if (string.IsNullOrEmpty(masterDomain.ITM_QTY + ""))
+                        {
+                            masterDomain.ITM_QTY = 0;
+                        }
+                        if (!masterDomain.ITM_QTY.Equals((e.Value == null ? "" : e.Value.ToString())))
+                        {
+                            double? tmpInt = Convert.ToDouble(e.Value.ToString());
+                            masterDomain.ITM_QTY = tmpInt;
+
+                            try
+                            {
+                                masterDomain.IN_PUR_ITM_QTY = (500 * tmpInt);
+                            }
+                            catch
+                            {
+                                masterDomain.IN_PUR_ITM_QTY = 0;
+                            }
+
+                            masterDomain.isCheckd = true;
+                            this.OKButton.IsEnabled = true;
+                        }
+                        masterDomain.PUR_AMT = Convert.ToDouble(masterDomain.CO_UT_PRC) * ((100 - Convert.ToInt32(masterDomain.DC_RT)) * 0.01) * Convert.ToDouble(masterDomain.ITM_QTY);
                     }
                 }
+                //비고
+                else if (purRmk)
+                {
+                    if (e.IsValid)
+                    {
+                        if (string.IsNullOrEmpty(masterDomain.PUR_RMK))
+                        {
+                            masterDomain.PUR_RMK = "";
+                        }
+                        if (!masterDomain.PUR_RMK.Equals((e.Value == null ? "" : e.Value.ToString())))
+                        {
+                            masterDomain.PUR_RMK = e.Value.ToString();
+                            masterDomain.isCheckd = true;
+                            this.OKButton.IsEnabled = true;
+                        }
+                    }
+                }
+                //DC단가
+                else if (imdcrt)
+                {
+                    if (!masterDomain.DC_RT.Equals((e.Value == null ? "" : e.Value.ToString())))
+                    {
+                        int? tmdcrt = Convert.ToInt32(e.Value.ToString());
 
+                        masterDomain.DC_RT = tmdcrt;
+                        masterDomain.isCheckd = true;
+                        this.OKButton.IsEnabled = true;
+                        masterDomain.PUR_AMT = Convert.ToDouble(masterDomain.CO_UT_PRC) * ((100 - Convert.ToInt32(masterDomain.DC_RT)) * 0.01) * Convert.ToDouble(masterDomain.ITM_QTY);
+                    }
+                }
+                // 단가 계산
+                try
+                {
+                    if (n2ndItmSzNm || n1stItmSzNm)
+                    {
+
+                        InvVo vo = new InvVo();
+                        vo.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
+                        vo.BSS_WGT = masterDomain.BSS_WGT;
+                        vo.N1ST_ITM_SZ_NM = masterDomain.N1ST_ITM_SZ_NM;
+                        vo.N2ND_ITM_SZ_NM = masterDomain.N2ND_ITM_SZ_NM;
+
+                        using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("i66101/pur/prc", new StringContent(JsonConvert.SerializeObject(vo), System.Text.Encoding.UTF8, "application/json")))
+                        {
+                            if (response.IsSuccessStatusCode)
+                            {
+                                InvVo coutprcVo = new InvVo();
+                                coutprcVo = JsonConvert.DeserializeObject<InvVo>(await response.Content.ReadAsStringAsync());
+                                masterDomain.CO_UT_PRC = JsonConvert.DeserializeObject<InvVo>(await response.Content.ReadAsStringAsync()).CO_UT_PRC;
+                                masterDomain.PUR_AMT = Convert.ToDouble(masterDomain.CO_UT_PRC) * ((100 - Convert.ToInt32(masterDomain.DC_RT)) * 0.01) * Convert.ToDouble(masterDomain.ITM_QTY);
+                            }
+                        }
+                    }
+                    this.ViewJOB_ITEMEdit.RefreshData();
+                }
+                catch (Exception eLog)
+                {
+                    WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + this._title, MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
             }
             catch (Exception eLog)
             {
@@ -211,48 +313,6 @@ namespace AquilaErpWpfApp3.View.INV.Dialog
                 return;
             }
         }
-
-        // 입력시 다음줄로 자동 이동
-        //private void viewPage1EditView_HiddenEditor(object sender, DevExpress.Xpf.Grid.EditorEventArgs e)
-        //{
-        //    try
-        //    {
-        //        this.viewJOB_ITEMView.CommitEditing();
-
-        //        bool n1stItmSzNm = (e.Column.FieldName.ToString().Equals("N1ST_ITM_SZ_NM") ? true : false);     // 가로
-        //        bool n2ndItmSzNm = (e.Column.FieldName.ToString().Equals("N2ND_ITM_SZ_NM") ? true : false);     // 세로
-        //        bool itmQty = (e.Column.FieldName.ToString().Equals("ITM_QTY") ? true : false);                 // 수량
-        //        bool purRmk = (e.Column.FieldName.ToString().Equals("PUR_RMK") ? true : false);                 // 비고  
-
-        //        int rowHandle = this.viewJOB_ITEMView.FocusedRowHandle + 1;
-
-        //        if (n1stItmSzNm)
-        //        {
-        //            this.ViewJOB_ITEMEdit.CurrentColumn = this.ViewJOB_ITEMEdit.Columns["N1ST_ITM_SZ_NM"];
-        //        }
-        //        else if (n2ndItmSzNm)
-        //        {
-        //            this.ViewJOB_ITEMEdit.CurrentColumn = this.ViewJOB_ITEMEdit.Columns["N2ND_ITM_SZ_NM"];
-        //        }
-        //        else if (itmQty)
-        //        {
-        //            this.ViewJOB_ITEMEdit.CurrentColumn = this.ViewJOB_ITEMEdit.Columns["ITM_QTY"];
-        //        }
-        //        else if (purRmk)
-        //        {
-        //            this.ViewJOB_ITEMEdit.CurrentColumn = this.ViewJOB_ITEMEdit.Columns["PUR_RMK"];
-        //        }
-
-        //        this.ViewJOB_ITEMEdit.RefreshRow(rowHandle - 1);
-        //        this.viewJOB_ITEMView.FocusedRowHandle = rowHandle;
-        //    }
-        //    catch (Exception eLog)
-        //    {
-        //        WinUIMessageBox.Show(eLog.Message, "[에러]" + _title, MessageBoxButton.OK, MessageBoxImage.Error);
-        //        return;
-        //    }
-        //}
-
 
         private void CheckEdit_Checked(object sender, RoutedEventArgs e)
         {
@@ -284,16 +344,6 @@ namespace AquilaErpWpfApp3.View.INV.Dialog
 
         public async void SYSTEM_CODE_VO()
         {
-            // 창고 관리 P-008
-            //using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.GetAsync("s131/dtl/" + Properties.Settings.Default.SettingChnl + "/" + "P-008"))
-            //{
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        this.combo_INAUD_ORG_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
-            //        this.lue_INAUD_ORG_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
-            //    }
-            //}
-
 
             // 거래처 AR 발주처 여부 
             using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s143", new StringContent(JsonConvert.SerializeObject(new SystemCodeVo() { DELT_FLG = "N", CO_TP_CD = "AR", AREA_CD = SystemProperties.USER_VO.EMPE_PLC_NM, CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))

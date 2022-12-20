@@ -1959,6 +1959,10 @@
             get;
             set;
         }
-
+        public object WGT_PER_PRC
+        {
+            get;
+            set;
+        }
     }
 }

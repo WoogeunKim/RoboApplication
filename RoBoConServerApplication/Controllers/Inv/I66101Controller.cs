@@ -32,6 +32,25 @@ namespace VisualServerApplication.Controllers.Inv
         }
 
         /// <summary>
+        /// 품목 입고 - 단가 조회
+        /// </summary>
+        [Route("pur/prc")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetPurPrcSelect([FromBody] InvVo vo)
+        {
+            try
+            {
+                return Ok<InvVo>(Properties.EntityMapper.QueryForObject<InvVo>("I66101SelectCoUtPrc", vo));
+
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+        /// <summary>
         /// 품목 입고  - 추가
         /// </summary>
         [Route("i")]
@@ -43,9 +62,9 @@ namespace VisualServerApplication.Controllers.Inv
             {
                 Properties.EntityMapper.BeginTransaction();
 
-                voList[0].INAUD_TMP_NO = Properties.EntityMapper.QueryForObject<string>("I66101SelectNo", voList[0]);
+                voList[0].INAUD_TMP_NO = Properties.EntityMapper.QueryForObject<string>("I6610SelectNo", voList[0]);
                 Properties.EntityMapper.Update("I66101UpdateNo", voList[0]);
-
+                Properties.EntityMapper.Update("I66101UpdateNo_2", voList[0]);
                 foreach (InvVo item in voList)
                 {
                     item.INAUD_TMP_NO = voList[0].INAUD_TMP_NO;
