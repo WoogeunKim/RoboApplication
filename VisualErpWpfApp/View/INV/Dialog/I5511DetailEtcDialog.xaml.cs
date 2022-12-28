@@ -200,7 +200,7 @@ namespace AquilaErpWpfApp3.View.INV.Dialog
                 //, N1ST_ITM_GRP_CD = ITM_N1ST_TP_NM_VO.ITM_GRP_CD, N2ND_ITM_GRP_CD = N2ND_ITM_GRP_NM_VO?.ITM_GRP_CD
                 InvVo vo = new InvVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD, ITM_GRP_CLSS_CD = ITM_GRP_CLSS_NM_VO.CLSS_CD, AREA_CD = SystemProperties.USER_VO.EMPE_PLC_NM, CO_CD = this.orgVo.CO_CD, CO_NM = this.orgVo.CO_NM };
 
-                this.search_title.Text = "[조회 조건]   " + "분류 : " + ITM_GRP_CLSS_NM_VO.CLSS_DESC; /*+ ", 대 그룹 : " + ITM_N1ST_TP_NM_VO.ITM_GRP_NM + ", 중 그룹 : " + N2ND_ITM_GRP_NM_VO?.ITM_GRP_NM*/;
+                this.search_title.Text = "[조회 조건]   " + "분류 : " + ITM_GRP_CLSS_NM_VO.CLSS_DESC; /*+ ", 대 그룹 : " + ITM_N1ST_TP_NM_VO.ITM_GRP_NM + ", 중 그룹 : " + N2ND_ITM_GRP_NM_VO?.ITM_GRP_NM*/
                 //CustomerCodeDao grpCdVo = this.combo_GRP_NM.SelectedItem as CustomerCodeDao;
                 //if (grpCdVo != null)
                 //{

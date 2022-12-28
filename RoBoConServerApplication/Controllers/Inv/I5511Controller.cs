@@ -140,15 +140,21 @@ namespace VisualServerApplication.Controllers.Inv
         [Route("popup/etc")]
         [HttpPost]
         // GET api/<controller>
-        public async Task<IHttpActionResult> GetPopEtcInSelect([FromBody]InvVo vo)
+        public async Task<IHttpActionResult> GetPopEtcInSelect([FromBody] InvVo vo)
         {
-            return Ok<IEnumerable<InvVo>>(Properties.EntityMapper.QueryForList<InvVo>("I5511SelectDtlEtcInList", vo));
+            try
+            {
+                return Ok<IEnumerable<InvVo>>(Properties.EntityMapper.QueryForList<InvVo>("I5511SelectDtlEtcInList", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
         }
-
         /// <summary>
         ///품목 입고 DTL  - POPUP (외주 입고) 조회
         /// </summary>
-        [Route("popup/out")]
+            [Route("popup/out")]
         [HttpPost]
         // GET api/<controller>
         public async Task<IHttpActionResult> GetPopOutInSelect([FromBody]InvVo vo)
