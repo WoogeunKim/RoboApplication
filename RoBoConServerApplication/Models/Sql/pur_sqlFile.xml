@@ -3159,24 +3159,35 @@
      
      <!-- 고객사발주관리 DTL - 도면조회-->
      <select id="P441106SelectDtlList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
-        SELECT  T1.CHNL_CD
-              , T1.PUR_NO
-              , T1.PUR_SEQ
-              , T1.DE_CO_NM
-              , T1.CNTR_NM
-              , T1.CNTR_PSN_NM
-              , T1.FLR_NM
-              , T1.FLR_NO
-              , ISNULL(T1.PUR_QTY, 0) AS PUR_QTY
-              , T1.PUR_WGT
-              , T1.FLR_FILE
-              , T1.CRE_USR_ID
-              , CONVERT(NVARCHAR, T1.UPD_DT, 23) AS UPD_DT
-              , T1.UPD_USR_ID
-              , CONVERT(NVARCHAR, T1.IN_REQ_DT, 23) AS IN_REQ_DT
-              , CONVERT(INT, ROW_NUMBER() OVER (PARTITION BY  T1.PUR_NO ORDER BY  T1.PUR_SEQ  )) AS RN
-              , T1.FLR_FILE_ID
-        FROM TB_CUST_PUR_DTL  T1
+        SELECT  
+		      CONVERT(INT, ROW_NUMBER() OVER (PARTITION BY  T1.PUR_NO ORDER BY  T1.PUR_SEQ  )) AS RN
+			, T1.CHNL_CD
+            , T1.PUR_NO
+            , T1.PUR_SEQ
+            , T1.DE_CO_NM
+            , T1.CNTR_NM
+            , T1.CNTR_PSN_NM
+            , T1.FLR_NM
+            , T1.FLR_NO
+            , ISNULL(T1.PUR_QTY, 0) AS PUR_QTY
+            , T1.PUR_WGT
+            , T1.FLR_FILE
+            , T1.CRE_USR_ID
+            , CONVERT(NVARCHAR, T1.UPD_DT, 23) AS UPD_DT
+            , T1.UPD_USR_ID
+            , CONVERT(NVARCHAR, T1.IN_REQ_DT, 23) AS IN_REQ_DT
+            , T1.FLR_FILE_ID
+            , T1.PRG_TP_CD
+            , T2.PRG_TP_NM
+         FROM TB_CUST_PUR_DTL  T1
+             OUTER APPLY (
+                SELECT X.CLSS_DESC AS PRG_TP_NM
+                  FROM TB_SYS_CLSS_CD X
+                 WHERE 1 = 1 
+                   AND X.CHNL_CD    = #CHNL_CD#
+                   AND X.CLSS_TP_CD = 'L-911'
+                   AND X.CLSS_CD    = T1.PRG_TP_CD
+             ) T2
          WHERE 1 = 1
            AND T1.CHNL_CD = #CHNL_CD#
            AND T1.PUR_NO  = #PUR_NO#
@@ -3186,45 +3197,47 @@
 
      <!--고객사발주관리DTL - 도면등록-->
      <insert id="P441106InsertDtl" parameterClass="ModelsLibrary.Pur.PurVo">
-        INSERT INTO dbo.TB_CUST_PUR_DTL
+        INSERT INTO TB_CUST_PUR_DTL
         (
-            PUR_NO
-           ,PUR_SEQ
-           ,CHNL_CD
-           ,DE_CO_NM
-           ,CNTR_NM
-           ,CNTR_PSN_NM
-           ,FLR_NM
-           ,FLR_NO
-           ,PUR_QTY
-           ,PUR_WGT
-           ,FLR_FILE
-           ,CRE_USR_ID
-           ,CRE_DT
-           ,UPD_USR_ID
-           ,UPD_DT
-           ,IN_REQ_DT
-           ,FLR_FILE_ID
+             PUR_NO
+           , PUR_SEQ
+           , CHNL_CD
+           , DE_CO_NM
+           , CNTR_NM
+           , CNTR_PSN_NM
+           , FLR_NM
+           , FLR_NO
+           , PUR_QTY
+           , PUR_WGT
+           , FLR_FILE
+           , CRE_USR_ID
+           , CRE_DT
+           , UPD_USR_ID
+           , UPD_DT
+           , IN_REQ_DT
+           , FLR_FILE_ID
+		   , PRG_TP_CD
         )
         VALUES
         (
-            #PUR_NO#
-           ,ISNULL((SELECT MAX(PUR_SEQ) + 1 FROM TB_CUST_PUR_DTL WHERE PUR_NO = #PUR_NO#), 1)
-           ,#CHNL_CD#
-           ,#DE_CO_NM#
-           ,#CNTR_NM#
-           ,#CNTR_PSN_NM#
-           ,#FLR_NM#
-           ,CONVERT(NVARCHAR, GETDATE(), 12) +  RIGHT('0000' + CONVERT(NVARCHAR, ISNULL((SELECT MAX(PUR_SEQ) + 1 FROM TB_CUST_PUR_DTL WHERE 1=1 AND CONVERT(NVARCHAR, CRE_DT, 23) = CONVERT(NVARCHAR, GETDATE(), 23)), 1)), 4)
-           ,#PUR_QTY#
-           ,#PUR_WGT#
-           ,#FLR_FILE#
-           ,#CRE_USR_ID#
-           ,GETDATE()
-           ,#UPD_USR_ID#
-           ,GETDATE()
-           ,#IN_REQ_DT#
-           ,#FLR_FILE_ID#
+             #PUR_NO#
+           , ISNULL((SELECT MAX(PUR_SEQ) + 1 FROM TB_CUST_PUR_DTL WHERE PUR_NO = #PUR_NO#), 1)
+           , #CHNL_CD#
+           , #DE_CO_NM#
+           , #CNTR_NM#
+           , #CNTR_PSN_NM#
+           , #FLR_NM#
+           , CONVERT(NVARCHAR, GETDATE(), 12) +  RIGHT('0000' + CONVERT(NVARCHAR, ISNULL((SELECT MAX(PUR_SEQ) + 1 FROM TB_CUST_PUR_DTL WHERE 1=1 AND CONVERT(NVARCHAR, CRE_DT, 23) = CONVERT(NVARCHAR, GETDATE(), 23)), 1)), 4)
+           , #PUR_QTY#
+           , #PUR_WGT#
+           , #FLR_FILE#
+           , #CRE_USR_ID#
+           , GETDATE()
+           , #UPD_USR_ID#
+           , GETDATE()
+           , #IN_REQ_DT#
+           , #FLR_FILE_ID#
+		   , #PRG_TP_CD#
         )
      </insert>
 

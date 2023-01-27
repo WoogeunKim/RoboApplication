@@ -2331,5 +2331,15 @@ namespace ModelsLibrary.Pur
             get;
             set;
         }
+        public string PRG_TP_CD
+        {
+            get;
+            set;
+        }
+        public string PRG_TP_NM
+        {
+            get;
+            set;
+        }
     }
 }

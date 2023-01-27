@@ -64,7 +64,8 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                     {
                         _item.DE_CO_NM = masterDomain.DE_CO_NM;
                         _item.CNTR_NM = masterDomain.CNTR_NM;
-
+                        _item.PRG_TP_CD = masterDomain.PRG_TP_CD;
+                        _item.PRG_TP_NM = masterDomain.PRG_TP_NM;
                     }
                     this.grid_File.ItemsSource = _applyList;
                     this.grid_File.RefreshData();
@@ -273,8 +274,9 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                 bool de_co_nm = e.Column.FieldName.ToString().Equals("DE_CO_NM") ? true : false;        // 납품처
                 bool qur_qty = e.Column.FieldName.ToString().Equals("PUR_QTY") ? true : false;          // 도면수량
                 bool pur_wgt = e.Column.FieldName.ToString().Equals("PUR_WGT") ? true : false;          // 도면중량
+                bool prg_tp_nm = e.Column.FieldName.ToString().Equals("PRG_TP_NM") ? true : false;      // 바리스트
 
-                if(in_req_dt)
+                if (in_req_dt)
                 {
                     if(e.IsValid)
                     {
@@ -309,6 +311,8 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                         {
                             masterDomain.CNTR_NM = e.Value.ToString();
                             masterDomain.isCheckd = true;
+
+
                         }
                     }
                 }
@@ -373,6 +377,24 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                         }
                     }
                 }
+                else if(prg_tp_nm)
+                {
+                    if (e.IsValid)
+                    {
+                        if (string.IsNullOrEmpty(masterDomain.PRG_TP_NM))
+                        {
+                            masterDomain.PRG_TP_NM = "";
+                        }
+                        if (!masterDomain.PRG_TP_NM.Equals(e.Value == null ? "" : e.Value.ToString()))
+                        {
+                            SystemCodeVo deCo =  (this.lue_PRG_TP_NM.ItemsSource as List<SystemCodeVo>).Where(x=>x.CLSS_DESC.Equals(e.Value.ToString())).LastOrDefault();
+
+                            masterDomain.PRG_TP_CD = deCo.CLSS_CD;
+                            masterDomain.PRG_TP_NM = deCo.CLSS_DESC;
+                            masterDomain.isCheckd = true;
+                        }
+                    }
+                }
 
 
                 this.grid_File.RefreshData();
@@ -396,6 +418,15 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                 {
                     this.lue_DE_CO_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().Where<SystemCodeVo>(x => Convert.ToInt32(x.DE_PRNT_NO) == 0).ToList();
                     //lue_CNTR_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().Where<SystemCodeVo>(x => Convert.ToInt32(x.DE_PRNT_NO) != 0).ToList();
+                }
+            }
+
+            // 바리스타 프로그램 조회
+            using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.GetAsync("s131/dtl/" + Properties.Settings.Default.SettingChnl + "/" + "L-911"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    this.lue_PRG_TP_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
                 }
             }
 

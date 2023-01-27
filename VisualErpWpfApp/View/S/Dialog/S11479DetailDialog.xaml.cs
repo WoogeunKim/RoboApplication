@@ -47,7 +47,12 @@ namespace AquilaErpWpfApp3.View.S.Dialog
                 DELT_FLG   = Dao.DELT_FLG,
                 CRE_USR_ID = Dao.CRE_USR_ID,
                 UPD_USR_ID = Dao.UPD_USR_ID,
-                CHNL_CD    = Dao.CHNL_CD
+                CHNL_CD    = Dao.CHNL_CD,
+
+                PRG_TP_NM = Dao.PRG_TP_NM,
+                PRG_TP_CD = Dao.PRG_TP_CD,
+                CLSS_CD = Dao.PRG_TP_CD,
+                CLSS_DESC = Dao.PRG_TP_NM
             };
 
             //수정
@@ -246,6 +251,14 @@ namespace AquilaErpWpfApp3.View.S.Dialog
 
             }
 
+            SystemCodeVo cdDe = this.combo_CD_DE.SelectedItem as SystemCodeVo;
+            if (cdDe != null)
+            {
+                Dao.PRG_TP_CD = cdDe.CLSS_CD;
+                Dao.PRG_TP_NM = cdDe.CLSS_DESC;
+            }
+
+
             Dao.DELT_FLG = (this.combo_DELT_FLG.Text.Equals("사용") ? "N" : "Y");
 
             Dao.CRE_USR_ID = SystemProperties.USER;
@@ -275,6 +288,15 @@ namespace AquilaErpWpfApp3.View.S.Dialog
                 if (response.IsSuccessStatusCode)
                 {
                     this.combo_CO_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
+                }
+            }
+
+            // 바리스타 프로그램 조회
+            using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.GetAsync("s131/dtl/" + Properties.Settings.Default.SettingChnl + "/" + "L-911"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    this.combo_CD_DE.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
                 }
             }
 

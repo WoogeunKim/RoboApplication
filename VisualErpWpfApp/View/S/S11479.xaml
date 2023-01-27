@@ -217,16 +217,18 @@
                                                         
 
                                                         <dxgn:GanttControl.Columns >
-                                                            <dxgn:GanttColumn FieldName="CO_NM" Header="고객사" Width="120"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True"  />
-                                                            <dxgn:GanttColumn FieldName="DE_CO_NM" Header="납품처" Width="150"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" />
-                                                            <dxgn:GanttColumn FieldName="CNTR_NM" Header="공사명" Width="150"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" />
+                                                            <dxgn:GanttColumn FieldName="CO_NM" Header="고객사" Width="100"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True"  />
+                                                            <dxgn:GanttColumn FieldName="DE_CO_NM" Header="납품처" Width="120"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" />
+                                                            <dxgn:GanttColumn FieldName="CNTR_NM" Header="공사명" Width="120"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" />
 
                                                             <dxgn:GanttColumn FieldName="CRE_DT" Header="등록일" Width="100"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" Visible="False" />
                                                             <dxgn:GanttColumn FieldName="S_CRE_DT" Header="등록일" Width="100"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" />
 
                                                             <dxgn:GanttColumn FieldName="DUE_DT" Header="납기일"  Width="100"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" Visible="False" />
                                                             <dxgn:GanttColumn FieldName="S_DUE_DT" Header="납기일" Width="100"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" />
-                                                            
+
+                                                            <dxgn:GanttColumn FieldName="PRG_TP_NM" Header="바리스트" Width="120"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" />
+
                                                             <dxgn:GanttColumn FieldName="CNTR_RMK" Header="비고" Width="180"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" />
                                                         </dxgn:GanttControl.Columns>
                                                        
