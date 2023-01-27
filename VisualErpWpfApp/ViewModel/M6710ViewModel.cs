@@ -417,7 +417,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 {
                     return;
                 }
-
+                      
                 MessageBoxResult result = WinUIMessageBox.Show("(지시 일자 : " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm") + ")  추가 하시겠습니까?", _title, MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
