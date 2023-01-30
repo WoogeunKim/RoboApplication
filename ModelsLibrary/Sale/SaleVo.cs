@@ -5306,5 +5306,52 @@
             get;
             set;
         }
+        //////
+        ///
+        public string PUR_NO
+        {
+            get;
+            set;
+        }
+        public int? PUR_SEQ
+        {
+            get;
+            set;
+        }        
+        public string PUR_DT
+        {
+            get;
+            set;
+        }
+        public string FLR_FILE_ID
+        {
+            get;
+            set;
+        }
+        public string FLR_NM
+        {
+            get;
+            set;
+        }
+        public object PUR_WGT
+        {
+            get;
+            set;
+        }
+        public string DE_CO_NM
+        {
+            get;
+            set;
+        }
+        public string PRG_TP_CD
+        {
+            get;
+            set;
+        }
+        public string CNTR_DE_NM
+        {
+            get;
+            set;
+        }
     }
 }

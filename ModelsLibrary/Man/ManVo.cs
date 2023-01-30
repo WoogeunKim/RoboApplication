@@ -2421,19 +2421,158 @@
             get;
             set;
         }
-
         public string BSS_WGT
         {
             get;
             set;
         }
-
         public int? MOLD_SEQ
         {
             get;
             set;
         }
         public object ROUT_PRC
+        {
+            get;
+            set;
+        }
+        public string CHK_FLG
+        {
+            get;
+            set;
+        }
+        public string EXTR_STS_CD
+        {
+            get;
+            set;
+        }
+        public string EXTR_STS_NM
+        {
+            get;
+            set;
+        }
+        public string DE_CO_NM
+        {
+            get;
+            set;
+        }
+        public object PUR_WGT
+        {
+            get;
+            set;
+        }
+        public string FLR_NM
+        {
+            get;
+            set;
+        }
+        public string FLR_FILE
+        {
+            get;
+            set;
+        }
+        public string FLR_NO
+        {
+            get;
+            set;
+        }
+        public string FLR_FILE_ID
+        {
+            get;
+            set;
+        }
+        public string PUR_CO_CD
+        {
+            get;
+            set;
+        }
+        public string PUR_NO
+        {
+            get;
+            set;
+        }
+        public int? PUR_SEQ
+        {
+            get;
+            set;
+        }
+        public int? LOG_SEQ
+        {
+            get;
+            set;
+        }
+        public string STS_CD
+        {
+            get;
+            set;
+        }
+        public string STS_DESC
+        {
+            get;
+            set;
+        }
+        public string PRG_TP_CD
+        {
+            get;
+            set;
+        }
+        public string BAR_SHAP_NO
+        {
+            get;
+            set;
+        }
+        public string BAR_SHAP_PROD_DESC
+        {
+            get;
+            set;
+        }
+        public string BAR_STEL_CD
+        {
+            get;
+            set;
+        }
+        public string BAR_STEL_SZ
+        {
+            get;
+            set;
+        }
+        public object BAR_LEN
+        {
+            get;
+            set;
+        }
+        public int? BAR_QTY
+        {
+            get;
+            set;
+        }
+        public object BAR_WGT
+        {
+            get;
+            set;
+        }
+        public string BAR_PSN_NM
+        {
+            get;
+            set;
+        }
+        public object BAR_TOT_LEN
+        {
+            get;
+            set;
+        }
+        public string SHP_NO
+        {
+            get;
+            set;
+        }
+        public string ITM_SHP_NM
+        {
+            get;
+            set;
+        }
+
+        public string VIS_FLG
         {
             get;
             set;

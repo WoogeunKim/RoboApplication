@@ -7086,7 +7086,34 @@
 		  select @RTN AS R_value
 	  </statement>
 
-
+        
+	 <!-- 고객발주현황  -->
+     <select id="S32210SelectMst" resultClass="ModelsLibrary.Sale.SaleVo">
+        SELECT  T2.PUR_NO                 
+                , T2.PUR_SEQ                 
+                , CONVERT(VARCHAR, T1.PUR_DT, 23) AS PUR_DT                 
+                , CONVERT(VARCHAR, T1.DUE_DT, 23) AS DUE_DT                 
+                , T1.PUR_CO_CD            
+                , T2.FLR_FILE_ID            
+                , T2.FLR_NO                  
+                , T2.FLR_FILE_ID+ '_' + T2.FLR_NM  AS FLR_FILE   
+                , T2.FLR_NM                
+                , T2.PUR_WGT             
+                , T2.DE_CO_NM 
+                , T2.CNTR_NM 
+                , T2.AREA_NM
+                , T2.CHNL_CD 
+                , T2.PRG_TP_CD
+                , T2.CNTR_DE_NM
+            FROM TB_CUST_PUR        T1
+               , TB_CUST_PUR_DTL    T2
+            WHERE 1 = 1
+              AND T1.CHNL_CD   = T2.CHNL_CD
+              AND T1.PUR_NO    = T2.PUR_NO
+              AND T1.CHNL_CD   = #CHNL_CD#
+              AND T1.PUR_DT >= CAST(#FM_DT# + ' 00:00:00' AS DATETIME)
+              AND T1.PUR_DT <![CDATA[ <= ]]> CAST(#TO_DT# + ' 23:59:59' AS DATETIME)
+     </select>
 
   </statements>
 </sqlMap>
