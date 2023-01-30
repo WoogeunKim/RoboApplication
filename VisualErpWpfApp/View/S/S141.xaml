@@ -236,9 +236,9 @@
                         
                         <TextBlock Grid.Column="5" Grid.Row="6" FontSize="14">
                             <Run Text="[" />
-                            <Run Text="{Binding N2ND_SUB_ITM_GRP_CD}" />
+                            <Run Text="{Binding N2ND_SUB_ITM_CD}" />
                             <Run Text="]" />
-                            <Run Text="{Binding N2ND_SUB_ITM_GRP_NM}" />
+                            <Run Text="{Binding N2ND_SUB_ITM_NM}" />
                         </TextBlock>
 
                         <TextBlock Grid.Column="5" Grid.Row="7" FontSize="14" Text="{Binding ITM_ORD_CD}" />

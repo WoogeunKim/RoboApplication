@@ -291,6 +291,7 @@
 		    , T1.ABC_NM
 		    , T1.ACT_INSP_CD
 		    , T1.QLTY_INSP_CD
+            , T1.QLTY_INSP_NM
 		    , ISNULL(T1.N1ST_ITM_GRP_CD, '') AS N1ST_ITM_GRP_CD
 		    , T1.N1ST_ITM_GRP_NM
 		    , T1.N2ND_ITM_GRP_CD
@@ -308,6 +309,7 @@
 		    , T1.MIN_TOR_VAL
 		    , T1.MAX_TOR_VAL
 		    , T1.INSP_ITM_GRP_CD
+			, T1.INSP_ITM_GRP_NM
 		    , 0  AS RN
 		    , T1.ITM_STD_FILE
 		    , T1.ITM_STD_FILE_NM
