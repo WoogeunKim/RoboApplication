@@ -235,6 +235,8 @@
     <Compile Include="Controllers\Inv\I6613Controller.cs" />
     <Compile Include="Controllers\Inv\I6610Controller.cs" />
     <Compile Include="Controllers\Inv\I66210Controller.cs" />
+    <Compile Include="Controllers\Man\M66103Controller.cs" />
+    <Compile Include="Controllers\Man\M66105Controller.cs" />
     <Compile Include="Controllers\Man\M66333Controller.cs" />
     <Compile Include="Controllers\Man\M6638Controller.cs" />
     <Compile Include="Controllers\Man\M6521Controller.cs" />
@@ -316,6 +318,7 @@
     <Compile Include="Controllers\Sale\S2223Controller.cs" />
     <Compile Include="Controllers\Sale\S22320Controller.cs" />
     <Compile Include="Controllers\Sale\S2230Controller.cs" />
+    <Compile Include="Controllers\Sale\S32210Controller.cs" />
     <Compile Include="Controllers\Sale\S3311Controller.cs" />
     <Compile Include="Controllers\Sale\S3321Controller.cs" />
     <Compile Include="Controllers\Sale\S22213Controller.cs" />

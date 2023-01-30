@@ -1257,6 +1257,11 @@
             출하현황 MST - 조회
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S32210Controller.GetMstSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            고객발주현황 조회
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Sale.S3311Controller.GetMstSelect(ModelsLibrary.Sale.SaleVo)">
             <summary>
             거래처별 판가기준표 MST - 조회
@@ -2070,6 +2075,21 @@
         <member name="M:VisualServerApplication.Controllers.Inv.I66210Controller.GetMstDelete(ModelsLibrary.Inv.InvVo)">
             <summary>
             품목 출고  - 삭제
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66103Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            도면바리스트형상추출 Mst 관리 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66103Controller.GetDtlSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            로그 DTL 관리 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66105Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            BarList 추출검증 조회
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Man.M66333Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
