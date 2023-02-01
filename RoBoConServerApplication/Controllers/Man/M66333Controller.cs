@@ -78,6 +78,23 @@ namespace VisualServerApplication.Controllers.Man
             }
         }
 
+        /// <summary>
+        /// 수동수주출력 / 생산 활용 - DTL 수정
+        /// </summary>
+        [Route("dtl/u")]
+        [HttpPost]
+        // PUT api/<controller>/5
+        public async Task<IHttpActionResult> GetDtlUpdate([FromBody] ManVo vo)
+        {
+            try
+            {
+                return Ok<int>(Properties.EntityMapper.Update("M66333UpdateDtl", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
 
     }
 }

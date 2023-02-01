@@ -25,14 +25,13 @@ namespace AquilaErpWpfApp3.ViewModel
         private string _title = "수동수주출력";
 
 
-
-
         public M66333ViewModel()
         {
             StartDt = System.DateTime.Now;
             EndDt = System.DateTime.Now;
 
-            Refresh();
+            SYSTEM_CODE_VO();
+
         }
 
 
@@ -73,6 +72,10 @@ namespace AquilaErpWpfApp3.ViewModel
 
                     DXSplashScreen.Close();
                 }
+
+
+
+
             }
             catch (System.Exception eLog)
             {
@@ -82,6 +85,48 @@ namespace AquilaErpWpfApp3.ViewModel
                 }
 
                 WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+        }
+
+        public async void SYSTEM_CODE_VO()
+        {
+            try
+            {
+                //형상 코드
+                using (HttpResponseMessage responseX = await SystemProperties.PROGRAM_HTTP.PostAsync("s141/mini", new StringContent(JsonConvert.SerializeObject(new SystemCodeVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD, ITM_GRP_CLSS_CD = "P", DELT_FLG = "N" }), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (responseX.IsSuccessStatusCode)
+                    {
+                        this.ShpCdList = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await responseX.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
+                    }
+                }
+
+                // 강종
+                using (HttpResponseMessage responseX = await SystemProperties.PROGRAM_HTTP.PostAsync("s133", new StringContent(JsonConvert.SerializeObject(new SystemCodeVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD, ITM_GRP_CLSS_CD = "M", N1ST_ITM_GRP_CD = "T", DELT_FLG = "N", CRE_USR_ID = "" }), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (responseX.IsSuccessStatusCode)
+                    {
+                        this.StlCdList = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await responseX.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
+                    }
+                }
+
+                // 규격
+                using (HttpResponseMessage responseX = await SystemProperties.PROGRAM_HTTP.PostAsync("s133", new StringContent(JsonConvert.SerializeObject(new SystemCodeVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD, ITM_GRP_CLSS_CD = "M", PRNT_ITM_GRP_CD = "D", N1ST_ITM_GRP_CD = "D", DELT_FLG = "N", CRE_USR_ID = "" }), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (responseX.IsSuccessStatusCode)
+                    {
+                        this.StlSzCdList = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await responseX.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
+                    }
+                }
+
+                Refresh();
+            }
+
+
+            catch (Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -134,6 +179,26 @@ namespace AquilaErpWpfApp3.ViewModel
             set { SetProperty(ref selectedDtlList, value, () => SelectDtlList); }
         }
 
+        private IList<SystemCodeVo> _shpCdList;
+        public IList<SystemCodeVo> ShpCdList
+        {
+            get { return _shpCdList; }
+            set { SetProperty(ref _shpCdList, value, () => ShpCdList); }
+        }
+
+        private IList<SystemCodeVo> _stlCdList;
+        public IList<SystemCodeVo> StlCdList
+        {
+            get { return _stlCdList; }
+            set { SetProperty(ref _stlCdList, value, () => StlCdList); }
+        }
+
+        private IList<SystemCodeVo> _stlSzCdList;
+        public IList<SystemCodeVo> StlSzCdList
+        {
+            get { return _stlSzCdList; }
+            set { SetProperty(ref _stlSzCdList, value, () => StlSzCdList); }
+        }
         //ManVo _selectedDtlItem = new ManVo();
 
         //public ManVo SelectedDtlItem
@@ -158,4 +223,3 @@ namespace AquilaErpWpfApp3.ViewModel
 
 
 }
-

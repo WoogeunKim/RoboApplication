@@ -2577,5 +2577,17 @@
             get;
             set;
         }
+
+        public string ITM_STL_NM
+        {
+            get;
+            set;
+        }
+
+        public string ITM_STL_SZ_NM
+        {
+            get;
+            set;
+        }
     }
 }

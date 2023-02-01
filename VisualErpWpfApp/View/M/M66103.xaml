@@ -84,7 +84,7 @@
                     </dxr:RibbonPageGroup>
 
                     <dxr:RibbonPageGroup Caption="바리스트 추출">
-                        <dxb:BarButtonItem x:Name="M_Barlist" Content="(Start)" Glyph="{dx:DXImage SvgImages/DiagramIcons/Orientation/re-format.svg}" LargeGlyph="{dx:DXImage SvgImages/DiagramIcons/Orientation/re-format.svg}" Command="{Binding BarListPlayCommand}" IsEnabled="True" />
+                        <dxb:BarButtonItem x:Name="M_Barlist" Content="(Start)" Glyph="{dx:DXImage SvgImages/DiagramIcons/Orientation/re-format.svg}" LargeGlyph="{dx:DXImage SvgImages/DiagramIcons/Orientation/re-format.svg}" Command="{Binding BarListPlayCommand}" IsEnabled="{Binding B_UPDATE}" />
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
             </dxr:RibbonDefaultPageCategory>

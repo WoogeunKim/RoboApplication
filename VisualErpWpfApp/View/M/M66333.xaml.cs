@@ -1,11 +1,15 @@
-﻿using AquilaErpWpfApp3.ViewModel;
+﻿using AquilaErpWpfApp3.Util;
+using AquilaErpWpfApp3.ViewModel;
 using DevExpress.Xpf.Printing;
 using DevExpress.XtraPrinting.Drawing;
+using ModelsLibrary.Code;
 using ModelsLibrary.Man;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -32,6 +36,111 @@ namespace AquilaErpWpfApp3.View.M
         {
             DataContext = new M66333ViewModel();
             InitializeComponent();
+        }
+
+        private async void GridColumn_Validate(object sender, DevExpress.Xpf.Grid.GridCellValidationEventArgs e)
+        {
+            try
+            {
+                ManVo masterDomain = (ManVo)DetailTable.GetFocusedRow();
+
+                bool itmshpcd = (e.Column.FieldName.ToString().Equals("ITM_SHP_CD") ? true : false);
+                bool itmstlcd = (e.Column.FieldName.ToString().Equals("ITM_STL_CD") ? true : false);
+                bool itmstlszcd = (e.Column.FieldName.ToString().Equals("ITM_STL_SZ_CD") ? true : false);
+
+                int _Num;
+
+                if (itmshpcd)
+                {
+                    if (e.IsValid)
+                    {
+                        if (string.IsNullOrEmpty(masterDomain.ITM_SHP_CD + ""))
+                        {
+                            masterDomain.ITM_SHP_CD = "";
+                            masterDomain.ITM_SHP_NM = "";
+                        }
+                        if (!masterDomain.ITM_SHP_CD.Equals((e.Value == null ? "" : e.Value.ToString())))
+                        {
+                            SystemCodeVo ItmShpDao = this.lue_ITM_SHP_CD.GetItemFromValue(e.Value) as SystemCodeVo;
+                            if (ItmShpDao != null)
+                            {
+                                masterDomain.ITM_SHP_CD = ItmShpDao.ITM_CD;
+                                masterDomain.ITM_SHP_NM = ItmShpDao.ITM_NM;
+                            }
+                        }
+                    }
+                }
+                else if (itmstlcd)
+                {
+
+                    if (e.IsValid)
+                    {
+                        if (string.IsNullOrEmpty(masterDomain.ITM_STL_CD + ""))
+                        {
+                            masterDomain.ITM_STL_CD = "";
+                            masterDomain.ITM_STL_NM = "";
+                        }
+                        if (!masterDomain.ITM_STL_CD.Equals((e.Value == null ? "" : e.Value.ToString())))
+                        {
+                            SystemCodeVo ItmShpDao = this.lue_ITM_STL_CD.GetItemFromValue(e.Value) as SystemCodeVo;
+                            if (ItmShpDao != null)
+                            {
+                                masterDomain.ITM_STL_CD = ItmShpDao.ITM_GRP_CD;
+                                masterDomain.ITM_STL_NM = ItmShpDao.ITM_GRP_NM;
+                            }
+                        }
+                    }
+                }
+
+                else if (itmstlszcd)
+                {
+
+                    if (e.IsValid)
+                    {
+                        if (string.IsNullOrEmpty(masterDomain.ITM_STL_SZ_CD + ""))
+                        {
+                            masterDomain.ITM_STL_SZ_CD = "";
+                            masterDomain.ITM_STL_SZ_NM = "";
+                        }
+                        if (!masterDomain.ITM_STL_SZ_CD.Equals((e.Value == null ? "" : e.Value.ToString())))
+                        {
+                            SystemCodeVo ItmShpDao = this.lue_ITM_STL_SZ_CD.GetItemFromValue(e.Value) as SystemCodeVo;
+                            if (ItmShpDao != null)
+                            {
+                                masterDomain.ITM_STL_SZ_CD = ItmShpDao.ITM_GRP_CD;
+                                masterDomain.ITM_STL_SZ_NM = ItmShpDao.ITM_GRP_NM;
+                            }
+                        }
+                    }
+                }
+                if (itmshpcd || itmstlcd || itmstlszcd)
+                {
+                    masterDomain.UPD_USR_ID = SystemProperties.USER;
+
+                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66333/dtl/u", new StringContent(JsonConvert.SerializeObject(masterDomain), System.Text.Encoding.UTF8, "application/json")))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string result = await response.Content.ReadAsStringAsync();
+                            if (int.TryParse(result, out _Num) == false)
+                            {
+                                //실패
+                                //WinUIMessageBox.Show(result, _title, MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                        }
+                    }
+                }
+                this.DetailTable.RefreshData();
+
+            }
+            catch (Exception eLog)
+            {
+                e.ErrorType = DevExpress.XtraEditors.DXErrorProvider.ErrorType.Critical;
+                e.ErrorContent = eLog.Message;
+                e.SetError(e.ErrorContent, e.ErrorType);
+                return;
+            }
         }
 
 

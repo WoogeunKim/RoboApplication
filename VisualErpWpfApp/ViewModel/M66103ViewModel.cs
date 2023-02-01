@@ -31,13 +31,15 @@ namespace AquilaErpWpfApp3.ViewModel
         {
             StartDt = System.DateTime.Now;
             EndDt = System.DateTime.Now;
-
+            B_UPDATE = false;
 
             SYSTEM_CODE_VO();
+
+
         }
 
         [Command]
-        public async void Refresh()
+        public async void Refresh(string _num = null)
         {
             try
             {
@@ -59,12 +61,22 @@ namespace AquilaErpWpfApp3.ViewModel
 
                         if (SelectMstList.Count > 0)
                         {
-                            SelectedMstItem = SelectMstList[0];
+                            if(_num == null)
+                            {
+                                SelectedMstItem = SelectMstList[0];
+                            }
+                            else
+                            {
+                                SelectedMstItem = SelectMstList.Where(x => x.RN.ToString().Equals(_num)).FirstOrDefault<ManVo>();
+                            }
+
+                            B_UPDATE = true;
                         }
                         else
                         {
                             this.SelectDtlList = new List<ManVo>();
                             SelectedMstItem = null;
+                            B_UPDATE = false;
                         }
                     }
                 }
@@ -83,8 +95,6 @@ namespace AquilaErpWpfApp3.ViewModel
             {
                 if (SelectedMstItem == null) return;
 
-                if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
-
                 using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66103/bar/count", new StringContent(JsonConvert.SerializeObject(SelectedMstItem), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
@@ -97,7 +107,6 @@ namespace AquilaErpWpfApp3.ViewModel
                             MessageBoxResult result = WinUIMessageBox.Show("재시작 하시겠습니까?", "바리스트 재시작", MessageBoxButton.YesNo, MessageBoxImage.Question);
                             if (result == MessageBoxResult.No)
                             {
-                                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
                                 return;
                             }
 
@@ -110,7 +119,6 @@ namespace AquilaErpWpfApp3.ViewModel
                                     if (int.TryParse(resultMsg, out _Num) == false)
                                     {
                                         //실패
-                                        if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
                                         WinUIMessageBox.Show(resultMsg, _title, MessageBoxButton.OK, MessageBoxImage.Error);
                                         return;
                                     }
@@ -118,34 +126,36 @@ namespace AquilaErpWpfApp3.ViewModel
                             }
                         }
 
+                        //if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
 
                         HttpClient httpClient = new HttpClient();
                         httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
                         string url = "http://210.217.42.139:8880/analyze?";
                         string value = "PUR_NO=" + SelectedMstItem.PUR_NO + "&" + "PUR_SEQ=" + SelectedMstItem.PUR_SEQ.ToString();
-                        //string value = url + "\"PUR_NO\":\"" + SelectedMstItem.PUR_NO + "\"," + "\"PUR_SEQ\":\"" + SelectedMstItem.PUR_SEQ.ToString() + "\"";
 
-                        using (var playResponse = await httpClient.GetAsync(url+value))
-                        {
-                            if (HttpStatusCode.OK != playResponse.StatusCode)
-                            {
-                                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
-                                WinUIMessageBox.Show(playResponse.ReasonPhrase, _title, MessageBoxButton.OK, MessageBoxImage.Error);
-                                return;
-                            }
-                        }
+                        httpClient.GetAsync(url + value);
 
-                        if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+                        //using (var playResponse = await httpClient.GetAsync(url+value))
+                        //{
+                        //    if (HttpStatusCode.OK != playResponse.StatusCode)
+                        //    {
+                        //        if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+                        //        WinUIMessageBox.Show(playResponse.ReasonPhrase, _title, MessageBoxButton.OK, MessageBoxImage.Error);
+                        //        return;
+                        //    }
+                        //}
 
-                        Refresh();
+                        //if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+
+                        Refresh(SelectedMstItem.RN.ToString());
                     }
 
                 }
             }
             catch (System.Exception eLog)
             {  
-                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+                //if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
 
                 WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
@@ -257,5 +267,13 @@ namespace AquilaErpWpfApp3.ViewModel
             get { return _endDt; }
             set { SetProperty(ref _endDt, value, () => EndDt); }
         }
+
+        bool _B_UPDATE;
+        public bool B_UPDATE
+        {
+            get { return _B_UPDATE; }
+            set { SetProperty(ref _B_UPDATE, value, () => B_UPDATE); }
+        }
+
     }
 }

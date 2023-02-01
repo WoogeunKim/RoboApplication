@@ -9007,10 +9007,13 @@
 		    AND T1.SL_RLSE_DT   <![CDATA[<=]]> CAST(#TO_DT# + ' 23:59:59' AS DATETIME)
 	  </select>
 
+
 	  <!--수동수주출력-생산활용 - DTL-->
 	  <select id="M66333SelectDtl" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
 		  SELECT
-		        T2.SL_RLSE_SEQ
+		        T2.CHNL_CD
+		      , T2.SL_RLSE_NO
+		      , T2.SL_RLSE_SEQ
 		      , T2.SL_ITM_QTY
 		      , T2.SL_ITM_WGT
 		      , T2.ITM_SHP_CD
@@ -9035,39 +9038,65 @@
 		      , T4.E_VAL
 		      , T4.F_LEN
 		      , T4.F_VAL
-		  FROM TB_SL_RLSE       T1
-		     , TB_SL_RLSE_DTL   T2
-		       OUTER APPLY (
-		          SELECT X.A_LEN, X.B_LEN, X.C_LEN, X.D_LEN, X.E_LEN, X.F_LEN, X.A_VAL, X.B_VAL, X.C_VAL, X.D_VAL, X.E_VAL, X.F_VAL
-		            FROM TB_MES_PROD_DESC  X
-		          WHERE 1 = 1
-		            AND X.SL_RLSE_NO   = T2.SL_RLSE_NO
-		            AND X.SL_RLSE_SEQ  = T2.SL_RLSE_SEQ
+		    FROM TB_SL_RLSE       T1
+		      , TB_SL_RLSE_DTL    T2
+		      OUTER APPLY (
+		        SELECT X.A_LEN, X.B_LEN, X.C_LEN, X.D_LEN, X.E_LEN, X.F_LEN, X.A_VAL, X.B_VAL, X.C_VAL, X.D_VAL, X.E_VAL, X.F_VAL
+		          FROM TB_MES_PROD_DESC  X
+		         WHERE 1 = 1
+		           AND X.SL_RLSE_NO   = T2.SL_RLSE_NO
+		           AND X.SL_RLSE_SEQ  = T2.SL_RLSE_SEQ
 		      ) T4
-		       OUTER APPLY (
-		             SELECT X.ITM_NM   AS ITM_SHP_NM
-		                  , X.ITM_CD AS SHP_CD
-		                  , Z.ITM_IMG
-		                FROM TB_CD_ITM  X
-		                  OUTER APPLY (
-		                      SELECT Z.IMG  AS ITM_IMG
-		                        FROM TB_CD_ITM_IMG Z
-		                       WHERE 1 = 1
-		                         AND X.CHNL_CD = Z.CHNL_CD
-		                         AND X.ITM_CD  = Z.ITM_CD
-		                  ) Z
-		    WHERE 1 = 1
-		      AND X.CHNL_CD           = #CHNL_CD#
-		      AND X.ITM_GRP_CLSS_CD   = 'P'
-		      AND X.DELT_FLG          = 'N'
-		      AND X.ITM_CD           = T2.ITM_SHP_CD
-		  ) T3
-		  WHERE 1 = 1
-		    AND T1.CHNL_CD      = T2.CHNL_CD
-		    AND T1.CHNL_CD      = #CHNL_CD#
-		    AND T1.SL_RLSE_NO   = T2.SL_RLSE_NO
-		    AND T1.SL_RLSE_NO   = #SL_RLSE_NO#
+		      OUTER APPLY (
+		        SELECT X.ITM_NM   AS ITM_SHP_NM
+		          , X.ITM_CD AS SHP_CD
+		          , Z.ITM_IMG
+		          FROM TB_CD_ITM  X
+		              OUTER APPLY (
+		                SELECT Z.IMG  AS ITM_IMG
+		                  FROM TB_CD_ITM_IMG Z
+		                 WHERE 1 = 1
+		                   AND X.CHNL_CD = Z.CHNL_CD
+		                   AND X.ITM_CD  = Z.ITM_CD
+		              ) Z
+		      WHERE 1 = 1
+		        AND X.CHNL_CD           = #CHNL_CD#
+		        AND X.ITM_GRP_CLSS_CD   = 'P'
+		        AND X.DELT_FLG          = 'N'
+		        AND X.ITM_CD           = T2.ITM_SHP_CD
+		      ) T3
+		   WHERE 1 = 1
+		     AND T1.CHNL_CD      = T2.CHNL_CD
+		     AND T1.CHNL_CD      = #CHNL_CD#
+		     AND T1.SL_RLSE_NO   = T2.SL_RLSE_NO
+		     AND T1.SL_RLSE_NO   = #SL_RLSE_NO#
 	  </select>
+
+
+	  <isNotNull property="EXTR_STS_CD" >
+		  AND T2.EXTR_STS_CD = #EXTR_STS_CD#
+	  </isNotNull>
+
+	  <update id="M66333UpdateDtl" parameterClass="ModelsLibrary.Man.ManVo">
+		  UPDATE TB_SL_RLSE_DTL
+		     SET UPD_USR_ID    = #UPD_USR_ID#
+		          , UPD_DT        = GETDATE()
+		          <isNotNull property="ITM_SHP_CD" >
+			          , ITM_SHP_CD    = #ITM_SHP_CD#
+		          </isNotNull>
+		          <isNotNull property="ITM_STL_CD" >
+			          , ITM_STL_CD     = #ITM_STL_CD#
+		          </isNotNull>
+		          <isNotNull property="ITM_STL_SZ_CD" >
+			          , ITM_STL_SZ_CD  = #ITM_STL_SZ_CD#
+		          </isNotNull>
+		   FROM TB_SL_RLSE_DTL
+		  WHERE 1 = 1
+		    AND CHNL_CD      = #CHNL_CD#
+		    AND SL_RLSE_NO   = #SL_RLSE_NO#
+		    AND SL_RLSE_SEQ  = #SL_RLSE_SEQ#
+	  </update>
+
 
 	  <select id="M6521SelectRoutCd" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
 		  SELECT TOP 1 ROUT_CD
@@ -9123,7 +9152,8 @@
 	  
 	  <select id="M66103SelectMstList" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
 	   	SELECT 
-               T1.PUR_NO               
+		       ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.PUR_NO, T2.PUR_SEQ) AS RN
+             , T1.PUR_NO               
              , T2.PUR_SEQ         
              , CONVERT(CHAR(10), T1.PUR_DT, 23) AS PUR_DT
              , CONVERT(CHAR(10), T1.DUE_DT, 23) AS DUE_DT       
