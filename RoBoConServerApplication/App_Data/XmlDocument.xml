@@ -2112,6 +2112,16 @@
              수동수주출력 / 생산 활용 - DTL 조회
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66333Controller.GetDtlUpdate(ModelsLibrary.Man.ManVo)">
+            <summary>
+            수동수주출력 / 생산 활용 - DTL 수정
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66333Controller.GetItmSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+             수동수주출력 / 생산 활용 - 자재정보 조회
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Man.M6638Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
             <summary>
             LOC 관리 MST  - 조회
