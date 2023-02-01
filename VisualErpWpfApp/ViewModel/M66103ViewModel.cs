@@ -14,6 +14,11 @@ using System.Windows.Media;
 using AquilaErpWpfApp3.Util;
 using System;
 using ModelsLibrary.Code;
+using System.Web;
+using System.Net;
+using System.IO;
+using System.Text;
+using System.Net.Http.Headers;
 
 namespace AquilaErpWpfApp3.ViewModel
 {
@@ -59,6 +64,7 @@ namespace AquilaErpWpfApp3.ViewModel
                         else
                         {
                             this.SelectDtlList = new List<ManVo>();
+                            SelectedMstItem = null;
                         }
                     }
                 }
@@ -71,6 +77,81 @@ namespace AquilaErpWpfApp3.ViewModel
         }
 
         [Command]
+        public async void BarListPlay()
+        {
+            try
+            {
+                if (SelectedMstItem == null) return;
+
+                if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
+
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66103/bar/count", new StringContent(JsonConvert.SerializeObject(SelectedMstItem), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        int barCount = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
+
+                        // 수정하는 것
+                        if (barCount > 0)
+                        {
+                            MessageBoxResult result = WinUIMessageBox.Show("재시작 하시겠습니까?", "바리스트 재시작", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                            if (result == MessageBoxResult.No)
+                            {
+                                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+                                return;
+                            }
+
+                            using (HttpResponseMessage DelResponse = await SystemProperties.PROGRAM_HTTP.PostAsync("m66103/bar/d", new StringContent(JsonConvert.SerializeObject(SelectedMstItem), System.Text.Encoding.UTF8, "application/json")))
+                            {
+                                if (DelResponse.IsSuccessStatusCode)
+                                {
+                                    int _Num = 0;
+                                    string resultMsg = await DelResponse.Content.ReadAsStringAsync();
+                                    if (int.TryParse(resultMsg, out _Num) == false)
+                                    {
+                                        //실패
+                                        if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+                                        WinUIMessageBox.Show(resultMsg, _title, MessageBoxButton.OK, MessageBoxImage.Error);
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+
+
+                        HttpClient httpClient = new HttpClient();
+                        httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                        string url = "http://210.217.42.139:8880/analyze?";
+                        string value = "PUR_NO=" + SelectedMstItem.PUR_NO + "&" + "PUR_SEQ=" + SelectedMstItem.PUR_SEQ.ToString();
+                        //string value = url + "\"PUR_NO\":\"" + SelectedMstItem.PUR_NO + "\"," + "\"PUR_SEQ\":\"" + SelectedMstItem.PUR_SEQ.ToString() + "\"";
+
+                        using (var playResponse = await httpClient.GetAsync(url+value))
+                        {
+                            if (HttpStatusCode.OK != playResponse.StatusCode)
+                            {
+                                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+                                WinUIMessageBox.Show(playResponse.ReasonPhrase, _title, MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                        }
+
+                        if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+
+                        Refresh();
+                    }
+
+                }
+            }
+            catch (System.Exception eLog)
+            {  
+                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+
+                WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+        }
+
         public async void DtlRefresh()
         {
             try

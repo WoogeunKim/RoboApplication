@@ -9128,6 +9128,7 @@
              , CONVERT(CHAR(10), T1.PUR_DT, 23) AS PUR_DT
              , CONVERT(CHAR(10), T1.DUE_DT, 23) AS DUE_DT       
              , T1.PUR_CO_CD               
+             , dbo.CD_COMPANY_NM_FNC(#CHNL_CD#, T1.PUR_CO_CD) AS PUR_CO_NM
              , T2.FLR_FILE_ID           
              , T2.FLR_NO                     
              , T2.FLR_FILE_ID+ '_' + T2.FLR_NM  AS FLR_FILE     
@@ -9182,6 +9183,54 @@
            AND T1.PUR_NO   = #PUR_NO#
            AND T1.PUR_SEQ  = #PUR_SEQ#
 	  </select>
+
+	  <select id="M66103SelectBarlistCount" parameterClass="ModelsLibrary.Man.ManVo" resultClass="int">
+		  SELECT COUNT(*)
+		    FROM TB_BAR_EXTR_LOG
+		   WHERE 1 = 1
+		     AND PUR_NO = #PUR_NO#
+		     AND PUR_SEQ = #PUR_SEQ#
+	  </select>
+	  
+	  <update id="M66103UpdateBarlist" parameterClass="ModelsLibrary.Man.ManVo">
+		 UPDATE TB_CUST_PUR_DTL 
+            SET EXTR_STS_CD = 'S'
+          WHERE 1 = 1
+            AND PUR_NO = #PUR_NO#
+            AND PUR_SEQ = #PUR_SEQ#
+	  </update>
+	  
+	  <delete id="M66103DeleteBarlist1" parameterClass="ModelsLibrary.Man.ManVo">
+		  DELETE FROM TB_BAR_LIST 
+		   WHERE 1 = 1 
+		     AND PUR_NO = #PUR_NO# 
+			 AND PUR_SEQ = #PUR_SEQ#
+	  </delete>
+	  <delete id="M66103DeleteBarlist2" parameterClass="ModelsLibrary.Man.ManVo">
+		  DELETE FROM TB_BAR_EXTR_LOG 
+		   WHERE 1 = 1 
+		     AND PUR_NO = #PUR_NO#  
+			 AND PUR_SEQ = #PUR_SEQ#
+	  </delete>
+	  <delete id="M66103DeleteBarlist3" parameterClass="ModelsLibrary.Man.ManVo">
+		  DELETE FROM TB_SL_RLSE_DTL 
+		   WHERE 1 = 1 
+		     AND CUST_PUR_NO = #PUR_NO#  
+			 AND CUST_PUR_SEQ = #PUR_SEQ#
+	  </delete>
+	  <delete id="M66103DeleteBarlist4" parameterClass="ModelsLibrary.Man.ManVo">
+		  DELETE FROM TB_RBK_CD_ITM 
+		   WHERE 1 = 1 
+		     AND PUR_NO = #PUR_NO#  
+			 AND PUR_SEQ = #PUR_SEQ#
+	  </delete>
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 	  
 	  <!-- BarList 추출검증 -->
      <select id="M66105SelectMst" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">

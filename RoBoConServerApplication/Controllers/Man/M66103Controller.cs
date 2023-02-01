@@ -45,5 +45,53 @@ namespace VisualServerApplication.Controllers.Man
             }
         }
 
+        /// <summary>
+        /// 도면바리스트형상추출 - 실행 조회
+        /// </summary>
+        [Route("bar/count")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetBarCountSelect([FromBody] ManVo vo)
+        {
+            try
+            {
+                return Ok<int>(Properties.EntityMapper.QueryForObject<int>("M66103SelectBarlistCount", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+        /// <summary>
+        /// 도면바리스트형상추출 - 실행 조회
+        /// </summary>
+        [Route("bar/d")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetBarDelete([FromBody] ManVo vo)
+        {
+            try
+            {
+                Properties.EntityMapper.BeginTransaction();
+
+                Properties.EntityMapper.Update("M66103UpdateBarlist", vo);
+                Properties.EntityMapper.Delete("M66103DeleteBarlist1", vo);
+                Properties.EntityMapper.Delete("M66103DeleteBarlist2", vo);
+                Properties.EntityMapper.Delete("M66103DeleteBarlist3", vo);
+                Properties.EntityMapper.Delete("M66103DeleteBarlist4", vo);
+
+                Properties.EntityMapper.CommitTransaction();
+
+                return Ok<int>(1);
+            }
+            catch (System.Exception eLog)
+            {
+                Properties.EntityMapper.RollBackTransaction();
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+
     }
 }

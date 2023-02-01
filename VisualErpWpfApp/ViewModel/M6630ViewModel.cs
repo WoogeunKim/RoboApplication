@@ -86,9 +86,9 @@ namespace AquilaErpWpfApp3.ViewModel
                     _param.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
                     _param.UPD_USR_ID = SystemProperties.USER;
                     _param.DELT_FLG = "N";
-                
 
-                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m6630/mst", new StringContent(JsonConvert.SerializeObject(_param), System.Text.Encoding.UTF8, "application/json")))
+
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m6630/mst", new StringContent(JsonConvert.SerializeObject(_param), System.Text.Encoding.UTF8, "application/json")))
                     {
 
                         SelectMstList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();

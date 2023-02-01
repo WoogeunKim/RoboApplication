@@ -82,6 +82,10 @@
 
                         <dxb:BarButtonItem x:Name="M_ref" Content="조회" KeyGesture="F5" Glyph="{dx:DXImage Image=Refresh2_16x16.png}" LargeGlyph="{dx:DXImage Image=Refresh2_32x32.png}" Command="{Binding RefreshCommand}" />
                     </dxr:RibbonPageGroup>
+
+                    <dxr:RibbonPageGroup Caption="바리스트 추출">
+                        <dxb:BarButtonItem x:Name="M_Barlist" Content="(Start)" Glyph="{dx:DXImage SvgImages/DiagramIcons/Orientation/re-format.svg}" LargeGlyph="{dx:DXImage SvgImages/DiagramIcons/Orientation/re-format.svg}" Command="{Binding BarListPlayCommand}" IsEnabled="True" />
+                    </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
             </dxr:RibbonDefaultPageCategory>
         </dxr:RibbonControl>
@@ -130,7 +134,7 @@
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="PUR_CO_CD" Header="발주업체" Width="150" HorizontalHeaderContentAlignment="Center" VisibleIndex="7">
+                                <dxg:GridColumn FieldName="PUR_CO_NM" Header="발주업체" Width="150" HorizontalHeaderContentAlignment="Center" VisibleIndex="7">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>

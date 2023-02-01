@@ -73,15 +73,15 @@
                             <!-- 조회 조건 -->
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="37"/>
+                                    <RowDefinition Height="0"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
-                                <dxe:ImageEdit HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Source="{dx:DXImage Image=Preview_16x16.png}" Grid.Row="0" ShowMenu="False" BorderBrush="#00000000" ShowBorder="False"  Margin="20,0,0,0" />
+                                <!--<dxe:ImageEdit HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Source="{dx:DXImage Image=Preview_16x16.png}" Grid.Row="0" ShowMenu="False" BorderBrush="#00000000" ShowBorder="False"  Margin="20,0,0,0" />
                                 <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" FontSize="15" Grid.Column="0" Margin="37,0,0,0"  >
                                     <Run Text="조회 조건 : "></Run>
                                     <Run Text="{Binding Title}" Foreground="#2BA5BA" FontWeight="Bold" ></Run>
-                                </TextBlock>
+                                </TextBlock>-->
 
                                 <Separator HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Foreground="LightGray"  />
 
@@ -91,16 +91,16 @@
                                             <dxd:LayoutPanel Caption="물품 리스트" AllowContextMenu="False" AllowClose="False" ShowCaption="False" CaptionImage="{dx:DXImage Image=Zoom100_16x16.png}" AllowMaximize="True">
                                                 <dxg:GridControl x:Name="ViewGridMst" AutoExpandAllGroups="False" ItemsSource="{Binding Path=SelectMstList}" SelectedItem="{Binding Path=SelectedMstItem, Mode=TwoWay}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="1">
                                                     <dxg:GridControl.View>
-                                                        <dxg:TableView x:Name="ViewTableMst" FontSize="13" ShowTotalSummary="True" ShowFixedTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" AutoWidth="False" AllowPerPixelScrolling="True" ShowGroupPanel="False" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT, Path=EditValue}">
+                                                        <dxg:TableView x:Name="ViewTableMst" FontSize="13" ShowTotalSummary="True" ShowFixedTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" AutoWidth="False" AllowPerPixelScrolling="True" ShowGroupPanel="True" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT, Path=EditValue}">
                                                             <dxg:TableView.FormatConditions>
                                                                 <dxg:FormatCondition FieldName="BAR_SHAP_NO" Expression="[VIS_FLG] = 'Y'" >
                                                                     <dxg:FormatCondition.Format>
-                                                                        <dx:Format Foreground="#EB5757"/>
+                                                                        <dx:Format Background="#EB5757"/>
                                                                     </dxg:FormatCondition.Format>
                                                                 </dxg:FormatCondition>
                                                                 <dxg:FormatCondition FieldName="BAR_SHAP_NO" Expression="[VIS_FLG] = 'N'" >
                                                                     <dxg:FormatCondition.Format>
-                                                                        <dx:Format Foreground="#A6CAF0"/>
+                                                                        <dx:Format Background="#A6CAF0"/>
                                                                     </dxg:FormatCondition.Format>                                                                    
                                                                 </dxg:FormatCondition>
                                                             </dxg:TableView.FormatConditions>
