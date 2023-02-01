@@ -94,11 +94,11 @@ namespace AquilaErpWpfApp3.ViewModel
             try
             {
                 //형상 코드
-                using (HttpResponseMessage responseX = await SystemProperties.PROGRAM_HTTP.PostAsync("s141/mini", new StringContent(JsonConvert.SerializeObject(new SystemCodeVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD, ITM_GRP_CLSS_CD = "P", DELT_FLG = "N" }), System.Text.Encoding.UTF8, "application/json")))
+                using (HttpResponseMessage responseX = await SystemProperties.PROGRAM_HTTP.PostAsync("m66333/itm", new StringContent(JsonConvert.SerializeObject(new ManVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD, ITM_GRP_CLSS_CD = "P", DELT_FLG = "N" }), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (responseX.IsSuccessStatusCode)
                     {
-                        this.ShpCdList = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await responseX.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
+                        this.ShpCdList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await responseX.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
                     }
                 }
 
@@ -179,8 +179,8 @@ namespace AquilaErpWpfApp3.ViewModel
             set { SetProperty(ref selectedDtlList, value, () => SelectDtlList); }
         }
 
-        private IList<SystemCodeVo> _shpCdList;
-        public IList<SystemCodeVo> ShpCdList
+        private IList<ManVo> _shpCdList;
+        public IList<ManVo> ShpCdList
         {
             get { return _shpCdList; }
             set { SetProperty(ref _shpCdList, value, () => ShpCdList); }

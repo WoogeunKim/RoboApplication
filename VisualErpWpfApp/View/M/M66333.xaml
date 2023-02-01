@@ -161,7 +161,7 @@
                                         </dxg:GridColumn>
                                         <dxg:GridColumn FieldName="ITM_SHP_CD" Header="형상코드" Width="80" AllowColumnFiltering="False" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate">
                                             <dxg:GridColumn.EditSettings>
-                                                <dxg:LookUpEditSettings Name="lue_ITM_SHP_CD" ItemsSource="{Binding ShpCdList}" HorizontalContentAlignment="Left"  VerticalContentAlignment="Center" IsSynchronizedWithCurrentItem="False" DisplayMember="ITM_CD" ValueMember="ITM_CD" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="False" PopupWidth="250" >
+                                                <dxg:LookUpEditSettings Name="lue_ITM_SHP_CD" ItemsSource="{Binding ShpCdList}" HorizontalContentAlignment="Left"  VerticalContentAlignment="Center" IsSynchronizedWithCurrentItem="False" DisplayMember="ITM_CD" ValueMember="ITM_CD" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="False" PopupWidth="350" >
                                                     <dxg:LookUpEditSettings.PopupContentTemplate>
                                                         <ControlTemplate>
                                                             <dxg:GridControl Name="PART_GridControl">
@@ -178,6 +178,20 @@
                                                                         <dxg:GridColumn.EditSettings>
                                                                             <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
                                                                         </dxg:GridColumn.EditSettings>
+                                                                    </dxg:GridColumn>
+                                                                    <dxg:GridColumn Header="품명" FieldName="ITM_IMG" Width="80" HorizontalHeaderContentAlignment="Center" CellTemplate="{StaticResource iconTemplate}">
+                                                                        <dxg:GridColumn.PrintCellStyle>
+                                                                            <Style TargetType="{x:Type dxe:TextEdit}" BasedOn="{StaticResource {dxgt:TableViewThemeKey ResourceKey=DefaultPrintCellStyle}}">
+                                                                                <Setter Property="dxp:ExportSettings.TargetType" Value="Image" />
+                                                                                <Setter Property="DisplayTemplate">
+                                                                                    <Setter.Value>
+                                                                                        <ControlTemplate TargetType="dxe:TextEdit">
+                                                                                            <dxe:ImageEdit Source="{Binding Path=Value}"/>
+                                                                                        </ControlTemplate>
+                                                                                    </Setter.Value>
+                                                                                </Setter>
+                                                                            </Style>
+                                                                        </dxg:GridColumn.PrintCellStyle>
                                                                     </dxg:GridColumn>
                                                                 </dxg:GridControl.Columns>
                                                             </dxg:GridControl>

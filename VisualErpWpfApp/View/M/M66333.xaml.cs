@@ -61,7 +61,7 @@ namespace AquilaErpWpfApp3.View.M
                         }
                         if (!masterDomain.ITM_SHP_CD.Equals((e.Value == null ? "" : e.Value.ToString())))
                         {
-                            SystemCodeVo ItmShpDao = this.lue_ITM_SHP_CD.GetItemFromValue(e.Value) as SystemCodeVo;
+                            ManVo ItmShpDao = this.lue_ITM_SHP_CD.GetItemFromValue(e.Value) as ManVo;
                             if (ItmShpDao != null)
                             {
                                 masterDomain.ITM_SHP_CD = ItmShpDao.ITM_CD;

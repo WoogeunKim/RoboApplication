@@ -96,5 +96,24 @@ namespace VisualServerApplication.Controllers.Man
             }
         }
 
+
+        /// <summary>
+        ///  수동수주출력 / 생산 활용 - 자재정보 조회
+        /// </summary>
+        [Route("itm")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetItmSelect([FromBody] ManVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<ManVo>>(Properties.EntityMapper.QueryForList<ManVo>("M66333SelectItmList", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
     }
 }

@@ -9071,11 +9071,25 @@
 		     AND T1.SL_RLSE_NO   = T2.SL_RLSE_NO
 		     AND T1.SL_RLSE_NO   = #SL_RLSE_NO#
 	  </select>
-
-
-	  <isNotNull property="EXTR_STS_CD" >
-		  AND T2.EXTR_STS_CD = #EXTR_STS_CD#
-	  </isNotNull>
+	  
+	   <!--수동수주출력-생산활용 - DTL-->
+	  <select id="M66333SelectItmList" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
+		  SELECT T1.ITM_CD 
+              ,  T1.ITM_NM
+              ,  T2.ITM_IMG 
+            FROM TB_CD_ITM  T1
+                OUTER APPLY (
+                    SELECT X.IMG  AS ITM_IMG
+                      FROM TB_CD_ITM_IMG X
+                     WHERE 1 = 1
+                       AND X.ITM_CD   = T1.ITM_CD
+                       AND X.CHNL_CD  = #CHNL_CD#
+                ) T2
+            WHERE 1 = 1
+              AND T1.CHNL_CD          = #CHNL_CD#
+              AND T1.ITM_GRP_CLSS_CD  = #ITM_GRP_CLSS_CD#
+              AND T1.DELT_FLG         = #DELT_FLG#        
+	  </select>
 
 	  <update id="M66333UpdateDtl" parameterClass="ModelsLibrary.Man.ManVo">
 		  UPDATE TB_SL_RLSE_DTL
