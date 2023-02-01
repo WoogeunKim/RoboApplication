@@ -169,7 +169,7 @@
                                                                     <dxg:TableView Name="View_Itm_Shp_Cd" SearchDelay="0"  ShowColumnHeaders="True" NewItemRowPosition="None" ShowGroupedColumns="True" AutoWidth="True" AllowPerPixelScrolling="True" ScrollAnimationDuration="0" ShowAutoFilterRow="False" ShowTotalSummary="False"/>
                                                                 </dxg:GridControl.View>
                                                                 <dxg:GridControl.Columns>
-                                                                    <dxg:GridColumn Header="형상" FieldName="ITM_CD" Width="30" HorizontalHeaderContentAlignment="Center">
+                                                                    <dxg:GridColumn Header="코드" FieldName="ITM_CD" Width="30" HorizontalHeaderContentAlignment="Center">
                                                                         <dxg:GridColumn.EditSettings>
                                                                             <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                                                         </dxg:GridColumn.EditSettings>
@@ -179,7 +179,7 @@
                                                                             <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
                                                                         </dxg:GridColumn.EditSettings>
                                                                     </dxg:GridColumn>
-                                                                    <dxg:GridColumn Header="품명" FieldName="ITM_IMG" Width="80" HorizontalHeaderContentAlignment="Center" CellTemplate="{StaticResource iconTemplate}">
+                                                                    <dxg:GridColumn Header="형상" FieldName="ITM_IMG" Width="80" HorizontalHeaderContentAlignment="Center" CellTemplate="{StaticResource iconTemplate}">
                                                                         <dxg:GridColumn.PrintCellStyle>
                                                                             <Style TargetType="{x:Type dxe:TextEdit}" BasedOn="{StaticResource {dxgt:TableViewThemeKey ResourceKey=DefaultPrintCellStyle}}">
                                                                                 <Setter Property="dxp:ExportSettings.TargetType" Value="Image" />
