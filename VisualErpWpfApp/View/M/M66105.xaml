@@ -83,7 +83,7 @@
                                     <Run Text="{Binding Title}" Foreground="#2BA5BA" FontWeight="Bold" ></Run>
                                 </TextBlock>-->
 
-                                <Separator HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Foreground="LightGray"  />
+                                <!--<Separator HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Foreground="LightGray"  />-->
 
                                 <Grid Grid.Row="1">
                                     <dxd:DockLayoutManager x:Name="CodeManager" Grid.Row="1" FloatingMode="Desktop">

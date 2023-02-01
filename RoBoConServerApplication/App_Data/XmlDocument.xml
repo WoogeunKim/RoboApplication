@@ -2087,6 +2087,16 @@
             로그 DTL 관리 - 조회
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66103Controller.GetBarCountSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            도면바리스트형상추출 - 실행 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66103Controller.GetBarDelete(ModelsLibrary.Man.ManVo)">
+            <summary>
+            도면바리스트형상추출 - 실행 조회
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Man.M66105Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
             <summary>
             BarList 추출검증 조회
