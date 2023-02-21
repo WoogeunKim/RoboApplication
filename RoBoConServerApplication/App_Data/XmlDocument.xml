@@ -2077,6 +2077,16 @@
             품목 출고  - 삭제
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Inv.I6621Controller.GetMstSelect(ModelsLibrary.Inv.InvVo)">
+            <summary>
+            품목그룹별 대그룹 재고장 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Inv.I6621Controller.GetDtlSelect(ModelsLibrary.Inv.InvVo)">
+            <summary>
+            품목그룹별 중그룹 재고장 - 조회
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Man.M66103Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
             <summary>
             도면바리스트형상추출 Mst 관리 - 조회
@@ -2100,6 +2110,41 @@
         <member name="M:VisualServerApplication.Controllers.Man.M66105Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
             <summary>
             BarList 추출검증 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66107Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            Loss 최적화 수행 MST 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66107Controller.GetKeySelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            Loss 최적화 수행 MST 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66107Controller.GetMstInsert(ModelsLibrary.Man.ManVo)">
+            <summary>
+            Loss 최적화 수행 MST - 추가
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66107Controller.GetMstUpdate(ModelsLibrary.Man.ManVo)">
+            <summary>
+            Loss 최적화 수행 MST - 수정
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66107Controller.GetDtlSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            Loss 최적화 수행 DTL 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66107Controller.GetDtlDiaSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            Loss 최적화 수행 DTL 다이얼로그 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66107Controller.GetDtlDiaInsert(System.Collections.Generic.IList{ModelsLibrary.Man.ManVo})">
+            <summary>
+            Loss 최적화 수행 DTL 다이얼로그 추가
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Man.M66333Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">

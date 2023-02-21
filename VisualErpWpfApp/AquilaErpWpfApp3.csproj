@@ -35,7 +35,7 @@
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>28</ApplicationRevision>
+    <ApplicationRevision>29</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -162,6 +162,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms">
       <Private>True</Private>
     </Reference>
@@ -240,12 +241,14 @@
     <Compile Include="ViewModel\I6618ViewModel.cs" />
     <Compile Include="ViewModel\I66201ViewModel.cs" />
     <Compile Include="ViewModel\I66210ViewModel.cs" />
+    <Compile Include="ViewModel\I6621ViewModel.cs" />
     <Compile Include="ViewModel\I66230ViewModel.cs" />
     <Compile Include="ViewModel\M6521ViewModel.cs" />
     <Compile Include="ViewModel\M6511ViewModel.cs" />
     <Compile Include="ViewModel\M6500ViewModel.cs" />
     <Compile Include="ViewModel\M66103ViewModel.cs" />
     <Compile Include="ViewModel\M66105ViewModel.cs" />
+    <Compile Include="ViewModel\M66107ViewModel.cs" />
     <Compile Include="ViewModel\M66333ViewModel.cs" />
     <Compile Include="ViewModel\M7711ViewModel.cs" />
     <Compile Include="ViewModel\M6641ViewModel.cs" />
@@ -306,6 +309,9 @@
     <Compile Include="View\INV\I66201.xaml.cs">
       <DependentUpon>I66201.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\INV\I6621.xaml.cs">
+      <DependentUpon>I6621.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\INV\I66210.xaml.cs">
       <DependentUpon>I66210.xaml</DependentUpon>
     </Compile>
@@ -320,6 +326,15 @@
     </Compile>
     <Compile Include="View\M\Dialog\M6521AddMasterDialog.xaml.cs">
       <DependentUpon>M6521AddMasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M66107DetailDialog.xaml.cs">
+      <DependentUpon>M66107DetailDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M66107MasterDialog.xaml.cs">
+      <DependentUpon>M66107MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M66107OptiDialog.xaml.cs">
+      <DependentUpon>M66107OptiDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\M\Dialog\M6684DocDialog.xaml.cs">
       <DependentUpon>M6684DocDialog.xaml</DependentUpon>
@@ -750,6 +765,9 @@
     </Compile>
     <Compile Include="View\M\M66105.xaml.cs">
       <DependentUpon>M66105.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66107.xaml.cs">
+      <DependentUpon>M66107.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\M\M66333.xaml.cs">
       <DependentUpon>M66333.xaml</DependentUpon>
@@ -1778,6 +1796,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\INV\I6621.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\INV\I66210.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1787,6 +1809,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\M\Dialog\M6521AddMasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M66107DetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M66107MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\Dialog\M66107OptiDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -2159,6 +2193,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\M\M66105.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66107.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -3352,11 +3390,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\logo.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7.2%28x86 및 x64%29</ProductName>
@@ -3388,8 +3421,14 @@
     <Resource Include="Images\red.png" />
     <Resource Include="Images\ktouch.png" />
     <Resource Include="Images\yellow.png" />
-    <Resource Include="Images\logo_32.png" />
     <Content Include="Dll\Popbill.dll" />
+    <Resource Include="Images\logo2.ico" />
+    <Resource Include="logo.ico" />
+    <Resource Include="logo2.ico" />
+    <Resource Include="Images\logo1.ico" />
+    <Resource Include="Images\logo.ico" />
+    <Resource Include="Images\logo_32.png" />
+    <Resource Include="Images\logo1_32.png" />
     <Content Include="uio32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
