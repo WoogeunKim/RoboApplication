@@ -73,10 +73,12 @@ namespace AquilaErpWpfApp3.View.S.Dialog
                 HDQTR_PHN_NO =  Dao.HDQTR_PHN_NO,
                 //법인 등록 번호
                 CORP_CD = Dao.CORP_CD,
-                //영업 담당자 : (정)
+                //영업 담당자 : (정)      
                 N1ST_SLS_MAN = Dao.N1ST_SLS_MAN,
-                //영업 담당자 : (부)
+                N1ST_SLS_MAN_CD = Dao.N1ST_SLS_MAN_CD,
+                //영업 담당자 : (부)      
                 N2ND_SLS_MAN = Dao.N2ND_SLS_MAN,
+                N2ND_SLS_MAN_CD = Dao.N2ND_SLS_MAN_CD,
                 //지역 구분
                 AREA_CD = Dao.AREA_CD,
                 AREA_NM = Dao.AREA_NM,
@@ -670,9 +672,9 @@ namespace AquilaErpWpfApp3.View.S.Dialog
             //법인 등록 번호
             Dao.CORP_CD = this.text_CORP_CD.Text;
             //영업 담당자 : (정)
-            Dao.N1ST_SLS_MAN = this.combo_N1ST_SLS_MAN.Text;
+            Dao.N1ST_SLS_MAN_CD = this.combo_N1ST_SLS_MAN.Text;
             //영업 담당자 : (부)
-            Dao.N2ND_SLS_MAN = this.combo_N2ND_SLS_MAN.Text;
+            Dao.N2ND_SLS_MAN_CD = this.combo_N2ND_SLS_MAN.Text;
 
             if (SL_AREA_NMVo != null)
             {

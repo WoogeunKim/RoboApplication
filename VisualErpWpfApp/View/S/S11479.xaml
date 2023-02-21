@@ -227,8 +227,8 @@
                                                             <dxgn:GanttColumn FieldName="DUE_DT" Header="납기일"  Width="100"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" Visible="False" />
                                                             <dxgn:GanttColumn FieldName="S_DUE_DT" Header="납기일" Width="100"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" />
 
-                                                            <dxgn:GanttColumn FieldName="PRG_TP_NM" Header="바리스트" Width="120"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" />
-
+                                                            <dxgn:GanttColumn FieldName="PRG_TP_NM" Header="컨버팅프로그램" Width="120"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" />
+                                                            
                                                             <dxgn:GanttColumn FieldName="CNTR_RMK" Header="비고" Width="180"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" />
                                                         </dxgn:GanttControl.Columns>
                                                        

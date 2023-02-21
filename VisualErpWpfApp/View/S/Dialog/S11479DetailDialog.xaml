@@ -5,10 +5,11 @@
     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" mc:Ignorable="d"
     x:Class="AquilaErpWpfApp3.View.S.Dialog.S11479DetailDialog"
-    Title="Detail Code" Height="460" Width="400" FontFamily="Arial" WindowStartupLocation="CenterOwner" ShowIcon="True" ResizeMode="NoResize" FontSize="13" Icon="{dx:DXImage Image=AddItem_16x16.png}">
-
+    Title="Detail Code" Height="490" Width="400" FontFamily="Arial" WindowStartupLocation="CenterOwner" ShowIcon="True" ResizeMode="NoResize" FontSize="13" Icon="{dx:DXImage Image=AddItem_16x16.png}">
+    
     <Grid Width="380" x:Name="configCode">
         <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
@@ -113,7 +114,7 @@
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0"  Grid.Row="5" Text="공사명 : " HorizontalAlignment="Right" TextAlignment="Right" />
         <dxe:TextEdit x:Name="text_CNTR_NM" Grid.Column="1" Grid.Row="5" VerticalAlignment="Stretch" Text="{Binding CNTR_NM}"  Margin="2" />
 
-        <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0"  Grid.Row="6" Text="바리스트 : " HorizontalAlignment="Right" TextAlignment="Right"/>
+        <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0"  Grid.Row="6" Text="컨버팅프로그램 : " HorizontalAlignment="Right" TextAlignment="Right"/>
         <dxg:LookUpEdit HorizontalContentAlignment="Left" Grid.Column="1" Margin="2" Grid.Row="6" VerticalAlignment="Stretch" x:Name="combo_CD_DE" Text="{Binding PRG_TP_NM}" IsSynchronizedWithCurrentItem="True" DisplayMember="CLSS_DESC" ValueMember="CLSS_DESC" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="280" PopupWidth="320">
             <dxg:LookUpEdit.PopupContentTemplate>
                 <ControlTemplate>
@@ -142,25 +143,28 @@
             </dxg:LookUpEdit.PopupContentTemplate>
         </dxg:LookUpEdit>
 
-        <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0"  Grid.Row="7" Text="비고 : " HorizontalAlignment="Right" TextAlignment="Right" />
-        <dxe:TextEdit x:Name="text_CNTR_RMK" Grid.Column="1" Grid.Row="7" VerticalAlignment="Stretch" Text="{Binding CNTR_RMK}"  Margin="2" />
+        <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0"  Grid.Row="7" Text="중량 : " HorizontalAlignment="Right" TextAlignment="Right"/>
+        <dxe:TextEdit x:Name="text_ITM_WGT" Grid.Column="1" Grid.Row="7" VerticalAlignment="Stretch" Text="{Binding ITM_WGT}"  Margin="2" MaskType="Numeric" Mask="###,###,###,##0.00 ㎏" MaskUseAsDisplayFormat="True" />
 
-        
-        <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0" Grid.Row="8" Text="사용 여부 : " HorizontalAlignment="Right" TextAlignment="Right"/>
-        <dxe:ComboBoxEdit  x:Name="combo_DELT_FLG" Grid.Column="1" Grid.Row="8" Margin="2" VerticalAlignment="Stretch" Text="{Binding DELT_FLG, Mode=TwoWay }" IsTextEditable="False" ShowSizeGrip="False" >
+        <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0"  Grid.Row="8" Text="비고 : " HorizontalAlignment="Right" TextAlignment="Right" />
+        <dxe:TextEdit x:Name="text_CNTR_RMK" Grid.Column="1" Grid.Row="8" VerticalAlignment="Stretch" Text="{Binding CNTR_RMK}"  Margin="2" />
+
+
+        <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0" Grid.Row="9" Text="사용 여부 : " HorizontalAlignment="Right" TextAlignment="Right"/>
+        <dxe:ComboBoxEdit  x:Name="combo_DELT_FLG" Grid.Column="1" Grid.Row="9" Margin="2" VerticalAlignment="Stretch" Text="{Binding DELT_FLG, Mode=TwoWay }" IsTextEditable="False" ShowSizeGrip="False" >
             <dxe:ComboBoxEditItem Content="사용" IsSelected="True" />
             <dxe:ComboBoxEditItem Content="미사용" />
         </dxe:ComboBoxEdit>
 
-        
-        <Button x:Name="OKButton" Height="30" Margin="50,0,0,7" Grid.Column="1" VerticalAlignment="Bottom" Width="100" HorizontalAlignment="Left" Grid.Row="10">
+
+        <Button x:Name="OKButton" Height="30" Margin="50,0,0,7" Grid.Column="1" VerticalAlignment="Bottom" Width="100" HorizontalAlignment="Left" Grid.Row="11">
             <StackPanel HorizontalAlignment="Left" Width="62" Height="Auto" Orientation="Horizontal">
                 <Image Width="20" Height="20" Source="{dx:DXImage Image=Apply_16x16.png}" Stretch="Fill"/>
                 <TextBlock Margin="5,0,50,0" VerticalAlignment="Center" FontSize="18" Text="확인" TextWrapping="Wrap" Width="40"/>
             </StackPanel>
         </Button>
 
-        <Button x:Name="CancelButton" Height="30" Margin="0,0,14,7" VerticalAlignment="Bottom" Grid.Column="1" HorizontalAlignment="Right" Width="100" Grid.Row="10"  >
+        <Button x:Name="CancelButton" Height="30" Margin="0,0,14,7" VerticalAlignment="Bottom" Grid.Column="1" HorizontalAlignment="Right" Width="100" Grid.Row="11"  >
             <StackPanel HorizontalAlignment="Left" Width="62" Height="Auto" Orientation="Horizontal">
                 <Image Width="20" Height="20" Source="{dx:DXImage Image=Cancel_16x16.png}" Stretch="Fill"/>
                 <TextBlock Margin="5,0,50,0" VerticalAlignment="Center" FontSize="18" Text="취소" TextWrapping="Wrap" Width="40"/>

@@ -25,6 +25,20 @@
                            IsReadOnly="True" 
                            IsPrintingMode ="True"/>
         </DataTemplate>
+
+        <Style x:Key="customCellStyle" TargetType="{x:Type dxg:LightweightCellEditor}" >
+            <Setter Property="Background" Value="#afeeee" />
+            <Style.Triggers>
+                <Trigger Property="SelectionState" Value="Focused">
+                    <Setter Property="Background" Value="#FFA5EEBF" />
+                </Trigger>
+                <Trigger Property="dxg:DataViewBase.IsFocusedRow" Value="True">
+                    <Setter Property ="Foreground" Value="Black"/>
+                    <Setter Property="Background" Value="#FFA5EEBF"/>
+                    <!--<Setter Property="Background" Value="#6FC2FB"/>-->
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
     <Grid>
@@ -159,7 +173,7 @@
                                                 <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" AllowNullInput="False"  MaskType="Numeric" Mask="###,###,###,###,##0.0000"  MaskUseAsDisplayFormat="True"/>
                                             </dxg:GridColumn.EditSettings>
                                         </dxg:GridColumn>
-                                        <dxg:GridColumn FieldName="ITM_SHP_CD" Header="형상코드" Width="80" AllowColumnFiltering="False" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate">
+                                        <dxg:GridColumn FieldName="ITM_SHP_CD" Header="형상코드" Width="80" AllowColumnFiltering="False" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate" CellStyle="{StaticResource customCellStyle}">                                            
                                             <dxg:GridColumn.EditSettings>
                                                 <dxg:LookUpEditSettings Name="lue_ITM_SHP_CD" ItemsSource="{Binding ShpCdList}" HorizontalContentAlignment="Left"  VerticalContentAlignment="Center" IsSynchronizedWithCurrentItem="False" DisplayMember="ITM_CD" ValueMember="ITM_CD" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="False" PopupWidth="350" >
                                                     <dxg:LookUpEditSettings.PopupContentTemplate>
@@ -222,7 +236,7 @@
                                             </dxg:GridColumn.EditSettings>-->
                                         </dxg:GridColumn>
 
-                                        <dxg:GridColumn FieldName="ITM_STL_CD" Header="강종" Width="70" AllowColumnFiltering="False" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate">
+                                        <dxg:GridColumn FieldName="ITM_STL_CD" Header="강종" Width="70" AllowColumnFiltering="False" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate" CellStyle="{StaticResource customCellStyle}">                                            
                                             <dxg:GridColumn.EditSettings>
                                                 <dxg:LookUpEditSettings Name="lue_ITM_STL_CD" ItemsSource="{Binding StlCdList}" HorizontalContentAlignment="Left"  VerticalContentAlignment="Center" IsSynchronizedWithCurrentItem="False" DisplayMember="ITM_GRP_CD" ValueMember="ITM_GRP_CD" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="False" PopupWidth="250" >
                                                     <dxg:LookUpEditSettings.PopupContentTemplate>
@@ -253,7 +267,7 @@
                                             </dxg:GridColumn.EditSettings>
                                         </dxg:GridColumn>
 
-                                        <dxg:GridColumn FieldName="ITM_STL_SZ_CD" Header="규격" Width="70" AllowColumnFiltering="False" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate">
+                                        <dxg:GridColumn FieldName="ITM_STL_SZ_CD" Header="규격" Width="70" AllowColumnFiltering="False" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate" CellStyle="{StaticResource customCellStyle}">                                            
                                             <dxg:GridColumn.EditSettings>
                                                 <dxg:LookUpEditSettings Name="lue_ITM_STL_SZ_CD" ItemsSource="{Binding StlSzCdList}" HorizontalContentAlignment="Left"  VerticalContentAlignment="Center" IsSynchronizedWithCurrentItem="False" DisplayMember="ITM_GRP_CD" ValueMember="ITM_GRP_CD" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="False" PopupWidth="250" >
                                                     <dxg:LookUpEditSettings.PopupContentTemplate>

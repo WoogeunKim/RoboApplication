@@ -3348,6 +3348,58 @@
 		  AND PUR_ORD_SEQ =  #PUR_ORD_SEQ#
 	  </update>
 
-  
+     <!--품목그룹별 대그룹 재고장 조회-->
+     <select id="I6621SelectMstList" parameterClass="ModelsLibrary.Inv.InvVo" resultClass="ModelsLibrary.Inv.InvVo">
+        SELECT  T2.N1ST_ITM_GRP_CD
+              , T3.N1ST_ITM_GRP_NM
+              , SUM(T1.ITM_QTY)        AS N1ST_ITM_QTY
+              , ROUND(SUM(T1.ITM_QTY * ISNULL(T2.UOM_RUN_WGT, 0)), 0)  AS N1ST_ITM_WGT
+          FROM  TB_INVT_DLY_STK  T1
+              , TB_CD_ITM        T2
+        OUTER APPLY (
+            SELECT ITM_GRP_NM     AS N1ST_ITM_GRP_NM
+              FROM TB_CD_ITM_GRP  X
+             WHERE 1 = 1
+               AND X.CHNL_CD          = #CHNL_CD#
+               AND X.ITM_GRP_CLSS_CD  = 'M'
+               AND X.PRNT_ITM_GRP_CD  = 'T'
+               AND X.DELT_FLG         = 'N'
+               AND X.ITM_GRP_CD       = T2.N1ST_ITM_GRP_CD
+            ) T3
+         WHERE 1 = 1
+           AND T1.CHNL_CD         = #CHNL_CD#
+           AND T1.CHNL_CD         = T2.CHNL_CD
+           AND T1.ITM_CD          = T2.ITM_CD
+           AND T2.ITM_GRP_CLSS_CD = 'M'
+        GROUP BY T2.N1ST_ITM_GRP_CD
+             ,   T3.N1ST_ITM_GRP_NM
+     </select>
+
+     <!--품목그룹별 중그룹 재고장 조회-->
+     <select id="I6621SelectDtlList" parameterClass="ModelsLibrary.Inv.InvVo" resultClass="ModelsLibrary.Inv.InvVo">
+        SELECT T2.N2ND_ITM_GRP_CD
+             , MAX(T3.N2ND_ITM_GRP_NM) AS N2ND_ITM_GRP_NM
+             , SUM(T1.ITM_QTY) AS N2ND_ITM_QTY
+             , ROUND(SUM(T1.ITM_QTY * ISNULL(T2.UOM_RUN_WGT, 0)), 0)  AS N2ND_ITM_WGT
+          FROM TB_INVT_DLY_STK  T1
+             , TB_CD_ITM        T2
+        OUTER APPLY (
+            SELECT ITM_GRP_NM     AS N2ND_ITM_GRP_NM
+              FROM TB_CD_ITM_GRP  X
+             WHERE 1 = 1
+               AND X.CHNL_CD          = #CHNL_CD#
+               AND X.ITM_GRP_CLSS_CD  = 'M'
+               AND X.PRNT_ITM_GRP_CD  <![CDATA[<>]]> 'T'
+               AND X.DELT_FLG         = 'N'
+               AND X.ITM_GRP_CD       = T2.N2ND_ITM_GRP_CD
+            ) T3
+         WHERE 1 = 1
+           AND T1.CHNL_CD         = #CHNL_CD#
+           AND T1.CHNL_CD         = T2.CHNL_CD
+           AND T1.ITM_CD          = T2.ITM_CD
+           AND T2.ITM_GRP_CLSS_CD = 'M'
+        GROUP BY  T2.N2ND_ITM_GRP_CD
+     </select>
+	  
   </statements>
 </sqlMap>

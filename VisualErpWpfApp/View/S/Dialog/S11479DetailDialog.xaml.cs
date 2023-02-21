@@ -28,31 +28,32 @@ namespace AquilaErpWpfApp3.View.S.Dialog
             InitializeComponent();
 
             SYSTEM_CODE_VO();
-            
+
             this.orgDao = Dao;
             SystemCodeVo copyDao = new SystemCodeVo()
             {
                 DE_PRNT_NO = Dao.DE_PRNT_NO,
-                DE_CHD_NO  = Dao.DE_CHD_NO,
-                CO_NO      = Dao.CO_NO,
-                CO_NM      = Dao.CO_NM,
-                DE_CO_NM   = Dao.DE_CO_NM,
-                DUE_DT     = Dao.DUE_DT,
-                S_DUE_DT   = Dao.S_DUE_DT,
-                CNTR_NM    = Dao.CNTR_NM,
-                CNTR_RMK   = Dao.CNTR_RMK,
+                DE_CHD_NO = Dao.DE_CHD_NO,
+                CO_NO = Dao.CO_NO,
+                CO_NM = Dao.CO_NM,
+                DE_CO_NM = Dao.DE_CO_NM,
+                DUE_DT = Dao.DUE_DT,
+                S_DUE_DT = Dao.S_DUE_DT,
+                CNTR_NM = Dao.CNTR_NM,
+                CNTR_RMK = Dao.CNTR_RMK,
 
-                CRE_DT     = Dao.CRE_DT,
-                S_CRE_DT   = Dao.S_CRE_DT,
-                DELT_FLG   = Dao.DELT_FLG,
+                CRE_DT = Dao.CRE_DT,
+                S_CRE_DT = Dao.S_CRE_DT,
+                DELT_FLG = Dao.DELT_FLG,
                 CRE_USR_ID = Dao.CRE_USR_ID,
                 UPD_USR_ID = Dao.UPD_USR_ID,
-                CHNL_CD    = Dao.CHNL_CD,
+                CHNL_CD = Dao.CHNL_CD,
 
                 PRG_TP_NM = Dao.PRG_TP_NM,
                 PRG_TP_CD = Dao.PRG_TP_CD,
                 CLSS_CD = Dao.PRG_TP_CD,
-                CLSS_DESC = Dao.PRG_TP_NM
+                CLSS_DESC = Dao.PRG_TP_NM,
+                ITM_WGT = Dao.ITM_WGT
             };
 
             //수정
@@ -236,6 +237,7 @@ namespace AquilaErpWpfApp3.View.S.Dialog
             Dao.DUE_DT = this.text_DUE_DT.Text;
             Dao.CNTR_NM = this.text_CNTR_NM.Text;
             Dao.CNTR_RMK = this.text_CNTR_RMK.Text;
+            Dao.ITM_WGT = this.text_ITM_WGT.Text;
 
             SystemCodeVo coNo = this.combo_CO_NM.SelectedItem as SystemCodeVo;
             if (coNo != null)

@@ -2589,5 +2589,70 @@
             get;
             set;
         }
+        public string ORD_ID
+        {
+            get;
+            set;
+        }
+
+        public string OPMZ_STS_CD
+        {
+            get;
+            set;
+        }
+
+        public string OPMZ_STS_NM
+        {
+            get;
+            set;
+        }
+
+        public object OPMZ_LSS_RT
+        {
+            get;
+            set;
+        }
+
+        public string LOC_CD
+        {
+            get;
+            set;
+        }
+
+        public object ITM_LEN
+        {
+            get;
+            set;
+        }
+
+        public int? ITM_QTY
+        {
+            get;
+            set;
+        }
+
+        public object ITM_WGT
+        {
+            get;
+            set;
+        }
+
+        public string ORD_NO
+        {
+            get;
+            set;
+        }
+
+        public int? ORD_SEQ
+        {
+            get;
+            set;
+        }
+
+        public int? NO
+        {
+            get;
+            set;
+        }
     }
 }

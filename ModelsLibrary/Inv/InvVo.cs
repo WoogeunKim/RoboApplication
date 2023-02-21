@@ -1964,5 +1964,25 @@
             get;
             set;
         }
+        public object N1ST_ITM_QTY
+        {
+            get;
+            set;
+        }
+        public object N1ST_ITM_WGT
+        {
+            get;
+            set;
+        }
+        public object N2ND_ITM_QTY
+        {
+            get;
+            set;
+        }
+        public object N2ND_ITM_WGT
+        {
+            get;
+            set;
+        }
     }
 }

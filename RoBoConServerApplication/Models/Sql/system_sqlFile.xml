@@ -1006,251 +1006,314 @@
       </isNotNull>
     </select>
 
-    <select id="S143SelectCustomerDetailCode" parameterClass="ModelsLibrary.Code.SystemCodeVo" resultClass="ModelsLibrary.Code.SystemCodeVo">
-      SELECT TOP 1
-      CO_NO
-      , CO_NM
-      , CO_RGST_NO
-      , PRSD_NM
-      , HDQTR_PHN_NO
-      , dbo.FF_CD_CO_TP_NM(CO_NO) AS CO_TP_NM
-      , N1ST_BIZ_COND_CD
-      , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-002', N1ST_BIZ_COND_CD) AS N1ST_BIZ_COND_NM
-      , N1ST_BZTP_CD
-      , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-003', N1ST_BZTP_CD) AS N1ST_BZTP_NM
-      , CO_CLSS_CD
-      , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-006', CO_CLSS_CD) AS CO_CLSS_NM
-      , CO_TP_CD
-      , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-005', CO_TP_CD) AS CO_TP_NM
-      , DUE_DT_PRD_DY
-      , BSE_CURR_CD
-      , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-007', BSE_CURR_CD) AS BSE_CURR_NM
-      , INTERRLT_CO_CD
-      , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-010', INTERRLT_CO_CD) AS INTERRLT_CO_NM
-      , (CASE WHEN DELT_FLG = 'N' THEN '사용' ELSE '미사용' END) AS DELT_FLG
-      , PUR_CLZ_CD
-      , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-013', PUR_CLZ_CD) AS PUR_CLZ_NM
-      , CNTC_MAN_NM
-      , CNTC_MAN_PSN_NM
-      , CNTC_MAN_PHN_NO
-      , CNTC_MAN_EML
-      , N2ND_CNTC_MAN_NM
-      , N2ND_CNTC_MAN_PHN_NO
-      , N2ND_CNTC_MAN_EML
-      , N2ND_CNTC_MAN_PSN_NM
-      , TAX_MAN_NM
-      , TAX_MAN_PHN_NO
-      , TAX_MAN_PSN_NM
-      , TAX_MAN_EML
-      , HDQTR_PST_NO
-      , HDQTR_ADDR
-      , HDQTR_FAX_NO
-      , N1ST_AREA_PST_NO
-      , N1ST_AREA_ADDR
-      , N1ST_AREA_PHN_NO
-      , N1ST_AREA_FAX_NO
-      , N2ND_AREA_PST_NO
-      , N2ND_AREA_ADDR
-      , N2ND_AREA_PHN_NO
-      , N2ND_AREA_FAX_NO
-      , N1ST_AREA_NM
-      , N2ND_AREA_NM
-      , HDQTR_AREA_NM
-      , CO_RMK
-      , CHNL_CD
-      , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-013', TRD_CATE_CD) AS TRD_CATE_NM
-      , TRD_CATE_CD
-	  , ACCT_HLD_NM
-	  , ACCT_NO
-	  , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-031', BILL_CD) AS BILL_NM
-	  , BILL_CD
-	  , BANK_CD
-	  , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-014', BANK_CD) AS BANK_NM
-	  , HMPG_ADDR
-	  , PAY_TP_CD
-	  , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-011', PAY_TP_CD) AS PAY_TP_NM
-      FROM TB_CD_CO
-      WHERE 1=1
-      AND CO_NO = #CO_NO#
-      AND CHNL_CD = #CHNL_CD#
-    </select>
+     <select id="S143SelectCustomerDetailCode" parameterClass="ModelsLibrary.Code.SystemCodeVo" resultClass="ModelsLibrary.Code.SystemCodeVo">			
+       SELECT TOP 1			
+              CO_NO			
+            , CO_NM			
+            , CO_RGST_NO			
+            , PRSD_NM			
+            , HDQTR_PHN_NO			
+            , dbo.FF_CD_CO_TP_NM(CO_NO) AS CO_TP_NM			
+            , N1ST_BIZ_COND_CD			
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-002', N1ST_BIZ_COND_CD) AS N1ST_BIZ_COND_NM			
+            , N1ST_BZTP_CD			
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-003', N1ST_BZTP_CD) AS N1ST_BZTP_NM			
+            , CO_CLSS_CD			
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-006', CO_CLSS_CD) AS CO_CLSS_NM			
+            , CO_TP_CD			
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-005', CO_TP_CD) AS CO_TP_NM			
+            , DUE_DT_PRD_DY			
+            , BSE_CURR_CD			
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-007', BSE_CURR_CD) AS BSE_CURR_NM			
+            , INTERRLT_CO_CD			
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-010', INTERRLT_CO_CD) AS INTERRLT_CO_NM			
+            , (CASE WHEN DELT_FLG = 'N' THEN '사용' ELSE '미사용' END) AS DELT_FLG			
+            , PUR_CLZ_CD			
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-013', PUR_CLZ_CD) AS PUR_CLZ_NM			
+            , CNTC_MAN_NM			
+            , CNTC_MAN_PSN_NM			
+            , CNTC_MAN_PHN_NO			
+            , CNTC_MAN_EML			
+            , N2ND_CNTC_MAN_NM			
+            , N2ND_CNTC_MAN_PHN_NO			
+            , N2ND_CNTC_MAN_EML			
+            , N2ND_CNTC_MAN_PSN_NM			
+            , TAX_MAN_NM			
+            , TAX_MAN_PHN_NO			
+            , TAX_MAN_PSN_NM			
+            , TAX_MAN_EML			
+            , HDQTR_PST_NO			
+            , HDQTR_ADDR			
+            , HDQTR_FAX_NO			
+            , N1ST_AREA_PST_NO			
+            , N1ST_AREA_ADDR			
+            , N1ST_AREA_PHN_NO			
+            , N1ST_AREA_FAX_NO			
+            , N2ND_AREA_PST_NO			
+            , N2ND_AREA_ADDR			
+            , N2ND_AREA_PHN_NO			
+            , N2ND_AREA_FAX_NO			
+            , N1ST_AREA_NM			
+            , N2ND_AREA_NM			
+            , HDQTR_AREA_NM			
+            , CO_RMK			
+            , CHNL_CD			
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-013', TRD_CATE_CD) AS TRD_CATE_NM			
+            , TRD_CATE_CD			
+            , ACCT_HLD_NM			
+            , ACCT_NO			
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-031', BILL_CD) AS BILL_NM			
+            , BILL_CD			
+            , BANK_CD			
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-014', BANK_CD) AS BANK_NM			
+            , HMPG_ADDR			
+            , CORP_CD			
+            , dbo.USR_NM_FNC(#CHNL_CD#, N1ST_SLS_MAN_CD)  AS N1ST_SLS_MAN			
+            , N1ST_SLS_MAN_CD			
+            , dbo.USR_NM_FNC(#CHNL_CD#, N2ND_SLS_MAN_CD)  AS N2ND_SLS_MAN			
+            , N2ND_SLS_MAN_CD			
+            , PAY_TP_CD			
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-011', PAY_TP_CD) AS PAY_TP_NM			
+            , (CASE WHEN DC_FLG = 'N' THEN '사용' ELSE '미사용' END) AS DC_FLG			
+            , TRD_TP_CD			
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-012', TRD_TP_CD) AS TRD_TP_NM			
+            , N1ST_CNTC_MAN_NM			
+            , N1ST_CNTC_MAN_PSN_NM			
+            , N1ST_CNTC_MAN_EML			
+            , N1ST_CNTC_MAN_PHN_NO			
+            , AREA_CD			
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-002', AREA_CD) AS AREA_NM			
+            , SL_AREA_CD			
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-009', SL_AREA_CD) AS SL_AREA_NM			
+            , TEAM_CD			
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-010', TEAM_CD) AS TEAM_NM			
+      FROM TB_CD_CO			
+      WHERE 1=1			
+      AND CO_NO = #CO_NO#			
+      AND CHNL_CD = #CHNL_CD#			
+    </select>			
+			
+    <insert id="S143InsertCustomerDetailCode" parameterClass="ModelsLibrary.Code.SystemCodeVo">					
+         INSERT INTO TB_CD_CO					
+          (      CO_NO					
+               , CO_NM					
+               , CO_RGST_NO					
+               , INTERRLT_CO_CD					
+               , PRSD_NM					
+               , CO_CLSS_CD					
+               , CO_TP_CD					
+               , N1ST_BIZ_COND_CD					
+               , N1ST_BZTP_CD					
+               , N2ND_BIZ_COND_CD					
+               , N2ND_BZTP_CD					
+               , BSE_CURR_CD					
+               , DUE_DT_PRD_DY					
+               , CNTC_MAN_NM					
+               , CNTC_MAN_PSN_NM					
+               , CNTC_MAN_PHN_NO					
+               , CNTC_MAN_EML					
+               , TAX_MAN_NM					
+               , TAX_MAN_PSN_NM					
+               , TAX_MAN_PHN_NO					
+               , TAX_MAN_EML					
+               , HDQTR_ADDR					
+               , HDQTR_PHN_NO					
+               , HDQTR_FAX_NO					
+               , CRE_USR_ID					
+               , CRE_DT					
+               , UPD_USR_ID					
+               , UPD_DT					
+               , DELT_FLG					
+               , PUR_CLZ_CD					
+               , N2ND_CNTC_MAN_NM					
+               , N2ND_CNTC_MAN_PHN_NO					
+               , N2ND_CNTC_MAN_EML					
+               , N2ND_CNTC_MAN_PSN_NM					
+               , N1ST_AREA_PST_NO					
+               , N1ST_AREA_ADDR					
+               , N1ST_AREA_PHN_NO					
+               , N1ST_AREA_FAX_NO					
+               , N2ND_AREA_PST_NO					
+               , N2ND_AREA_ADDR					
+               , N2ND_AREA_PHN_NO					
+               , N2ND_AREA_FAX_NO					
+               , HDQTR_PST_NO					
+               , N1ST_AREA_NM					
+               , N2ND_AREA_NM					
+               , HDQTR_AREA_NM					
+               , CO_RMK					
+               , CHNL_CD					
+               , PAY_TP_CD					
+               , SL_AREA_CD					
+               , AREA_CD					
+               , TRD_CATE_CD					
+               , TEAM_CD					
+               , ABBR_NM					
+               , ACCT_HLD_NM					
+               , ACCT_NO					
+               , BILL_CD					
+               , BANK_CD					
+               , HMPG_ADDR					
+               , CO_PWD					
+               , CORP_CD					
+               , N1ST_SLS_MAN_CD					
+               , N2ND_SLS_MAN_CD					
+               , DC_FLG					
+               , TRD_TP_CD					
+               , N1ST_CNTC_MAN_NM					
+               , N1ST_CNTC_MAN_PSN_NM					
+               , N1ST_CNTC_MAN_EML					
+               , N1ST_CNTC_MAN_PHN_NO  					
+         )					
+          VALUES					
+         (       #CO_NO#					
+               , #CO_NM#					
+               , #CO_RGST_NO#					
+               , #INTERRLT_CO_CD#					
+               , #PRSD_NM#					
+               , #CO_CLSS_CD#					
+               , #CO_TP_CD#					
+               , #N1ST_BIZ_COND_CD#					
+               , #N1ST_BZTP_CD#					
+               , #N2ND_BIZ_COND_CD#					
+               , #N2ND_BZTP_CD#					
+               , #BSE_CURR_CD#					
+               , #DUE_DT_PRD_DY#					
+               , #CNTC_MAN_NM#					
+               , #CNTC_MAN_PSN_NM#					
+               , #CNTC_MAN_PHN_NO#					
+               , #CNTC_MAN_EML#					
+               , #TAX_MAN_NM#					
+               , #TAX_MAN_PSN_NM#					
+               , #TAX_MAN_PHN_NO#					
+               , #TAX_MAN_EML#					
+               , #HDQTR_ADDR#					
+               , #HDQTR_PHN_NO#					
+               , #HDQTR_FAX_NO#					
+               , #CRE_USR_ID#					
+               , GETDATE()					
+               , #UPD_USR_ID#					
+               , GETDATE()					
+               , #DELT_FLG#					
+               , #PUR_CLZ_CD#					
+               , #N2ND_CNTC_MAN_NM#					
+               , #N2ND_CNTC_MAN_PHN_NO#					
+               , #N2ND_CNTC_MAN_EML#					
+               , #N2ND_CNTC_MAN_PSN_NM#					
+               , #N1ST_AREA_PST_NO#					
+               , #N1ST_AREA_ADDR#					
+               , #N1ST_AREA_PHN_NO#					
+               , #N1ST_AREA_FAX_NO#					
+               , #N2ND_AREA_PST_NO#					
+               , #N2ND_AREA_ADDR#					
+               , #N2ND_AREA_PHN_NO#					
+               , #N2ND_AREA_FAX_NO#					
+               , #HDQTR_PST_NO#					
+               , #N1ST_AREA_NM#					
+               , #N2ND_AREA_NM#					
+               , #HDQTR_AREA_NM#					
+               , #CO_RMK#					
+               , #CHNL_CD#					
+               , #PAY_TP_CD#					
+               , #SL_AREA_CD#					
+               , #AREA_CD#					
+               , #TRD_CATE_CD#					
+               , #TEAM_CD#					
+               , #ABBR_NM#					
+               , #ACCT_HLD_NM#					
+               , #ACCT_NO#					
+               , #BILL_CD#					
+               , #BANK_CD#					
+               , #HMPG_ADDR#					
+               , #CO_PWD#					
+               , #CORP_CD#					
+               , #N1ST_SLS_MAN_CD#					
+               , #N2ND_SLS_MAN_CD#					
+               , #DC_FLG#					
+               , #TRD_TP_CD#					
+               , #N1ST_CNTC_MAN_NM#					
+               , #N1ST_CNTC_MAN_PSN_NM#					
+               , #N1ST_CNTC_MAN_EML#					
+               , #N1ST_CNTC_MAN_PHN_NO#           					
+          )					
+      </insert>					
 
-    <insert id="S143InsertCustomerDetailCode" parameterClass="ModelsLibrary.Code.SystemCodeVo">
-      INSERT INTO TB_CD_CO
-      ( CO_NO,
-      CO_NM,
-      CO_RGST_NO,
-      PRSD_NM,
-      INTERRLT_CO_CD,
-      CO_CLSS_CD,
-      CO_TP_CD,
-      N1ST_BIZ_COND_CD,
-      N1ST_BZTP_CD,
-      N2ND_BIZ_COND_CD,
-      N2ND_BZTP_CD,
-      BSE_CURR_CD,
-      DUE_DT_PRD_DY,
-      CNTC_MAN_NM,
-      CNTC_MAN_PSN_NM,
-      CNTC_MAN_PHN_NO,
-      CNTC_MAN_EML,
-      TAX_MAN_NM,
-      TAX_MAN_PSN_NM,
-      TAX_MAN_PHN_NO,
-      TAX_MAN_EML,
-      HDQTR_ADDR,
-      HDQTR_PHN_NO,
-      HDQTR_FAX_NO,
-      CRE_USR_ID,
-      CRE_DT,
-      UPD_USR_ID,
-      UPD_DT,
-      DELT_FLG,
-      PUR_CLZ_CD,
-      N2ND_CNTC_MAN_NM,
-      N2ND_CNTC_MAN_PHN_NO,
-      N2ND_CNTC_MAN_EML,
-      N2ND_CNTC_MAN_PSN_NM,
-      N1ST_AREA_PST_NO,
-      N1ST_AREA_ADDR,
-      N1ST_AREA_PHN_NO,
-      N1ST_AREA_FAX_NO,
-      N2ND_AREA_PST_NO,
-      N2ND_AREA_ADDR,
-      N2ND_AREA_PHN_NO,
-      N2ND_AREA_FAX_NO,
-      HDQTR_PST_NO,
-      N1ST_AREA_NM,
-      N2ND_AREA_NM,
-      HDQTR_AREA_NM,
-      CO_RMK,
-      CHNL_CD,
-      TRD_CATE_CD, 
-	  ACCT_HLD_NM,
-	  ACCT_NO,
-	  BILL_CD,
-	  BANK_CD,
-	  HMPG_ADDR,
-	  PAY_TP_CD
-	  )
-      VALUES
-	  (
-      #CO_NO#,
-      #CO_NM#,
-      #CO_RGST_NO#,
-      #PRSD_NM#,
-      #INTERRLT_CO_CD#,
-      #CO_CLSS_CD#,
-      #CO_TP_CD#,
-      #N1ST_BIZ_COND_CD#,
-      #N1ST_BZTP_CD#,
-      #N2ND_BIZ_COND_CD#,
-      #N2ND_BZTP_CD#,
-      #BSE_CURR_CD#,
-      #DUE_DT_PRD_DY#,
-      #CNTC_MAN_NM#,
-      #CNTC_MAN_PSN_NM#,
-      #CNTC_MAN_PHN_NO#,
-      #CNTC_MAN_EML#,
-      #TAX_MAN_NM#,
-      #TAX_MAN_PSN_NM#,
-      #TAX_MAN_PHN_NO#,
-      #TAX_MAN_EML#,
-      #HDQTR_ADDR#,
-      #HDQTR_PHN_NO#,
-      #HDQTR_FAX_NO#,
-      #CRE_USR_ID#,
-      GETDATE(),
-      #UPD_USR_ID#,
-      GETDATE(),
-      #DELT_FLG#,
-      #PUR_CLZ_CD#,
-      #N2ND_CNTC_MAN_NM#,
-      #N2ND_CNTC_MAN_PHN_NO#,
-      #N2ND_CNTC_MAN_EML#,
-      #N2ND_CNTC_MAN_PSN_NM#,
-      #N1ST_AREA_PST_NO#,
-      #N1ST_AREA_ADDR#,
-      #N1ST_AREA_PHN_NO#,
-      #N1ST_AREA_FAX_NO#,
-      #N2ND_AREA_PST_NO#,
-      #N2ND_AREA_ADDR#,
-      #N2ND_AREA_PHN_NO#,
-      #N2ND_AREA_FAX_NO#,
-      #HDQTR_PST_NO#,
-      #N1ST_AREA_NM#,
-      #N2ND_AREA_NM#,
-      #HDQTR_AREA_NM#,
-      #CO_RMK#,
-      #CHNL_CD#,
-      #TRD_CATE_CD#,
-	  #ACCT_HLD_NM#,
-	  #ACCT_NO#,
-	  #BILL_CD#,
-	  #BANK_CD#,
-	  #HMPG_ADDR#,
-	  #PAY_TP_CD#
-      )
-    </insert>
 
-    <update id="S143UpdateCustomerDetailCode" parameterClass="ModelsLibrary.Code.SystemCodeVo">
-      update TB_CD_CO
-      SET
-      CO_NO = #CO_NO#
-      ,CO_NM = #CO_NM#
-      ,CO_RGST_NO = #CO_RGST_NO#
-      ,INTERRLT_CO_CD = #INTERRLT_CO_CD#
-      ,PRSD_NM = #PRSD_NM#
-      ,CO_CLSS_CD = #CO_CLSS_CD#
-      ,CO_TP_CD = #CO_TP_CD#
-      ,N1ST_BIZ_COND_CD = #N1ST_BIZ_COND_CD#
-      ,N1ST_BZTP_CD = #N1ST_BZTP_CD#
-      ,N2ND_BIZ_COND_CD = #N2ND_BIZ_COND_CD#
-      ,N2ND_BZTP_CD = #N2ND_BZTP_CD#
-      ,BSE_CURR_CD = #BSE_CURR_CD#
-      ,DUE_DT_PRD_DY = #DUE_DT_PRD_DY#
-      ,CNTC_MAN_NM = #CNTC_MAN_NM#
-      ,CNTC_MAN_PSN_NM = #CNTC_MAN_PSN_NM#
-      ,CNTC_MAN_PHN_NO = #CNTC_MAN_PHN_NO#
-      ,CNTC_MAN_EML = #CNTC_MAN_EML#
-      ,TAX_MAN_NM = #TAX_MAN_NM#
-      ,TAX_MAN_PSN_NM = #TAX_MAN_PSN_NM#
-      ,TAX_MAN_PHN_NO = #TAX_MAN_PHN_NO#
-      ,TAX_MAN_EML = #TAX_MAN_EML#
-      ,HDQTR_ADDR = #HDQTR_ADDR#
-      ,HDQTR_PHN_NO = #HDQTR_PHN_NO#
-      ,HDQTR_FAX_NO = #HDQTR_FAX_NO#
-      ,CRE_USR_ID = #CRE_USR_ID#
-      ,CRE_DT = getdate()
-      ,DELT_FLG = #DELT_FLG#
-      ,PUR_CLZ_CD = #PUR_CLZ_CD#
-      ,N2ND_CNTC_MAN_NM = #N2ND_CNTC_MAN_NM#
-      ,N2ND_CNTC_MAN_PHN_NO = #N2ND_CNTC_MAN_PHN_NO#
-      ,N2ND_CNTC_MAN_EML = #N2ND_CNTC_MAN_EML#
-      ,N2ND_CNTC_MAN_PSN_NM = #N2ND_CNTC_MAN_PSN_NM#
-      ,N1ST_AREA_PST_NO = #N1ST_AREA_PST_NO#
-      ,N1ST_AREA_ADDR = #N1ST_AREA_ADDR#
-      ,N1ST_AREA_PHN_NO = #N1ST_AREA_PHN_NO#
-      ,N1ST_AREA_FAX_NO = #N1ST_AREA_FAX_NO#
-      ,N2ND_AREA_PST_NO = #N2ND_AREA_PST_NO#
-      ,N2ND_AREA_ADDR = #N2ND_AREA_ADDR#
-      ,N2ND_AREA_PHN_NO = #N2ND_AREA_PHN_NO#
-      ,N2ND_AREA_FAX_NO = #N2ND_AREA_FAX_NO#
-      ,HDQTR_PST_NO = #HDQTR_PST_NO#
-      ,N1ST_AREA_NM = #N1ST_AREA_NM#
-      ,N2ND_AREA_NM = #N2ND_AREA_NM#
-      ,HDQTR_AREA_NM = #HDQTR_AREA_NM#
-      ,CO_RMK = #CO_RMK#
-      ,TRD_CATE_CD = #TRD_CATE_CD#
-	  ,ACCT_HLD_NM = #ACCT_HLD_NM#
-	  ,ACCT_NO = #ACCT_NO#
-	  ,BILL_CD = #BILL_CD#
-	  ,BANK_CD = #BANK_CD#
-	  ,HMPG_ADDR = #HMPG_ADDR#
-	  ,PAY_TP_CD = #PAY_TP_CD#
-      WHERE CO_NO = #CO_NO#
-      AND CHNL_CD = #CHNL_CD#
-    </update>
+      <update id="S143UpdateCustomerDetailCode" parameterClass="ModelsLibrary.Code.SystemCodeVo">					
+      update TB_CD_CO					
+      SET    CO_NO                   = #CO_NO# 					
+           , CO_NM                   = #CO_NM#					
+           , CO_RGST_NO              = #CO_RGST_NO#					
+           , INTERRLT_CO_CD          = #INTERRLT_CO_CD#  					
+           , PRSD_NM                 = #PRSD_NM#					
+           , CO_CLSS_CD              = #CO_CLSS_CD#					
+           , CO_TP_CD                = #CO_TP_CD# 					
+           , N1ST_BIZ_COND_CD        = #N1ST_BIZ_COND_CD#					
+           , N1ST_BZTP_CD            = #N1ST_BZTP_CD#					
+           , N2ND_BIZ_COND_CD        = #N2ND_BIZ_COND_CD#					
+           , N2ND_BZTP_CD            = #N2ND_BZTP_CD#					
+           , BSE_CURR_CD             = #BSE_CURR_CD#      					
+           , DUE_DT_PRD_DY           = #DUE_DT_PRD_DY#   					
+           , CNTC_MAN_NM             = #CNTC_MAN_NM#     					
+           , CNTC_MAN_PSN_NM         = #CNTC_MAN_PSN_NM# 					
+           , CNTC_MAN_PHN_NO         = #CNTC_MAN_PHN_NO#					
+           , CNTC_MAN_EML            = #CNTC_MAN_EML#    					
+           , TAX_MAN_NM              = #TAX_MAN_NM#      					
+           , TAX_MAN_PSN_NM          = #TAX_MAN_PSN_NM#  					
+           , TAX_MAN_PHN_NO          = #TAX_MAN_PHN_NO#  					
+           , TAX_MAN_EML             = #TAX_MAN_EML#     					
+           , HDQTR_ADDR              = #HDQTR_ADDR#      					
+           , HDQTR_PHN_NO            = #HDQTR_PHN_NO#    					
+           , HDQTR_FAX_NO            = #HDQTR_FAX_NO#    					
+           , CRE_USR_ID              = #CRE_USR_ID#      					
+           , CRE_DT                  = GETDATE()          					
+           , UPD_USR_ID              = #UPD_USR_ID#      					
+           , UPD_DT                  = GETDATE()          					
+           , DELT_FLG                = #DELT_FLG#        					
+           , PUR_CLZ_CD              = #PUR_CLZ_CD#      					
+           , N2ND_CNTC_MAN_NM        = #N2ND_CNTC_MAN_NM#					
+           , N2ND_CNTC_MAN_PHN_NO    = #N2ND_CNTC_MAN_PHN_NO# 					
+           , N2ND_CNTC_MAN_EML       = #N2ND_CNTC_MAN_EML#					
+           , N2ND_CNTC_MAN_PSN_NM    = #N2ND_CNTC_MAN_PSN_NM#					
+           , N1ST_AREA_PST_NO        = #N1ST_AREA_PST_NO#					
+           , N1ST_AREA_ADDR          = #N1ST_AREA_ADDR#					
+           , N1ST_AREA_PHN_NO        = #N1ST_AREA_PHN_NO#					
+           , N1ST_AREA_FAX_NO        = #N1ST_AREA_FAX_NO# 					
+           , N2ND_AREA_PST_NO        = #N2ND_AREA_PST_NO#    					
+           , N2ND_AREA_ADDR          = #N2ND_AREA_ADDR#      					
+           , N2ND_AREA_PHN_NO        = #N2ND_AREA_PHN_NO#    					
+           , N2ND_AREA_FAX_NO        = #N2ND_AREA_FAX_NO#    					
+           , HDQTR_PST_NO            = #HDQTR_PST_NO#        					
+           , N1ST_AREA_NM            = #N1ST_AREA_NM#        					
+           , N2ND_AREA_NM            = #N2ND_AREA_NM#        					
+           , HDQTR_AREA_NM           = #HDQTR_AREA_NM#       					
+           , CO_RMK                  = #CO_RMK#              					
+           , CHNL_CD                 = #CHNL_CD#             					
+           , PAY_TP_CD               = #PAY_TP_CD#           					
+           , SL_AREA_CD              = #SL_AREA_CD#          					
+           , AREA_CD                 = #AREA_CD#                      					
+           , TRD_CATE_CD             = #TRD_CATE_CD#         					
+           , TEAM_CD                 = #TEAM_CD#             					
+           , ABBR_NM                 = #ABBR_NM#             					
+           , ACCT_HLD_NM             = #ACCT_HLD_NM#         					
+           , ACCT_NO                 = #ACCT_NO#             					
+           , BILL_CD                 = #BILL_CD#             					
+           , BANK_CD                 = #BANK_CD#             					
+           , HMPG_ADDR               = #HMPG_ADDR#           					
+           , CO_PWD                  = #CO_PWD#              					
+           , CORP_CD                 = #CORP_CD#             					
+           , N1ST_SLS_MAN_CD         = #N1ST_SLS_MAN_CD#     					
+           , N2ND_SLS_MAN_CD         = #N2ND_SLS_MAN_CD#    					
+           , DC_FLG                  = #DC_FLG#              					
+           , TRD_TP_CD               = #TRD_TP_CD#           					
+           , N1ST_CNTC_MAN_NM        = #N1ST_CNTC_MAN_NM#    					
+           , N1ST_CNTC_MAN_PSN_NM    = #N1ST_CNTC_MAN_PSN_NM#					
+           , N1ST_CNTC_MAN_EML       = #N1ST_CNTC_MAN_EML#   					
+           , N1ST_CNTC_MAN_PHN_NO    = #N1ST_CNTC_MAN_PHN_NO#					
+      WHERE CO_NO = #CO_NO#					
+      AND CHNL_CD = #CHNL_CD#					
+    </update>					
+
 
     <delete id="S143DeleteCustomerDetailCode" parameterClass="ModelsLibrary.Code.SystemCodeVo">
       DELETE FROM TB_CD_CO
@@ -2878,7 +2941,7 @@
       <!--S11479 납품처관리 - 조회-->
     <select id="S11479SelectMaster" parameterClass="ModelsLibrary.Code.SystemCodeVo" resultClass="ModelsLibrary.Code.SystemCodeVo">
           SELECT
-                 T1.DE_PRNT_NO                                
+                  T1.DE_PRNT_NO                                
                 , T1.DE_CHD_NO
                 , T1.CHNL_CD 
                 <!--, T1.CO_NO-->                                 
@@ -2896,6 +2959,7 @@
                 , (T1.DE_CO_NM + '/' + T1.CNTR_NM) AS GBN
                 , T1.PRG_TP_CD
                 , T3.PRG_TP_NM
+                , T1.ITM_WGT
             FROM TB_CD_DE T1 
                 OUTER APPLY (
                     SELECT X.CLSS_DESC AS PRG_TP_NM
@@ -2970,11 +3034,12 @@
                , DUE_DT
                , CNTR_NM
                , CNTR_RMK
-			   , PRG_TP_CD
+               , PRG_TP_CD
                , CRE_DT
                , CRE_USR_ID
                , UPD_DT
                , UPD_USR_ID
+               , ITM_WGT
             )
             VALUES
             (
@@ -2986,11 +3051,12 @@
                , #DUE_DT#
                , #CNTR_NM#
                , #CNTR_RMK#
-			   , #PRG_TP_CD#
+               , #PRG_TP_CD#
                , #CRE_DT#
                , #CRE_USR_ID#
                , GETDATE()
                , #UPD_USR_ID#
+               , #ITM_WGT#
             )
      </insert>
 
@@ -3006,9 +3072,9 @@
                   , UPD_DT     = GETDATE()
                   , UPD_USR_ID = #UPD_USR_ID#
              WHERE 1=1
-             AND CHNL_CD   = #CHNL_CD#
-             AND DE_CHD_NO = #DE_CHD_NO#
-             AND CO_NO     = #CO_NO#
+               AND CHNL_CD   = #CHNL_CD#
+               AND DE_CHD_NO = #DE_CHD_NO#
+               AND CO_NO     = #CO_NO#
      </update>
 
 
@@ -3022,13 +3088,14 @@
                   , DUE_DT     = #DUE_DT#
                   , CNTR_NM    = #CNTR_NM#
                   , CNTR_RMK   = #CNTR_RMK#
-			      , PRG_TP_CD  = #PRG_TP_CD#
+                  , PRG_TP_CD  = #PRG_TP_CD#
                   , UPD_DT     = GETDATE()
                   , UPD_USR_ID = #UPD_USR_ID#
+                  , ITM_WGT    = #ITM_WGT#
              WHERE 1=1
-             AND CHNL_CD   = #CHNL_CD#
-             AND DE_CHD_NO = #DE_CHD_NO#
-             AND CO_NO     = #CO_NO#
+               AND CHNL_CD   = #CHNL_CD#
+               AND DE_CHD_NO = #DE_CHD_NO#
+               AND CO_NO     = #CO_NO#
      </update>
     
     

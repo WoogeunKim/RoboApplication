@@ -1797,5 +1797,32 @@
             get;
             set;
         }
+        public string N1ST_SLS_MAN_CD
+        {
+            get;
+            set;
+        }
+
+        public string N2ND_SLS_MAN_CD
+        {
+            get;
+            set;
+        }
+
+        public string ABBR_NM
+        {
+            get;
+            set;
+        }
+        public string CO_PWD
+        {
+            get;
+            set;
+        }
+        public object ITM_WGT
+        {
+            get;
+            set;
+        }
     }
 }
