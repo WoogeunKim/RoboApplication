@@ -6,37 +6,7 @@ using System.Web.Http;
 using VisualServerApplication.Config;
 
 namespace VisualServerApplication.Controllers.Man
-{
-    //public class M66107Controller : ApiController
-    //{
-    //    // GET api/<controller>
-    //    public IEnumerable<string> Get()
-    //    {
-    //        return new string[] { "value1", "value2" };
-    //    }
-
-    //    // GET api/<controller>/5
-    //    public string Get(int id)
-    //    {
-    //        return "value";
-    //    }
-
-    //    // POST api/<controller>
-    //    public void Post([FromBody] string value)
-    //    {
-    //    }
-
-    //    // PUT api/<controller>/5
-    //    public void Put(int id, [FromBody] string value)
-    //    {
-    //    }
-
-    //    // DELETE api/<controller>/5
-    //    public void Delete(int id)
-    //    {
-    //    }
-    //}
-    
+{    
     [RoutePrefix("m66107")]
     public class M66107Controller : ApiController
     {
@@ -107,6 +77,24 @@ namespace VisualServerApplication.Controllers.Man
                 return Ok<int>(Properties.EntityMapper.Update("M66107UpdateMst", vo));
             }
             catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+        /// <summary>
+        /// Loss 최적화 수행 MST 로그 조회
+        /// </summary>
+        [Route("mst/log")]
+        [HttpPost]
+        // POST api/<controller>
+        public async Task<IHttpActionResult> GetMstLogSelect([FromBody] ManVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<ManVo>>(Properties.EntityMapper.QueryForList<ManVo>("M66107SelectMstLogList", vo));
+            }
+            catch (Exception eLog)
             {
                 return Ok<string>(eLog.Message);
             }

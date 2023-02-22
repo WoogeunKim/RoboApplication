@@ -87,15 +87,25 @@ namespace AquilaErpWpfApp3.ViewModel
         {
             try
             {
+                if (SelectedMstItem == null) return;
                 if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
 
+                // 해당 최적화 건에 로그상태
+                using (HttpResponseMessage responseLog = await SystemProperties.PROGRAM_HTTP.PostAsync("m66107/mst/log", new StringContent(JsonConvert.SerializeObject(SelectedMstItem), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (responseLog.IsSuccessStatusCode)
+                    {
+                        this.SelectMstLogList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await responseLog.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+                    }
+                }
+
+                // 최적화 해당 자재 리스트
                 using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66107/dtl", new StringContent(JsonConvert.SerializeObject(SelectedMstItem), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
                         this.SelectDtlList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
                     }
-
                 }
 
                 if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
@@ -261,6 +271,13 @@ namespace AquilaErpWpfApp3.ViewModel
                 SetProperty(ref _selectedMstItem, value, () => SelectedMstItem); DtListRefresh();
 
             }
+        }
+
+        IList<ManVo> _selectMstLogList = new List<ManVo>();
+        public IList<ManVo> SelectMstLogList
+        {
+            get { return _selectMstLogList; }
+            set { SetProperty(ref _selectMstLogList, value, () => SelectMstLogList); }
         }
 
         private IList<ManVo> selectedDtlList = new List<ManVo>();

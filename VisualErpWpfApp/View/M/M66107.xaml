@@ -58,6 +58,7 @@
                 <dxb:BarButtonItem x:Name="M_MST_UPDATE" Content="수정" KeyGesture="F7" Glyph="{dx:DXImage Image=Edit_16x16.png}" LargeGlyph="{dx:DXImage Image=Edit_32x32.png}"  RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" Command="{Binding EditContactCommand}" />
                 <dxb:BarButtonItem x:Name="M_MST_PRINT" Content="출력" Glyph="{dx:DXImage Image=PrintDialog_16x16.png}" LargeGlyph="{dx:DXImage Image=PrintDialog_32x32.png}" RibbonStyle="Large" IsEnabled="False"/>
                 <dxb:BarButtonItem x:Name="M_MST2_INSERT" Content="추가" Glyph="{dx:DXImage Image=AddItem_16x16.png}" LargeGlyph="{dx:DXImage Image=AddItem_32x32.png}" RibbonStyle="Large" Command="{Binding New2ContactCommand}" IsEnabled="{Binding isM_UPDATE}" />
+
                 <dxb:BarButtonItem x:Name="M_OPTI_RUN" Content="Opti Run" Glyph="{dx:DXImage Image=AddItem_16x16.png}" LargeGlyph="{dx:DXImage Image=AddItem_32x32.png}" RibbonStyle="Large" Command="{Binding OptiRunCommand}" IsEnabled="{Binding isM_UPDATE}" />
             </dxb:BarManager.Items>
 
@@ -124,52 +125,93 @@
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
 
-                                    <dxg:GridControl  Grid.Row="1" x:Name="ViewGridMst" AutoExpandAllGroups="True" ItemsSource="{Binding Path=SelectMstList}" SelectedItem="{Binding Path=SelectedMstItem, Mode=TwoWay}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                                        <dxg:GridControl.InputBindings>
-                                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding EditMasterContactCommand}" />
-                                        </dxg:GridControl.InputBindings>
+                                    <dxd:TabbedGroup Grid.Row="0"  Grid.Column="0" >
+                                        <dxd:LayoutPanel Caption="최적화" CaptionImage="{dxc:DXImage SvgImages/Chart/ChartType_PolarLine.svg}" AllowDrag="False"  AllowSizing="True" AllowRestore="False" AllowDrop="False" AllowMove="False" AllowFloat="False" AllowDockToCurrentItem="False" AllowDockToDocumentGroup="False" AllowContextMenu="False" AllowClose="False" ShowCaption="False" ShowPinButton="False" CloseCommand="{Binding CloseReportViewContactCommand}"  AutomationProperties.IsRowHeader="True">
+                                            <dxg:GridControl x:Name="ViewGridMst" AutoExpandAllGroups="True" ItemsSource="{Binding Path=SelectMstList}" SelectedItem="{Binding Path=SelectedMstItem, Mode=TwoWay}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                                <dxg:GridControl.InputBindings>
+                                                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding EditMasterContactCommand}" />
+                                                </dxg:GridControl.InputBindings>
 
-                                        <dxg:GridControl.View>
-                                            <dxg:TableView x:Name="ViewTableMst" FontSize="12" RowMinHeight="35" ShowFixedTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Always" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupPanel="False" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT, Path=EditValue}" />
-                                        </dxg:GridControl.View>
-                                      
-                                        <dxg:GridControl.Columns>
-                                            <dxg:GridColumn FieldName="RN" Header="SEQ" Width="40" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="0">
+                                                <dxg:GridControl.View>
+                                                    <dxg:TableView x:Name="ViewTableMst" FontSize="12" RowMinHeight="35" ShowFixedTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Always" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupPanel="False" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT, Path=EditValue}" />
+                                                </dxg:GridControl.View>
+
+                                                <dxg:GridControl.Columns>
+                                                    <!--<dxg:GridColumn FieldName="RN" Header="SEQ" Width="40" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="0">
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                                 </dxg:GridColumn.EditSettings>
-                                            </dxg:GridColumn>
+                                            </dxg:GridColumn>-->
 
-                                            <dxg:GridColumn FieldName="OPMZ_NO" Header="Opti.NO" Width="80" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="1">
-                                                <dxg:GridColumn.EditSettings>
-                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-                                                </dxg:GridColumn.EditSettings>
-                                            </dxg:GridColumn>
-                                            
-                                            <dxg:GridColumn FieldName="OPMZ_STS_NM" Header="상태" Width="50" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="2">
-                                                <dxg:GridColumn.EditSettings>
-                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-                                                </dxg:GridColumn.EditSettings>
-                                            </dxg:GridColumn>
+                                                    <dxg:GridColumn FieldName="OPMZ_NO" Header="Opti.NO" Width="50" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="1">
+                                                        <dxg:GridColumn.EditSettings>
+                                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                                        </dxg:GridColumn.EditSettings>
+                                                    </dxg:GridColumn>
 
-                                            <dxg:GridColumn FieldName="OPMZ_LSS_RT" Header="LOSS(%)" Width="50" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="3">
-                                                <dxg:GridColumn.EditSettings>
-                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
-                                                </dxg:GridColumn.EditSettings>
-                                            </dxg:GridColumn>
+                                                    <dxg:GridColumn FieldName="OPMZ_STS_CD" Header="상태" Width="30" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="2">
+                                                        <dxg:GridColumn.EditSettings>
+                                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                                        </dxg:GridColumn.EditSettings>
+                                                    </dxg:GridColumn>
 
-                                            <dxg:GridColumn FieldName="OPMZ_RMK" Header="비고" Width="120" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="4">
-                                                <dxg:GridColumn.EditSettings>
-                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
-                                                </dxg:GridColumn.EditSettings>
-                                            </dxg:GridColumn>
-                                        </dxg:GridControl.Columns>
+                                                    <dxg:GridColumn FieldName="OPMZ_LSS_RT" Header="LOSS" Width="50" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="3">
+                                                        <dxg:GridColumn.EditSettings>
+                                                            <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric"/>
+                                                        </dxg:GridColumn.EditSettings>
+                                                    </dxg:GridColumn>
 
-                                        <dxg:GridControl.TotalSummary>
-                                            <dxg:GridSummaryItem SummaryType="Count" Alignment="Right"/>
-                                        </dxg:GridControl.TotalSummary>
-                                        
-                                    </dxg:GridControl>
+                                                    <dxg:GridColumn FieldName="OPMZ_RMK" Header="비고" Width="120" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="4">
+                                                        <dxg:GridColumn.EditSettings>
+                                                            <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
+                                                        </dxg:GridColumn.EditSettings>
+                                                    </dxg:GridColumn>
+                                                </dxg:GridControl.Columns>
+
+                                                <dxg:GridControl.TotalSummary>
+                                                    <dxg:GridSummaryItem SummaryType="Count" Alignment="Right"/>
+                                                </dxg:GridControl.TotalSummary>
+                                            </dxg:GridControl>
+                                        </dxd:LayoutPanel>
+
+                                        <dxd:LayoutPanel Caption="로그" CaptionImage="{dxc:DXImage SvgImages/Chart/ChartType_SwiftPlot.svg}" AllowDrag="False"  AllowSizing="True" AllowRestore="False" AllowDrop="False" AllowMove="False" AllowFloat="False" AllowDockToCurrentItem="False" AllowDockToDocumentGroup="False" AllowContextMenu="False" AllowClose="False" ShowCaption="False" ShowPinButton="False" CloseCommand="{Binding CloseReportViewContactCommand}"  AutomationProperties.IsRowHeader="True">
+                                            <dxg:GridControl x:Name="ViewGridMstLog" AutoExpandAllGroups="True" ItemsSource="{Binding Path=SelectMstLogList}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                                <dxg:GridControl.View>
+                                                    <dxg:TableView x:Name="ViewTableMstLog" FontSize="12" RowMinHeight="35" ShowFixedTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Always" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupPanel="False" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT, Path=EditValue}" />
+                                                </dxg:GridControl.View>
+
+                                                <dxg:GridControl.Columns>
+                                                    <dxg:GridColumn FieldName="OPMZ_NO" Header="Opti.NO" Width="50" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="1">
+                                                        <dxg:GridColumn.EditSettings>
+                                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                                        </dxg:GridColumn.EditSettings>
+                                                    </dxg:GridColumn>
+
+                                                    <dxg:GridColumn FieldName="OPMZ_SEQ" Header="순번" Width="30" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="2">
+                                                        <dxg:GridColumn.EditSettings>
+                                                            <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+                                                        </dxg:GridColumn.EditSettings>
+                                                    </dxg:GridColumn>
+
+                                                    <dxg:GridColumn FieldName="STS_CD" Header="상태 코드" Width="50" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="3">
+                                                        <dxg:GridColumn.EditSettings>
+                                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                                        </dxg:GridColumn.EditSettings>
+                                                    </dxg:GridColumn>
+
+                                                    <dxg:GridColumn FieldName="STS_DESC" Header="상태" Width="120" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="4">
+                                                        <dxg:GridColumn.EditSettings>
+                                                            <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
+                                                        </dxg:GridColumn.EditSettings>
+                                                    </dxg:GridColumn>
+                                                </dxg:GridControl.Columns>
+
+                                                <dxg:GridControl.TotalSummary>
+                                                    <dxg:GridSummaryItem SummaryType="Count" Alignment="Right"/>
+                                                </dxg:GridControl.TotalSummary>
+                                            </dxg:GridControl>
+                                        </dxd:LayoutPanel>
+                                    </dxd:TabbedGroup>
 
                                     <Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0">
                                         <dxg:GridControl x:Name="ViewGridDtl" Grid.Row="1" AutoExpandAllGroups="True" ItemsSource="{Binding Path=SelectDtlList}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" SelectionMode="Row" >

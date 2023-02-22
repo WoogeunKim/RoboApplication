@@ -205,7 +205,7 @@
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="STS_DESC" Header="로그 성명" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="3">
+                                <dxg:GridColumn FieldName="STS_DESC" Header="로그 설명" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="3">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>

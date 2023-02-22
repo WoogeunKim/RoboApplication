@@ -9324,7 +9324,7 @@
 
 	  <!-- Loss 최적화 수행 -->
 	  <select id="M66107SelectMst" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
-		  SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T2.SL_RLSE_DT DESC) AS RN
+		  <!--SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T2.SL_RLSE_DT DESC) AS RN
 		       , T1.OPMZ_NO
 		       , CASE WHEN T1.OPMZ_STS_CD = 'S' THEN '시작' ELSE '종료'  END AS OPMZ_STS_NM
 		       , ROUND(T1.OPMZ_LSS_RT  * 100, 2) AS OPMZ_LSS_RT
@@ -9346,7 +9346,29 @@
 		    AND T1.SL_RLSE_NO =  T2.SL_RLSE_NO
 		    AND T2.CHNL_CD    =  #CHNL_CD#
 		    AND T2.SL_RLSE_DT >= CAST(CONVERT(VARCHAR, #FM_DT#, 112) + ' 00:00:00' AS DATETIME)
-		    AND T2.SL_RLSE_DT <![CDATA[<=]]> CAST(CONVERT(VARCHAR, #TO_DT#, 112) + ' 23:59:59' AS DATETIME)
+		    AND T2.SL_RLSE_DT <![CDATA[<=]]> CAST(CONVERT(VARCHAR, #TO_DT#, 112) + ' 23:59:59' AS DATETIME)-->
+		  
+		  SELECT 
+               T1.OPMZ_NO
+             , T1.OPMZ_STS_CD
+             , CASE WHEN T1.OPMZ_STS_CD = 'S' THEN '시작' ELSE '종료'  END AS OPMZ_STS_NM
+             , T1.OPMZ_LSS_RT
+             , T1.OPMZ_RMK
+          FROM TB_OPMZ_RUN  T1
+        WHERE 1 = 1
+          AND T1.CRE_DT >= CAST(CONVERT(VARCHAR, #FM_DT#, 112) + ' 00:00:00' AS DATETIME)
+          AND T1.CRE_DT <![CDATA[<=]]> CAST(CONVERT(VARCHAR, #TO_DT#, 112) + ' 23:59:59' AS DATETIME)
+	  </select>
+	  
+	  <select id="M66107SelectMstLogList" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
+		SELECT OPMZ_NO
+             , OPMZ_SEQ
+             , STS_CD    
+             , STS_DESC
+          FROM TB_OPMZ_LOG
+         WHERE 1 = 1
+           AND OPMZ_NO = #OPMZ_NO#
+
 	  </select>
 
 	  <select id="M66107SelectDtl" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
