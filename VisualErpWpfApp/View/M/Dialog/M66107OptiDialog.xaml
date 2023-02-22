@@ -9,12 +9,19 @@
     xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
     Height="180" Width="460" FontFamily="Arial" 
     WindowStartupLocation="CenterOwner" ShowIcon="True" ResizeMode="NoResize" FontSize="14" Icon="{dx:DXImage Image=AddItem_16x16.png}">
+
+    <!--<dx:DXWindow.Resources>
+        <Style TargetType="dxe:CheckEdit">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="50"/>
+        </Style>
+    </dx:DXWindow.Resources>-->
     
     <Grid Width="430" x:Name="configCode" Margin="0,10,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -28,7 +35,23 @@
         <dxe:TextEdit x:Name="text_OPMZ_NO" Grid.Column="2" Grid.ColumnSpan="2" Margin="2" VerticalAlignment="Stretch" Text="{Binding OPMZ_NO}" AcceptsReturn="True" TextWrapping="Wrap" Grid.Row="0" HorizontalContentAlignment="Left" IsReadOnly="True" />
 
         <TextBlock Height="20" HorizontalAlignment="Right" Text="연신율 적용 : " TextAlignment="Right" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"  />
-        <dxe:CheckEdit x:Name="is_checked" Grid.Row="2" Grid.Column="2" Margin="10,0,0,0" />
+        <dxe:CheckEdit x:Name="is_checked" Grid.Row="2" Grid.Column="2" Margin="10,0,0,0" 
+                                CheckedGlyph="{dx:DXImage Images/XAF/Action_Validation_Validate_32x32.png}"
+                                UncheckedGlyph="{dx:DXImage Image=Empty.png}"
+                                EditValue="true"
+                                IsThreeState="False" IsChecked="False" Background="White">
+            <dxe:CheckEdit.GlyphTemplate>
+                <DataTemplate>
+                    <Border Height="40" Width="40" BorderBrush="Gray" BorderThickness="2" >
+                        <Image Source="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2"/>
+                    </Border>
+                </DataTemplate>
+            </dxe:CheckEdit.GlyphTemplate>
+            <dxe:CheckEdit.StyleSettings>
+                <dxe:ImageCheckEditStyleSettings />
+            </dxe:CheckEdit.StyleSettings>
+        </dxe:CheckEdit>
+
         <!--<GroupBox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" Width="30" Height="30">
             <dxe:CheckEdit x:Name="is_checked"
                                CheckedGlyph="{dx:DXImage Images/XAF/Action_Validation_Validate_32x32.png}"

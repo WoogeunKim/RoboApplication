@@ -299,9 +299,9 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                         }
                     }
                 }
-                else if(cntr_nm)
+                else if (cntr_nm)
                 {
-                    if(e.IsValid)
+                    if (e.IsValid)
                     {
                         if (string.IsNullOrEmpty(masterDomain.CNTR_NM))
                         {
@@ -312,7 +312,10 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                             masterDomain.CNTR_NM = e.Value.ToString();
                             masterDomain.isCheckd = true;
 
+                            SystemCodeVo deCo1 = (this.lue_CNTR_NM.ItemsSource as List<SystemCodeVo>).Where(x => x.CNTR_NM.Equals(e.Value.ToString())).LastOrDefault();
 
+                            masterDomain.PRG_TP_CD = deCo1.PRG_TP_CD;
+                            masterDomain.PRG_TP_NM = deCo1.PRG_TP_NM;
                         }
                     }
                 }

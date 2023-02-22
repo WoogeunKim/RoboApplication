@@ -29,7 +29,7 @@
 
 
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0"  Grid.Row="0" Text="상위 ID : " HorizontalAlignment="Right" TextAlignment="Right" />
-        <dxg:LookUpEdit HorizontalContentAlignment="Left" Grid.Column="1" Margin="2" Grid.Row="0" VerticalAlignment="Stretch" x:Name="combo_DE_PRNT_NO" IsSynchronizedWithCurrentItem="True" DisplayMember="DE_CO_NM" ValueMember="DE_CHD_NO" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="280" PopupWidth="500">
+        <dxg:LookUpEdit HorizontalContentAlignment="Center" Grid.Column="1" Margin="2" Grid.Row="0" VerticalAlignment="Stretch" x:Name="combo_DE_PRNT_NO" IsSynchronizedWithCurrentItem="True" DisplayMember="DE_CO_NM" ValueMember="DE_CHD_NO" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="280" PopupWidth="500">
             <dxg:LookUpEdit.PopupContentTemplate>
                 <ControlTemplate>
                     <dxg:GridControl Name="PART_GridControl" >
@@ -67,7 +67,7 @@
 
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0"  Grid.Row="1" Text="고객사 : " HorizontalAlignment="Right" TextAlignment="Right" />
         <!--<dxe:TextEdit x:Name="text_CO_NO" Grid.Column="1"  Grid.Row="1"  VerticalAlignment="Stretch" Text="{Binding CO_NO}" Margin="2" />-->
-        <dxg:LookUpEdit HorizontalContentAlignment="Left" Grid.Column="1" Margin="2" Grid.Row="1" VerticalAlignment="Stretch" x:Name="combo_CO_NM" Text="{Binding CO_NM}" IsSynchronizedWithCurrentItem="True" DisplayMember="CO_NM" ValueMember="CO_NM" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="280" PopupWidth="320">
+        <dxg:LookUpEdit HorizontalContentAlignment="Center" Grid.Column="1" Margin="2" Grid.Row="1" VerticalAlignment="Stretch" x:Name="combo_CO_NM" Text="{Binding CO_NM}" IsSynchronizedWithCurrentItem="True" DisplayMember="CO_NM" ValueMember="CO_NM" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="280" PopupWidth="320">
             <dxg:LookUpEdit.PopupContentTemplate>
                 <ControlTemplate>
                     <dxg:GridControl Name="PART_GridControl" >
@@ -85,7 +85,7 @@
                             
                             <dxg:GridColumn FieldName="CO_NM" Width="100" HorizontalHeaderContentAlignment="Center"  FilterPopupMode="CheckedList" ToolTip="" >
                                 <dxg:GridColumn.EditSettings>
-                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
                                 </dxg:GridColumn.EditSettings>
                             </dxg:GridColumn>
                             
@@ -101,21 +101,21 @@
 
 
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0"  Grid.Row="2" Text="납품처 : " HorizontalAlignment="Right" TextAlignment="Right" />
-        <dxe:TextEdit x:Name="text_DE_CO_NM" Grid.Column="1" Grid.Row="2" VerticalAlignment="Stretch" Text="{Binding DE_CO_NM}"  Margin="2" />
+        <dxe:TextEdit x:Name="text_DE_CO_NM" Grid.Column="1" Grid.Row="2" VerticalAlignment="Stretch" Text="{Binding DE_CO_NM}"  Margin="2" HorizontalContentAlignment="Left" />
 
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0"  Grid.Row="3" Text="등록일 : " HorizontalAlignment="Right" TextAlignment="Right" />
-        <dxe:DateEdit x:Name="text_CRE_DT" Grid.Column="1"  Grid.Row="3" VerticalAlignment="Stretch" Text="{Binding S_CRE_DT}" Margin="2"  />
+        <dxe:DateEdit x:Name="text_CRE_DT" Grid.Column="1"  Grid.Row="3" VerticalAlignment="Stretch" Text="{Binding S_CRE_DT}" Margin="2" HorizontalContentAlignment="Center" />
 
         
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0"  Grid.Row="4" Text="납기일 : " HorizontalAlignment="Right" TextAlignment="Right" />
-        <dxe:DateEdit x:Name="text_DUE_DT" Grid.Column="1"  Grid.Row="4" VerticalAlignment="Stretch" Text="{Binding S_DUE_DT}" Margin="2"  />
+        <dxe:DateEdit x:Name="text_DUE_DT" Grid.Column="1"  Grid.Row="4" VerticalAlignment="Stretch" Text="{Binding S_DUE_DT}" Margin="2" HorizontalContentAlignment="Center" />
 
         
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0"  Grid.Row="5" Text="공사명 : " HorizontalAlignment="Right" TextAlignment="Right" />
-        <dxe:TextEdit x:Name="text_CNTR_NM" Grid.Column="1" Grid.Row="5" VerticalAlignment="Stretch" Text="{Binding CNTR_NM}"  Margin="2" />
+        <dxe:TextEdit x:Name="text_CNTR_NM" Grid.Column="1" Grid.Row="5" VerticalAlignment="Stretch" Text="{Binding CNTR_NM}"  Margin="2" HorizontalContentAlignment="Left" />
 
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0"  Grid.Row="6" Text="컨버팅프로그램 : " HorizontalAlignment="Right" TextAlignment="Right"/>
-        <dxg:LookUpEdit HorizontalContentAlignment="Left" Grid.Column="1" Margin="2" Grid.Row="6" VerticalAlignment="Stretch" x:Name="combo_CD_DE" Text="{Binding PRG_TP_NM}" IsSynchronizedWithCurrentItem="True" DisplayMember="CLSS_DESC" ValueMember="CLSS_DESC" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="280" PopupWidth="320">
+        <dxg:LookUpEdit HorizontalContentAlignment="Center" Grid.Column="1" Margin="2" Grid.Row="6" VerticalAlignment="Stretch" x:Name="combo_CD_DE" Text="{Binding PRG_TP_NM}" IsSynchronizedWithCurrentItem="True" DisplayMember="CLSS_DESC" ValueMember="CLSS_DESC" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="280" PopupWidth="320">
             <dxg:LookUpEdit.PopupContentTemplate>
                 <ControlTemplate>
                     <dxg:GridControl Name="PART_GridControl" >
@@ -133,7 +133,7 @@
 
                             <dxg:GridColumn FieldName="CLSS_DESC" Width="100" HorizontalHeaderContentAlignment="Center"  FilterPopupMode="CheckedList" ToolTip="" >
                                 <dxg:GridColumn.EditSettings>
-                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
                                 </dxg:GridColumn.EditSettings>
                             </dxg:GridColumn>
 
@@ -144,14 +144,14 @@
         </dxg:LookUpEdit>
 
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0"  Grid.Row="7" Text="중량 : " HorizontalAlignment="Right" TextAlignment="Right"/>
-        <dxe:TextEdit x:Name="text_ITM_WGT" Grid.Column="1" Grid.Row="7" VerticalAlignment="Stretch" Text="{Binding ITM_WGT}"  Margin="2" MaskType="Numeric" Mask="###,###,###,##0.00 ㎏" MaskUseAsDisplayFormat="True" />
+        <dxe:TextEdit x:Name="text_ITM_WGT" HorizontalContentAlignment="Right" Grid.Column="1" Grid.Row="7" VerticalAlignment="Stretch" Text="{Binding ITM_WGT}"  Margin="2" MaskType="Numeric" Mask="###,###,###,##0.0000 ㎏" MaskUseAsDisplayFormat="True" />
 
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0"  Grid.Row="8" Text="비고 : " HorizontalAlignment="Right" TextAlignment="Right" />
-        <dxe:TextEdit x:Name="text_CNTR_RMK" Grid.Column="1" Grid.Row="8" VerticalAlignment="Stretch" Text="{Binding CNTR_RMK}"  Margin="2" />
+        <dxe:TextEdit x:Name="text_CNTR_RMK" Grid.Column="1" Grid.Row="8" VerticalAlignment="Stretch" Text="{Binding CNTR_RMK}"  Margin="2" HorizontalContentAlignment="Left"/>
 
 
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0" Grid.Row="9" Text="사용 여부 : " HorizontalAlignment="Right" TextAlignment="Right"/>
-        <dxe:ComboBoxEdit  x:Name="combo_DELT_FLG" Grid.Column="1" Grid.Row="9" Margin="2" VerticalAlignment="Stretch" Text="{Binding DELT_FLG, Mode=TwoWay }" IsTextEditable="False" ShowSizeGrip="False" >
+        <dxe:ComboBoxEdit  x:Name="combo_DELT_FLG" Grid.Column="1" Grid.Row="9" Margin="2" VerticalAlignment="Stretch" Text="{Binding DELT_FLG, Mode=TwoWay }" IsTextEditable="False" ShowSizeGrip="False" HorizontalContentAlignment="Center" >
             <dxe:ComboBoxEditItem Content="사용" IsSelected="True" />
             <dxe:ComboBoxEditItem Content="미사용" />
         </dxe:ComboBoxEdit>

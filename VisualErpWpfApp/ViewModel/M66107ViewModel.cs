@@ -176,6 +176,8 @@ namespace AquilaErpWpfApp3.ViewModel
         {
             try
             {
+                if (SelectedMstItem == null) return;
+
                 detailDialog = new M66107DetailDialog(SelectedMstItem);
                 detailDialog.Title = title + " - 추가";
                 detailDialog.Owner = Application.Current.MainWindow;

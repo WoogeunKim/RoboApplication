@@ -120,7 +120,7 @@
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
-                                            <dxg:GridColumn FieldName="PRG_TP_NM" Header="바리스트" Width="110" HorizontalHeaderContentAlignment="Center"  FilterPopupMode="CheckedList" ToolTip="" >
+                                            <dxg:GridColumn FieldName="PRG_TP_NM" Header="컨버팅프로그램" Width="150" HorizontalHeaderContentAlignment="Center"  FilterPopupMode="CheckedList" ToolTip="" >
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
                                                 </dxg:GridColumn.EditSettings>

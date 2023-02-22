@@ -57,9 +57,9 @@
                 <dxb:BarButtonItem x:Name="M_MST_INSERT" Content="추가" KeyGesture="F6" Glyph="{dx:DXImage Image=AddItem_16x16.png}" LargeGlyph="{dx:DXImage Image=AddItem_32x32.png}" RibbonStyle="Large" Command="{Binding NewContactCommand}" />
                 <dxb:BarButtonItem x:Name="M_MST_UPDATE" Content="수정" KeyGesture="F7" Glyph="{dx:DXImage Image=Edit_16x16.png}" LargeGlyph="{dx:DXImage Image=Edit_32x32.png}"  RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" Command="{Binding EditContactCommand}" />
                 <dxb:BarButtonItem x:Name="M_MST_PRINT" Content="출력" Glyph="{dx:DXImage Image=PrintDialog_16x16.png}" LargeGlyph="{dx:DXImage Image=PrintDialog_32x32.png}" RibbonStyle="Large" IsEnabled="False"/>
-                <dxb:BarButtonItem x:Name="M_MST2_INSERT" Content="추가" Glyph="{dx:DXImage Image=AddItem_16x16.png}" LargeGlyph="{dx:DXImage Image=AddItem_32x32.png}" RibbonStyle="Large" Command="{Binding New2ContactCommand}" IsEnabled="{Binding isM_UPDATE}" />
+                <dxb:BarButtonItem x:Name="M_MST2_INSERT" Content="추가" RibbonStyle="Large" Command="{Binding New2ContactCommand}" IsEnabled="{Binding isM_UPDATE}" Glyph="{dxc:DXImage SvgImages/Outlook Inspired/NewOrder.svg}" LargeGlyph="{dxc:DXImage SvgImages/Outlook Inspired/NewOrder.svg}" />
 
-                <dxb:BarButtonItem x:Name="M_OPTI_RUN" Content="Opti Run" Glyph="{dx:DXImage Image=AddItem_16x16.png}" LargeGlyph="{dx:DXImage Image=AddItem_32x32.png}" RibbonStyle="Large" Command="{Binding OptiRunCommand}" IsEnabled="{Binding isM_UPDATE}" />
+                <dxb:BarButtonItem x:Name="M_OPTI_RUN" Content="Opti Run" RibbonStyle="Large" Command="{Binding OptiRunCommand}" IsEnabled="{Binding isM_UPDATE}" Glyph="{dxc:DXImage SvgImages/Chart/ChartType_RadarArea.svg}" LargeGlyph="{dxc:DXImage SvgImages/Chart/ChartType_RadarArea.svg}" />
             </dxb:BarManager.Items>
 
             <Grid>
@@ -77,22 +77,22 @@
                                 <dxb:BarEditItemLink BarItemName="M_TO_DT" EditWidth="120" EditHeight="28" />
                                 <dxb:BarButtonItemLink BarItemName="M_MST_REFRESH"/>
                             </dxr:RibbonPageGroup>
-                            
+
                             <dxr:RibbonPageGroup Caption="관리">
                                 <dxb:BarButtonItemLink BarItemName="M_MST_INSERT"/>
                                 <dxb:BarButtonItemLink BarItemName="M_MST_UPDATE"/>
                             </dxr:RibbonPageGroup>
-                            
-                            <dxr:RibbonPageGroup Caption="출력">
-                                <dxb:BarButtonItemLink BarItemName="M_MST_PRINT"/>
-                            </dxr:RibbonPageGroup>
-                            
-                            <dxr:RibbonPageGroup Caption="생산자재">
+
+                            <dxr:RibbonPageGroup Caption="생산 자재">
                                 <dxb:BarButtonItemLink BarItemName="M_MST2_INSERT"/>
                             </dxr:RibbonPageGroup>
                             
-                            <dxr:RibbonPageGroup Caption="생산계획">
+                            <dxr:RibbonPageGroup Caption="LOSS 최적회 실행">
                                 <dxb:BarButtonItemLink BarItemName="M_OPTI_RUN"/>
+                            </dxr:RibbonPageGroup>
+
+                            <dxr:RibbonPageGroup Caption="출력">
+                                <dxb:BarButtonItemLink BarItemName="M_MST_PRINT"/>
                             </dxr:RibbonPageGroup>
                         </dxr:RibbonPage>
                     </dxr:RibbonDefaultPageCategory>
