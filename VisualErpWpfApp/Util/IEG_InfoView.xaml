@@ -81,7 +81,7 @@
         </Border>-->
         <Border VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Margin="220,284,225,47" Height="214" Width="219">
             <StackPanel Margin="10,0,10,1" Orientation="Horizontal">
-                <dxe:ImageEdit HorizontalAlignment="Left"  Source="/AquilaErpWpfApp3;component/Images/logo.ico"  Name="img_main" Stretch="Fill" VerticalAlignment="Center" IsReadOnly="True" ShowBorder="False" Width="200" Height="200" />
+                <dxe:ImageEdit HorizontalAlignment="Left"  Source="/AquilaErpWpfApp3;component/Images/logo1_128.ico"  Name="img_main" Stretch="Fill" VerticalAlignment="Center" IsReadOnly="True" ShowBorder="False" Width="200" Height="200" />
             </StackPanel>
         </Border>
 

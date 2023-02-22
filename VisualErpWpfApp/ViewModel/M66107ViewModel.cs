@@ -150,6 +150,7 @@ namespace AquilaErpWpfApp3.ViewModel
             try
             {
                 if (SelectedMstItem == null) return;
+
                 masterDialog = new M66107MasterDialog(SelectedMstItem);
                 masterDialog.Title = title + " - 수정";
                 masterDialog.Owner = Application.Current.MainWindow;

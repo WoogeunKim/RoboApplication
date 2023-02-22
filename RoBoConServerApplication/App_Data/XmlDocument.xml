@@ -2132,6 +2132,11 @@
             Loss 최적화 수행 MST - 수정
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66107Controller.GetMstLogSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            Loss 최적화 수행 MST 로그 조회
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Man.M66107Controller.GetDtlSelect(ModelsLibrary.Man.ManVo)">
             <summary>
             Loss 최적화 수행 DTL 조회

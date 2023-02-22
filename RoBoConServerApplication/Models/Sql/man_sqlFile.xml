@@ -9354,6 +9354,7 @@
              , CASE WHEN T1.OPMZ_STS_CD = 'S' THEN '시작' ELSE '종료'  END AS OPMZ_STS_NM
              , T1.OPMZ_LSS_RT
              , T1.OPMZ_RMK
+			 , #CHNL_CD# AS CHNL_CD
           FROM TB_OPMZ_RUN  T1
         WHERE 1 = 1
           AND T1.CRE_DT >= CAST(CONVERT(VARCHAR, #FM_DT#, 112) + ' 00:00:00' AS DATETIME)

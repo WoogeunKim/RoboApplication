@@ -35,7 +35,7 @@
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>29</ApplicationRevision>
+    <ApplicationRevision>31</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -62,7 +62,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Images\logo.ico</ApplicationIcon>
+    <ApplicationIcon>logo2_128.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>A3FE22369F266087F763B78E91D87D35CCB0EF56</ManifestCertificateThumbprint>
@@ -3422,13 +3422,15 @@
     <Resource Include="Images\ktouch.png" />
     <Resource Include="Images\yellow.png" />
     <Content Include="Dll\Popbill.dll" />
-    <Resource Include="Images\logo2.ico" />
     <Resource Include="logo.ico" />
     <Resource Include="logo2.ico" />
-    <Resource Include="Images\logo1.ico" />
     <Resource Include="Images\logo.ico" />
     <Resource Include="Images\logo_32.png" />
-    <Resource Include="Images\logo1_32.png" />
+    <Resource Include="Images\logo1_128.ico" />
+    <Resource Include="Images\logo1_48.png" />
+    <Resource Include="Images\logo2_128.ico" />
+    <Resource Include="Images\logo2_48.png" />
+    <Resource Include="logo2_128.ico" />
     <Content Include="uio32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

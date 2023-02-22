@@ -7,7 +7,7 @@
     xmlns:dxd="http://schemas.devexpress.com/winfx/2008/xaml/docking"
     xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
                   xmlns:local="clr-namespace:AquilaErpWpfApp3.Utillity"
-   Icon="pack://application:,,,/AquilaErpWpfApp3;component/Images/logo.ico" 
+   Icon="pack://application:,,,/AquilaErpWpfApp3;component/Images/logo1_128.ico" 
     Title="Aquila ERP" Height="700" Width="1100" WindowState="Maximized" SnapsToDevicePixels="True" UseLayoutRounding="True" FontFamily="Arial" FontSize="12">
     
     <!--<dxr:DXRibbonWindow.Resources>
@@ -42,7 +42,7 @@
         </dxb:BarManager.Items>
         <DockPanel>
             <!-- ApplicationButtonLargeIcon="pack://application:,,,/Images/logo_32.png"-->
-            <dxr:RibbonControl x:Name="ribbonControl1" DockPanel.Dock="Top" ToolbarShowCustomizationButton="False" ShowApplicationButton="True" ApplicationButtonLargeIcon="pack://application:,,,/Images/logo_32.png"  >
+            <dxr:RibbonControl x:Name="ribbonControl1" DockPanel.Dock="Top" ToolbarShowCustomizationButton="False" ShowApplicationButton="True" ApplicationButtonLargeIcon="pack://application:,,,/Images/logo1_48.png" RibbonStyle="Office2007" >
                 <dxr:RibbonControl.ApplicationMenu>
                     <dxr:BackstageViewControl SelectedTabIndex="{Binding DefaultBackstatgeIndex, Mode=TwoWay}" IsOpen="{Binding IsBackstageOpen, Mode=TwoWay}">
                         <dxr:BackstageViewControl.Items>
