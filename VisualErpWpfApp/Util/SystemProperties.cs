@@ -50,7 +50,7 @@ namespace AquilaErpWpfApp3.Util
 
         public static string PROGRAM_TITLE
         {
-            get { return "Aquila ERP"; }
+            get { return "AToZ MES"; }
         }
 
         public static HttpClient PROGRAM_HTTP

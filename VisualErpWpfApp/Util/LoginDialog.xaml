@@ -82,7 +82,7 @@
                 <TextBlock>LOGIN</TextBlock>
             </StackPanel>
         </Button>-->
-        <TextBlock Text="2020 © IEG CO., ALL RIGHTS RESERVED" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" FontSize="11" />
+        <TextBlock Text="2022 © JSS CO., ALL RIGHTS RESERVED" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" FontSize="11" />
 
     </Grid>
 
