@@ -16,24 +16,24 @@ using AquilaErpWpfApp3.Util;
 namespace AquilaErpWpfApp3.View.PUR.Dialog
 {
     public partial class P4411Detail_2Dialog : DXWindow
-	{
-		//private static PurServiceClient purClient = SystemProperties.PurClient;
-		//private static ItemCodeServiceClient itemClient = SystemProperties.ItemClient;
+    {
+        //private static PurServiceClient purClient = SystemProperties.PurClient;
+        //private static ItemCodeServiceClient itemClient = SystemProperties.ItemClient;
 
         private string _title = "발주 등록 관리";
 
-		public bool isEdit = false;
-		private PurVo orgDao;
-		//private PurVo updateDao;
+        public bool isEdit = false;
+        private PurVo orgDao;
+        //private PurVo updateDao;
 
-		//private P4411DetailViewDialog itemDialog;
+        //private P4411DetailViewDialog itemDialog;
 
 
         private IList<PurVo> SelectItems;
 
         public P4411Detail_2Dialog(PurVo Dao)
-		{
-			InitializeComponent();
+        {
+            InitializeComponent();
 
             SYSTEM_CODE_VO();
             //this.combo_ITM_GRP_CLSS_CD.ItemsSource = SystemProperties.SYSTEM_CODE_VO("L-001");
@@ -43,37 +43,37 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
 
 
             this.orgDao = Dao;
-                this.btn_ITEMS.Click += btn_ITEMS_Click;
+            this.btn_ITEMS.Click += btn_ITEMS_Click;
 
-                //if (string.IsNullOrEmpty(this.orgDao.GBN))  
-                //{
-                    //수정
-                    //this.SelectItems = new ObservableCollection<PurVo>(purClient.P4411SelectDtlList(this.orgDao));
-                   
-                //}
-                //else if (this.orgDao.GBN.Equals("Add"))
-                //{
-                //    //추가
-                //    this.SelectItems = new ObservableCollection<PurVo>(purClient.P5511SelectDtlList(this.orgDao));
+            //if (string.IsNullOrEmpty(this.orgDao.GBN))  
+            //{
+            //수정
+            //this.SelectItems = new ObservableCollection<PurVo>(purClient.P4411SelectDtlList(this.orgDao));
 
-                    //if (this.SelectItems.Count <= 0)
-                    //{
-                        this.SelectItems = new List<PurVo>();
-                    //}
+            //}
+            //else if (this.orgDao.GBN.Equals("Add"))
+            //{
+            //    //추가
+            //    this.SelectItems = new ObservableCollection<PurVo>(purClient.P5511SelectDtlList(this.orgDao));
 
-      
-                //}
+            //if (this.SelectItems.Count <= 0)
+            //{
+            this.SelectItems = new List<PurVo>();
+            //}
 
-                //this.ViewGridDtl.ItemsSource = this.SelectItems;
-                //this.configCode.DataContext = copyDao;
-                //this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
-                this.OKButton.Click += new RoutedEventHandler(OKButton_Click);
-                this.CancelButton.Click += new RoutedEventHandler(CancelButton_Click);
+
+            //}
+
+            //this.ViewGridDtl.ItemsSource = this.SelectItems;
+            //this.configCode.DataContext = copyDao;
+            //this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+            this.OKButton.Click += new RoutedEventHandler(OKButton_Click);
+            this.CancelButton.Click += new RoutedEventHandler(CancelButton_Click);
 
             this.btn_BUN_WGT_1.Click += Btn_BUN_WGT_1_Click;
             this.btn_BUN_WGT_2.Click += Btn_BUN_WGT_2_Click;
 
-                //this.DELButton.Click += new RoutedEventHandler(DELButton_Click);
+            //this.DELButton.Click += new RoutedEventHandler(DELButton_Click);
 
             //this.combo_ITM_GRP_CLSS_CD.Text = ((IList<CodeDao>)this.combo_ITM_GRP_CLSS_CD.ItemsSource)[0].CLSS_DESC;
             //this.ViewTableDtl.MouseDoubleClick += ViewTableDtl_MouseDoubleClick;
@@ -224,8 +224,8 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
             }
         }
 
-		async void btn_ITEMS_Click(object sender, RoutedEventArgs e)
-		{
+        async void btn_ITEMS_Click(object sender, RoutedEventArgs e)
+        {
             try
             {
                 DXSplashScreen.Show<ProgressWindow>();
@@ -235,10 +235,10 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                 SystemCodeVo dao = new SystemCodeVo();
 
                 SystemCodeVo ITM_GRP_CLSS_CDVo = this.combo_ITM_GRP_CLSS_CD.SelectedItem as SystemCodeVo;
-			    if (ITM_GRP_CLSS_CDVo != null)
-			    {
-				    dao.ITM_GRP_CLSS_CD = ITM_GRP_CLSS_CDVo.CLSS_CD;
-				    dao.ITM_GRP_CLSS_NM = ITM_GRP_CLSS_CDVo.CLSS_DESC;
+                if (ITM_GRP_CLSS_CDVo != null)
+                {
+                    dao.ITM_GRP_CLSS_CD = ITM_GRP_CLSS_CDVo.CLSS_CD;
+                    dao.ITM_GRP_CLSS_NM = ITM_GRP_CLSS_CDVo.CLSS_DESC;
                     dao.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
                 }
                 //
@@ -266,30 +266,47 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
 
                         this.SelectItems.Clear();
 
-                            for (int x = 0; x < resultItems.Count; x++)
+                        for (int x = 0; x < resultItems.Count; x++)
+                        {
+                            this.SelectItems.Add(new PurVo()
                             {
-                                 this.SelectItems.Add(new PurVo() {
-                                                  PUR_ORD_NO = this.orgDao.PUR_ORD_NO
-                                                , ITM_CD = resultItems[x].ITM_CD
-                                                , ITM_NM = resultItems[x].ITM_NM
-                                                , ITM_SZ_NM = resultItems[x].ITM_SZ_NM
-                                                , UOM_NM = resultItems[x].UOM_NM
-                                                , UOM_CD = resultItems[x].UOM_CD 
-                                                , COLR_NM = resultItems[x].N2ND_ITM_GRP_CD
-                                                , CRE_USR_ID = SystemProperties.USER
-                                                , UPD_USR_ID = SystemProperties.USER
-                                                , CHNL_CD = SystemProperties.USER_VO.CHNL_CD
-                                                , N1ST_ITM_GRP_NM = resultItems[x].N1ST_ITM_GRP_NM
-                                                , N5TH_QTY = resultItems[x].SFSTK_QTY
-                                                , GBN= resultItems[x].GBN
-                                                , ITM_LEN_NM = resultItems[x].ITM_LEN_NM
-                                                , YRMON = resultItems[x].CAR_ITM_NM
-                                 });
-                            }
-                            //
-                            this.ViewGridDtl.ItemsSource = this.SelectItems;
-                            this.ViewGridDtl.SelectedItems = new List<PurVo>();
-                            this.ViewGridDtl.RefreshData();
+                                PUR_ORD_NO = this.orgDao.PUR_ORD_NO
+                                           ,
+                                ITM_CD = resultItems[x].ITM_CD
+                                           ,
+                                ITM_NM = resultItems[x].ITM_NM
+                                           ,
+                                ITM_SZ_NM = resultItems[x].ITM_SZ_NM
+                                           ,
+                                UOM_NM = resultItems[x].UOM_NM
+                                           ,
+                                UOM_CD = resultItems[x].UOM_CD
+                                           ,
+                                COLR_NM = resultItems[x].N2ND_ITM_GRP_CD
+                                           ,
+                                CRE_USR_ID = SystemProperties.USER
+                                           ,
+                                UPD_USR_ID = SystemProperties.USER
+                                           ,
+                                CHNL_CD = SystemProperties.USER_VO.CHNL_CD
+                                           ,
+                                N1ST_ITM_GRP_NM = resultItems[x].N1ST_ITM_GRP_NM
+                                           ,
+                                N5TH_QTY = resultItems[x].SFSTK_QTY
+                                           ,
+                                GBN = resultItems[x].GBN
+                                           ,
+                                ITM_LEN_NM = resultItems[x].ITM_LEN_NM
+                                           ,
+                                YRMON = resultItems[x].CAR_ITM_NM
+                                           ,
+                                BUN_WGT = resultItems[x].UOM_RUN_WGT
+                            });
+                        }
+                        //
+                        this.ViewGridDtl.ItemsSource = this.SelectItems;
+                        this.ViewGridDtl.SelectedItems = new List<PurVo>();
+                        this.ViewGridDtl.RefreshData();
                     }
                 }
 
@@ -339,10 +356,10 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
             //        this.ViewGridDtl.RefreshData();
             //    }
             //}
-		}
+        }
 
-		private async void OKButton_Click(object sender, RoutedEventArgs e)
-		{
+        private async void OKButton_Click(object sender, RoutedEventArgs e)
+        {
             try
             {
                 List<PurVo> saveItems = (List<PurVo>)this.ViewGridDtl.ItemsSource;
@@ -415,62 +432,62 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                 WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + this._title, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-		}
+        }
 
-		private void CancelButton_Click(object sender, RoutedEventArgs e)
-		{
-			this.DialogResult = false;
-			this.Close();
-		}
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+            this.Close();
+        }
 
-		private void HandleEsc(object sender, KeyEventArgs e)
-		{
-			if (e.Key == Key.Escape)
-			{
-				this.DialogResult = false;
-				Close();
-			}
-		}
+        private void HandleEsc(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                this.DialogResult = false;
+                Close();
+            }
+        }
 
-		//void combo_ITM_GRP_CLSS_CD_SelectedIndexChanged(object sender, RoutedEventArgs e)
-		//{
-		//	try
-		//	{
-		//		CodeDao ITM_GRP_CLSS_NM_VO = this.combo_ITM_GRP_CLSS_CD.SelectedItem as CodeDao;
-		//		if (ITM_GRP_CLSS_NM_VO != null)
-		//		{
-		//			if (string.IsNullOrEmpty(ITM_GRP_CLSS_NM_VO.CLSS_CD))
-		//			{
-		//				return;
-		//			}
+        //void combo_ITM_GRP_CLSS_CD_SelectedIndexChanged(object sender, RoutedEventArgs e)
+        //{
+        //   try
+        //   {
+        //      CodeDao ITM_GRP_CLSS_NM_VO = this.combo_ITM_GRP_CLSS_CD.SelectedItem as CodeDao;
+        //      if (ITM_GRP_CLSS_NM_VO != null)
+        //      {
+        //         if (string.IsNullOrEmpty(ITM_GRP_CLSS_NM_VO.CLSS_CD))
+        //         {
+        //            return;
+        //         }
 
-		//			IList<ItemGroupCodeVo> ItemGroupVo = itemClient.SelectCodeItemGroupList(new ItemGroupCodeVo() { DELT_FLG = "N", ITM_GRP_CLSS_CD = ITM_GRP_CLSS_NM_VO.CLSS_CD, CRE_USR_ID = "" });
-		//			IList<CodeDao> ItemList = new List<CodeDao>();
-		//			int nCnt = ItemGroupVo.Count;
-		//			ItemGroupCodeVo tmpVo;
+        //         IList<ItemGroupCodeVo> ItemGroupVo = itemClient.SelectCodeItemGroupList(new ItemGroupCodeVo() { DELT_FLG = "N", ITM_GRP_CLSS_CD = ITM_GRP_CLSS_NM_VO.CLSS_CD, CRE_USR_ID = "" });
+        //         IList<CodeDao> ItemList = new List<CodeDao>();
+        //         int nCnt = ItemGroupVo.Count;
+        //         ItemGroupCodeVo tmpVo;
 
-		//			this.combo_N1ST_ITM_GRP_CD.Clear();
+        //         this.combo_N1ST_ITM_GRP_CD.Clear();
 
-		//			for (int x = 0; x < nCnt; x++)
-		//			{
-		//				tmpVo = ItemGroupVo[x];
-		//				ItemList.Add(new CodeDao() { CLSS_DESC = tmpVo.ITM_GRP_NM, CLSS_CD = tmpVo.ITM_GRP_CD });
-		//			}
-		//			this.combo_N1ST_ITM_GRP_CD.ItemsSource = ItemList;
+        //         for (int x = 0; x < nCnt; x++)
+        //         {
+        //            tmpVo = ItemGroupVo[x];
+        //            ItemList.Add(new CodeDao() { CLSS_DESC = tmpVo.ITM_GRP_NM, CLSS_CD = tmpVo.ITM_GRP_CD });
+        //         }
+        //         this.combo_N1ST_ITM_GRP_CD.ItemsSource = ItemList;
 
-  //                  if (ItemList.Count > 0)
-  //                  {
-  //                      this.combo_N1ST_ITM_GRP_CD.Text = ItemList[0].CLSS_DESC;
-  //                  }
-		//		}
+        //                  if (ItemList.Count > 0)
+        //                  {
+        //                      this.combo_N1ST_ITM_GRP_CD.Text = ItemList[0].CLSS_DESC;
+        //                  }
+        //      }
 
-		//	}
-		//	catch (Exception eLog)
-		//	{
-		//		WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + this._title, MessageBoxButton.OK, MessageBoxImage.Error);
-		//		return;
-		//	}
-		//}
+        //   }
+        //   catch (Exception eLog)
+        //   {
+        //      WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + this._title, MessageBoxButton.OK, MessageBoxImage.Error);
+        //      return;
+        //   }
+        //}
 
         //void combo_N1ST_ITM_GRP_CD_SelectedIndexChanged(object sender, RoutedEventArgs e)
         //{
@@ -516,40 +533,12 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
             {
                 PurVo masterDomain = (PurVo)ViewGridDtl.GetFocusedRow();
 
-                bool colrNm = (e.Column.FieldName.ToString().Equals("COLR_NM") ? true : false);
                 bool impItmQty = (e.Column.FieldName.ToString().Equals("PUR_QTY") ? true : false);
                 bool impItmPrc = (e.Column.FieldName.ToString().Equals("CO_UT_PRC") ? true : false);
                 //bool impItmAmt = (e.Column.FieldName.ToString().Equals("IMP_ITM_AMT") ? true : false);
                 bool impItmRmk = (e.Column.FieldName.ToString().Equals("PUR_ITM_RMK") ? true : false);
-                bool bunWgt = (e.Column.FieldName.ToString().Equals("BUN_WGT") ? true : false);
 
-
-                if (colrNm)
-                {
-                    //if (e.IsValid)
-                    //{
-                    //    if (string.IsNullOrEmpty(masterDomain.COLR_CD))
-                    //    {
-                    //        masterDomain.COLR_NM = "";
-                    //        masterDomain.COLR_CD = "";
-                    //    }
-                    //    //
-                    //    if (!masterDomain.COLR_CD.Equals((e.Value == null ? "" : e.Value.ToString())))
-                    //    {
-                    //        SystemCodeVo bankIoDao = this.lue_COLR_NM.GetItemFromValue(e.Value) as SystemCodeVo;
-                    //        //
-                    //        if (bankIoDao != null)
-                    //        {
-                    //            masterDomain.COLR_CD = bankIoDao.CLSS_CD;
-                    //            masterDomain.COLR_NM = bankIoDao.CLSS_DESC;
-                    //        }
-
-                    //        masterDomain.isCheckd = true;
-                    //        this.OKButton.IsEnabled = true;
-                    //    }
-                    //}
-                }
-                else if(impItmQty)
+                if (impItmQty)
                 {
                     if (e.IsValid)
                     {
@@ -575,10 +564,12 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                             //에러 체크
                             try
                             {
+                                masterDomain.TOT_USE_QTY = tmpInt * Convert.ToDouble(masterDomain.BUN_WGT);
                                 masterDomain.PUR_AMT = tmpInt * Convert.ToDouble(masterDomain.CO_UT_PRC);
                             }
                             catch (Exception)
                             {
+                                masterDomain.TOT_USE_QTY = 0;
                                 masterDomain.PUR_AMT = 0;
                             }
 
@@ -617,41 +608,6 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                             {
                                 masterDomain.PUR_AMT = 0;
                             }
-                            this.OKButton.IsEnabled = true;
-                        }
-                    }
-                }
-                else if (bunWgt)
-                {
-                    if (e.IsValid)
-                    {
-                        if (string.IsNullOrEmpty(masterDomain.BUN_WGT + ""))
-                        {
-                            masterDomain.BUN_WGT = 0;
-                        }
-                        //
-                        if (!masterDomain.BUN_WGT.Equals((e.Value == null ? "" : e.Value.ToString())))
-                        {
-                            //double? tmpInt = Convert.ToDouble(e.Value.ToString());
-                            //if (tmpInt <= -1)
-                            //{
-                            //    e.ErrorType = DevExpress.XtraEditors.DXErrorProvider.ErrorType.Critical;
-                            //    e.ErrorContent = "[단가]" + tmpInt + " -값은 입력 하실수 없습니다";
-                            //    e.SetError(e.ErrorContent, e.ErrorType);
-                            //    return;
-                            //}
-
-                            masterDomain.BUN_WGT = e.Value.ToString();
-                            masterDomain.isCheckd = true;
-                            ////에러 체크
-                            //try
-                            //{
-                            //    masterDomain.PUR_AMT = Convert.ToInt32(masterDomain.PUR_QTY) * tmpInt;
-                            //}
-                            //catch (Exception)
-                            //{
-                            //    masterDomain.PUR_AMT = 0;
-                            //}
                             this.OKButton.IsEnabled = true;
                         }
                     }
