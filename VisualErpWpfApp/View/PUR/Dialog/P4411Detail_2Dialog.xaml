@@ -179,7 +179,7 @@
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
 
-                <dxg:GridColumn FieldName="ITM_CD" Header="물품코드" Width="20" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="1" >
+                <dxg:GridColumn FieldName="ITM_NM" Header="물품명" Width="20" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="1" >
                     <dxg:GridColumn.EditSettings>
                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                     </dxg:GridColumn.EditSettings>

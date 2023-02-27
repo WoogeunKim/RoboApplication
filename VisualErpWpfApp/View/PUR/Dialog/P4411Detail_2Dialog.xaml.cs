@@ -271,8 +271,8 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                             this.SelectItems.Add(new PurVo()
                             {
                                 PUR_ORD_NO = this.orgDao.PUR_ORD_NO
-                                           ,
-                                ITM_CD = resultItems[x].ITM_CD
+                                //           ,
+                                //ITM_CD = resultItems[x].ITM_CD
                                            ,
                                 ITM_NM = resultItems[x].ITM_NM
                                            ,

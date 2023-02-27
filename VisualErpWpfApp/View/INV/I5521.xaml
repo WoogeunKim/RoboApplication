@@ -413,7 +413,7 @@
 
 
                                         <dxg:GridControl.View>
-                                            <dxg:TableView x:Name="ViewTableMst" FontSize="11" ShowFixedTotalSummary="True" AllowPerPixelScrolling="True" ShowTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" AutoWidth="False" ShowGroupPanel="True" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="True" AllowEditing="False" NavigationStyle="Cell" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False" AllowCellMerge="True" SearchString="{Binding ElementName=M_SEARCH_TEXT, Path=EditValue}" />
+                                            <dxg:TableView x:Name="ViewTableMst" FontSize="11" ShowFixedTotalSummary="True" AllowPerPixelScrolling="True" ShowTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" AutoWidth="True" ShowGroupPanel="True" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="True" AllowEditing="False" NavigationStyle="Cell" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False" AllowCellMerge="True" SearchString="{Binding ElementName=M_SEARCH_TEXT, Path=EditValue}" />
                                         </dxg:GridControl.View>
 
                                         <!--<dxg:GridControl.InputBindings>
@@ -440,11 +440,11 @@
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
-                                            <!--<dxg:GridColumn FieldName="N2ND_ITM_GRP_NM" Header="중 분류" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="3" AllowCellMerge="True">
+                                            <dxg:GridColumn FieldName="N2ND_ITM_GRP_NM" Header="중 분류" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="3" AllowCellMerge="True">
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                                 </dxg:GridColumn.EditSettings>
-                                            </dxg:GridColumn>-->
+                                            </dxg:GridColumn>
 
                                             <dxg:GridColumn FieldName="ITM_CD" Header="품번" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="4" AllowCellMerge="True">
                                                 <dxg:GridColumn.EditSettings>

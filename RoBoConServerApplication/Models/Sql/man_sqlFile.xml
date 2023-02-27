@@ -9527,5 +9527,268 @@
 		  exec @RTN = sp_opmz_dmnd_ins #OPMZ_NO#, #UPD_USR_ID#
 		  select @RTN AS R_value
 	  </statement>
+	  
+	  <select id="M66311SelectMstList" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
+       SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.OPMZ_SEQ) AS RN 
+             , T2.ORD_ID
+             , T2.ITM_SHP_CD
+             , T5.ITM_IMG
+             , T2.ITM_STL_CD
+             , T2.ITM_STL_SZ_CD
+             , T1.INTO_RAW_LEN
+             , T1.INTO_RAW_KNT
+             , T2.ITM_LEN
+             , T3.ITM_STL_PRD_DESC
+             , T3.EQ_NO
+             , T4.A_LEN
+             , T4.B_LEN
+             , T4.C_LEN
+             , T4.D_LEN
+             , T4.E_LEN
+             , T4.F_LEN
+             , T4.A_VAL
+             , T4.B_VAL
+             , T4.C_VAL
+             , T4.D_VAL
+             , T4.E_VAL
+             , T4.F_VAL    
+          , #OPMZ_NO# AS OPMZ_NO
+          FROM (
+              SELECT dbo.FN_splitValue(ORD_ID, '-', 1)
+                   +'-' + dbo.FN_splitValue(ORD_ID, '-', 2)             AS ORD_NO
+                   , CAST(dbo.FN_splitValue(ORD_ID, '-', 3) AS INT)     AS ORD_SEQ 
+                   , DMND_IDX
+                   , STEP
+                   , SUB_STEP                   
+                   , ORD_ID
+                   , CUT_VAL
+                   , INTO_RAW_LEN       
+                   , INTO_RAW_KNT       
+                   , LSS_LEN
+                   , LSS_RT
+                   , CUT_RMN_LEN
+                   , CUT_RMN_QTY
+                   , CUT_RMN_LSS_LEN
+                   , CUT_RMN_LSS_RT 
+                   , OPMZ_NO, OPMZ_SEQ                   
+                FROM TB_OPMZ_SOL_RSLT T1
+               WHERE 1 = 1
+                 AND OPMZ_NO = #OPMZ_NO#    
+                 AND STEP    IN ( SELECT STEP
+                                    FROM TB_OPMZ_INTO_MTRL_MAP
+                                   WHERE 1 = 1
+                                     AND OPMZ_NO = #OPMZ_NO#                                   
+                                     AND CLZ_FLG = 'Y'
+                                  )
+                ) T1
+              , TB_OPMZ_DMND      T2
+              , TB_SL_RLSE_DTL    T3
+                OUTER APPLY (
+                  SELECT X.A_LEN, X.B_LEN, X.C_LEN, X.D_LEN, X.E_LEN, X.F_LEN, X.A_VAL, X.B_VAL, X.C_VAL, X.D_VAL, X.E_VAL, X.F_VAL 
+                    FROM TB_MES_PROD_DESC  X
+                   WHERE 1 = 1
+                     AND X.SL_RLSE_NO   = T3.SL_RLSE_NO
+                     AND X.SL_RLSE_SEQ  = T3.SL_RLSE_SEQ
+                 ) T4
+                OUTER APPLY (
+                  SELECT X.IMG   AS ITM_IMG 
+                    FROM TB_CD_ITM_IMG  X
+                   WHERE 1 = 1
+                     AND X.CHNL_CD   = #CHNL_CD#
+                     AND X.ITM_CD    = T3.SL_ITM_CD                
+                ) T5
+         WHERE 1 = 1
+           AND T2.OPMZ_NO   = #OPMZ_NO#               
+           AND T1.OPMZ_NO   = T2.OPMZ_NO
+           AND T1.ORD_NO    = T2.ORD_NO
+           AND T1.ORD_SEQ   = T2.ORD_SEQ
+           AND T2.ORD_NO    = T3.SL_RLSE_NO
+           AND T2.ORD_SEQ   = T3.SL_RLSE_SEQ
+           AND T3.CHNL_CD   = #CHNL_CD#
+     </select>
+	  
+	  
+	  
+
+	  <select id="M66310SelectMstList" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
+		SELECT    T1.STEP             AS RN 
+                , T1.ITM_STL_CD
+                , T1.ITM_STL_SZ_CD
+                , T1.INTO_RAW_KNT
+                , T1.INTO_RAW_LEN
+                , MAX(CASE WHEN SUB_STEP = 1 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N1ST_STEP_VAL
+                , MAX(CASE WHEN SUB_STEP = 2 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N2ND_STEP_VAL
+                , MAX(CASE WHEN SUB_STEP = 3 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N3RD_STEP_VAL  
+                , MAX(CASE WHEN SUB_STEP = 4 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N4TH_STEP_VAL      
+                , MAX(CASE WHEN SUB_STEP = 5 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N5TH_STEP_VAL   
+                , MAX(CASE WHEN SUB_STEP = 6 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N6TH_STEP_VAL     
+                , MAX(CASE WHEN SUB_STEP = 7 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N7TH_STEP_VAL   
+                , MAX(CASE WHEN SUB_STEP = 8 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N8TH_STEP_VAL  
+                , MAX(CASE WHEN SUB_STEP = 9 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N9TH_STEP_VAL  
+                , MAX(CASE WHEN SUB_STEP = 10 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N10TH_STEP_VAL          
+                , MAX(LSS_LEN)  AS LSS_LEN
+      FROM (
+            SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.OPMZ_SEQ) AS RN 
+                 , T1.OPMZ_SEQ
+                 , T1.DMND_IDX
+                 , T1.STEP
+                 , T2.ITM_STL_CD
+                 , T2.ITM_STL_SZ_CD
+                 , T1.INTO_RAW_KNT
+                 , T1.INTO_RAW_LEN
+                 , CUT_VAL
+                 , T2.ITM_LEN
+                 , T2.ITM_QTY
+                 , T2.ITM_SHP_CD
+                 , LSS_LEN
+                 , SUB_STEP
+              FROM (
+                  SELECT dbo.FN_splitValue(ORD_ID, '-', 1)
+                       +'-' + dbo.FN_splitValue(ORD_ID, '-', 2)             AS ORD_NO
+                       , CAST(dbo.FN_splitValue(ORD_ID, '-', 3) AS INT)     AS ORD_SEQ 
+                       , DMND_IDX
+                       , STEP
+                       , SUB_STEP                   
+                       , ORD_ID
+                       , CUT_VAL
+                       , INTO_RAW_LEN    
+                       , INTO_RAW_KNT  
+                       , LSS_LEN
+                       , LSS_RT
+                       , CUT_RMN_LEN
+                       , CUT_RMN_QTY
+                       , CUT_RMN_LSS_LEN
+                       , CUT_RMN_LSS_RT 
+                       , OPMZ_NO, OPMZ_SEQ                   
+                    FROM TB_OPMZ_SOL_RSLT T1
+                   WHERE 1 = 1
+                     AND OPMZ_NO = #OPMZ_NO#
+                     AND STEP    IN ( SELECT STEP
+                                        FROM TB_OPMZ_INTO_MTRL_MAP
+                                       WHERE 1 = 1
+                                         AND OPMZ_NO = #OPMZ_NO#                                 
+                                         AND CLZ_FLG = 'N'
+                                      )
+                    ) T1
+                    , TB_OPMZ_DMND T2
+             WHERE 1 = 1
+               AND T2.OPMZ_NO   = #OPMZ_NO#                
+               AND T1.OPMZ_NO   = T2.OPMZ_NO
+               AND T1.ORD_NO    = T2.ORD_NO
+               AND T1.ORD_SEQ   = T2.ORD_SEQ
+      ) T1
+    WHERE 1 = 1
+     GROUP BY  T1.ITM_STL_CD
+            , T1.ITM_STL_SZ_CD
+            , T1.INTO_RAW_LEN
+            , T1.STEP
+            , T1.INTO_RAW_KNT
+
+	  </select>
+
+	  <select id="M66310SelectDtlList" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
+		  SELECT    T1.STEP             AS RN 
+                  , T1.ITM_STL_CD
+                  , T1.ITM_STL_SZ_CD
+                  , T1.INTO_RAW_KNT
+                  , T1.INTO_RAW_LEN
+				  , T1.OPMZ_NO
+                  , MAX(CASE WHEN SUB_STEP = 1 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N1ST_STEP_VAL
+                  , MAX(CASE WHEN SUB_STEP = 2 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N2ND_STEP_VAL
+                  , MAX(CASE WHEN SUB_STEP = 3 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N3RD_STEP_VAL  
+                  , MAX(CASE WHEN SUB_STEP = 4 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N4TH_STEP_VAL      
+                  , MAX(CASE WHEN SUB_STEP = 5 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N5TH_STEP_VAL   
+                  , MAX(CASE WHEN SUB_STEP = 6 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N6TH_STEP_VAL     
+                  , MAX(CASE WHEN SUB_STEP = 7 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N7TH_STEP_VAL   
+                  , MAX(CASE WHEN SUB_STEP = 8 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N8TH_STEP_VAL  
+                  , MAX(CASE WHEN SUB_STEP = 9 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N9TH_STEP_VAL  
+                  , MAX(CASE WHEN SUB_STEP = 10 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N10TH_STEP_VAL          
+                  , MAX(LSS_LEN)  AS LSS_LEN
+      FROM (
+            SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.OPMZ_SEQ) AS RN 
+			     , T1.OPMZ_NO
+                 , T1.OPMZ_SEQ
+                 , T1.DMND_IDX
+                 , T1.STEP
+                 , T2.ITM_STL_CD
+                 , T2.ITM_STL_SZ_CD
+                 , T1.INTO_RAW_KNT
+                 , T1.INTO_RAW_LEN
+                 , CUT_VAL
+                 , T2.ITM_LEN, T2.ITM_QTY, T2.ITM_SHP_CD
+                                    , LSS_LEN
+                                    , SUB_STEP
+              FROM (
+                  SELECT dbo.FN_splitValue(ORD_ID, '-', 1)
+                       +'-' + dbo.FN_splitValue(ORD_ID, '-', 2)             AS ORD_NO
+                       , CAST(dbo.FN_splitValue(ORD_ID, '-', 3) AS INT)     AS ORD_SEQ 
+                       , DMND_IDX
+                       , STEP
+                       , SUB_STEP                   
+                       , ORD_ID
+                       , CUT_VAL
+                       , INTO_RAW_LEN       
+                       , INTO_RAW_KNT    
+                       , LSS_LEN
+                       , LSS_RT
+                       , CUT_RMN_LEN
+                       , CUT_RMN_QTY
+                       , CUT_RMN_LSS_LEN
+                       , CUT_RMN_LSS_RT 
+                       , OPMZ_NO
+					   , OPMZ_SEQ                   
+                    FROM TB_OPMZ_SOL_RSLT T1
+                   WHERE 1 = 1
+                     AND OPMZ_NO = #OPMZ_NO#
+                     AND NOT EXISTS (SELECT 'X' 
+                                       FROM TB_OPMZ_INTO_MTRL_MAP X
+                                      WHERE 1 = 1
+                                        AND X.OPMZ_NO = #OPMZ_NO#
+                                        AND X.STEP    = T1.STEP
+                                     )
+                    ) T1, TB_OPMZ_DMND T2
+             WHERE 1 = 1
+               AND T2.OPMZ_NO   = #OPMZ_NO#          
+               AND T1.OPMZ_NO   = T2.OPMZ_NO
+               AND T1.ORD_NO    = T2.ORD_NO
+               AND T1.ORD_SEQ   = T2.ORD_SEQ
+      ) T1
+    WHERE 1 = 1
+     GROUP BY  T1.ITM_STL_CD
+            , T1.ITM_STL_SZ_CD
+            , T1.INTO_RAW_LEN
+            , T1.STEP
+            , T1.INTO_RAW_KNT
+			, T1.OPMZ_NO
+	  </select>
+	  
+	  <insert id="M66310InsertDtl" parameterClass="ModelsLibrary.Man.ManVo">		   
+		INSERT INTO TB_OPMZ_INTO_MTRL_MAP
+        (
+           OPMZ_NO
+         , ORD_NO
+         , ORD_SEQ
+         , STEP
+         , CLZ_FLG 
+        ) 
+        SELECT OPMZ_NO
+             , dbo.FN_splitValue(ORD_ID, '-', 1)
+              +'-' + dbo.FN_splitValue(ORD_ID, '-', 2) 
+             , CAST(dbo.FN_splitValue(ORD_ID, '-', 3) AS INT)
+             , STEP
+             , 'N'
+          FROM TB_OPMZ_SOL_RSLT
+          WHERE 1 = 1
+            AND OPMZ_NO = #OPMZ_NO#
+            AND STEP    = #RN#		
+	 </insert>
+	  
+     <update id="M66310UpdateMst" parameterClass="ModelsLibrary.Man.ManVo">
+     UPDATE TB_OPMZ_INTO_MTRL_MAP
+           SET CLZ_FLG = 'Y'
+         WHERE 1 = 1
+           AND OPMZ_NO = #OPMZ_NO# 
+	  </update>
+
   </statements>
 </sqlMap>

@@ -235,7 +235,7 @@
                                                                 </dxgn:GanttColumn.EditSettings>
                                                             </dxgn:GanttColumn>
 
-                                                            <dxgn:GanttColumn FieldName="ITM_WGT" Header="중량" Width="100"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="6" >
+                                                            <dxgn:GanttColumn FieldName="ITM_WGT" Header="도면 중량" Width="100"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="6" >
                                                                 <dxgn:GanttColumn.EditSettings>
                                                                     <dxe:TextEditSettings MaskType="Numeric" Mask="###,###,###,##0.0000 ㎏" MaskUseAsDisplayFormat="True" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
                                                                 </dxgn:GanttColumn.EditSettings>

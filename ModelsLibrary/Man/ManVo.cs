@@ -2654,5 +2654,83 @@
             get;
             set;
         }
+        public object INTO_RAW_LEN
+        {
+            get;
+            set;
+        }
+
+        public object INTO_RAW_KNT
+        {
+            get;
+            set;
+        }
+
+        public object LSS_LEN
+        {
+            get;
+            set;
+        }
+
+        public string N1ST_STEP_VAL
+        {
+            get;
+            set;
+        }
+
+        public string N2ND_STEP_VAL
+        {
+            get;
+            set;
+        }
+
+        public string N3RD_STEP_VAL
+        {
+            get;
+            set;
+        }
+
+        public string N4TH_STEP_VAL
+        {
+            get;
+            set;
+        }
+
+        public string N5TH_STEP_VAL
+        {
+            get;
+            set;
+        }
+
+        public string N6TH_STEP_VAL
+        {
+            get;
+            set;
+        }
+
+        public string N7TH_STEP_VAL
+        {
+            get;
+            set;
+        }
+
+        public string N8TH_STEP_VAL
+        {
+            get;
+            set;
+        }
+
+        public string N9TH_STEP_VAL
+        {
+            get;
+            set;
+        }
+
+        public string N10TH_STEP_VAL
+        {
+            get;
+            set;
+        }
+
     }
 }

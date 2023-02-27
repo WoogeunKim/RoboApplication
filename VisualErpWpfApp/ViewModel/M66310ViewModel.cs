@@ -1,0 +1,193 @@
+﻿using DevExpress.Mvvm;
+using DevExpress.Mvvm.DataAnnotations;
+using DevExpress.Xpf.Core;
+using DevExpress.Xpf.WindowsUI;
+using ModelsLibrary.Man;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Net.Http;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
+using AquilaErpWpfApp3.Util;
+using System;
+using ModelsLibrary.Code;
+using System.Web;
+using System.Net;
+using System.IO;
+using System.Text;
+using System.Net.Http.Headers;
+using AquilaErpWpfApp3.View.M.Dialog;
+using AquilaErpWpfApp3.M.View.Dialog;
+
+namespace AquilaErpWpfApp3.ViewModel
+{
+    public sealed class M66310ViewModel : ViewModelBase, INotifyPropertyChanged
+    {
+        private string _title = "투입자재지시관리";
+
+        private M66311MasterDialog masterDialog;
+
+        public M66310ViewModel()
+        {
+            B_UPDATE = false;
+
+        }
+
+        [Command]
+        public async void BarlistInput()
+        {
+            try
+            {
+                if (SelectedDtlItem == null) return;
+
+                MessageBoxResult result = WinUIMessageBox.Show("순번 "+ SelectedDtlItem.RN.ToString() + " 을(를) 정말로 투입 하시겠습니까?", "투입자재", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310/dtl/i", new StringContent(JsonConvert.SerializeObject(this.SelectedDtlItem), System.Text.Encoding.UTF8, "application/json")))
+                    {
+                        int _Num = 0;
+                        string resultMsg = await response.Content.ReadAsStringAsync();
+                        if (int.TryParse(resultMsg, out _Num) == false)
+                        {
+                            //실패
+                            WinUIMessageBox.Show(resultMsg, _title, MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }  
+
+                        WinUIMessageBox.Show("완료 되었습니다", _title, MessageBoxButton.OK, MessageBoxImage.Information);
+                        DtlRefresh(SelectedDtlItem.OPMZ_NO);
+                    }
+                }
+            }
+            catch (System.Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+        }
+
+
+
+        [Command]
+        public void Refresh()
+        {
+            try
+            {
+                masterDialog = new M66311MasterDialog();
+                masterDialog.Title = _title + " - 선택";
+                masterDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                masterDialog.Owner = Application.Current.MainWindow;
+                masterDialog.BorderEffect = BorderEffect.Default;
+                masterDialog.BorderEffectActiveColor = new SolidColorBrush(Color.FromRgb(255, 128, 0));
+                masterDialog.BorderEffectInactiveColor = new SolidColorBrush(Color.FromRgb(255, 170, 170));
+                bool isDialog = (bool)masterDialog.ShowDialog();
+                if (isDialog)
+                {
+                    string SelectedOPMG_NO = masterDialog.resultDomain.OPMZ_NO;
+
+                    DtlRefresh(SelectedOPMG_NO);
+                }
+            }
+            catch (System.Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+        }
+
+
+        public async void DtlRefresh(string opmgno)
+        {
+            try
+            {
+                if (opmgno == null) return;
+
+                ManVo vo = new ManVo() { OPMZ_NO = opmgno };
+
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310", new StringContent(JsonConvert.SerializeObject(vo), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        //this.SelectMstList = new List<ManVo>();
+                        this.SelectMstList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+                        this.SelectedMstItem = null;
+                    }
+                }
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310/dtl", new StringContent(JsonConvert.SerializeObject(vo), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        //this.SelectMstList = new List<ManVo>();
+                        this.SelectDtlList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+                        this.SelectedDtlItem = null;
+                    }
+                }
+            }
+            catch (System.Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+        }
+
+
+
+        private IList<ManVo> _selectMstList;
+        public IList<ManVo> SelectMstList
+        {
+            get { return _selectMstList; }
+            set { SetProperty(ref _selectMstList, value, () => SelectMstList); }
+        }
+        private ManVo _selectedMstItem;
+        public ManVo SelectedMstItem
+        {
+            get { return _selectedMstItem; }
+            set { SetProperty(ref _selectedMstItem, value, () => SelectedMstItem); }
+        }
+
+        private IList<ManVo> _selectDtlList;
+        public IList<ManVo> SelectDtlList
+        {
+            get { return _selectDtlList; }
+            set { SetProperty(ref _selectDtlList, value, () => SelectDtlList); }
+        }
+
+        private ManVo _selectedDtlItem;
+        public ManVo SelectedDtlItem
+        {
+            get { return _selectedDtlItem; }
+            set { SetProperty(ref _selectedDtlItem, value, () => SelectedDtlItem, InputValue); }
+        }
+
+        //private IList<SystemCodeVo> _extrStsList;
+        //public IList<SystemCodeVo> ExtrStsList
+        //{
+        //    get { return _extrStsList; }
+        //    set { SetProperty(ref _extrStsList, value, () => ExtrStsList); }
+        //}
+
+        //private SystemCodeVo _M_EXTR_STS_NM;
+        //public SystemCodeVo M_EXTR_STS_NM
+        //{
+        //    get { return _M_EXTR_STS_NM; }
+        //    set { SetProperty(ref _M_EXTR_STS_NM, value, () => M_EXTR_STS_NM); }
+        //}
+
+        bool _B_UPDATE;
+        public bool B_UPDATE
+        {
+            get { return _B_UPDATE; }
+            set { SetProperty(ref _B_UPDATE, value, () => B_UPDATE); }
+        }
+
+        private void InputValue()
+        {
+            B_UPDATE = SelectedDtlItem != null ? true : false;
+        }
+
+
+    }
+}

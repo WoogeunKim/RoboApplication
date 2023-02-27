@@ -131,7 +131,7 @@ namespace AquilaErpWpfApp3.ViewModel
                         HttpClient httpClient = new HttpClient();
                         httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                        string url = "http://210.217.42.139:8880/analyze?";
+                        string url = "http://210.217.42.139:8880/robocon/api/extract_barlist/v1?";
                         string value = "PUR_NO=" + SelectedMstItem.PUR_NO + "&" + "PUR_SEQ=" + SelectedMstItem.PUR_SEQ.ToString();
 
                         httpClient.GetAsync(url + value);

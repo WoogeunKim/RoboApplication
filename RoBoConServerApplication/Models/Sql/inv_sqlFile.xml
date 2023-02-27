@@ -3354,6 +3354,7 @@
               , T3.N1ST_ITM_GRP_NM
               , SUM(T1.ITM_QTY)        AS N1ST_ITM_QTY
               , ROUND(SUM(T1.ITM_QTY * ISNULL(T2.UOM_RUN_WGT, 0)), 0)  AS N1ST_ITM_WGT
+              , #CHNL_CD# AS CHNL_CD
           FROM  TB_INVT_DLY_STK  T1
               , TB_CD_ITM        T2
         OUTER APPLY (
@@ -3372,13 +3373,14 @@
            AND T1.ITM_CD          = T2.ITM_CD
            AND T2.ITM_GRP_CLSS_CD = 'M'
         GROUP BY T2.N1ST_ITM_GRP_CD
-             ,   T3.N1ST_ITM_GRP_NM
+               , T3.N1ST_ITM_GRP_NM
+	    ORDER BY T2.N1ST_ITM_GRP_CD
      </select>
-
+	  
      <!--품목그룹별 중그룹 재고장 조회-->
-     <select id="I6621SelectDtlList" parameterClass="ModelsLibrary.Inv.InvVo" resultClass="ModelsLibrary.Inv.InvVo">
+      <select id="I6621SelectDtlList" parameterClass="ModelsLibrary.Inv.InvVo" resultClass="ModelsLibrary.Inv.InvVo">
         SELECT T2.N2ND_ITM_GRP_CD
-             , MAX(T3.N2ND_ITM_GRP_NM) AS N2ND_ITM_GRP_NM
+             , T3.N2ND_ITM_GRP_NM
              , SUM(T1.ITM_QTY) AS N2ND_ITM_QTY
              , ROUND(SUM(T1.ITM_QTY * ISNULL(T2.UOM_RUN_WGT, 0)), 0)  AS N2ND_ITM_WGT
           FROM TB_INVT_DLY_STK  T1
@@ -3398,7 +3400,10 @@
            AND T1.CHNL_CD         = T2.CHNL_CD
            AND T1.ITM_CD          = T2.ITM_CD
            AND T2.ITM_GRP_CLSS_CD = 'M'
-        GROUP BY  T2.N2ND_ITM_GRP_CD
+           AND T2.N1ST_ITM_GRP_CD = #N1ST_ITM_GRP_CD#
+         GROUP BY T2.N2ND_ITM_GRP_CD
+                , T3.N2ND_ITM_GRP_NM
+	     ORDER BY T2.N2ND_ITM_GRP_CD
      </select>
 	  
   </statements>

@@ -43,7 +43,7 @@ namespace AquilaErpWpfApp3.ViewModel
                     //SelectedMasterViewList = itemClient.SelectCodeItemGroupList(new SystemCodeVo() { CRE_USR_ID = "" , CHNL_CD = SystemProperties.USER_VO.CHNL_CD});
                     if (SelectedMasterViewList.Count > 0)
                     {
-                        //SelectedMasterItem = SelectedMasterViewList[0];
+                        SelectedMasterItem = SelectedMasterViewList[0];
                         SelectedMasterItem = null;
                     }
                     else
@@ -51,18 +51,56 @@ namespace AquilaErpWpfApp3.ViewModel
                         SelectedMasterItem = null;
                         SelectedMasterViewList = null;
                     }
+                    SelectedDetailItem = null;
+                    SelectedDetailViewList = null;
                 }
 
-                SelectedDetailItem = null;
-                SelectedDetailViewList = null;
 
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("i6621/dtl", new StringContent(JsonConvert.SerializeObject(new InvVo() { CRE_USR_ID = "", CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+                //using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("i6621/dtl", new StringContent(JsonConvert.SerializeObject(new InvVo() { CRE_USR_ID = "", CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+                //{
+                //    if (response.IsSuccessStatusCode)
+                //    {
+                //        this.SelectedDetailViewList = JsonConvert.DeserializeObject<IEnumerable<InvVo>>(await response.Content.ReadAsStringAsync()).Cast<InvVo>().ToList();
+
+                //        //SelectedMasterViewList = itemClient.SelectCodeItemGroupList(new SystemCodeVo() { CRE_USR_ID = "" , CHNL_CD = SystemProperties.USER_VO.CHNL_CD});
+                //        if (SelectedDetailViewList.Count > 0)
+                //        {
+                //            //SelectedDetailItem = SelectedDetailViewList[0];
+                //            SelectedDetailItem = null;
+                //        }
+                //        else
+                //        {
+                //            SelectedDetailItem = null;
+                //            SelectedDetailViewList = null;
+                //        }
+                //    }
+                //}
+
+
+            }
+            catch (System.Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+
+            
+
+
+        }
+        public async void DtListRefresh()
+        {
+            try
+            {
+                if (SelectedMasterItem == null) return;
+
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("i6621/dtl", new StringContent(JsonConvert.SerializeObject(SelectedMasterItem), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
                         this.SelectedDetailViewList = JsonConvert.DeserializeObject<IEnumerable<InvVo>>(await response.Content.ReadAsStringAsync()).Cast<InvVo>().ToList();
 
-                        //SelectedMasterViewList = itemClient.SelectCodeItemGroupList(new SystemCodeVo() { CRE_USR_ID = "" , CHNL_CD = SystemProperties.USER_VO.CHNL_CD});
+
                         if (SelectedDetailViewList.Count > 0)
                         {
                             //SelectedDetailItem = SelectedDetailViewList[0];
@@ -74,17 +112,15 @@ namespace AquilaErpWpfApp3.ViewModel
                             SelectedDetailViewList = null;
                         }
                     }
+
+
                 }
-
-
             }
             catch (System.Exception eLog)
             {
                 WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }
-
-
         }
 
         #region Function (Master)
@@ -106,7 +142,7 @@ namespace AquilaErpWpfApp3.ViewModel
             {
                 if (value != null)
                 {
-                    SetProperty(ref _selectedMasterItem, value, () => SelectedMasterItem);
+                    SetProperty(ref _selectedMasterItem, value, () => SelectedMasterItem); DtListRefresh();
                 }
             }
         }
