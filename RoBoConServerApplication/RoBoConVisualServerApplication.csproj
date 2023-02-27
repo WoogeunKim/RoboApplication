@@ -239,6 +239,8 @@
     <Compile Include="Controllers\Man\M66103Controller.cs" />
     <Compile Include="Controllers\Man\M66105Controller.cs" />
     <Compile Include="Controllers\Man\M66107Controller.cs" />
+    <Compile Include="Controllers\Man\M66310Controller.cs" />
+    <Compile Include="Controllers\Man\M66311Controller.cs" />
     <Compile Include="Controllers\Man\M66333Controller.cs" />
     <Compile Include="Controllers\Man\M6638Controller.cs" />
     <Compile Include="Controllers\Man\M6521Controller.cs" />

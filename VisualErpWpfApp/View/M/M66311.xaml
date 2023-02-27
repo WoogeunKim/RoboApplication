@@ -7,12 +7,43 @@
         xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
         xmlns:dxd="http://schemas.devexpress.com/winfx/2008/xaml/docking"
         xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
+        xmlns:dxp="http://schemas.devexpress.com/winfx/2008/xaml/printing"
         xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
         xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AquilaErpWpfApp3.View.M"
         FontFamily="Arial" FontSize="12"
         d:DesignHeight="768" d:DesignWidth="1024" mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="iconTemplate">
+            <dxe:ImageEdit Source="{Binding Path=Value}"
+                           Height="55"
+                           Stretch="Uniform"
+                           HorizontalAlignment="Center"
+                           Margin="3"
+                           ShowMenu="False"
+                           IsReadOnly="True" 
+                           IsPrintingMode ="True"/>
+        </DataTemplate>
+
+        <Style x:Key="customCellStyle" TargetType="{x:Type dxg:LightweightCellEditor}" >
+            <Setter Property="Background" Value="#afeeee" />
+            <Style.Triggers>
+                <Trigger Property="SelectionState" Value="Focused">
+                    <Setter Property="Background" Value="#FFA5EEBF" />
+                </Trigger>
+                <Trigger Property="dxg:DataViewBase.IsFocusedRow" Value="True">
+                    <Setter Property ="Foreground" Value="Black"/>
+                    <Setter Property="Background" Value="#FFA5EEBF"/>
+                    <!--<Setter Property="Background" Value="#6FC2FB"/>-->
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -79,19 +110,34 @@
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="ITM_SHP_CD" Header="형상" Width="70" HorizontalHeaderContentAlignment="Center" VisibleIndex="3">
+                                <dxg:GridColumn FieldName="ITM_SHP_CD" Header="형상코드" Width="80" HorizontalHeaderContentAlignment="Center" VisibleIndex="3">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="ITM_STL_CD" Header="강종" Width="70" HorizontalHeaderContentAlignment="Center" VisibleIndex="4" GroupIndex="3">
+                                <dxg:GridColumn FieldName="ITM_IMG"  Header="형상" AllowColumnFiltering="False" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True"  CellTemplate="{StaticResource iconTemplate}" VisibleIndex="4">
+                                    <dxg:GridColumn.PrintCellStyle>
+                                        <Style TargetType="{x:Type dxe:TextEdit}" BasedOn="{StaticResource {dxgt:TableViewThemeKey ResourceKey=DefaultPrintCellStyle}}">
+                                            <Setter Property="dxp:ExportSettings.TargetType" Value="Image" />
+                                            <Setter Property="DisplayTemplate">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="dxe:TextEdit">
+                                                        <dxe:ImageEdit Source="{Binding Path=Value}"/>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </dxg:GridColumn.PrintCellStyle>
+                                </dxg:GridColumn>
+                                
+                                <dxg:GridColumn FieldName="ITM_STL_CD" Header="강종" Width="70" HorizontalHeaderContentAlignment="Center" VisibleIndex="5" GroupIndex="3">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="ITM_STL_SZ_CD" Header="규격" Width="70" HorizontalHeaderContentAlignment="Center" VisibleIndex="5" GroupIndex="2">
+                                <dxg:GridColumn FieldName="ITM_STL_SZ_CD" Header="규격" Width="70" HorizontalHeaderContentAlignment="Center" VisibleIndex="6" GroupIndex="2">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>

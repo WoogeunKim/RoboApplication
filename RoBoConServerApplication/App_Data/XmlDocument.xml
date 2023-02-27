@@ -2152,6 +2152,21 @@
             Loss 최적화 수행 DTL 다이얼로그 추가
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66310Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            투입자재지시관리 Mst 관리 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66310Controller.GetDtlSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            투입자재지시관리 DTL 관리 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66310Controller.GetDtlInsert(ModelsLibrary.Man.ManVo)">
+            <summary>
+            투입자재지시관리 DTL 관리 - 추가
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Man.M66333Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
             <summary>
              수동수주출력 / 생산 활용 - MST 조회

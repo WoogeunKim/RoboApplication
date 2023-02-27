@@ -9552,7 +9552,7 @@
              , T4.D_VAL
              , T4.E_VAL
              , T4.F_VAL    
-          , #OPMZ_NO# AS OPMZ_NO
+             , #OPMZ_NO# AS OPMZ_NO
           FROM (
               SELECT dbo.FN_splitValue(ORD_ID, '-', 1)
                    +'-' + dbo.FN_splitValue(ORD_ID, '-', 2)             AS ORD_NO
