@@ -35,7 +35,7 @@
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.3.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -275,6 +275,7 @@
     <Compile Include="ViewModel\S2257ViewModel.cs" />
     <Compile Include="ViewModel\S22225ViewModel.cs" />
     <Compile Include="ViewModel\S32210ViewModel.cs" />
+    <Compile Include="ViewModel\S3310ViewModel.cs" />
     <Compile Include="ViewModel\T6325ViewModel.cs" />
     <Compile Include="ViewModel\M6111ViewModel.cs" />
     <Compile Include="ViewModel\T8825ViewModel.cs" />
@@ -1209,6 +1210,9 @@
     <Compile Include="View\SAL\Dialog\S2223DetailDialog.xaml.cs">
       <DependentUpon>S2223DetailDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SAL\Dialog\S3310MasterDialog.xaml.cs">
+      <DependentUpon>S3310MasterDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SAL\Dialog\S3311MasterDialog.xaml.cs">
       <DependentUpon>S3311MasterDialog.xaml</DependentUpon>
     </Compile>
@@ -1319,6 +1323,9 @@
     </Compile>
     <Compile Include="View\SAL\S32210.xaml.cs">
       <DependentUpon>S32210.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\S3310.xaml.cs">
+      <DependentUpon>S3310.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SAL\S3311.xaml.cs">
       <DependentUpon>S3311.xaml</DependentUpon>
@@ -2683,6 +2690,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\SAL\Dialog\S3310MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\SAL\Dialog\S3311MasterDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -2820,6 +2831,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\SAL\S32210.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SAL\S3310.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

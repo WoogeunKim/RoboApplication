@@ -1287,6 +1287,11 @@
             거래처별 판가기준표 DTL - 조회
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S3311Controller.GetCoSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            Dialog거래처 - 조회
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Sale.S3321Controller.GetMstSelect(ModelsLibrary.Sale.SaleVo)">
             <summary>
             수주등록 MST - 조회
@@ -4056,6 +4061,11 @@
         <member name="M:VisualServerApplication.Controllers.Pur.P4411Controller.GetPopup2Select(ModelsLibrary.Pur.PurVo)">
             <summary>
             발주 관리(SCM) POPUP - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Pur.P4411Controller.GetDlg2Select(ModelsLibrary.Pur.PurVo)">
+            <summary>
+            Dialog2 - 조회
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Pur.P4430Controller.GetMstSelect(ModelsLibrary.Pur.PurVo)">
