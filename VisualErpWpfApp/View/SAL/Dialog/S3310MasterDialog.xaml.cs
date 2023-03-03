@@ -13,14 +13,14 @@ using AquilaErpWpfApp3.Util;
 
 namespace AquilaErpWpfApp3.View.SAL.Dialog
 {
-    public partial class S3311MasterDialog : DXWindow
+    public partial class S3310MasterDialog : DXWindow
     {
         private SaleVo orgDao;
         public SaleVo updateDao;
 
-        private string title = "거래처별 판가기준표";
+        private string title = "매입단가관리";
 
-        public S3311MasterDialog(SaleVo Dao)
+        public S3310MasterDialog(SaleVo Dao)
         {
             InitializeComponent();
 
@@ -86,8 +86,6 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
         #region Functon (ValueCheckd)
         public Boolean ValueCheckd()
         {
-
-
             if (string.IsNullOrEmpty(this.combo_CO_NM.Text))
             {
                 WinUIMessageBox.Show("[거래처] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -95,14 +93,6 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
                 this.combo_CO_NM.Focus();
                 return false;
             }
-            else if (string.IsNullOrEmpty(this.combo_GBN_NM.Text))
-            {
-                WinUIMessageBox.Show("[거래분류] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
-                this.combo_GBN_NM.IsTabStop = true;
-                this.combo_GBN_NM.Focus();
-                return false;
-            }
-
             return true;
         }
         #endregion
@@ -112,17 +102,13 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
         {
             SaleVo Dao = new SaleVo();
 
+            Dao.GBN = orgDao.GBN;
+
             SaleVo coNmVo = this.combo_CO_NM.SelectedItem as SaleVo;
             if (coNmVo != null)
             {
                 Dao.CO_NO = coNmVo.CO_NO;
                 Dao.CO_NM = coNmVo.CO_NM;
-            }
-
-            SystemCodeVo gbnNmVo = this.combo_GBN_NM.SelectedItem as SystemCodeVo;
-            if (gbnNmVo != null)
-            {
-                Dao.GBN = gbnNmVo.CLSS_CD;
             }
 
             Dao.CRE_USR_ID = SystemProperties.USER;
@@ -165,15 +151,6 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
                         this.combo_CO_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SaleVo>>(await response.Content.ReadAsStringAsync()).Cast<SaleVo>().ToList();
                     }
                 }
-
-                // 거래유형구분
-                IList<SystemCodeVo> _gbnList = new List<SystemCodeVo>();
-                _gbnList.Add(new SystemCodeVo() { CLSS_CD = "S", CLSS_DESC = "매출" });
-                _gbnList.Add(new SystemCodeVo() { CLSS_CD = "P", CLSS_DESC = "매입" });
-                this.combo_GBN_NM.ItemsSource = _gbnList;
-                // 
-                this.combo_GBN_NM.SelectedItem = _gbnList.Where(x => x.CLSS_CD.Equals(this.orgDao.GBN)).FirstOrDefault<SystemCodeVo>();
-
             }
             catch (Exception eLog)
             {

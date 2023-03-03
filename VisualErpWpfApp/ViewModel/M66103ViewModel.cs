@@ -172,7 +172,6 @@ namespace AquilaErpWpfApp3.ViewModel
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                        this.SelectDtlList = new List<ManVo>();
                         this.SelectDtlList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
                     }
                 }

@@ -262,65 +262,24 @@ namespace VisualServerApplication.Controllers.Pur
         }
 
 
-        ///// <summary>
-        ///// 수주 등록 POPUP(Left1) - 조회
-        ///// </summary>
-        //[Route("popupleft")]
-        //[HttpPost]
-        //// GET api/<controller>
-        //public async Task<IHttpActionResult> GetPopupLeftSelect([FromBody]SaleVo vo)
-        //{
-        //    return Ok<IEnumerable<SaleVo>>(Properties.EntityMapper.QueryForList<SaleVo>("S2211SelectSubLeftDtlList", vo));
-        //}
-
-        ///// <summary>
-        ///// 수주 등록 POPUP(Right2) - 조회
-        ///// </summary>
-        //[Route("popup")]
-        //[HttpPost]
-        //// GET api/<controller>
-        //public async Task<IHttpActionResult> GetPopupSelect([FromBody]SaleVo vo)
-        //{
-        //    return Ok<IEnumerable<SaleVo>>(Properties.EntityMapper.QueryForList<SaleVo>("S2211SelectSubDtlList", vo));
-        //}
-
-        ///// <summary>
-        ///// 수주 등록 POPUP 선택 Items(Right1) - 조회
-        ///// </summary>
-        //[Route("popupitems")]
-        //[HttpPost]
-        //// GET api/<controller>
-        //public async Task<IHttpActionResult> GetPopupItemsSelect([FromBody]SaleVo vo)
-        //{
-        //    return Ok<IEnumerable<SaleVo>>(Properties.EntityMapper.QueryForList<SaleVo>("S2211SelectSubItmDtlList", vo));
-        //}
-
-        ///// <summary>
-        ///// 수주 등록 POPUP_RESULT - 조회
-        ///// </summary>
-        //[Route("popup/r")]
-        //[HttpPost]
-        //// GET api/<controller>
-        //public async Task<IHttpActionResult> GetPopupResultSelect([FromBody]SaleVo vo)
-        //{
-        //    if (vo.RN == 1)
-        //    {
-        //        return Ok<SaleVo>(Properties.EntityMapper.QueryForObject<SaleVo>("S2211SelectSubDtlResult", vo));
-        //    }
-        //    else if (vo.RN == 2)
-        //    {
-        //        return Ok<SaleVo>(Properties.EntityMapper.QueryForObject<SaleVo>("S2211SelectSubDtlResult2", vo));
-        //    }
-        //    else if (vo.RN == 3)
-        //    {
-        //        return Ok<SaleVo>(Properties.EntityMapper.QueryForObject<SaleVo>("S2211SelectQuickDtl", vo));
-        //    }
-        //    else
-        //    {
-        //        return Ok<string>("");
-        //    }
-        //}
 
 
+        /// <summary>
+        /// Dialog2 - 조회
+        /// </summary>
+        [Route("dlg2")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetDlg2Select([FromBody]PurVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<PurVo>>(Properties.EntityMapper.QueryForList<PurVo>("P4411SelectDtlDlg2List", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
     }
 }

@@ -44,9 +44,16 @@ namespace VisualServerApplication.Controllers.Sale
         [Route("mst")]
         [HttpPost]
         // GET api/<controller>
-        public async Task<IHttpActionResult> GetMstSelect([FromBody]SaleVo vo)
+        public async Task<IHttpActionResult> GetMstSelect([FromBody] SaleVo vo)
         {
-            return Ok<IEnumerable<SaleVo>>(Properties.EntityMapper.QueryForList<SaleVo>("S3311SelectMstList", vo));
+            try
+            {
+                return Ok<IEnumerable<SaleVo>>(Properties.EntityMapper.QueryForList<SaleVo>("S3311SelectMstList", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
         }
 
 
@@ -121,5 +128,24 @@ namespace VisualServerApplication.Controllers.Sale
             return Ok<IEnumerable<SaleVo>>(Properties.EntityMapper.QueryForList<SaleVo>("S3311SelectDtlList", vo));
         }
 
+
+        /// <summary>
+        /// Dialog거래처 - 조회
+        /// </summary>
+        [Route("cocd")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetCoSelect([FromBody] SaleVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<SaleVo>>(Properties.EntityMapper.QueryForList<SaleVo>("S3311CocdSelect", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+
+        }
     }
 }

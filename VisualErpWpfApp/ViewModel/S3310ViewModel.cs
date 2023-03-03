@@ -17,14 +17,14 @@ using System.Windows.Media;
 
 namespace AquilaErpWpfApp3.ViewModel
 {
-    public sealed class S3311ViewModel : ViewModelBase, INotifyPropertyChanged
+    public sealed class S3310ViewModel : ViewModelBase, INotifyPropertyChanged
     {
-        private string _title = "거래처별 판가기준표";
+        private string _title = "매입단가관리";
+        private string _gbmCd = "P";
 
+        private S3310MasterDialog masterDialog;
 
-        private S3311MasterDialog masterDialog;
-
-        public S3311ViewModel()
+        public S3310ViewModel()
         {
             SYSTEM_CODE_VO();
         }
@@ -44,7 +44,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 SelectDtlList = null;
 
                 // MST 데이터 조회 (거래구분, 사업장, 채널코드)
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s3311/mst", new StringContent(JsonConvert.SerializeObject(new SaleVo() { GBN = M_GBN.CLSS_CD, AREA_CD = M_SL_AREA_NM.CLSS_CD, CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s3311/mst", new StringContent(JsonConvert.SerializeObject(new SaleVo() { GBN = _gbmCd, AREA_CD = M_SL_AREA_NM.CLSS_CD, CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
@@ -73,7 +73,7 @@ namespace AquilaErpWpfApp3.ViewModel
                         }
 
                         // 조회 조건
-                        Title = "[사업장] " + M_SL_AREA_NM.CLSS_DESC + ", [거래분류] " + M_GBN.CLSS_DESC;
+                        Title = "[사업장] " + M_SL_AREA_NM.CLSS_DESC;
                     }
 
                     // 스플래시 종료
@@ -169,9 +169,7 @@ namespace AquilaErpWpfApp3.ViewModel
         [Command]
         public void NewContact()
         {
-            if (M_GBN == null) return;
-
-            masterDialog = new S3311MasterDialog(new SaleVo() { GBN = M_GBN.CLSS_CD, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, DELT_FLG = "N" });
+            masterDialog = new S3310MasterDialog(new SaleVo() { GBN = _gbmCd, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, DELT_FLG = "N" });
             masterDialog.Title = _title + " - 추가";
             masterDialog.Owner = Application.Current.MainWindow;
             masterDialog.BorderEffect = BorderEffect.Default;
@@ -211,23 +209,6 @@ namespace AquilaErpWpfApp3.ViewModel
             get { return _M_SL_AREA_NM; }
             set { SetProperty(ref _M_SL_AREA_NM, value, () => M_SL_AREA_NM); }
         }
-
-
-        // 거래구분 
-        private IList<SystemCodeVo> _GbnList = new List<SystemCodeVo>();
-        public IList<SystemCodeVo> GbnList
-        {
-            get { return _GbnList; }
-            set { SetProperty(ref _GbnList, value, () => GbnList); }
-        }
-        // 거래구분 
-        private SystemCodeVo _M_GBN;
-        public SystemCodeVo M_GBN
-        {
-            get { return _M_GBN; }
-            set { SetProperty(ref _M_GBN, value, () => M_GBN); }
-        }
-
 
         // MST 
         private IList<SaleVo> selectedMstList = new List<SaleVo>();
@@ -302,15 +283,6 @@ namespace AquilaErpWpfApp3.ViewModel
                     }
                 }
             }
-
-            // 거래처유형구분
-            IList<SystemCodeVo> _gbnList = new List<SystemCodeVo>();
-            _gbnList.Add(new SystemCodeVo() { CLSS_CD = "S", CLSS_DESC = "매출" });
-            _gbnList.Add(new SystemCodeVo() { CLSS_CD = "P", CLSS_DESC = "매입" });
-            GbnList = _gbnList;
-
-            M_GBN = GbnList[0];
-
 
             Refresh();
         }

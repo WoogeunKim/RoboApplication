@@ -291,9 +291,9 @@
         , UPD_USR_ID
         , UPD_DT
         , CHNL_CD
-				, ORD_NO
-				, ORD_SEQ
-				, COLR_CD
+		, ORD_NO
+		, ORD_SEQ
+		, COLR_CD
         , BUN_WGT
       ) 
       VALUES
@@ -311,9 +311,9 @@
         , #UPD_USR_ID#
         , GETDATE()
         , #CHNL_CD#
-				, #SL_ORD_NO#
-				, #SL_ORD_SEQ#
-				, #COLR_CD#
+		, #SL_ORD_NO#
+		, #SL_ORD_SEQ#
+		, #COLR_CD#
         , #BUN_WGT#
       )
     </insert>
@@ -406,6 +406,53 @@
     <!-- P44110 (차종)-->
     <select id="P4411SelectPopUp1Result" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
       SELECT X.BAR_WGT AS BUN_WGT  FROM TB_CD_DEFM_BAR_MATH_TBL AS X WHERE 1=1 AND X.BAR_SZ_CD = #ITM_SZ_NM# AND X.BAR_SZ_LEN = dbo.FN_splitValue(#ITM_CD#, '-', 2) AND X.BAR_CLSS_CD = #GBN#
+    </select>
+
+	  
+	  
+    <!-- 기타발주 DIALOG 수정 -->
+    <select id="P4411SelectDtlDlg2List" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+       SELECT
+			  T1.N1ST_ITM_GRP_CD
+			, T1.N1ST_ITM_GRP_NM
+			, T1.N2ND_ITM_GRP_CD
+			, T1.N2ND_ITM_GRP_NM
+			, T1.ITM_CD
+			, T1.ITM_NM
+			, ISNULL(T3.ITM_PRC, 0)  AS CO_UT_PRC
+			, ISNULL(T2.ITM_QTY, 0)  AS STK_QTY     
+		    , ISNULL(T1.UOM_RUN_WGT, 0) AS BUN_WGT 
+			, T1.CHNL_CD
+		    , #PUR_ORD_NO# AS PUR_ORD_NO
+		    , #CRE_USR_ID# AS CRE_USR_ID
+		    , #UPD_USR_ID# AS UPD_USR_ID
+		 FROM MV_TB_CD_ITM T1
+	          OUTER APPLY (
+	          		  SELECT X.ITM_QTY
+	          		    FROM TB_INVT_DLY_STK X
+	          		   WHERE 1 = 1
+	          		     AND X.CHNL_CD = #CHNL_CD#
+	          		     AND X.ITM_CD  = T1.ITM_CD
+	          ) T2
+	          OUTER APPLY (    
+	          		  SELECT CO_UT_PRC  AS ITM_PRC
+	          		   FROM (
+	          				  SELECT X.CO_UT_PRC
+	          				  	   , ROW_NUMBER() OVER (PARTITION BY X.CO_NO ORDER BY X.CNG_APLY_DT DESC) AS RN 
+	          				    FROM TB_CD_CO_UT_PRC   X
+	          			  	   WHERE 1 = 1
+	          					 AND X.CHNL_CD      = #CHNL_CD#
+	          					 AND X.ITM_BZTP_FLG = 'P'
+	          					 AND X.ITM_CD       = T1.N1ST_ITM_GRP_CD
+	          					 AND X.CO_ITM_CD    = T1.N2ND_ITM_GRP_CD
+	          					 AND X.CO_NO        = #CO_NO#
+	          			   ) Y
+	          	     WHERE 1 = 1
+	          		   AND RN = 1
+	          ) T3
+		WHERE 1 = 1
+		  AND T1.CHNL_CD         = #CHNL_CD#
+		  AND T1.ITM_GRP_CLSS_CD = #ITM_GRP_CLSS_CD#
     </select>
 
 

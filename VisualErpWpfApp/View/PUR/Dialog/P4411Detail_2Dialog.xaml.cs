@@ -17,181 +17,25 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
 {
     public partial class P4411Detail_2Dialog : DXWindow
     {
-        //private static PurServiceClient purClient = SystemProperties.PurClient;
-        //private static ItemCodeServiceClient itemClient = SystemProperties.ItemClient;
-
         private string _title = "발주 등록 관리";
 
         public bool isEdit = false;
         private PurVo orgDao;
-        //private PurVo updateDao;
-
-        //private P4411DetailViewDialog itemDialog;
 
 
-        private IList<PurVo> SelectItems;
+        private IList<PurVo> SelectItems = new List<PurVo>();
 
         public P4411Detail_2Dialog(PurVo Dao)
         {
             InitializeComponent();
 
             SYSTEM_CODE_VO();
-            //this.combo_ITM_GRP_CLSS_CD.ItemsSource = SystemProperties.SYSTEM_CODE_VO("L-001");
-
-            //this.combo_ITM_GRP_CLSS_CD.SelectedIndexChanged += combo_ITM_GRP_CLSS_CD_SelectedIndexChanged;
-            //this.combo_N1ST_ITM_GRP_CD.SelectedIndexChanged += combo_N1ST_ITM_GRP_CD_SelectedIndexChanged;
-
 
             this.orgDao = Dao;
+
             this.btn_ITEMS.Click += btn_ITEMS_Click;
-
-            //if (string.IsNullOrEmpty(this.orgDao.GBN))  
-            //{
-            //수정
-            //this.SelectItems = new ObservableCollection<PurVo>(purClient.P4411SelectDtlList(this.orgDao));
-
-            //}
-            //else if (this.orgDao.GBN.Equals("Add"))
-            //{
-            //    //추가
-            //    this.SelectItems = new ObservableCollection<PurVo>(purClient.P5511SelectDtlList(this.orgDao));
-
-            //if (this.SelectItems.Count <= 0)
-            //{
-            this.SelectItems = new List<PurVo>();
-            //}
-
-
-            //}
-
-            //this.ViewGridDtl.ItemsSource = this.SelectItems;
-            //this.configCode.DataContext = copyDao;
-            //this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
             this.OKButton.Click += new RoutedEventHandler(OKButton_Click);
             this.CancelButton.Click += new RoutedEventHandler(CancelButton_Click);
-
-            this.btn_BUN_WGT_1.Click += Btn_BUN_WGT_1_Click;
-            this.btn_BUN_WGT_2.Click += Btn_BUN_WGT_2_Click;
-
-            //this.DELButton.Click += new RoutedEventHandler(DELButton_Click);
-
-            //this.combo_ITM_GRP_CLSS_CD.Text = ((IList<CodeDao>)this.combo_ITM_GRP_CLSS_CD.ItemsSource)[0].CLSS_DESC;
-            //this.ViewTableDtl.MouseDoubleClick += ViewTableDtl_MouseDoubleClick;
-
-            //this.isEdit = IsPreview;
-            //if (IsPreview)
-            //{
-            //    //this.SelectItems = new List<PurVo>(purClient.P4411SelectDtlList(this.orgDao));
-
-            //    //this.OKButton.IsEnabled = false;
-            //    //this.DELButton.IsEnabled = false;
-            //    this.btn_ITEMS.IsEnabled = false;
-            //    this.combo_ITM_GRP_CLSS_CD.IsEnabled = false;
-            //    //this.combo_N1ST_ITM_GRP_CD.IsEnabled = false;
-            //    //this.combo_N2ND_ITM_GRP_CD.IsEnabled = false;
-
-            //    //this.ViewTableDtl.NavigationStyle = DevExpress.Xpf.Grid.GridViewNavigationStyle.Row;
-
-            //    this.ViewGridDtl.ItemsSource = this.SelectItems;
-            //    this.ViewGridDtl.RefreshData();
-            //}
-            //else
-            //{
-            //    btn_ITEMS_Click(null, null);
-            //}
-        }
-
-        private async void Btn_BUN_WGT_2_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                DXSplashScreen.Show<ProgressWindow>();
-
-                List<PurVo> _selectItems = this.ViewGridDtl.SelectedItems as List<PurVo>;
-                foreach (PurVo _item in _selectItems)
-                {
-                    _item.GBN = "B2";
-
-                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("p4411/popup1/result", new StringContent(JsonConvert.SerializeObject(_item), System.Text.Encoding.UTF8, "application/json")))
-                    {
-                        if (response.IsSuccessStatusCode)
-                        {
-                            _item.BUN_WGT = JsonConvert.DeserializeObject<PurVo>(await response.Content.ReadAsStringAsync()).BUN_WGT;
-                            _item.isCheckd = true;
-
-                            try
-                            {
-                                _item.PUR_AMT = Convert.ToInt32(_item.PUR_QTY) * Convert.ToDouble(_item.CO_UT_PRC);
-                            }
-                            catch (Exception)
-                            {
-                                _item.PUR_AMT = 0;
-                            }
-                        }
-                    }
-                }
-
-                this.ViewGridDtl.RefreshData();
-                //
-                if (DXSplashScreen.IsActive == true)
-                {
-                    DXSplashScreen.Close();
-                }
-            }
-            catch (Exception eLog)
-            {
-                if (DXSplashScreen.IsActive == true)
-                {
-                    DXSplashScreen.Close();
-                }
-                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + this._title, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private async void Btn_BUN_WGT_1_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                DXSplashScreen.Show<ProgressWindow>();
-
-                List<PurVo> _selectItems = this.ViewGridDtl.SelectedItems as List<PurVo>;
-                foreach (PurVo _item in _selectItems)
-                {
-                    _item.GBN = "B1";
-
-                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("p4411/popup1/result", new StringContent(JsonConvert.SerializeObject(_item), System.Text.Encoding.UTF8, "application/json")))
-                    {
-                        if (response.IsSuccessStatusCode)
-                        {
-                            _item.BUN_WGT = JsonConvert.DeserializeObject<PurVo>(await response.Content.ReadAsStringAsync()).BUN_WGT;
-                            _item.isCheckd = true;
-
-                            try
-                            {
-                                _item.PUR_AMT = Convert.ToInt32(_item.PUR_QTY) * Convert.ToDouble(_item.CO_UT_PRC);
-                            }
-                            catch (Exception)
-                            {
-                                _item.PUR_AMT = 0;
-                            }
-                        }
-                    }
-                }
-
-                this.ViewGridDtl.RefreshData();
-                if (DXSplashScreen.IsActive == true)
-                {
-                    DXSplashScreen.Close();
-                }
-            }
-            catch (Exception eLog)
-            {
-                if (DXSplashScreen.IsActive == true)
-                {
-                    DXSplashScreen.Close();
-                }
-                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + this._title, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
         }
 
         void ViewTableDtl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -228,134 +72,45 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
         {
             try
             {
-                DXSplashScreen.Show<ProgressWindow>();
+                if (DXSplashScreen.IsActive == false)  DXSplashScreen.Show<ProgressWindow>();
 
-
-                //
-                SystemCodeVo dao = new SystemCodeVo();
+                PurVo dao = new PurVo();
 
                 SystemCodeVo ITM_GRP_CLSS_CDVo = this.combo_ITM_GRP_CLSS_CD.SelectedItem as SystemCodeVo;
                 if (ITM_GRP_CLSS_CDVo != null)
                 {
                     dao.ITM_GRP_CLSS_CD = ITM_GRP_CLSS_CDVo.CLSS_CD;
-                    dao.ITM_GRP_CLSS_NM = ITM_GRP_CLSS_CDVo.CLSS_DESC;
-                    dao.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
+                    dao.CHNL_CD = SystemProperties.USER_VO.CHNL_CD; 
+                    dao.CO_NO = orgDao.CO_NO;
+                    dao.PUR_ORD_NO = orgDao.PUR_ORD_NO;
+                    dao.CRE_USR_ID = SystemProperties.USER;
+                    dao.UPD_USR_ID = SystemProperties.USER;
                 }
-                //
-                //CodeDao N1ST_ITM_GRP_CDVo = this.combo_N1ST_ITM_GRP_CD.SelectedItem as CodeDao;
-                //if (N1ST_ITM_GRP_CDVo != null)
-                //{
-                // dao.N1ST_ITM_GRP_CD = N1ST_ITM_GRP_CDVo.CLSS_CD;
-                // dao.N1ST_ITM_GRP_NM = N1ST_ITM_GRP_CDVo.CLSS_DESC;
-                //}
-                //         //
-                //         CodeDao N2ND_ITM_GRP_NMVo = this.combo_N2ND_ITM_GRP_CD.SelectedItem as CodeDao;
-                //         if (N2ND_ITM_GRP_NMVo != null)
-                //         {
-                //             dao.N2ND_ITM_GRP_CD = N2ND_ITM_GRP_NMVo.CLSS_CD;
-                //             dao.N2ND_ITM_GRP_NM = N2ND_ITM_GRP_NMVo.CLSS_DESC;
-                //         }
 
-                //IList<ItemCodeVo> resultItems = (IList<ItemCodeVo>)itemClient.SelectItemList2(dao);
 
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s141", new StringContent(JsonConvert.SerializeObject(dao), System.Text.Encoding.UTF8, "application/json")))
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("p4411/dlg2", new StringContent(JsonConvert.SerializeObject(dao), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                        IList<SystemCodeVo> resultItems = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
+                        IList<PurVo> resultItems = JsonConvert.DeserializeObject<IEnumerable<PurVo>>(await response.Content.ReadAsStringAsync()).Cast<PurVo>().ToList();
 
                         this.SelectItems.Clear();
 
-                        for (int x = 0; x < resultItems.Count; x++)
-                        {
-                            this.SelectItems.Add(new PurVo()
-                            {
-                                PUR_ORD_NO = this.orgDao.PUR_ORD_NO
-                                //           ,
-                                //ITM_CD = resultItems[x].ITM_CD
-                                           ,
-                                ITM_NM = resultItems[x].ITM_NM
-                                           ,
-                                ITM_SZ_NM = resultItems[x].ITM_SZ_NM
-                                           ,
-                                UOM_NM = resultItems[x].UOM_NM
-                                           ,
-                                UOM_CD = resultItems[x].UOM_CD
-                                           ,
-                                COLR_NM = resultItems[x].N2ND_ITM_GRP_CD
-                                           ,
-                                CRE_USR_ID = SystemProperties.USER
-                                           ,
-                                UPD_USR_ID = SystemProperties.USER
-                                           ,
-                                CHNL_CD = SystemProperties.USER_VO.CHNL_CD
-                                           ,
-                                N1ST_ITM_GRP_NM = resultItems[x].N1ST_ITM_GRP_NM
-                                           ,
-                                N5TH_QTY = resultItems[x].SFSTK_QTY
-                                           ,
-                                GBN = resultItems[x].GBN
-                                           ,
-                                ITM_LEN_NM = resultItems[x].ITM_LEN_NM
-                                           ,
-                                YRMON = resultItems[x].CAR_ITM_NM
-                                           ,
-                                BUN_WGT = resultItems[x].UOM_RUN_WGT
-                            });
-                        }
-                        //
-                        this.ViewGridDtl.ItemsSource = this.SelectItems;
+                        this.ViewGridDtl.ItemsSource = resultItems;
                         this.ViewGridDtl.SelectedItems = new List<PurVo>();
                         this.ViewGridDtl.RefreshData();
                     }
                 }
 
 
-                //
-                if (DXSplashScreen.IsActive == true)
-                {
-                    DXSplashScreen.Close();
-                }
+                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
             }
             catch (Exception eLog)
             {
-                if (DXSplashScreen.IsActive == true)
-                {
-                    DXSplashScreen.Close();
-                }
+                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+
                 WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + this._title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            //DXSplashScreen.Close();
-            //itemDialog = new P4411DetailViewDialog(dao);
-            //itemDialog.Title = "자재 명 조회";
-            //itemDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            ////masterDialog.Owner = Application.Current.MainWindow;
-            //itemDialog.BorderEffect = BorderEffect.Default;
-            ////itemDialog.BorderEffectActiveColor = new SolidColorBrush(Color.FromRgb(255, 128, 0));
-            ////itemDialog.BorderEffectInactiveColor = new SolidColorBrush(Color.FromRgb(255, 170, 170));
-            //bool isDialog = (bool)itemDialog.ShowDialog();
-            //if (isDialog)
-            //{
-            //    IList<ItemCodeVo> resultItems = itemDialog.SelectItems;
-            //    if (resultItems != null)
-            //    {
-            //        for (int x = 0; x < resultItems.Count; x++)
-            //        {
-            //            this.SelectItems.Add(new PurVo() {
-            //                      PUR_ORD_NO = this.orgDao.PUR_ORD_NO
-            //                    , ITM_CD = resultItems[x].ITM_CD
-            //                    , ITM_NM = resultItems[x].ITM_NM
-            //                    , ITM_SZ_NM = resultItems[x].ITM_SZ_NM
-            //                    , UOM_NM = resultItems[x].UOM_NM
-            //                    , UOM_CD = resultItems[x].UOM_CD 
-            //                    , CRE_USR_ID = SystemProperties.USER
-            //                    , UPD_USR_ID = SystemProperties.USER
-            //                        });
-            //        }
-            //        this.ViewGridDtl.ItemsSource = this.SelectItems;
-            //        this.ViewGridDtl.RefreshData();
-            //    }
-            //}
         }
 
         private async void OKButton_Click(object sender, RoutedEventArgs e)
@@ -384,48 +139,6 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                         }
                     }
                 }
-
-
-                ////삭제
-                ////PurVo resultVo = purClient.P4411DeleteDtl(new PurVo() { PUR_ORD_NO = orgDao.PUR_ORD_NO });
-                ////if (!resultVo.isSuccess)
-                ////{
-                ////    //실패
-                ////    WinUIMessageBox.Show(resultVo.Message, "[에러]" + this._title, MessageBoxButton.OK, MessageBoxImage.Error);
-                ////    return;
-                ////}
-                //// 전체 저장
-                //List<PurVo> saveItems = (List<PurVo>)this.ViewGridDtl.ItemsSource;
-                //if (this.isEdit)
-                //{
-                //    PurVo resultVo = purClient.P4411UpdateDtl_Transaction((saveItems.FindAll(x => x.isCheckd == true)).ToArray());
-                //    if (!resultVo.isSuccess)
-                //    {
-                //        //실패
-                //        WinUIMessageBox.Show(resultVo.Message, "[에러]" + this._title, MessageBoxButton.OK, MessageBoxImage.Error);
-                //        return;
-                //    }
-                //    //성공
-                //    WinUIMessageBox.Show("완료 되었습니다", "[수정]" + this._title, MessageBoxButton.OK, MessageBoxImage.Information);
-                //}
-                //else
-                //{ 
-                //    //if (saveItems.FindAll(x => x.isCheckd == true).Count > 0)
-                //    //{
-                //        PurVo resultVo = purClient.P4411InsertDtl_Transaction((saveItems.FindAll(x => x.isCheckd == true)).ToArray());
-                //        if (!resultVo.isSuccess)
-                //        {
-                //            //실패
-                //            WinUIMessageBox.Show(resultVo.Message, "[에러]" + this._title, MessageBoxButton.OK, MessageBoxImage.Error);
-                //            return;
-                //        }
-                //        //성공
-                //        WinUIMessageBox.Show("완료 되었습니다", "[추가]" + this._title, MessageBoxButton.OK, MessageBoxImage.Information);
-                //    //}
-                //}
-
-                //this.DialogResult = true;
-                //this.Close();
             }
             catch (Exception eLog)
             {
@@ -448,84 +161,6 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                 Close();
             }
         }
-
-        //void combo_ITM_GRP_CLSS_CD_SelectedIndexChanged(object sender, RoutedEventArgs e)
-        //{
-        //   try
-        //   {
-        //      CodeDao ITM_GRP_CLSS_NM_VO = this.combo_ITM_GRP_CLSS_CD.SelectedItem as CodeDao;
-        //      if (ITM_GRP_CLSS_NM_VO != null)
-        //      {
-        //         if (string.IsNullOrEmpty(ITM_GRP_CLSS_NM_VO.CLSS_CD))
-        //         {
-        //            return;
-        //         }
-
-        //         IList<ItemGroupCodeVo> ItemGroupVo = itemClient.SelectCodeItemGroupList(new ItemGroupCodeVo() { DELT_FLG = "N", ITM_GRP_CLSS_CD = ITM_GRP_CLSS_NM_VO.CLSS_CD, CRE_USR_ID = "" });
-        //         IList<CodeDao> ItemList = new List<CodeDao>();
-        //         int nCnt = ItemGroupVo.Count;
-        //         ItemGroupCodeVo tmpVo;
-
-        //         this.combo_N1ST_ITM_GRP_CD.Clear();
-
-        //         for (int x = 0; x < nCnt; x++)
-        //         {
-        //            tmpVo = ItemGroupVo[x];
-        //            ItemList.Add(new CodeDao() { CLSS_DESC = tmpVo.ITM_GRP_NM, CLSS_CD = tmpVo.ITM_GRP_CD });
-        //         }
-        //         this.combo_N1ST_ITM_GRP_CD.ItemsSource = ItemList;
-
-        //                  if (ItemList.Count > 0)
-        //                  {
-        //                      this.combo_N1ST_ITM_GRP_CD.Text = ItemList[0].CLSS_DESC;
-        //                  }
-        //      }
-
-        //   }
-        //   catch (Exception eLog)
-        //   {
-        //      WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + this._title, MessageBoxButton.OK, MessageBoxImage.Error);
-        //      return;
-        //   }
-        //}
-
-        //void combo_N1ST_ITM_GRP_CD_SelectedIndexChanged(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        CodeDao ITM_GRP_CLSS_NM_VO = this.combo_ITM_GRP_CLSS_CD.SelectedItem as CodeDao;
-        //        if (ITM_GRP_CLSS_NM_VO != null)
-        //        {
-        //            CodeDao ITM_N1ST_TP_NM_VO = this.combo_N1ST_ITM_GRP_CD.SelectedItem as CodeDao;
-        //            if (ITM_N1ST_TP_NM_VO != null)
-        //            {
-        //                if (string.IsNullOrEmpty(ITM_N1ST_TP_NM_VO.CLSS_CD))
-        //                {
-        //                    return;
-        //                }
-
-        //                IList<ItemGroupCodeVo> ItemGroupVo = itemClient.SelectCodeItemGroupList(new ItemGroupCodeVo() { PRNT_ITM_GRP_CD = "X", N1ST_ITM_GRP_CD = ITM_N1ST_TP_NM_VO.CLSS_CD, DELT_FLG = "N", ITM_GRP_CLSS_CD = ITM_GRP_CLSS_NM_VO.CLSS_CD, CRE_USR_ID = "" });
-        //                IList<CodeDao> ItemList = new List<CodeDao>();
-        //                int nCnt = ItemGroupVo.Count;
-        //                ItemGroupCodeVo tmpVo;
-
-        //                this.combo_N2ND_ITM_GRP_CD.Clear();
-        //                for (int x = 0; x < nCnt; x++)
-        //                {
-        //                    tmpVo = ItemGroupVo[x];
-        //                    ItemList.Add(new CodeDao() { CLSS_DESC = tmpVo.ITM_GRP_NM, CLSS_CD = tmpVo.ITM_GRP_CD });
-        //                }
-        //                this.combo_N2ND_ITM_GRP_CD.ItemsSource = ItemList;
-        //                this.combo_N2ND_ITM_GRP_CD.SelectedIndex = 0;
-        //            }
-        //        }
-        //    }
-        //    catch (Exception eLog)
-        //    {
-        //        WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error);
-        //        return;
-        //    }
-        //}
 
         private void GridColumn_Validate(object sender, DevExpress.Xpf.Grid.GridCellValidationEventArgs e)
         {
@@ -708,7 +343,6 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
 
         public async void SYSTEM_CODE_VO()
         {
-            //this.combo_ITM_GRP_CLSS_CD.ItemsSource = SystemProperties.SYSTEM_CODE_VO("L-001");
             using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.GetAsync("s131/dtl/" + Properties.Settings.Default.SettingChnl + "/" + "L-001"))
             {
                 if (response.IsSuccessStatusCode)
@@ -717,15 +351,6 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                     this.combo_ITM_GRP_CLSS_CD.SelectedIndex = 0;
                 }
             }
-
-            //using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.GetAsync("s131/dtl/" + Properties.Settings.Default.SettingChnl + "/" + "L-026"))
-            //{
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        this.lue_COLR_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
-            //        //this.lue_COLR_NM.SelectedIndex = 0;
-            //    }
-            //}
 
             btn_ITEMS_Click(null, null);
         }

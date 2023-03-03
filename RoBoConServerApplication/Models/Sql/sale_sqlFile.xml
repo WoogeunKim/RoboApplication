@@ -5391,19 +5391,29 @@
     
     <!--거래처별 판가기준표 MST -->
     <select id="S3311SelectMstList" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
-      SELECT 
-		      T1.CO_NO
-	      ,	MAX(T2.CO_NM) AS CO_NM
-	      ,	CONVERT(VARCHAR, T1.CNG_APLY_DT, 23) AS FM_DT
-	      ,	MAX(T1.CHNL_CD) AS CHNL_CD
-       FROM TB_CD_CO_UT_PRC AS T1 LEFT JOIN TB_CD_CO T2
-            ON T1.CO_NO = T2.CO_NO
-	      WHERE 1=1
-		      AND T1.CHNL_CD                = T2.CHNL_CD
-		      AND T1.CHNL_CD                = #CHNL_CD#
-	        AND T1.CNG_APLY_DT            >= CAST(#FM_DT# + ' 00:00:00' AS DATETIME)
-          AND T1.CNG_APLY_DT  <![CDATA[ <= ]]> CAST(#TO_DT# + ' 23:59:59' AS DATETIME)
-        GROUP BY T1.CO_NO, T1.CNG_APLY_DT
+      SELECT CO_NO
+           , CO_NM
+           , FM_DT
+           , CHNL_CD
+           , GBN
+        FROM (
+          SELECT T1.CO_NO
+               , T2.CO_NM
+               , CONVERT(VARCHAR, T1.CNG_APLY_DT, 23) AS FM_DT
+               , T1.CHNL_CD
+               , T1.ITM_BZTP_FLG AS GBN
+               , ROW_NUMBER() OVER (PARTITION BY T1.CO_NO ORDER BY T1.CNG_APLY_DT DESC) AS RN
+             FROM TB_CD_CO_UT_PRC AS T1
+                , TB_CD_CO           T2
+                WHERE 1=1
+                    AND T1.CHNL_CD                = T2.CHNL_CD
+                    AND T1.CO_NO                  = T2.CO_NO
+                    AND T1.CHNL_CD                = #CHNL_CD#
+               AND T2.AREA_CD                = #AREA_CD#
+                    AND T1.ITM_BZTP_FLG           = #GBN#   
+                ) T1
+             WHERE 1 = 1
+                 AND RN = 1
     </select>
     
       <!--거래처별 판가기준표  MST - 추가-->
@@ -5440,7 +5450,7 @@
                     WHERE 1 = 1
                       AND CLSS_TP_CD = 'L-910'
                       AND DELT_FLG   = 'N'
-					            AND CHNL_CD = #CHNL_CD#
+                           AND CHNL_CD = #CHNL_CD#
                       AND USE_ST_DT  <![CDATA[ <= ]]>  GETDATE() 
                       AND USE_END_DT >= GETDATE()
               ) T2   
@@ -5468,28 +5478,28 @@
              , ITM_STEL_CD
              , ITM_STEL_SZ_CD
            )
-		      SELECT
-				      T1.N1ST_CD
-			      , T1.N2ND_CD
-			      , #CO_NO#       AS CO_NO
-			      , #FM_DT#       AS CNG_APLY_DT
-			      , 'S'           AS ITM_BZTP_FLG
-			      , NULL          AS CO_ITM_NM
-			      , 0.0           AS CO_UT_PRC
-			      , 'Y'           AS MN_CO_FLG
-			      , 'Y'           AS CRNT_PRC_FLG
-			      , NULL          AS UOM_CD
-			      , NULL          AS LOT_VAL
-			      , 'KRW'         AS CURR_CD
-			      , NULL          AS CNG_HIS_DESC
-			      , #CRE_USR_ID#  AS CRE_USR_ID
-			      , GETDATE()     AS CRE_DT
-			      , #UPD_USR_ID#  AS UPD_USR_ID
-			      , GETDATE()     AS UPD_DT
-			      , #CHNL_CD#     AS CHNL_CD
-			      , NULL          AS ITM_STEL_CD
-			      , NULL          AS ITM_STEL_SZ_CD
-		      FROM TMP T1               
+            SELECT
+                T1.N1ST_CD
+               , T1.N2ND_CD
+               , #CO_NO#       AS CO_NO
+               , GETDATE()     AS CNG_APLY_DT
+               , #GBN#         AS ITM_BZTP_FLG
+               , NULL          AS CO_ITM_NM
+               , 0.0           AS CO_UT_PRC
+               , 'Y'           AS MN_CO_FLG
+               , 'Y'           AS CRNT_PRC_FLG
+               , NULL          AS UOM_CD
+               , NULL          AS LOT_VAL
+               , 'KRW'         AS CURR_CD
+               , NULL          AS CNG_HIS_DESC
+               , #CRE_USR_ID#  AS CRE_USR_ID
+               , GETDATE()     AS CRE_DT
+               , #UPD_USR_ID#  AS UPD_USR_ID
+               , GETDATE()     AS UPD_DT
+               , #CHNL_CD#     AS CHNL_CD
+               , NULL          AS ITM_STEL_CD
+               , NULL          AS ITM_STEL_SZ_CD
+            FROM TMP T1               
            WHERE 1 = 1
      </insert>
 
@@ -5550,7 +5560,7 @@
             WHERE 1 = 1
               AND CHNL_CD       = #CHNL_CD#
               AND CO_NO         = #CO_NO#
-              AND ITM_BZTP_FLG  = 'S'
+              AND ITM_BZTP_FLG  = #ITM_BZTP_FLG#
               AND CNG_APLY_DT   <![CDATA[ <= ]]> CAST(#FM_DT# + ' 23:59:59' AS DATETIME)
              ) T1
            WHERE RN = 1   
@@ -5577,6 +5587,7 @@
            AND CHNL_CD                           = #CHNL_CD#
            AND CO_NO                             = #CO_NO#
            AND CONVERT(VARCHAR, CNG_APLY_DT, 23) = #FM_DT#
+		   AND ITM_BZTP_FLG                      = #GBN#
      </delete>
     
 
@@ -5589,7 +5600,7 @@
              , T2.N2ND_CD
              , T2.N2ND_NM
              , T2.N2ND_KNT
-             , T2.N2ND_SRT_SEQ     
+             , T2.N2ND_SRT_SEQ    
           FROM (
                   SELECT CLSS_CD      AS N1ST_CD
                        , CLSS_DESC    AS N1ST_NM
@@ -5633,16 +5644,17 @@
                     WHERE 1 = 1
                       AND CHNL_CD       = #CHNL_CD#
                       AND CO_NO         = #CO_NO#   
-                      AND ITM_BZTP_FLG  = 'S'      
+                      AND ITM_BZTP_FLG  = #GBN#    
                       AND CNG_APLY_DT  <![CDATA[ <= ]]> CAST(#FM_DT# + ' 23:59:59' AS DATETIME)   
            ) T1
          WHERE RN = 1   
       )                                                                                              
         SELECT 'D10' AS GBN
-	           , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 1 AND T2.N2ND_SRT_SEQ = 1 THEN T1.CO_UT_PRC END), 0) AS A1
+            , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 1 AND T2.N2ND_SRT_SEQ = 1 THEN T1.CO_UT_PRC END), 0) AS A1
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 2 AND T2.N2ND_SRT_SEQ = 1 THEN T1.CO_UT_PRC END), 0) AS A2
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 3 AND T2.N2ND_SRT_SEQ = 1 THEN T1.CO_UT_PRC END), 0) AS A3
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 4 AND T2.N2ND_SRT_SEQ = 1 THEN T1.CO_UT_PRC END), 0) AS A4
+          , MAX(T1.ITM_BZTP_FLG)  AS ITM_BZTP_FLG
           FROM TB_CD_CO_UT_PRC  T1     
              , TMP              T2     
              , TMP_DT           T3     
@@ -5658,10 +5670,11 @@
            AND T1.ITM_BZTP_FLG = T3.ITM_BZTP_FLG
       UNION ALL
         SELECT 'D13' AS GBN
-	           , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 1 AND T2.N2ND_SRT_SEQ = 2 THEN T1.CO_UT_PRC END), 0) AS A1
+            , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 1 AND T2.N2ND_SRT_SEQ = 2 THEN T1.CO_UT_PRC END), 0) AS A1
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 2 AND T2.N2ND_SRT_SEQ = 2 THEN T1.CO_UT_PRC END), 0) AS A2
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 3 AND T2.N2ND_SRT_SEQ = 2 THEN T1.CO_UT_PRC END), 0) AS A3
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 4 AND T2.N2ND_SRT_SEQ = 2 THEN T1.CO_UT_PRC END), 0) AS A4
+          , MAX(T1.ITM_BZTP_FLG)  AS ITM_BZTP_FLG
           FROM TB_CD_CO_UT_PRC  T1    
              , TMP              T2    
              , TMP_DT           T3    
@@ -5677,10 +5690,11 @@
            AND T1.ITM_BZTP_FLG = T3.ITM_BZTP_FLG   
       UNION ALL
         SELECT 'D16' AS GBN
-	           , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 1 AND T2.N2ND_SRT_SEQ = 3 THEN T1.CO_UT_PRC END), 0) AS A1
+              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 1 AND T2.N2ND_SRT_SEQ = 3 THEN T1.CO_UT_PRC END), 0) AS A1
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 2 AND T2.N2ND_SRT_SEQ = 3 THEN T1.CO_UT_PRC END), 0) AS A2
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 3 AND T2.N2ND_SRT_SEQ = 3 THEN T1.CO_UT_PRC END), 0) AS A3
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 4 AND T2.N2ND_SRT_SEQ = 3 THEN T1.CO_UT_PRC END), 0) AS A4
+          , MAX(T1.ITM_BZTP_FLG)  AS ITM_BZTP_FLG
           FROM TB_CD_CO_UT_PRC  T1     
              , TMP              T2     
              , TMP_DT           T3     
@@ -5696,10 +5710,11 @@
            AND T1.ITM_BZTP_FLG = T3.ITM_BZTP_FLG   
       UNION ALL
         SELECT 'D19' AS GBN
-	           , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 1 AND T2.N2ND_SRT_SEQ = 4 THEN T1.CO_UT_PRC END), 0) AS A1
+              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 1 AND T2.N2ND_SRT_SEQ = 4 THEN T1.CO_UT_PRC END), 0) AS A1
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 2 AND T2.N2ND_SRT_SEQ = 4 THEN T1.CO_UT_PRC END), 0) AS A2
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 3 AND T2.N2ND_SRT_SEQ = 4 THEN T1.CO_UT_PRC END), 0) AS A3
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 4 AND T2.N2ND_SRT_SEQ = 4 THEN T1.CO_UT_PRC END), 0) AS A4
+          , MAX(T1.ITM_BZTP_FLG)  AS ITM_BZTP_FLG
           FROM TB_CD_CO_UT_PRC  T1    
              , TMP              T2    
              , TMP_DT           T3    
@@ -5715,10 +5730,11 @@
            AND T1.ITM_BZTP_FLG = T3.ITM_BZTP_FLG   
       UNION ALL
         SELECT 'D22' AS GBN
-	           , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 1 AND T2.N2ND_SRT_SEQ = 5 THEN T1.CO_UT_PRC END), 0) AS A1
+              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 1 AND T2.N2ND_SRT_SEQ = 5 THEN T1.CO_UT_PRC END), 0) AS A1
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 2 AND T2.N2ND_SRT_SEQ = 5 THEN T1.CO_UT_PRC END), 0) AS A2
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 3 AND T2.N2ND_SRT_SEQ = 5 THEN T1.CO_UT_PRC END), 0) AS A3
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 4 AND T2.N2ND_SRT_SEQ = 5 THEN T1.CO_UT_PRC END), 0) AS A4
+          , MAX(T1.ITM_BZTP_FLG)  AS ITM_BZTP_FLG
           FROM TB_CD_CO_UT_PRC  T1 
              , TMP              T2 
              , TMP_DT           T3 
@@ -5734,10 +5750,11 @@
            AND T1.ITM_BZTP_FLG = T3.ITM_BZTP_FLG   
       UNION ALL
         SELECT 'D25' AS GBN
-	           , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 1 AND T2.N2ND_SRT_SEQ = 6 THEN T1.CO_UT_PRC END), 0) AS A1
+              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 1 AND T2.N2ND_SRT_SEQ = 6 THEN T1.CO_UT_PRC END), 0) AS A1
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 2 AND T2.N2ND_SRT_SEQ = 6 THEN T1.CO_UT_PRC END), 0) AS A2
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 3 AND T2.N2ND_SRT_SEQ = 6 THEN T1.CO_UT_PRC END), 0) AS A3
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 4 AND T2.N2ND_SRT_SEQ = 6 THEN T1.CO_UT_PRC END), 0) AS A4 
+          , MAX(T1.ITM_BZTP_FLG)  AS ITM_BZTP_FLG
           FROM TB_CD_CO_UT_PRC  T1     
              , TMP              T2     
              , TMP_DT           T3     
@@ -5753,10 +5770,11 @@
            AND T1.ITM_BZTP_FLG = T3.ITM_BZTP_FLG   
       UNION ALL
         SELECT 'D29' AS GBN
-	           , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 1 AND T2.N2ND_SRT_SEQ = 7 THEN T1.CO_UT_PRC END), 0) AS A1
+              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 1 AND T2.N2ND_SRT_SEQ = 7 THEN T1.CO_UT_PRC END), 0) AS A1
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 2 AND T2.N2ND_SRT_SEQ = 7 THEN T1.CO_UT_PRC END), 0) AS A2
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 3 AND T2.N2ND_SRT_SEQ = 7 THEN T1.CO_UT_PRC END), 0) AS A3
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 4 AND T2.N2ND_SRT_SEQ = 7 THEN T1.CO_UT_PRC END), 0) AS A4
+          , MAX(T1.ITM_BZTP_FLG)  AS ITM_BZTP_FLG
           FROM TB_CD_CO_UT_PRC  T1    
              , TMP              T2    
              , TMP_DT           T3    
@@ -5772,10 +5790,11 @@
            AND T1.ITM_BZTP_FLG = T3.ITM_BZTP_FLG   
       UNION ALL
         SELECT 'D32' AS GBN
-	           , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 1 AND T2.N2ND_SRT_SEQ = 8 THEN T1.CO_UT_PRC END), 0) AS A1
+              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 1 AND T2.N2ND_SRT_SEQ = 8 THEN T1.CO_UT_PRC END), 0) AS A1
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 2 AND T2.N2ND_SRT_SEQ = 8 THEN T1.CO_UT_PRC END), 0) AS A2
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 3 AND T2.N2ND_SRT_SEQ = 8 THEN T1.CO_UT_PRC END), 0) AS A3
              , ISNULL(MAX(CASE WHEN T2.N1ST_SRT_SEQ = 4 AND T2.N2ND_SRT_SEQ = 8 THEN T1.CO_UT_PRC END), 0) AS A4
+          , MAX(T1.ITM_BZTP_FLG)  AS ITM_BZTP_FLG
           FROM TB_CD_CO_UT_PRC  T1     
              , TMP              T2     
              , TMP_DT           T3     
@@ -7113,6 +7132,22 @@
               AND T1.CHNL_CD   = #CHNL_CD#
               AND T1.PUR_DT >= CAST(#FM_DT# + ' 00:00:00' AS DATETIME)
               AND T1.PUR_DT <![CDATA[ <= ]]> CAST(#TO_DT# + ' 23:59:59' AS DATETIME)
+     </select>
+	  
+	  
+	   <!--S3311추가 - 조회-->
+     <select id="S3311CocdSelect" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+       SELECT CO_NO
+            , CO_NM           
+          FROM TB_CD_CO
+             WHERE 1 = 1
+               AND CHNL_CD  = #CHNL_CD#
+               AND DELT_FLG = #DELT_FLG#
+               AND CO_NO IN (SELECT CO_NO
+                               FROM TB_CD_CO_TP 
+                              WHERE 1 = 1
+                                AND CO_TP_CD = CASE WHEN #GBN# = 'S' THEN 'AR' ELSE 'AP' END 
+                             )
      </select>
 
   </statements>

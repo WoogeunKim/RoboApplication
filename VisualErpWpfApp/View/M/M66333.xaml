@@ -147,13 +147,45 @@
 
                                 <dxg:GridControl x:Name="DetailTable" Grid.Column="1" ItemsSource="{Binding Path=SelectDtlList}" >
                                     <dxg:GridControl.View>
-                                        <dxg:TableView x:Name="ViewDetail" FontSize="13" NavigationStyle="Cell" AllowPerPixelScrolling="True" AllowFilterEditor="False" ShowGroupedColumns="True" BestFitMode="Smart" BestFitArea="All" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="True" IsColumnMenuEnabled="False" >
+                                        <dxg:TableView x:Name="ViewDetail" FontSize="13" NavigationStyle="Cell" AllowPerPixelScrolling="True" AllowFilterEditor="False" ShowGroupedColumns="True" ShowFixedTotalSummary="True" BestFitMode="Smart" BestFitArea="All" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="True" IsColumnMenuEnabled="False" >
                                             <dxg:TableView.CellStyle>
                                                 <Style TargetType="dxg:LightweightCellEditor">
                                                     <Setter Property="MinHeight" Value="62"/>
                                                     <Setter Property="MaxHeight" Value="62"/>
                                                 </Style>
                                             </dxg:TableView.CellStyle>
+                                            <dxg:TableView.FormatConditions>
+                                                <dxg:FormatCondition FieldName="ITM_SHP_CD" Expression="[VIS_FLG] = 'Y'">
+                                                    <dxg:FormatCondition.Format>
+                                                        <dx:Format Background="#EB5757"/>
+                                                    </dxg:FormatCondition.Format>
+                                                </dxg:FormatCondition>
+                                                <dxg:FormatCondition FieldName="ITM_SHP_CD" Expression="[VIS_FLG] = 'N'">
+                                                    <dxg:FormatCondition.Format>
+                                                        <dx:Format Background="#AFEEEE"/>
+                                                    </dxg:FormatCondition.Format>
+                                                </dxg:FormatCondition>
+                                                <dxg:FormatCondition FieldName="ITM_STL_CD" Expression="[VIS_FLG] = 'Y'">
+                                                    <dxg:FormatCondition.Format>
+                                                        <dx:Format Background="#EB5757"/>
+                                                    </dxg:FormatCondition.Format>
+                                                </dxg:FormatCondition>
+                                                <dxg:FormatCondition FieldName="ITM_STL_CD" Expression="[VIS_FLG] = 'N'">
+                                                    <dxg:FormatCondition.Format>
+                                                        <dx:Format Background="#AFEEEE"/>
+                                                    </dxg:FormatCondition.Format>
+                                                </dxg:FormatCondition>
+                                                <dxg:FormatCondition FieldName="ITM_STL_SZ_CD" Expression="[VIS_FLG] = 'Y'">
+                                                    <dxg:FormatCondition.Format>
+                                                        <dx:Format Background="#EB5757"/>
+                                                    </dxg:FormatCondition.Format>
+                                                </dxg:FormatCondition>
+                                                <dxg:FormatCondition FieldName="ITM_STL_SZ_CD" Expression="[VIS_FLG] = 'N'">
+                                                    <dxg:FormatCondition.Format>
+                                                        <dx:Format Background="#AFEEEE"/>
+                                                    </dxg:FormatCondition.Format>
+                                                </dxg:FormatCondition>
+                                            </dxg:TableView.FormatConditions>
                                         </dxg:TableView>
                                     </dxg:GridControl.View>
 

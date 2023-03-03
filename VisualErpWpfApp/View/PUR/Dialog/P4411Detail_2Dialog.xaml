@@ -271,7 +271,7 @@
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
 
-                <dxg:GridColumn FieldName="N5TH_QTY" Header="재고" Width="20" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True"  >
+                <dxg:GridColumn FieldName="STK_QTY" Header="재고" Width="20" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True"  >
                     <dxg:GridColumn.EditSettings>
                         <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True" />
                     </dxg:GridColumn.EditSettings>
@@ -303,7 +303,7 @@
         </Button>-->
 
 
-        <GroupBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Header="번들 중량" Width="300" Height="60" HorizontalAlignment="Left" >
+        <!--<GroupBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Header="번들 중량" Width="300" Height="60" HorizontalAlignment="Left" >
             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120" />
@@ -316,7 +316,7 @@
                 <dx:SimpleButton Grid.Column="2" Content="2톤" Glyph="{dx:DXImage SvgImages/XAF/Action_Grant_Set.svg}"  x:Name="btn_BUN_WGT_2" />
 
             </Grid>
-        </GroupBox>
+        </GroupBox>-->
 
 
 

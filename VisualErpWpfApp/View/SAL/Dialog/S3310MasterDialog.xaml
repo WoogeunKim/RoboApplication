@@ -7,16 +7,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    x:Class="AquilaErpWpfApp3.View.SAL.Dialog.S3311MasterDialog"
-    Title="Master Code" Height="220" Width="465" FontFamily="Arial" 
+    x:Class="AquilaErpWpfApp3.View.SAL.Dialog.S3310MasterDialog"
+    Title="Master Code" Height="160" Width="465" FontFamily="Arial" 
     WindowStartupLocation="CenterOwner" ShowIcon="True" ResizeMode="NoResize" FontSize="15" Icon="{dx:DXImage Image=AddItem_16x16.png}">
 
     <Grid Width="430" x:Name="configCode">
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
             <RowDefinition Height="40" />
-            <RowDefinition Height="10" />
-            <RowDefinition Height="40" />
+            <RowDefinition Height="0" />
+            <RowDefinition Height="0" />
             <RowDefinition Height="25" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -57,35 +57,6 @@
 
         <!--<TextBlock Height="20" VerticalAlignment="Center" Grid.Column="1" Text="기준 일자 : " HorizontalAlignment="Right" TextAlignment="Right" Grid.Row="1" />
         <dxe:DateEdit x:Name="text_FM_DT" Grid.Column="2" VerticalAlignment="Stretch" Margin="2" Grid.Row="1" IsTextEditable="False" ShowClearButton="False" Text="{Binding FM_DT}"/>-->
-
-        <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="1" Text="거래분류 : " HorizontalAlignment="Right" TextAlignment="Right" Grid.Row="3" />
-        <dxg:LookUpEdit HorizontalContentAlignment="Center" Grid.Column="2" VerticalAlignment="Stretch" Margin="2" Grid.Row="3" x:Name="combo_GBN_NM"  IsSynchronizedWithCurrentItem="True" DisplayMember="CLSS_DESC" ValueMember="CLSS_CD" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="150" PopupWidth="290" IsEnabled="True" >
-            <dxg:LookUpEdit.PopupContentTemplate>
-                <ControlTemplate>
-                    <dxg:GridControl Name="PART_GridControl" >
-                        <dxg:GridControl.View>
-                            <dxg:TableView Name="View_GBN_NM" SearchDelay="0" ShowColumnHeaders="True" ShowGroupedColumns="True" AutoWidth="True" AllowPerPixelScrolling="True" ScrollAnimationDuration="0" ShowAutoFilterRow="False" ShowTotalSummary="False" IsSynchronizedWithCurrentItem="True" />
-                        </dxg:GridControl.View>
-                        <dxg:GridControl.Columns>
-                            <dxg:GridColumn FieldName="CLSS_CD" Header="코드" Width="50" HorizontalHeaderContentAlignment="Center" FilterPopupMode="CheckedList" ToolTip="" >
-                                <dxg:GridColumn.EditSettings>
-                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-                                </dxg:GridColumn.EditSettings>
-                            </dxg:GridColumn>
-                            <dxg:GridColumn FieldName="CLSS_DESC" Header="설명" Width="130" HorizontalHeaderContentAlignment="Center"  FilterPopupMode="CheckedList" ToolTip="" >
-                                <dxg:GridColumn.EditSettings>
-                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
-                                </dxg:GridColumn.EditSettings>
-                            </dxg:GridColumn>
-                        </dxg:GridControl.Columns>
-                    </dxg:GridControl>
-                </ControlTemplate>
-            </dxg:LookUpEdit.PopupContentTemplate>
-            <dxg:LookUpEdit.StyleSettings>
-                <dxg:SearchLookUpEditStyleSettings />
-            </dxg:LookUpEdit.StyleSettings>
-        </dxg:LookUpEdit>
-
 
         <Button x:Name="OKButton" Height="30" Margin="85,0,0,0" Grid.Column="2" VerticalAlignment="Center" Width="100" HorizontalAlignment="Left" Grid.Row="27">
             <StackPanel HorizontalAlignment="Left" Width="62" Height="Auto" Orientation="Horizontal">

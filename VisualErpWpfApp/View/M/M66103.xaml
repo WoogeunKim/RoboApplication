@@ -210,6 +210,12 @@
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
+
+                                <dxg:GridColumn FieldName="WK" Header="진행시간(초)" Width="20" HorizontalHeaderContentAlignment="Center" VisibleIndex="3">
+                                    <dxg:GridColumn.EditSettings>
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,##0 초" MaskUseAsDisplayFormat="True"/>
+                                    </dxg:GridColumn.EditSettings>
+                                </dxg:GridColumn>
                             </dxg:GridControl.Columns>
                         </dxg:GridControl>
                     </Grid>

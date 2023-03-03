@@ -61,7 +61,7 @@ namespace AquilaErpWpfApp3.ViewModel
         {
             try
             {
-                DXSplashScreen.Show<ProgressWindow>();
+                if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
 
                 using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66333/dtl", new StringContent(JsonConvert.SerializeObject(SelectedMstItem), System.Text.Encoding.UTF8, "application/json")))
                 {
@@ -69,13 +69,9 @@ namespace AquilaErpWpfApp3.ViewModel
                     {
                         this.SelectDtlList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
                     }
-
-                    DXSplashScreen.Close();
                 }
 
-
-
-
+                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
             }
             catch (System.Exception eLog)
             {

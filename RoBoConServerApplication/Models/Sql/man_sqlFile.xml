@@ -9009,68 +9009,69 @@
 
 
 	  <!--수동수주출력-생산활용 - DTL-->
-	  <select id="M66333SelectDtl" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
-		  SELECT
-		        T2.CHNL_CD
-		      , T2.SL_RLSE_NO
-		      , T2.SL_RLSE_SEQ
-		      , T2.SL_ITM_QTY
-		      , T2.SL_ITM_WGT
-		      , T2.ITM_SHP_CD
-		      , T3.ITM_IMG
-		      , T2.ITM_STL_CD
-		      , T2.ITM_STL_SZ_CD
-		      , T2.ITM_STL_LENG
-		      , T2.ITM_STL_PRD_DESC
-		      , T2.CNTR_NM
-		      , T2.CNTR_PSN_NM
-		      , T2.CNTR_DE_NM
-		      , CONVERT(CHAR(10), T2.IN_REQ_DT, 23) AS IN_REQ_DT
-		      , T4.A_LEN
-		      , T4.A_VAL
-		      , T4.B_LEN
-		      , T4.B_VAL
-		      , T4.C_LEN
-		      , T4.C_VAL
-		      , T4.D_LEN
-		      , T4.D_VAL
-		      , T4.E_LEN
-		      , T4.E_VAL
-		      , T4.F_LEN
-		      , T4.F_VAL
-		    FROM TB_SL_RLSE       T1
-		      , TB_SL_RLSE_DTL    T2
-		      OUTER APPLY (
-		        SELECT X.A_LEN, X.B_LEN, X.C_LEN, X.D_LEN, X.E_LEN, X.F_LEN, X.A_VAL, X.B_VAL, X.C_VAL, X.D_VAL, X.E_VAL, X.F_VAL
-		          FROM TB_MES_PROD_DESC  X
-		         WHERE 1 = 1
-		           AND X.SL_RLSE_NO   = T2.SL_RLSE_NO
-		           AND X.SL_RLSE_SEQ  = T2.SL_RLSE_SEQ
-		      ) T4
-		      OUTER APPLY (
-		        SELECT X.ITM_NM   AS ITM_SHP_NM
-		          , X.ITM_CD AS SHP_CD
-		          , Z.ITM_IMG
-		          FROM TB_CD_ITM  X
-		              OUTER APPLY (
-		                SELECT Z.IMG  AS ITM_IMG
-		                  FROM TB_CD_ITM_IMG Z
-		                 WHERE 1 = 1
-		                   AND X.CHNL_CD = Z.CHNL_CD
-		                   AND X.ITM_CD  = Z.ITM_CD
-		              ) Z
-		      WHERE 1 = 1
-		        AND X.CHNL_CD           = #CHNL_CD#
-		        AND X.ITM_GRP_CLSS_CD   = 'P'
-		        AND X.DELT_FLG          = 'N'
-		        AND X.ITM_CD           = T2.ITM_SHP_CD
-		      ) T3
-		   WHERE 1 = 1
-		     AND T1.CHNL_CD      = T2.CHNL_CD
-		     AND T1.CHNL_CD      = #CHNL_CD#
-		     AND T1.SL_RLSE_NO   = T2.SL_RLSE_NO
-		     AND T1.SL_RLSE_NO   = #SL_RLSE_NO#
-	  </select>
+     <select id="M66333SelectDtl" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
+        SELECT
+              T2.CHNL_CD
+            , T2.SL_RLSE_NO
+            , T2.SL_RLSE_SEQ
+            , T2.SL_ITM_QTY
+            , T2.SL_ITM_WGT
+            , T2.ITM_SHP_CD
+            , T3.ITM_IMG
+            , T2.ITM_STL_CD
+            , T2.ITM_STL_SZ_CD
+            , T2.ITM_STL_LENG
+            , T2.ITM_STL_PRD_DESC
+            , T2.CNTR_NM
+            , T2.CNTR_PSN_NM
+            , T2.CNTR_DE_NM
+            , CONVERT(CHAR(10), T2.IN_REQ_DT, 23) AS IN_REQ_DT
+            , T4.A_LEN
+            , T4.A_VAL
+            , T4.B_LEN
+            , T4.B_VAL
+            , T4.C_LEN
+            , T4.C_VAL
+            , T4.D_LEN
+            , T4.D_VAL
+            , T4.E_LEN
+            , T4.E_VAL
+            , T4.F_LEN
+            , T4.F_VAL
+            , CASE WHEN T3.SHP_CD IS NULL THEN 'Y' ELSE 'N' END AS VIS_FLG
+          FROM TB_SL_RLSE       T1
+             , TB_SL_RLSE_DTL    T2
+            OUTER APPLY (
+              SELECT X.A_LEN, X.B_LEN, X.C_LEN, X.D_LEN, X.E_LEN, X.F_LEN, X.A_VAL, X.B_VAL, X.C_VAL, X.D_VAL, X.E_VAL, X.F_VAL
+                FROM TB_MES_PROD_DESC  X
+               WHERE 1 = 1
+                 AND X.SL_RLSE_NO   = T2.SL_RLSE_NO
+                 AND X.SL_RLSE_SEQ  = T2.SL_RLSE_SEQ
+            ) T4
+            OUTER APPLY (
+              SELECT X.ITM_NM   AS ITM_SHP_NM
+                , X.ITM_CD AS SHP_CD
+                , Z.ITM_IMG
+                FROM TB_CD_ITM  X
+                    OUTER APPLY (
+                      SELECT Z.IMG  AS ITM_IMG
+                        FROM TB_CD_ITM_IMG Z
+                       WHERE 1 = 1
+                         AND X.CHNL_CD = Z.CHNL_CD
+                         AND X.ITM_CD  = Z.ITM_CD
+                    ) Z
+            WHERE 1 = 1
+              AND X.CHNL_CD           = #CHNL_CD#
+              AND X.ITM_GRP_CLSS_CD   = 'P'
+              AND X.DELT_FLG          = 'N'
+              AND X.ITM_CD           = T2.ITM_SHP_CD
+            ) T3
+         WHERE 1 = 1
+           AND T1.CHNL_CD      = T2.CHNL_CD
+           AND T1.CHNL_CD      = #CHNL_CD#
+           AND T1.SL_RLSE_NO   = T2.SL_RLSE_NO
+           AND T1.SL_RLSE_NO   = #SL_RLSE_NO#
+     </select>
 	  
 	   <!--수동수주출력-생산활용 - DTL-->
 	  <select id="M66333SelectItmList" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
@@ -9214,6 +9215,7 @@
              , T1.STS_CD
              , T2.EXTR_STS_NM
              , T1.STS_DESC 
+             , DATEDIFF( s, T3.CRE_DT, T1.CRE_DT) AS WK     
           FROM TB_BAR_EXTR_LOG T1
                OUTER APPLY (
                    SELECT CLSS_DESC AS EXTR_STS_NM
@@ -9223,6 +9225,14 @@
                       AND CLSS_TP_CD = 'L-912'
                       AND CLSS_CD    = T1.STS_CD
                ) T2
+               OUTER APPLY (
+                   SELECT CRE_DT
+                     FROM TB_BAR_EXTR_LOG X 
+                    WHERE 1 = 1
+                      AND X.PUR_NO   = T1.PUR_NO
+                      AND X.PUR_SEQ  = T1.PUR_SEQ
+                      AND X.LOG_SEQ  = 1
+               ) T3
          WHERE 1 = 1
            AND T1.PUR_NO   = #PUR_NO#
            AND T1.PUR_SEQ  = #PUR_SEQ#
@@ -9465,47 +9475,51 @@
 	  </update>
 
 	  <select id="M66107SelectDtlDia" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
-		  SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T2.IN_REQ_DT, T1.SL_RLSE_NO) AS RN
-		       , CONVERT(VARCHAR(10),T2.IN_REQ_DT, 23) AS IN_REQ_DT
-		       , T6.CO_NM
-		       , T2.CNTR_NM
-		       , T2.CNTR_PSN_NM
-		       , T5.EQ_NO
-		       , T2.LOC_CD
-		       , T2.ITM_SHP_CD
-		       , T2.ITM_STL_CD
-		       , T2.ITM_STL_SZ_CD
-		       , T2.ITM_STL_LENG
-		       , T2.SL_ITM_QTY
-		       , T2.ITM_STL_PRD_DESC
-		       , T2.CNTR_DE_NM
-		       , T2.SL_RLSE_NO
-		       , T2.SL_RLSE_SEQ
-		       , #OPMZ_NO# AS OPMZ_NO
-		       , #UPD_USR_ID# AS UPD_USR_ID
-		    FROM TB_SL_RLSE       T1
-		   OUTER APPLY (
-		    SELECT X.CO_NM
-		        FROM TB_CD_CO X
-		      WHERE 1 = 1
-		        AND X.CHNL_CD    = #CHNL_CD#
-		        AND X.CO_NO      = T1.SL_CO_CD
-		    ) T6
-		      , TB_SL_RLSE_DTL   T2
-		   OUTER APPLY (
-		    SELECT TOP 1 EQ_NO
-		        FROM dbo.ufnSelEq(T2.SL_RLSE_NO, T2.SL_RLSE_SEQ)
-		       GROUP BY EQ_NO
-		    ) T5
-		  WHERE 1 = 1
-		    AND T1.CHNL_CD    = T2.CHNL_CD
-		    AND T1.CHNL_CD    = #CHNL_CD#
-		    AND T1.SL_RLSE_NO = T2.SL_RLSE_NO
-		    AND T1.CLZ_FLG    = 'N'
-		    AND NOT EXISTS(SELECT 'X' FROM TB_RBK_SOMO_LNK Y WHERE Y.SL_RLSE_NO = T2.SL_RLSE_NO AND Y.SL_RLSE_SEQ = T2.SL_RLSE_SEQ)
-		    AND SUBSTRING(T1.SL_RLSE_NO,1,2) <![CDATA[<>]]> 'SR'
-		   ORDER BY T2.SL_RLSE_NO, T2.SL_RLSE_SEQ
-	  </select>
+        SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T2.IN_REQ_DT, T1.SL_RLSE_NO) AS RN
+             , CONVERT(VARCHAR(10),T2.IN_REQ_DT, 23) AS IN_REQ_DT
+             , T6.CO_NM
+             , T2.CNTR_NM
+             , T2.CNTR_PSN_NM
+             , T5.EQ_NO
+             , T2.LOC_CD
+             , T2.ITM_SHP_CD
+             , T2.ITM_STL_CD
+             , T2.ITM_STL_SZ_CD
+             , T2.ITM_STL_LENG
+             , T2.SL_ITM_QTY
+             , T2.ITM_STL_PRD_DESC
+             , T2.CNTR_DE_NM
+             , T2.SL_RLSE_NO
+             , T2.SL_RLSE_SEQ
+             , #OPMZ_NO# AS OPMZ_NO
+             , #UPD_USR_ID# AS UPD_USR_ID
+          FROM TB_SL_RLSE       T1
+         OUTER APPLY (
+          SELECT X.CO_NM
+              FROM TB_CD_CO X
+            WHERE 1 = 1
+              AND X.CHNL_CD    = #CHNL_CD#
+              AND X.CO_NO      = T1.SL_CO_CD
+          ) T6
+            , TB_SL_RLSE_DTL   T2
+         OUTER APPLY (
+          SELECT TOP 1 EQ_NO
+              FROM dbo.ufnSelEq(T2.SL_RLSE_NO, T2.SL_RLSE_SEQ)
+             GROUP BY EQ_NO
+          ) T5
+        WHERE 1 = 1
+          AND T1.CHNL_CD    = T2.CHNL_CD
+          AND T1.CHNL_CD    = #CHNL_CD#
+          AND T1.SL_RLSE_NO = T2.SL_RLSE_NO
+          AND T1.CLZ_FLG    = 'N'
+          AND NOT EXISTS(SELECT 'X' FROM TB_RBK_SOMO_LNK Y WHERE Y.SL_RLSE_NO = T2.SL_RLSE_NO AND Y.SL_RLSE_SEQ = T2.SL_RLSE_SEQ)
+          AND SUBSTRING(T1.SL_RLSE_NO,1,2) <![CDATA[<>]]> 'SR'
+         AND T1.SL_CO_CD = #CO_CD#
+         <isNotNull property="CNTR_PSN_NM" >
+            AND T2.CNTR_PSN_NM = #CNTR_PSN_NM#
+         </isNotNull>
+         ORDER BY T2.SL_RLSE_NO, T2.SL_RLSE_SEQ
+     </select>
 
 	  <insert id="M66107InsertDtl" parameterClass="ModelsLibrary.Man.ManVo">
 		  INSERT INTO TB_OPMZ_DMND_TMP
@@ -9616,16 +9630,16 @@
                 , T1.ITM_STL_SZ_CD
                 , T1.INTO_RAW_KNT
                 , T1.INTO_RAW_LEN
-                , MAX(CASE WHEN SUB_STEP = 1 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N1ST_STEP_VAL
-                , MAX(CASE WHEN SUB_STEP = 2 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N2ND_STEP_VAL
-                , MAX(CASE WHEN SUB_STEP = 3 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N3RD_STEP_VAL  
-                , MAX(CASE WHEN SUB_STEP = 4 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N4TH_STEP_VAL      
-                , MAX(CASE WHEN SUB_STEP = 5 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N5TH_STEP_VAL   
-                , MAX(CASE WHEN SUB_STEP = 6 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N6TH_STEP_VAL     
-                , MAX(CASE WHEN SUB_STEP = 7 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N7TH_STEP_VAL   
-                , MAX(CASE WHEN SUB_STEP = 8 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N8TH_STEP_VAL  
-                , MAX(CASE WHEN SUB_STEP = 9 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N9TH_STEP_VAL  
-                , MAX(CASE WHEN SUB_STEP = 10 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N10TH_STEP_VAL          
+                , MAX(CASE WHEN SUB_STEP = 1 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N1ST_STEP_VAL
+                , MAX(CASE WHEN SUB_STEP = 2 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N2ND_STEP_VAL
+                , MAX(CASE WHEN SUB_STEP = 3 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N3RD_STEP_VAL  
+                , MAX(CASE WHEN SUB_STEP = 4 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N4TH_STEP_VAL      
+                , MAX(CASE WHEN SUB_STEP = 5 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N5TH_STEP_VAL   
+                , MAX(CASE WHEN SUB_STEP = 6 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N6TH_STEP_VAL     
+                , MAX(CASE WHEN SUB_STEP = 7 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N7TH_STEP_VAL   
+                , MAX(CASE WHEN SUB_STEP = 8 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N8TH_STEP_VAL  
+                , MAX(CASE WHEN SUB_STEP = 9 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N9TH_STEP_VAL  
+                , MAX(CASE WHEN SUB_STEP = 10 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N10TH_STEP_VAL         
                 , MAX(LSS_LEN)  AS LSS_LEN
       FROM (
             SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.OPMZ_SEQ) AS RN 
@@ -9693,16 +9707,16 @@
                   , T1.INTO_RAW_KNT
                   , T1.INTO_RAW_LEN
 				  , T1.OPMZ_NO
-                  , MAX(CASE WHEN SUB_STEP = 1 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N1ST_STEP_VAL
-                  , MAX(CASE WHEN SUB_STEP = 2 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N2ND_STEP_VAL
-                  , MAX(CASE WHEN SUB_STEP = 3 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N3RD_STEP_VAL  
-                  , MAX(CASE WHEN SUB_STEP = 4 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N4TH_STEP_VAL      
-                  , MAX(CASE WHEN SUB_STEP = 5 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N5TH_STEP_VAL   
-                  , MAX(CASE WHEN SUB_STEP = 6 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N6TH_STEP_VAL     
-                  , MAX(CASE WHEN SUB_STEP = 7 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N7TH_STEP_VAL   
-                  , MAX(CASE WHEN SUB_STEP = 8 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N8TH_STEP_VAL  
-                  , MAX(CASE WHEN SUB_STEP = 9 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N9TH_STEP_VAL  
-                  , MAX(CASE WHEN SUB_STEP = 10 THEN  CAST(T1.ITM_LEN AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N10TH_STEP_VAL          
+                  , MAX(CASE WHEN SUB_STEP = 1 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N1ST_STEP_VAL
+                  , MAX(CASE WHEN SUB_STEP = 2 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N2ND_STEP_VAL
+                  , MAX(CASE WHEN SUB_STEP = 3 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N3RD_STEP_VAL  
+                  , MAX(CASE WHEN SUB_STEP = 4 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N4TH_STEP_VAL      
+                  , MAX(CASE WHEN SUB_STEP = 5 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N5TH_STEP_VAL   
+                  , MAX(CASE WHEN SUB_STEP = 6 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N6TH_STEP_VAL     
+                  , MAX(CASE WHEN SUB_STEP = 7 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N7TH_STEP_VAL   
+                  , MAX(CASE WHEN SUB_STEP = 8 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N8TH_STEP_VAL  
+                  , MAX(CASE WHEN SUB_STEP = 9 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N9TH_STEP_VAL  
+                  , MAX(CASE WHEN SUB_STEP = 10 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END + '×' + CAST(CUT_VAL AS VARCHAR))  AS N10TH_STEP_VAL       
                   , MAX(LSS_LEN)  AS LSS_LEN
       FROM (
             SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.OPMZ_SEQ) AS RN 
@@ -9715,9 +9729,11 @@
                  , T1.INTO_RAW_KNT
                  , T1.INTO_RAW_LEN
                  , CUT_VAL
-                 , T2.ITM_LEN, T2.ITM_QTY, T2.ITM_SHP_CD
-                                    , LSS_LEN
-                                    , SUB_STEP
+                 , T2.ITM_LEN
+				 , T2.ITM_QTY
+				 , T2.ITM_SHP_CD
+                 , LSS_LEN
+                 , SUB_STEP
               FROM (
                   SELECT dbo.FN_splitValue(ORD_ID, '-', 1)
                        +'-' + dbo.FN_splitValue(ORD_ID, '-', 2)             AS ORD_NO

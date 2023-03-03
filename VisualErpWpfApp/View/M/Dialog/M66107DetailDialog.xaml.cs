@@ -14,6 +14,7 @@ using System.Net.Http;
 using System.Windows;
 using System.Windows.Input;
 using AquilaErpWpfApp3.Util;
+//using System.Linq;
 
 namespace AquilaErpWpfApp3.View.M.Dialog
 {
@@ -24,6 +25,8 @@ namespace AquilaErpWpfApp3.View.M.Dialog
     {
         private ManVo orgVo;
         private string _title = "Loss 최적화 수행";
+        private ManVo updateDao;
+
 
         public M66107DetailDialog(ManVo vo)
         {
@@ -33,6 +36,7 @@ namespace AquilaErpWpfApp3.View.M.Dialog
 
             SYSTEM_CODE_VO();
 
+            this.Refresh.Click += new RoutedEventHandler(Refresh_Click);
             this.OKButton.Click += new RoutedEventHandler(OKButton_Click);
             this.CancelButton.Click += new RoutedEventHandler(CancelButton_Click);
 
@@ -40,7 +44,89 @@ namespace AquilaErpWpfApp3.View.M.Dialog
 
         }
 
-        #region Functon (OKButton_Click, CancelButton_Click)
+        #region Functon (getDomain - ConfigView1Dao)
+        private ManVo getDomain()
+        {
+            ManVo vo = new ManVo();
+
+            //vo.CNTR_PSN_NM = getRemoveWhiteSpaces(this.text_CNTR_PSN_NM.Text);
+            vo.CNTR_PSN_NM = (this.text_CNTR_PSN_NM.Text).Trim();
+            if (vo.CNTR_PSN_NM == "") vo.CNTR_PSN_NM = null;
+
+            SystemCodeVo CO_NM = this.combo_CO_NM.SelectedItem as SystemCodeVo;
+            vo.CO_CD = CO_NM.CO_NO;
+            vo.CO_NM = CO_NM.CO_NM;
+
+            vo.OPMZ_NO = orgVo.OPMZ_NO;
+            vo.UPD_USR_ID = SystemProperties.USER;
+            vo.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
+
+            return vo;
+        }
+
+        //public static string getRemoveWhiteSpaces(string str)
+        //{
+        //    return string.Concat(str.Where(c => !Char.IsWhiteSpace(c)));
+        //}
+        #endregion
+
+        #region Functon (ValueCheckd)
+        public Boolean ValueCheckd()
+        {
+            if (string.IsNullOrEmpty(this.combo_CO_NM.Text))
+            {
+                WinUIMessageBox.Show("고객사가 선택되지 않았습니다.", "[유효검사]" + _title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                this.combo_CO_NM.IsTabStop = true;
+                this.combo_CO_NM.Focus();
+                return false;
+            }
+
+            return true;
+        }
+        #endregion
+
+        #region Functon (Refresh_Click, OKButton_Click, CancelButton_Click)
+        private async void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (ValueCheckd())
+                {
+                    if (DXSplashScreen.IsActive == false)
+                    {
+                        DXSplashScreen.Show<ProgressWindow>();
+                    }
+
+                    this.updateDao = getDomain();
+
+                    this.search_title.Text = "[조회 조건]   " +  "거래처 : " + updateDao.CO_NM + "  공사부위 : " + updateDao.CNTR_PSN_NM;
+
+                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66107/dtl/dia", new StringContent(JsonConvert.SerializeObject(this.updateDao), System.Text.Encoding.UTF8, "application/json")))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            this.ViewJOB_ITEMEdit.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+                        }
+                    }
+                }
+
+                if (DXSplashScreen.IsActive == true)
+                {
+                    DXSplashScreen.Close();
+                }
+            }
+            catch (System.Exception eLog)
+            {
+                if (DXSplashScreen.IsActive == true)
+                {
+                    DXSplashScreen.Close();
+                }
+
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+        }
+
         private async void OKButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -141,14 +227,23 @@ namespace AquilaErpWpfApp3.View.M.Dialog
             {
                 if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
 
-                // 메인화면 조회
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66107/dtl/dia", new StringContent(JsonConvert.SerializeObject(new ManVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD, OPMZ_NO = orgVo.OPMZ_NO, UPD_USR_ID = SystemProperties.USER }), System.Text.Encoding.UTF8, "application/json")))
+                // 고객사 조회
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s143", new StringContent(JsonConvert.SerializeObject(new SystemCodeVo() { DELT_FLG = "N", CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                        this.ViewJOB_ITEMEdit.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+                        this.combo_CO_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
                     }
                 }
+
+                //// 메인화면 조회
+                //using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66107/dtl/dia", new StringContent(JsonConvert.SerializeObject(new ManVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD, OPMZ_NO = orgVo.OPMZ_NO, UPD_USR_ID = SystemProperties.USER }), System.Text.Encoding.UTF8, "application/json")))
+                //{
+                //    if (response.IsSuccessStatusCode)
+                //    {
+                //        this.ViewJOB_ITEMEdit.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+                //    }
+                //}
 
                 if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
             }

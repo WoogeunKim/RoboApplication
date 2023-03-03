@@ -5353,5 +5353,10 @@
             get;
             set;
         }
+        public string ITM_BZTP_FLG
+        {
+            get;
+            set;
+        }
     }
 }

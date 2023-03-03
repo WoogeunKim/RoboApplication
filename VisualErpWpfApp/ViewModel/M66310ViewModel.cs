@@ -104,30 +104,37 @@ namespace AquilaErpWpfApp3.ViewModel
             try
             {
                 if (opmgno == null) return;
+                                
+                if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
 
-                ManVo vo = new ManVo() { OPMZ_NO = opmgno };
+                IList<ManVo> MstList = new List<ManVo>();
 
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310", new StringContent(JsonConvert.SerializeObject(vo), System.Text.Encoding.UTF8, "application/json")))
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310", new StringContent(JsonConvert.SerializeObject(new ManVo() { OPMZ_NO = opmgno }), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                        //this.SelectMstList = new List<ManVo>();
-                        this.SelectMstList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
-                        this.SelectedMstItem = null;
+                        MstList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
                     }
                 }
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310/dtl", new StringContent(JsonConvert.SerializeObject(vo), System.Text.Encoding.UTF8, "application/json")))
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310/dtl", new StringContent(JsonConvert.SerializeObject(new ManVo() { OPMZ_NO = opmgno }), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                        //this.SelectMstList = new List<ManVo>();
+                        // DTL 조회하는데 오래걸려서 같이 보이도록 조절하였음.
+                        this.SelectMstList = MstList;
+                        this.SelectedMstItem = null;
+
                         this.SelectDtlList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
                         this.SelectedDtlItem = null;
                     }
                 }
+
+                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
             }
             catch (System.Exception eLog)
             {
+                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+
                 WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }

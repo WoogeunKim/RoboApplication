@@ -66,6 +66,7 @@ namespace AquilaErpWpfApp3.View.M
                             {
                                 masterDomain.ITM_SHP_CD = ItmShpDao.ITM_CD;
                                 masterDomain.ITM_SHP_NM = ItmShpDao.ITM_NM;
+                                masterDomain.ITM_IMG = ItmShpDao.ITM_IMG;
                             }
                         }
                     }

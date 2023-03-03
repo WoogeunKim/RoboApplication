@@ -1032,7 +1032,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 return;
             }
 
-            detailDialog_2 = new P4411Detail_2Dialog(new PurVo() { PUR_ORD_NO = SelectedMstItem.PUR_ORD_NO, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, CRE_USR_ID = SystemProperties.USER_VO.USR_ID, UPD_USR_ID = SystemProperties.USER_VO.USR_ID });
+            detailDialog_2 = new P4411Detail_2Dialog(new PurVo() { PUR_ORD_NO = SelectedMstItem.PUR_ORD_NO, CO_NO = SelectedMstItem.PUR_CO_CD, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, CRE_USR_ID = SystemProperties.USER_VO.USR_ID, UPD_USR_ID = SystemProperties.USER_VO.USR_ID });
             detailDialog_2.Title = "발주 자재 관리 - 기타 발주 등록[" + SelectedMstItem.PUR_ORD_NO + "]";
             detailDialog_2.Owner = Application.Current.MainWindow;
             detailDialog_2.BorderEffect = BorderEffect.Default;

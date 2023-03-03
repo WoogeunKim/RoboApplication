@@ -76,79 +76,79 @@
 
                                 <dxg:GridColumn FieldName="INTO_RAW_KNT" Header="공급수량" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="4">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,##0" MaskUseAsDisplayFormat="True"/>
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,###,##0" MaskUseAsDisplayFormat="True" />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="INTO_RAW_LEN" Header="원자재 길이" Width="140" HorizontalHeaderContentAlignment="Center" VisibleIndex="5">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  MaskType="Numeric" Mask="###,##0" MaskUseAsDisplayFormat="True"/>
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center"  MaskType="Numeric" Mask="###,###,###,###,##0" MaskUseAsDisplayFormat="True" />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N1ST_STEP_VAL" Header="절단1" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="7">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N2ND_STEP_VAL" Header="절단2" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="8">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N3RD_STEP_VAL" Header="절단3" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="9">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N4TH_STEP_VAL" Header="절단4" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="10">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N5TH_STEP_VAL" Header="절단5" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="12">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N6TH_STEP_VAL" Header="절단6" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="13">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N7TH_STEP_VAL" Header="절단7" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="14">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N8TH_STEP_VAL" Header="절단8" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="15">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N9TH_STEP_VAL" Header="절단9" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="16">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N10TH_STEP_VAL" Header="절단10" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="17">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="LSS_LEN" Header="LOSS" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="18">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,###,##0" MaskUseAsDisplayFormat="True" />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
                                 
@@ -209,61 +209,61 @@
 
                                 <dxg:GridColumn FieldName="N1ST_STEP_VAL" Header="절단1" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="7">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N2ND_STEP_VAL" Header="절단2" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="8">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N3RD_STEP_VAL" Header="절단3" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="9">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N4TH_STEP_VAL" Header="절단4" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="10">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N5TH_STEP_VAL" Header="절단5" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="12">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N6TH_STEP_VAL" Header="절단6" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="13">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N7TH_STEP_VAL" Header="절단7" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="14">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N8TH_STEP_VAL" Header="절단8" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="15">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N9TH_STEP_VAL" Header="절단9" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="16">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="N10TH_STEP_VAL" Header="절단10" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="17">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
