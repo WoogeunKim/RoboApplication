@@ -69,12 +69,14 @@ namespace AquilaErpWpfApp3.ViewModel
 
                         if (SelectMstList.Count > 0)
                         {
-                            isM_UPDATE = true;
+                            //isM_UPDATE = true;
 
                             if (string.IsNullOrEmpty(_OPMZ_NO))
                             {
                                 SelectedMstItem = null;
                                 SelectDtlList = null;
+
+                                isM_UPDATE = false;
                             }
                             else
                             {
@@ -116,6 +118,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 //    isM_DELETE = true;
                 //    isM_UPDATE = false;
                 //}
+                isM_UPDATE = true;
 
                 // 해당 최적화 건에 로그상태
                 using (HttpResponseMessage responseLog = await SystemProperties.PROGRAM_HTTP.PostAsync("m66107/mst/log", new StringContent(JsonConvert.SerializeObject(SelectedMstItem), System.Text.Encoding.UTF8, "application/json")))
@@ -245,7 +248,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 bool isDialog = (bool)optiRunDialog.ShowDialog();
                 if (isDialog)
                 {
-                    Refresh();
+                    Refresh(SelectedMstItem.OPMZ_NO);
                 }
             }
             catch (System.Exception eLog)
@@ -284,7 +287,7 @@ namespace AquilaErpWpfApp3.ViewModel
                             WinUIMessageBox.Show("완료 되었습니다", title + "[완료]", MessageBoxButton.OK, MessageBoxImage.Information);
 
 
-                            Refresh();
+                            Refresh(SelectedMstItem.OPMZ_NO);
                         }
                     }
                 }
