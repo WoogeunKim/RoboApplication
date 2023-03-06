@@ -86,6 +86,11 @@
                     <dxr:RibbonPageGroup Caption="바리스트 추출">
                         <dxb:BarButtonItem x:Name="M_Barlist" Content="(Start)" Glyph="{dx:DXImage SvgImages/DiagramIcons/Orientation/re-format.svg}" LargeGlyph="{dx:DXImage SvgImages/DiagramIcons/Orientation/re-format.svg}" Command="{Binding BarListPlayCommand}" IsEnabled="{Binding B_UPDATE}" />
                     </dxr:RibbonPageGroup>
+
+
+                    <dxr:RibbonPageGroup Caption="추출Log 관리">
+                        <dxb:BarButtonItem x:Name="M_reff" Content="조회" KeyGesture="ctrl+F5" Glyph="{dx:DXImage Image=Refresh2_16x16.png}" LargeGlyph="{dx:DXImage Image=Refresh2_32x32.png}" RibbonStyle="SmallWithText" Command="{Binding DtlRefreshCommand}" />
+                    </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
             </dxr:RibbonDefaultPageCategory>
         </dxr:RibbonControl>

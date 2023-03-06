@@ -70,7 +70,7 @@
         <TextBlock x:Name="search_title" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="15" Grid.Column="0" Margin="57,0,0,0"  Grid.ColumnSpan="10" />
 
         <dxg:GridControl x:Name="ViewJOB_ITEMEdit" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,10,0,0" AutoExpandAllGroups="True" SelectionMode="Row" Grid.Row="1" Grid.ColumnSpan="10">
-            <dxg:GridColumn FieldName="isCheckd" Header="" Width="30" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="False" AllowColumnFiltering="True" AllowSorting="False" HeaderTemplate="{StaticResource ReadOnlyHeaderTemplate}" CellStyle="{StaticResource customCellStyle}" VisibleIndex="0" >
+            <dxg:GridColumn FieldName="isCheckd" Header="" Width="30" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="False" AllowColumnFiltering="True" AllowSorting="False" CellStyle="{StaticResource customCellStyle}" VisibleIndex="0" ShowCheckBoxInHeader="True" >
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:CheckEdit x:Name="PART_Editor" HorizontalContentAlignment="Center" Style="{StaticResource checkEditStyle}" Checked="PART_Editor_Checked"   />

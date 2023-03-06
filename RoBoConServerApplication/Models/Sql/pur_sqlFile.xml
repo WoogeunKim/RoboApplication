@@ -443,7 +443,8 @@
 	          			  	   WHERE 1 = 1
 	          					 AND X.CHNL_CD      = #CHNL_CD#
 	          					 AND X.ITM_BZTP_FLG = 'P'
-	          					 AND X.ITM_CD       = T1.N1ST_ITM_GRP_CD
+	          					 AND X.ITM_CD       = T1.N1ST_ITM_GRP_NM
+	          					 <!--AND X.ITM_CD       = T1.N1ST_ITM_GRP_CD-->
 	          					 AND X.CO_ITM_CD    = T1.N2ND_ITM_GRP_CD
 	          					 AND X.CO_NO        = #CO_NO#
 	          			   ) Y

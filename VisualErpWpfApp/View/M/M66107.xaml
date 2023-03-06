@@ -60,6 +60,7 @@
                 <dxb:BarButtonItem x:Name="M_MST2_INSERT" Content="추가" RibbonStyle="Large" Command="{Binding New2ContactCommand}" IsEnabled="{Binding isM_UPDATE}" Glyph="{dxc:DXImage SvgImages/Outlook Inspired/NewOrder.svg}" LargeGlyph="{dxc:DXImage SvgImages/Outlook Inspired/NewOrder.svg}" />
 
                 <dxb:BarButtonItem x:Name="M_OPTI_RUN" Content="Opti Run" RibbonStyle="Large" Command="{Binding OptiRunCommand}" IsEnabled="{Binding isM_UPDATE}" Glyph="{dxc:DXImage SvgImages/Chart/ChartType_RadarArea.svg}" LargeGlyph="{dxc:DXImage SvgImages/Chart/ChartType_RadarArea.svg}" />
+                <dxb:BarButtonItem x:Name="M_OPTI_OK" Content="확정" RibbonStyle="Large" Command="{Binding OptiOkCommand}" IsEnabled="{Binding isM_UPDATE}" LargeGlyph="{dxc:DXImage SvgImages/Snap/FinishMerge.svg}" Glyph="{dxc:DXImage SvgImages/Snap/FinishMerge.svg}" />
             </dxb:BarManager.Items>
 
             <Grid>
@@ -87,13 +88,17 @@
                                 <dxb:BarButtonItemLink BarItemName="M_MST2_INSERT"/>
                             </dxr:RibbonPageGroup>
                             
-                            <dxr:RibbonPageGroup Caption="LOSS 최적회 실행">
+                            <dxr:RibbonPageGroup Caption="LOSS 최적화 실행">
                                 <dxb:BarButtonItemLink BarItemName="M_OPTI_RUN"/>
+                            </dxr:RibbonPageGroup>                            
+                            
+                            <dxr:RibbonPageGroup Caption="최적화 확정">
+                                <dxb:BarButtonItemLink BarItemName="M_OPTI_OK"/>
                             </dxr:RibbonPageGroup>
 
                             <dxr:RibbonPageGroup Caption="출력">
                                 <dxb:BarButtonItemLink BarItemName="M_MST_PRINT"/>
-                            </dxr:RibbonPageGroup>
+                            </dxr:RibbonPageGroup> 
                         </dxr:RibbonPage>
                     </dxr:RibbonDefaultPageCategory>
                 </dxr:RibbonControl>
@@ -231,7 +236,7 @@
                                             </dxg:GridColumn.EditSettings>
                                         </dxg:GridColumn>
 
-                                        <dxg:GridColumn FieldName="SL_CO_CD" Header="GR.NO" Width="70" AllowColumnFiltering="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="True" VisibleIndex="1" >
+                                        <dxg:GridColumn FieldName="SL_CO_CD" Header="GR.NO" Width="60" AllowColumnFiltering="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="True" VisibleIndex="1" >
                                             <dxg:GridColumn.EditSettings>
                                                 <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                             </dxg:GridColumn.EditSettings>
@@ -255,7 +260,7 @@
                                             </dxg:GridColumn.EditSettings>
                                         </dxg:GridColumn>
 
-                                        <dxg:GridColumn FieldName="CNTR_PSN_NM" Header="공사부위" Width="80" AllowColumnFiltering="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="True" VisibleIndex="5">
+                                        <dxg:GridColumn FieldName="CNTR_PSN_NM" Header="공사부위" Width="250" AllowColumnFiltering="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="True" VisibleIndex="5">
                                             <dxg:GridColumn.EditSettings>
                                                 <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                             </dxg:GridColumn.EditSettings>

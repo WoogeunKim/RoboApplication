@@ -102,6 +102,8 @@ namespace AquilaErpWpfApp3.ViewModel
                 //DXSplashScreen.Show<ProgressWindow>();
                 SearchDetail = null;
                 SelectDtlList = null;
+                SelectedMstItem = null;
+
                 using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("p441106/mst", new StringContent(JsonConvert.SerializeObject(new PurVo() { FM_DT = (StartDt).ToString("yyyy-MM-dd"), TO_DT = (EndDt).ToString("yyyy-MM-dd"), AREA_CD = M_SL_AREA_NM.CLSS_CD, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, PUR_ITM_CD = "M" }), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
@@ -132,7 +134,7 @@ namespace AquilaErpWpfApp3.ViewModel
                     else
                     {
 
-                        //isM_UPDATE = false;
+                        isM_UPDATE = false;
                         //isM_UPDATE = true;
                         isM_DELETE = false;
                         //
@@ -274,10 +276,7 @@ namespace AquilaErpWpfApp3.ViewModel
             }
             set
             {
-                if (value != null)
-                {
-                    SetProperty(ref _selectedMstItem, value, () => SelectedMstItem, SelectMstDetail);
-                }
+                SetProperty(ref _selectedMstItem, value, () => SelectedMstItem, SelectMstDetail);
             }
         }
 

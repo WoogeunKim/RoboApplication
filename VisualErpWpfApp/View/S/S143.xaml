@@ -537,12 +537,12 @@
                                 <dxb:BarButtonItemLink BarItemName="M_class"/>
                                 <dxb:BarItemLinkSeparator />
                             </dxr:RibbonPageGroup>
-                            <dxr:RibbonPageGroup Caption="검색 조건">
+                            <!--<dxr:RibbonPageGroup Caption="검색 조건">
                                 <dxb:BarEditItemLink BarItemName="S_barEditItem1" EditWidth="70"/>
                                 <dxb:BarEditItemLink BarItemName="S_barEditItem2" EditWidth="70"/>
                                 <dxb:BarEditItemLink BarItemName="S_barEditItem3" EditWidth="70"/>
                                 <dxb:BarEditItemLink BarItemName="S_barEditItem4" EditWidth="70"/>
-                            </dxr:RibbonPageGroup>
+                            </dxr:RibbonPageGroup>-->
                             <dxr:RibbonPageGroup Caption="FAX">
                                 <dxb:BarButtonItemLink BarItemName="M_fax"/>
                             </dxr:RibbonPageGroup>

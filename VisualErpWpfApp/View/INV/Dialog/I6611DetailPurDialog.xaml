@@ -122,7 +122,7 @@
             <dxg:GridControl.Bands>
                 <dxg:GridControlBand Header="" HorizontalHeaderContentAlignment="Center" >
 
-                    <dxg:GridColumn FieldName="isCheckd" Header="" Width="30" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="False" AllowColumnFiltering="True" AllowSorting="False" HeaderTemplate="{StaticResource ReadOnlyHeaderTemplate}" CellStyle="{StaticResource customCellStyle}" >
+                    <dxg:GridColumn FieldName="isCheckd" Header="" Width="30" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="False" AllowColumnFiltering="True" AllowSorting="False" CellStyle="{StaticResource customCellStyle}" ShowCheckBoxInHeader="True">
                         <dxg:GridColumn.CellTemplate>
                             <DataTemplate>
                                 <dxe:CheckEdit x:Name="PART_Editor" HorizontalContentAlignment="Center" Style="{StaticResource checkEditStyle}" Checked="PART_Editor_Checked"   />
@@ -154,13 +154,13 @@
                         </dxg:GridColumn.EditSettings>
                     </dxg:GridColumn>-->
 
-                    <dxg:GridColumn FieldName="CO_NM" Header="거래처" Width="180" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False" AllowAutoFilter="False" HorizontalHeaderContentAlignment="Center" AllowResizing="True">
+                    <dxg:GridColumn FieldName="CO_NM" Header="거래처" Width="130" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False" AllowAutoFilter="False" HorizontalHeaderContentAlignment="Center" AllowResizing="True">
                         <dxg:GridColumn.EditSettings>
                             <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
                         </dxg:GridColumn.EditSettings>
                     </dxg:GridColumn>
 
-                    <dxg:GridColumn FieldName="ITM_CD" Header="품번" Width="150" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False" AllowAutoFilter="False" HorizontalHeaderContentAlignment="Center" AllowResizing="True" >
+                    <dxg:GridColumn FieldName="ITM_CD" Header="품번" Width="120" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False" AllowAutoFilter="False" HorizontalHeaderContentAlignment="Center" AllowResizing="True" >
                         <dxg:GridColumn.EditSettings>
                             <dxe:TextEditSettings   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                         </dxg:GridColumn.EditSettings>
@@ -172,13 +172,13 @@
                         </dxg:GridColumn.EditSettings>
                     </dxg:GridColumn>-->
 
-                    <dxg:GridColumn FieldName="N1ST_ITM_GRP_NM" Header="강종" Width="100" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False" AllowAutoFilter="False" HorizontalHeaderContentAlignment="Center" AllowResizing="True">
+                    <dxg:GridColumn FieldName="N1ST_ITM_GRP_NM" Header="강종" Width="80" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False" AllowAutoFilter="False" HorizontalHeaderContentAlignment="Center" AllowResizing="True">
                         <dxg:GridColumn.EditSettings>
                             <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                         </dxg:GridColumn.EditSettings>
                     </dxg:GridColumn>
 
-                    <dxg:GridColumn FieldName="ITM_SZ_NM" Header="규격" Width="120" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False" AllowAutoFilter="False" HorizontalHeaderContentAlignment="Center" AllowResizing="True" >
+                    <dxg:GridColumn FieldName="ITM_SZ_NM" Header="규격" Width="100" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False" AllowAutoFilter="False" HorizontalHeaderContentAlignment="Center" AllowResizing="True" >
                         <dxg:GridColumn.EditSettings>
                             <dxe:TextEditSettings   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                         </dxg:GridColumn.EditSettings>
@@ -254,7 +254,7 @@
                         </dxg:GridColumn.EditSettings>
                     </dxg:GridColumn>
 
-                    <dxg:GridColumn FieldName="PUR_RMK" Header="비고*" Width="130" AllowEditing="True" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False" AllowAutoFilter="False" HorizontalHeaderContentAlignment="Center" AllowResizing="True" Validate="GridColumn_Validate" CellStyle="{StaticResource customCellStyle}" >
+                    <dxg:GridColumn FieldName="PUR_RMK" Header="비고*" Width="150" AllowEditing="True" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False" AllowAutoFilter="False" HorizontalHeaderContentAlignment="Center" AllowResizing="True" Validate="GridColumn_Validate" CellStyle="{StaticResource customCellStyle}" >
                         <dxg:GridColumn.EditSettings>
                             <dxe:TextEditSettings   HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
                         </dxg:GridColumn.EditSettings>
@@ -278,7 +278,7 @@
 
 
             <dxg:GridControl.View>
-                <dxg:TableView x:Name="viewJOB_ITEMView" SearchDelay="0" ShowSearchPanelMode="Never"  ShowSearchPanelCloseButton="True" ShowTotalSummary="True"  ShowFixedTotalSummary="True" AutoWidth="False" AllowPerPixelScrolling="True" ShowGroupPanel="False" AllowFilterEditor="True" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Cell" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False"  HiddenEditor="viewPage1EditView_HiddenEditor" SearchString="{Binding ElementName=text_search, Path=Text}" />
+                <dxg:TableView x:Name="viewJOB_ITEMView" SearchDelay="0" ShowSearchPanelMode="Never"  ShowSearchPanelCloseButton="True" ShowTotalSummary="True"  ShowFixedTotalSummary="True" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupPanel="False" AllowFilterEditor="True" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Cell" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False"  HiddenEditor="viewPage1EditView_HiddenEditor" SearchString="{Binding ElementName=text_search, Path=Text}" />
             </dxg:GridControl.View>
             <dxg:GridControl.GroupSummary>
                 <dxg:GridSummaryItem SummaryType="Count" />

@@ -171,7 +171,7 @@
             </dxg:GridControl.View>
 
             <dxg:GridControl.Columns>
-                <dxg:GridColumn FieldName="isCheckd" Header="" Width="10"  AllowAutoFilter="False" AllowColumnFiltering="True" AllowSorting="False"  AllowSearchPanel="False" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" AllowMoving="False" HeaderTemplate="{StaticResource ReadOnlyHeaderTemplate}" VisibleIndex="0" >
+                <dxg:GridColumn FieldName="isCheckd" Header="" Width="10"  AllowAutoFilter="False" AllowColumnFiltering="True" AllowSorting="False"  AllowSearchPanel="False" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" AllowMoving="False" VisibleIndex="0" ShowCheckBoxInHeader="True">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:CheckEdit Name="PART_Editor" HorizontalContentAlignment="Center" Style="{StaticResource checkEditStyle}" />

@@ -2084,6 +2084,12 @@
             set;
         }
 
+        public int? OPMZ_SEQ
+        {
+            get;
+            set;
+        }
+
         public string OPMZ_DT
         {
             get;

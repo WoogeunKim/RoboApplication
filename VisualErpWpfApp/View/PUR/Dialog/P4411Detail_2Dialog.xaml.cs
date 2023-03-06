@@ -117,25 +117,38 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
         {
             try
             {
-                List<PurVo> saveItems = (List<PurVo>)this.ViewGridDtl.ItemsSource;
-                if (saveItems.FindAll(x => x.isCheckd == true).Count > 0)
+
+                List<PurVo> saveItems = (this.ViewGridDtl.ItemsSource as IList<PurVo>).Where(x => x.isCheckd == true).ToList<PurVo>();
+                //List<PurVo> saveItems = (List<PurVo>)this.ViewGridDtl.ItemsSource;
+                if (saveItems.Count <= 0)
                 {
-                    int _Num = 0;
-                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("p4411/dtl/i", new StringContent(JsonConvert.SerializeObject((saveItems.FindAll(x => x.isCheckd == true)).ToArray()), System.Text.Encoding.UTF8, "application/json")))
+                    WinUIMessageBox.Show("데이터가 존재 하지 않습니다.", "[유효검사]" + _title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (ValueCheckd())
+                {
+                    MessageBoxResult result = WinUIMessageBox.Show("정말로 저장 하시겠습니까?", "[저장]" + _title, MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                    if (result == MessageBoxResult.Yes)
                     {
-                        if (response.IsSuccessStatusCode)
+                        int _Num = 0;
+                        using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("p4411/dtl/i", new StringContent(JsonConvert.SerializeObject(saveItems), System.Text.Encoding.UTF8, "application/json")))
                         {
-                            string result = await response.Content.ReadAsStringAsync();
-                            if (int.TryParse(result, out _Num) == false)
+                            if (response.IsSuccessStatusCode)
                             {
-                                //실패
-                                WinUIMessageBox.Show(result, _title, MessageBoxButton.OK, MessageBoxImage.Error);
-                                return;
+                                string resultMsg = await response.Content.ReadAsStringAsync();
+                                if (int.TryParse(resultMsg, out _Num) == false)
+                                {
+                                    //실패
+                                    WinUIMessageBox.Show(resultMsg, _title, MessageBoxButton.OK, MessageBoxImage.Error);
+                                    return;
+                                }
+                                //성공
+                                WinUIMessageBox.Show("완료 되었습니다", this._title, MessageBoxButton.OK, MessageBoxImage.Information);
+                                this.DialogResult = true;
+                                this.Close();
                             }
-                            //성공
-                            WinUIMessageBox.Show("완료 되었습니다", this._title, MessageBoxButton.OK, MessageBoxImage.Information);
-                            this.DialogResult = true;
-                            this.Close();
                         }
                     }
                 }
@@ -146,6 +159,40 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                 return;
             }
         }
+
+
+        public Boolean ValueCheckd()
+        {
+            List<PurVo> saveItems = (this.ViewGridDtl.ItemsSource as IList<PurVo>).Where(x => x.isCheckd == true).ToList<PurVo>();
+
+            foreach(PurVo vo in saveItems)
+            {
+                if (vo.PUR_QTY == null)
+                {
+                    WinUIMessageBox.Show(vo.ITM_CD + " 번들수량을 입력하세요.", "[유효검사]" + _title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+                else if (double.Parse(vo.PUR_QTY.ToString()) <= 0)
+                {
+                    WinUIMessageBox.Show(vo.ITM_CD + " 번들수량을 다시 입력하세요.", "[유효검사]" + _title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+                else if (vo.CO_UT_PRC == null)
+                {
+                    WinUIMessageBox.Show(vo.ITM_CD + " 단가를 입력하세요.", "[유효검사]" + _title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+                else if (double.Parse(vo.CO_UT_PRC.ToString()) <= 0)
+                {
+                    WinUIMessageBox.Show(vo.ITM_CD + " 단가를 다시 입력하세요.", "[유효검사]" + _title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {

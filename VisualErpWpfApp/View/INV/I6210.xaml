@@ -152,7 +152,7 @@
                     </dxb:BarEditItem.EditSettings>
                 </dxb:BarEditItem>
 
-                <dxb:BarEditItem x:Name="M_AREA_NM" Content="사업장 : " EditValue="{Binding M_SL_AREA_NM, Mode=TwoWay}"  IsEnabled="False" >
+                <dxb:BarEditItem x:Name="M_AREA_NM" Content="사업장 : " EditValue="{Binding M_SL_AREA_NM, Mode=TwoWay}"  IsEnabled="True" >
                     <dxb:BarEditItem.EditSettings>
                         <dxg:LookUpEditSettings ItemsSource="{Binding AreaList}" DisplayMember="CLSS_DESC" ImmediatePopup="True" IsPopupAutoWidth="True" AutoPopulateColumns ="False"  IsTextEditable="False" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" >
                             <dxg:LookUpEditSettings.PopupContentTemplate>

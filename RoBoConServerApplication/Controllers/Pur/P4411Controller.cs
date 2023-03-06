@@ -107,11 +107,15 @@ namespace VisualServerApplication.Controllers.Pur
         {
             try
             {
+                Properties.EntityMapper.BeginTransaction();
                 Properties.EntityMapper.Delete("P4411DeleteDtl", vo);
-                return Ok<int>(Properties.EntityMapper.Delete("P4411DeleteMst", vo));
+                Properties.EntityMapper.Delete("P4411DeleteMst", vo);
+                Properties.EntityMapper.CommitTransaction();
+                return Ok<int>(1);
             }
             catch (System.Exception eLog)
             {
+                Properties.EntityMapper.RollBackTransaction();
                 return Ok<string>(eLog.Message);
             }
         }

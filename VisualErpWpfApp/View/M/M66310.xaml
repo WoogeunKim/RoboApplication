@@ -58,7 +58,7 @@
                             <dxg:GridControl.Columns>
                                 <dxg:GridColumn FieldName="RN" Header="순번" Width="70" HorizontalHeaderContentAlignment="Center" VisibleIndex="1">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,##0" MaskUseAsDisplayFormat="True"/>
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
@@ -163,7 +163,7 @@
                         <dxg:GridControl x:Name="ConfigViewPage1Edit_Detail" AutoExpandAllGroups="True" ItemsSource="{Binding Path=SelectDtlList}" SelectedItem="{Binding Path=SelectedDtlItem, Mode=TwoWay}" >
                             <dxg:GridControl.View>
                                 <!--<dxg:TableView x:Name="ViewTableMst" SearchPanelFindMode="Always" ShowSearchPanelMode="Always" ShowCheckBoxSelectorColumn="True" ShowCheckBoxSelectorInGroupRow="True" CheckBoxSelectorColumnWidth="40" SearchDelay="0" EditorButtonShowMode="ShowForFocusedRow"  FontSize="13" ShowFixedTotalSummary="False" ShowTotalSummary="True" ShowSearchPanelCloseButton="True" AutoWidth="False" AllowPerPixelScrolling="True" ShowGroupPanel="True" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" AllowEditing="False" NavigationStyle="Cell" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="True"  IsColumnMenuEnabled="False" ShowGroupFooters="True" AllowCellMerge="False"  ShowHorizontalLines="True" />-->
-                                <dxg:TableView x:Name="configViewPage1EditView_Detail" AllowEditing="False" AllowMoving="True" AllowResizing="False" ShowSearchPanelCloseButton="True" ShowFixedTotalSummary="False"  ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="True" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupedColumns="True" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" ShowGroupFooters="True" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="True" SearchString="{Binding ElementName=M_SEARCH_TEXT , Path=EditValue}" RowMinHeight="35"/>
+                                <dxg:TableView x:Name="configViewPage1EditView_Detail" AllowEditing="False" AllowMoving="True" AllowResizing="False" ShowSearchPanelCloseButton="True" ShowFixedTotalSummary="True"  ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="True" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" ShowGroupFooters="True" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="True" SearchString="{Binding ElementName=M_SEARCH_TEXT , Path=EditValue}" RowMinHeight="35"/>
                             </dxg:GridControl.View>
 
                             <dxg:GridControl.TotalSummary>
@@ -177,19 +177,25 @@
 
                             <dxg:GridControl.Columns>
 
-                                <dxg:GridColumn FieldName="RN" Header="순번" Width="50" HorizontalHeaderContentAlignment="Center" VisibleIndex="1">
+                                <dxg:GridColumn FieldName="GRP_LOT_NO" Header="그룹" Width="50" HorizontalHeaderContentAlignment="Center" GroupIndex="1">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="ITM_STL_CD" Header="강종" Width="70" HorizontalHeaderContentAlignment="Center" VisibleIndex="2" GroupIndex="1">
+                                <dxg:GridColumn FieldName="RN" Header="순번" Width="50" HorizontalHeaderContentAlignment="Center" VisibleIndex="1">
+                                    <dxg:GridColumn.EditSettings>
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,##0" MaskUseAsDisplayFormat="True"/>
+                                    </dxg:GridColumn.EditSettings>
+                                </dxg:GridColumn>
+
+                                <dxg:GridColumn FieldName="ITM_STL_CD" Header="강종" Width="70" HorizontalHeaderContentAlignment="Center" VisibleIndex="2" >
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="ITM_STL_SZ_CD" Header="규격" Width="70" HorizontalHeaderContentAlignment="Center" VisibleIndex="3" GroupIndex="2">
+                                <dxg:GridColumn FieldName="ITM_STL_SZ_CD" Header="규격" Width="70" HorizontalHeaderContentAlignment="Center" VisibleIndex="3" >
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                     </dxg:GridColumn.EditSettings>
@@ -201,7 +207,7 @@
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="INTO_RAW_LEN" Header="원자재 길이" Width="140" HorizontalHeaderContentAlignment="Center" VisibleIndex="5" GroupIndex="3">
+                                <dxg:GridColumn FieldName="INTO_RAW_LEN" Header="원자재 길이" Width="140" HorizontalHeaderContentAlignment="Center" VisibleIndex="5" >
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,###,##0" MaskUseAsDisplayFormat="True" />
                                     </dxg:GridColumn.EditSettings>

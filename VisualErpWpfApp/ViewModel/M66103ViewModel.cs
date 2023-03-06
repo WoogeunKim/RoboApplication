@@ -162,6 +162,7 @@ namespace AquilaErpWpfApp3.ViewModel
             }
         }
 
+        [Command]
         public async void DtlRefresh()
         {
             try

@@ -34,11 +34,14 @@ namespace AquilaErpWpfApp3.ViewModel
             StartDt = System.DateTime.Now;
             EndDt = System.DateTime.Now;
 
-            SYSTEM_CODE_VO();
+            isM_DELETE = false;
+            isM_UPDATE = false;
+
+            Refresh();
         }
 
         [Command]
-        public async void Refresh()
+        public async void Refresh(string _OPMZ_NO = null)
         {
             try
             {
@@ -54,6 +57,8 @@ namespace AquilaErpWpfApp3.ViewModel
                     return;
                 }
 
+                SelectDtlList = null;
+
                 using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("M66107/mst", new StringContent(JsonConvert.SerializeObject(_param), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
@@ -65,6 +70,16 @@ namespace AquilaErpWpfApp3.ViewModel
                         if (SelectMstList.Count > 0)
                         {
                             isM_UPDATE = true;
+
+                            if (string.IsNullOrEmpty(_OPMZ_NO))
+                            {
+                                SelectedMstItem = null;
+                                SelectDtlList = null;
+                            }
+                            else
+                            {
+                                SelectedMstItem = SelectMstList.Where(x => x.OPMZ_NO.Equals(_OPMZ_NO)).LastOrDefault<ManVo>();
+                            }
                         }
                         else
                         {
@@ -89,6 +104,18 @@ namespace AquilaErpWpfApp3.ViewModel
             {
                 if (SelectedMstItem == null) return;
                 if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
+
+                // 완료된 건은 수정,자재추가, 최적화 불가능함. 
+                //if (SelectedMstItem.CLZ_FLG.Equals("N"))
+                //{
+                //    isM_DELETE = false;
+                //    isM_UPDATE = true;
+                //}
+                //else
+                //{
+                //    isM_DELETE = true;
+                //    isM_UPDATE = false;
+                //}
 
                 // 해당 최적화 건에 로그상태
                 using (HttpResponseMessage responseLog = await SystemProperties.PROGRAM_HTTP.PostAsync("m66107/mst/log", new StringContent(JsonConvert.SerializeObject(SelectedMstItem), System.Text.Encoding.UTF8, "application/json")))
@@ -133,7 +160,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 bool isDialog = (bool)masterDialog.ShowDialog();
                 if (isDialog)
                 {
-                    Refresh();
+                    Refresh(masterDialog.OPMZ_NO);
                 }
             }
             catch (System.Exception eLog)
@@ -160,7 +187,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 bool isDialog = (bool)masterDialog.ShowDialog();
                 if (isDialog)
                 {
-                    Refresh();
+                    Refresh(SelectedMstItem.OPMZ_NO);
                 }
             }
             catch (System.Exception eLog)
@@ -187,7 +214,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 bool isDialog = (bool)detailDialog.ShowDialog();
                 if (isDialog)
                 {
-                    Refresh();
+                    Refresh(SelectedMstItem.OPMZ_NO);
                 }
             }
             catch (System.Exception eLog)
@@ -228,9 +255,46 @@ namespace AquilaErpWpfApp3.ViewModel
             }
         }
 
-        public async void SYSTEM_CODE_VO()
+
+        [Command]
+        public async void OptiOk()
         {
-            Refresh();
+            try
+            {
+                if (SelectedMstItem == null) return;
+
+                MessageBoxResult isResult = WinUIMessageBox.Show("[ Opti.NO: " + SelectedMstItem.OPMZ_NO + " ] 를 확정하겠습니까? ", title + "[완료]", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (isResult == MessageBoxResult.Yes)
+                {
+                    int _Num = 0;
+
+                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66107/mst/u", new StringContent(JsonConvert.SerializeObject(new ManVo() { OPMZ_NO = SelectedMstItem.OPMZ_NO, CLZ_FLG = "Y", UPD_USR_ID = SystemProperties.USER }), System.Text.Encoding.UTF8, "application/json")))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string result = await response.Content.ReadAsStringAsync();
+                            if (int.TryParse(result, out _Num) == false)
+                            {
+                                //실패
+                                WinUIMessageBox.Show(result, title + "[완료]", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+
+                            //성공
+                            WinUIMessageBox.Show("완료 되었습니다", title + "[완료]", MessageBoxButton.OK, MessageBoxImage.Information);
+
+
+                            Refresh();
+                        }
+                    }
+                }
+
+            }
+            catch (System.Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
         }
 
 
@@ -305,6 +369,12 @@ namespace AquilaErpWpfApp3.ViewModel
             set { SetProperty(ref _isM_UPDATE, value, () => isM_UPDATE);}
         }
 
+        bool _isM_DELETE;
+        public bool isM_DELETE
+        {
+            get { return _isM_DELETE; }
+            set { SetProperty(ref _isM_DELETE, value, () => isM_DELETE); }
+        }
     }
     
 }

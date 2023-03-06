@@ -981,7 +981,10 @@
        FROM TB_CD_CO T1
       WHERE 1 = 1
         AND T1.CHNL_CD = #CHNL_CD#
-		AND T1.DELT_FLG = 'N'
+      <isNotNull property="DELT_FLG">
+        AND T1.DELT_FLG = #DELT_FLG#
+      </isNotNull>
+		<!--AND T1.DELT_FLG = 'N'-->
       <isNotNull property="SEEK">
         AND (T1.CO_NO IN (
             SELECT CO_NO

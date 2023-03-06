@@ -74,6 +74,7 @@ namespace AquilaErpWpfApp3.View.M.Dialog
                 Dao = orgDao;
 
                 Dao.OPMZ_NO = isEdit == true ? orgDao.OPMZ_NO : text_OPMZ_NO.Text;
+                this.OPMZ_NO = Dao.OPMZ_NO;
 
                 Dao.OPMZ_RMK = orgDao.OPMZ_RMK;
 
