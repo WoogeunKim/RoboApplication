@@ -1172,6 +1172,31 @@
             주문별 생산공장/GR확정 - GR번호 확정
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S22223Controller.GetDlgSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            납품확인서 Dialog - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S22223Controller.GetDlgInsert(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            납품확인서 Dialog - 추가
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S22223Controller.GetDlgUpdate(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            납품확인서 Dialog - 수정
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S22223Controller.GetRpt1Select(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            납품확인서 Report1 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S22223Controller.GetRpt2Select(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            납품리스트 Report2 - 조회
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Sale.S2215Controller.GetMstSelect(ModelsLibrary.Sale.SaleVo)">
             <summary>
             수주현황 MST - 조회

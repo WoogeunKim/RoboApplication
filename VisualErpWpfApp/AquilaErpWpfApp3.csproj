@@ -1204,6 +1204,9 @@
     <Compile Include="View\SAL\Dialog\S2219MasterDialog.xaml.cs">
       <DependentUpon>S2219MasterDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SAL\Dialog\S22223GrDialog.xaml.cs">
+      <DependentUpon>S22223GrDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SAL\Dialog\S22226ExcelOutputDialog.xaml.cs">
       <DependentUpon>S22226ExcelOutputDialog.xaml</DependentUpon>
     </Compile>
@@ -1284,6 +1287,18 @@
     </Compile>
     <Compile Include="View\SAL\Report\S2219MstReport.designer.cs">
       <DependentUpon>S2219MstReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Report\S22223Report1.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\SAL\Report\S22223Report1.designer.cs">
+      <DependentUpon>S22223Report1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\SAL\Report\S22223Report2.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\SAL\Report\S22223Report2.designer.cs">
+      <DependentUpon>S22223Report2.cs</DependentUpon>
     </Compile>
     <Compile Include="View\SAL\S221111.xaml.cs">
       <DependentUpon>S221111.xaml</DependentUpon>
@@ -2682,6 +2697,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\SAL\Dialog\S22223GrDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\SAL\Dialog\S22226ExcelOutputDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -3396,6 +3415,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\SAL\Report\S2219MstReport.resx">
       <DependentUpon>S2219MstReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\SAL\Report\S22223Report1.resx">
+      <DependentUpon>S22223Report1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\SAL\Report\S22223Report2.resx">
+      <DependentUpon>S22223Report2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\TEC\Report\T8812BarCodeReport.resx">
       <DependentUpon>T8812BarCodeReport.cs</DependentUpon>
