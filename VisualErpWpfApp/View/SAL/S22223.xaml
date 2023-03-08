@@ -15,7 +15,7 @@
     <UserControl.Resources>
         <dx:ImageDataConverter x:Key="ImageDataConverter" />
 
-       <!--<Style x:Key="customCellStyle" TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}" >
+        <!--<Style x:Key="customCellStyle" TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}" >
             <Setter Property="Background" Value="#fffacd" />
             <Style.Triggers>
                 <Trigger Property="SelectionState" Value="Focused">
@@ -107,7 +107,7 @@
 
                 <dxb:BarEditItem x:Name="M_SL_CO_CD" Content="판매처 : "  EditValue="{Binding M_SL_CO_NM, Mode=TwoWay}" >
                     <dxb:BarEditItem.EditSettings>
-                        <dxg:LookUpEditSettings ItemsSource="{Binding CoNmList}"  DisplayMember="CO_NM" ValueMember="CO_NM" ImmediatePopup="True" AutoPopulateColumns ="False"  IsTextEditable="False" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsPopupAutoWidth="True" PopupHeight="400" PopupWidth="670" >
+                        <dxg:LookUpEditSettings ItemsSource="{Binding CoNmList}"  DisplayMember="CO_NM" ValueMember="CO_NM" ImmediatePopup="True" AutoPopulateColumns ="False"  IsTextEditable="False" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsPopupAutoWidth="True" PopupHeight="240" PopupWidth="370" >
                             <dxg:LookUpEditSettings.PopupContentTemplate>
                                 <ControlTemplate>
                                     <dxg:GridControl Name="PART_GridControl" >
@@ -119,18 +119,6 @@
                                             </dxg:GridColumn>
 
                                             <dxg:GridColumn FieldName="CO_NM" Header="설명" Width="30" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="2">
-                                                <dxg:GridColumn.EditSettings>
-                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
-                                                </dxg:GridColumn.EditSettings>
-                                            </dxg:GridColumn>
-
-                                            <dxg:GridColumn FieldName="CO_RGST_NO" Header="사업자 등록 번호" Width="30" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="2">
-                                                <dxg:GridColumn.EditSettings>
-                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
-                                                </dxg:GridColumn.EditSettings>
-                                            </dxg:GridColumn>
-
-                                            <dxg:GridColumn FieldName="PRSD_NM" Header="" Width="30" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="2">
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
                                                 </dxg:GridColumn.EditSettings>
@@ -191,7 +179,7 @@
                     </dxb:BarEditItem.EditTemplate>
                 </dxb:BarEditItem>
 
-                
+
                 <dxb:BarEditItem x:Name="M_BLANK" Content=""  />
 
                 <dxb:BarEditItem x:Name="M_IN_REQ_DT" Content="확정납품요청일 : " EditValue="{Binding InReqDt}" IsEnabled="{Binding isD_DELETE}">
@@ -210,8 +198,10 @@
                 <dxb:BarButtonItem x:Name="M_MST_REFRESH" Content="조회" KeyGesture="F5" RibbonStyle="Large" Command="{Binding RefreshCommand}" Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_Refresh.svg}" LargeGlyph="{dx:DXImage SvgImages/Icon Builder/Actions_Refresh.svg}" />
 
                 <dxb:BarButtonItem x:Name="M_DTL_APPLY" Content="GR번호 부여" KeyGesture="Ctrl+F5" RibbonStyle="Large" Command="{Binding ApplyCommand}" IsEnabled="{Binding isD_DELETE}" Glyph="{dx:DXImage SvgImages/RichEdit/DifferentFirstPage.svg}" LargeGlyph="{dx:DXImage SvgImages/RichEdit/DifferentFirstPage.svg}" />
-               
+
                 <dxb:BarButtonItem x:Name="M_DTL_EDIT" Content="GR번호 확정" KeyGesture="Ctrl+F6" RibbonStyle="Large" Command="{Binding DtlGRCommand}" IsEnabled="{Binding isD_UPDATE}" Glyph="{dx:DXImage SvgImages/RichEdit/DifferentOddEvenPages.svg}" LargeGlyph="{dx:DXImage SvgImages/XAF/Action_Grant_Set.svg}" />
+                
+                <dxb:BarButtonItem x:Name="M_DTL_RPT" Content="출력" KeyGesture="Ctrl+F8" RibbonStyle="Large" Command="{Binding DtlRptCommand}" IsEnabled="{Binding isD_UPDATE}" Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_Print.svg}" LargeGlyph="{dx:DXImage SvgImages/Icon Builder/Actions_Print.svg}" />
 
                 <!--<dxb:BarButtonItem x:Name="M_MST_INSERT" Content="추가" KeyGesture="F6" Glyph="{dx:DXImage Image=AddItem_16x16.png}" LargeGlyph="{dx:DXImage Image=AddItem_32x32.png}" RibbonStyle="Large" Command="{Binding NewContactCommand}" IsEnabled="True" />
                 <dxb:BarButtonItem x:Name="M_MST_UPDATE" Content="수정" KeyGesture="F7" Glyph="{dx:DXImage Image=Edit_16x16.png}" LargeGlyph="{dx:DXImage Image=Edit_32x32.png}" RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" Command="{Binding EditContactCommand}" />
@@ -222,7 +212,7 @@
 
                 <dxb:BarButtonItem x:Name="M_MST_REPORT" Content="반품 전표 출력" KeyGesture="F9" Glyph="{dx:DXImage Image=Report_16x16.png}" LargeGlyph="{dx:DXImage Image=Report_32x32.png}" RibbonStyle="Large" IsEnabled="{Binding isD_DELETE}" Command="{Binding ReportContactCommand}" />-->
                 <!--<dxb:BarButtonItem x:Name="M_MST_REPORT_1" Content="거래 명세서 출력" KeyGesture="F9" Glyph="{dx:DXImage Image=Report_16x16.png}" LargeGlyph="{dx:DXImage Image=Report_32x32.png}" RibbonStyle="Large" IsEnabled="{Binding isD_DELETE}" Command="{Binding Report_1DialogCommand}" />-->
-                
+
                 <!--<dxb:BarButtonItem x:Name="M_DTL_DELETE" Content="삭제" KeyGesture="Ctrl+F8" Glyph="{dx:DXImage Image=Delete_16x16.png}" LargeGlyph="{dx:DXImage Image=Delete_32x32.png}" RibbonStyle="SmallWithText" IsEnabled="{Binding isD_DELETE}" Command="{Binding DelDtlDialogCommand}" />-->
                 <!--<dxb:BarButtonItem x:Name="M_MST_REPORT_1" Content="패킹 리스트" KeyGesture="F9" Glyph="{dx:DXImage Image=Report_16x16.png}" LargeGlyph="{dx:DXImage Image=Report_32x32.png}" RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" Command="{Binding Report1DtlDialogCommand}" />
                 <dxb:BarButtonItem x:Name="M_MST_REPORT_2" Content="인수증" KeyGesture="F9" Glyph="{dx:DXImage Image=Report_16x16.png}" LargeGlyph="{dx:DXImage Image=Report_32x32.png}" RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" Command="{Binding Report2DtlDialogCommand}" />
@@ -249,17 +239,22 @@
                                 <dxb:BarButtonItemLink BarItemName="M_MST_REFRESH"/>
 
                                 <!--<dxb:BarEditItemLink BarItemName="M_SL_RLSE_FM_DT" EditWidth="120" EditHeight="28" />-->
-                            
+
                                 <!--<dxb:BarEditItemLink BarItemName="M_SL_AREA_NM" EditWidth="120" EditHeight="25" />-->
                             </dxr:RibbonPageGroup>
-                            
+
 
 
                             <dxr:RibbonPageGroup Caption="GR번호 관리">
                                 <dxb:BarButtonItemLink BarItemName="M_DTL_APPLY"/>
                                 <dxb:BarButtonItemLink BarItemName="M_DTL_EDIT"/>
                             </dxr:RibbonPageGroup>
-                            
+
+
+                            <dxr:RibbonPageGroup Caption="철근납품확인서 관리">
+                                <dxb:BarButtonItemLink BarItemName="M_DTL_RPT"/>
+                            </dxr:RibbonPageGroup>
+
                         </dxr:RibbonPage>
                     </dxr:RibbonDefaultPageCategory>
                 </dxr:RibbonControl>
@@ -285,7 +280,7 @@
 
                                 <Grid Grid.Row="1">
                                     <Grid.RowDefinitions>
-                                     
+
                                     </Grid.RowDefinitions>
                                     <dxd:DockLayoutManager x:Name="CodeManager" Grid.Row="1" FloatingMode="Desktop">
                                         <dxd:LayoutGroup  Orientation="Vertical" ItemHeight="*" >
@@ -298,7 +293,7 @@
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    
+
                                                     <dxg:GridControl x:Name="ViewGridMst" AutoExpandAllGroups="True" ItemsSource="{Binding Path=SelectMstList}" SelectedItem="{Binding Path=SelectedMstItem, Mode=TwoWay}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="1" SelectionMode="Row">
                                                         <dxg:GridControl.InputBindings>
                                                             <MouseBinding Gesture="LeftClick" Command="{Binding SelectDetailCheckdCommand}" />
@@ -312,7 +307,7 @@
                                                                     <dxg:FormatCondition FieldName="GBN" Expression="[isCheckd] = 'True'" PredefinedFormatName="BoldText"/>
                                                                     <dxg:FormatCondition FieldName="CNTR_NM" Expression="[isCheckd] = 'True'" PredefinedFormatName="BoldText"/>
                                                                     <dxg:FormatCondition FieldName="CNTR_PSN_NM" Expression="[isCheckd] = 'True'" PredefinedFormatName="BoldText"/>
-                                                                    
+
                                                                     <dxg:FormatCondition Expression="[isCheckd] = 'True'" PredefinedFormatName="YellowFillWithDarkYellowText"/>
 
                                                                 </dxg:TableView.FormatConditions>
@@ -417,7 +412,7 @@
                                                             </StackPanel>
                                                         </dx:SimpleButton>
                                                     </StackPanel>-->
-                                                    
+
                                                 </Grid>
                                             </dxd:LayoutPanel>
 
@@ -512,16 +507,18 @@
                                                                     </dxg:GridColumn.EditSettings>
                                                                 </dxg:GridColumn>
 
-                                                          
+
                                                             </dxg:GridControl.Columns>
 
                                                             <!--<dxb:BarManager.DXContextMenu>
                                                                 <dxb:PopupMenu>
                                                                     <dxb:BarButtonItemLink BarItemName="M_DTL_REFRESH"/>
-                                                                    --><!--<dxb:BarItemLinkSeparator/>
+                                                                    -->
+                                                            <!--<dxb:BarItemLinkSeparator/>
                                                                     <dxb:BarButtonItemLink BarItemName="M_DTL_INSERT"/>
                                                                     <dxb:BarItemLinkSeparator/>
-                                                                    <dxb:BarButtonItemLink BarItemName="M_DTL_UPDATE"/>--><!--
+                                                                    <dxb:BarButtonItemLink BarItemName="M_DTL_UPDATE"/>-->
+                                                            <!--
                                                                 </dxb:PopupMenu>
                                                             </dxb:BarManager.DXContextMenu>-->
 

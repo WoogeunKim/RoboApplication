@@ -5358,5 +5358,182 @@
             get;
             set;
         }
+
+
+
+
+
+        public string GR_NO
+        {
+            get;
+            set;
+        }
+        public string GR_CNTR_NM
+        {
+            get;
+            set;
+        }
+        public string GR_CNTR_ROUT_NM
+        {
+            get;
+            set;
+        }
+        public string GR_RLSE_KNT_NM
+        {
+            get;
+            set;
+        }
+        public string GR_SND_DT
+        {
+            get;
+            set;
+        }
+        public string GR_ARR_DT
+        {
+            get;
+            set;
+        }
+        public string GR_INV_NO
+        {
+            get;
+            set;
+        }
+        public string GR_CAR_NO
+        {
+            get;
+            set;
+        }
+        public int? INCR_RT
+        {
+            get;
+            set;
+        }
+        public object GR_WGT
+        {
+            get;
+            set;
+        }
+        public string ARR_USR_NM
+        {
+            get;
+            set;
+        }
+        public string ARR_ADDR
+        {
+            get;
+            set;
+        }
+        public string CAR_DRV_USR_NM
+        {
+            get;
+            set;
+        }
+        public string N1ST_TEL_NO
+        {
+            get;
+            set;
+        }
+        public string N2ND_TEL_NO
+        {
+            get;
+            set;
+        }
+        public object LOSS_ITM_WGT
+        {
+            get;
+            set;
+        }
+        public int? A_LEN
+        {
+            get;
+            set;
+        }
+
+        public int? A_VAL
+        {
+            get;
+            set;
+        }
+        public int? B_LEN
+        {
+            get;
+            set;
+        }
+        public int? B_VAL
+        {
+            get;
+            set;
+        }
+        public int? C_LEN
+        {
+            get;
+            set;
+        }
+        public int? C_VAL
+        {
+            get;
+            set;
+        }
+        public int? D_LEN
+        {
+            get;
+            set;
+        }
+        public int? D_VAL
+        {
+            get;
+            set;
+        }
+        public int? E_LEN
+        {
+            get;
+            set;
+        }
+        public int? E_VAL
+        {
+            get;
+            set;
+        }
+        public int? F_LEN
+        {
+            get;
+            set;
+        }
+        public int? F_VAL
+        {
+            get;
+            set;
+        }
+        public string VIS_FLG
+        {
+            get;
+            set;
+        }
+        public int? CUST_PUR_SEQ
+        {
+            get;
+            set;
+        }
+        public string CUST_PUR_NO
+        {
+            get;
+            set;
+        }
+        public byte[] ITM_IMG
+        {
+            get;
+            set;
+        }
+        public string ITM_SHP_NM
+        {
+            get;
+            set;
+        }
+        public string RLSE_NO
+        {
+            get;
+            set;
+        }
+
     }
 }

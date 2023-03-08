@@ -6409,9 +6409,9 @@
     <update id="S22223UpdateRlseCmdNo" parameterClass="ModelsLibrary.Sale.SaleVo">
       UPDATE TB_SYS_NO_FMT
       SET LST_FMT_NO = #LST_FMT_NO#
-      WHERE TBL_ID     = #TBL_ID#
-      AND AREA_CD   = #AREA_CD#
-      AND CHNL_CD   = #CHNL_CD#
+      WHERE TBL_ID   = #TBL_ID#
+      AND AREA_CD    = #AREA_CD#
+      AND CHNL_CD    = #CHNL_CD#
     </update>
 
 
@@ -7149,6 +7149,264 @@
                                 AND CO_TP_CD = CASE WHEN #GBN# = 'S' THEN 'AR' ELSE 'AP' END 
                              )
      </select>
+
+	  
+	  
+	  
+	  
+	 <select id="S22223GrDlgSelect" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+       SELECT 
+           GR_NO
+         , GR_CNTR_NM
+         , GR_CNTR_ROUT_NM
+         , GR_RLSE_KNT_NM
+         , CONVERT(VARCHAR(10), GR_SND_DT, 23) AS GR_SND_DT
+         , CONVERT(VARCHAR(10), GR_ARR_DT, 23) AS GR_ARR_DT
+         , GR_INV_NO
+         , GR_CAR_NO
+         , GR_WGT
+         , ARR_USR_NM
+         , ARR_ADDR
+         , CAR_DRV_USR_NM
+         , N1ST_TEL_NO
+         , N2ND_TEL_NO
+         , INCR_RT
+      FROM TB_SL_RLSE_GR_INFO
+     WHERE 1 = 1 
+       AND GR_NO = #RLSE_CMD_NO# 
+     </select>
+	  
+	 <insert id="S22223GrDlgInsert" parameterClass="ModelsLibrary.Sale.SaleVo" >
+		INSERT INTO TB_SL_RLSE_GR_INFO
+        ( 
+             GR_NO
+           , GR_CNTR_NM
+           , GR_CNTR_ROUT_NM
+           , GR_RLSE_KNT_NM
+           , GR_SND_DT
+           , GR_ARR_DT
+           , GR_INV_NO
+           , GR_CAR_NO
+           , INCR_RT
+           , GR_WGT
+           , ARR_USR_NM            
+           , ARR_ADDR              
+           , CAR_DRV_USR_NM     
+           , N1ST_TEL_NO           
+           , N2ND_TEL_NO            
+           , CRE_USR_ID
+           , CRE_DT
+           , UPD_USR_ID
+           , UPD_DT
+        )
+        VALUES 
+        (
+  	         #GR_NO#
+           , #GR_CNTR_NM#
+           , #GR_CNTR_ROUT_NM#
+           , #GR_RLSE_KNT_NM#
+           , #GR_SND_DT#
+           , #GR_ARR_DT#
+           , #GR_INV_NO#
+           , #GR_CAR_NO#
+           , #INCR_RT# 
+           , #GR_WGT#
+           , #ARR_USR_NM#            
+           , #ARR_ADDR#              
+           , #CAR_DRV_USR_NM#     
+           , #N1ST_TEL_NO#           
+           , #N2ND_TEL_NO#            
+           , #CRE_USR_ID#
+           , GETDATE()
+           , #UPD_USR_ID#
+           , GETDATE()
+        ) 
+     </insert>
+	  
+	 <update id="S22223GrDlgUpdate" parameterClass="ModelsLibrary.Sale.SaleVo" >
+	    UPDATE TB_SL_RLSE_GR_INFO
+           SET UPD_USR_ID      = #UPD_USR_ID#
+             , UPD_DT          = GETDATE()
+             , GR_CNTR_NM      = #GR_CNTR_NM#
+             , GR_CNTR_ROUT_NM = #GR_CNTR_ROUT_NM#
+             , GR_RLSE_KNT_NM  = #GR_RLSE_KNT_NM#
+             , GR_SND_DT       = #GR_SND_DT#
+             , GR_ARR_DT       = #GR_ARR_DT#
+             , GR_INV_NO       = #GR_INV_NO#
+             , GR_CAR_NO       = #GR_CAR_NO#
+             , INCR_RT         = #INCR_RT#
+             , GR_WGT          = #GR_WGT#
+             , ARR_USR_NM      = #ARR_USR_NM#      
+             , ARR_ADDR        = #ARR_ADDR#
+             , CAR_DRV_USR_NM  = #CAR_DRV_USR_NM#
+             , N1ST_TEL_NO     = #N1ST_TEL_NO#
+             , N2ND_TEL_NO     = #N2ND_TEL_NO# 
+         WHERE 1 = 1 
+           AND GR_NO = #GR_NO# 
+     </update>
+	  
+	 <select id="S22223GrRpt1Select" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+	    SELECT T1.ITM_STL_SZ_CD
+             , T1.ITM_WGT
+             , ISNULL(T2.INCR_RT, 0) AS INCR_RT
+             , ISNULL(ROUND(T1.ITM_WGT + (T1.ITM_WGT * ( T2.INCR_RT / 100 )), 3), 0)   AS LOSS_ITM_WGT
+             , T2.GR_CNTR_NM
+             , T2.GR_CNTR_ROUT_NM
+             , T2.GR_RLSE_KNT_NM
+             , CONVERT(VARCHAR(10), T2.GR_SND_DT, 23) AS GR_SND_DT
+             , CONVERT(VARCHAR(10), T2.GR_ARR_DT, 23) AS GR_ARR_DT
+             , T2.GR_INV_NO
+             , T2.GR_CAR_NO
+             , T2.ARR_USR_NM
+             , T2.ARR_ADDR
+             , T2.CAR_DRV_USR_NM
+             , T2.N1ST_TEL_NO
+             , T2.N2ND_TEL_NO
+          FROM (
+                SELECT T2.ITM_STL_SZ_CD
+                     , ROUND(SUM(T2.SL_ITM_WGT) / 1000, 3)  AS ITM_WGT    
+                  FROM TB_SL_RLSE       T1
+                     , TB_SL_RLSE_DTL   T2
+                     OUTER APPLY (
+                        SELECT X.A_LEN, X.B_LEN, X.C_LEN, X.D_LEN, X.E_LEN, X.F_LEN, X.A_VAL, X.B_VAL, X.C_VAL, X.D_VAL, X.E_VAL, X.F_VAL 
+                          FROM TB_MES_PROD_DESC  X
+                         WHERE 1 = 1
+                           AND X.SL_RLSE_NO   = T2.SL_RLSE_NO
+                           AND X.SL_RLSE_SEQ  = T2.SL_RLSE_SEQ
+                     ) T4
+                     OUTER APPLY (
+                      SELECT X.ITM_NM   AS ITM_SHP_NM
+                           , X.ITM_CD AS SHP_CD
+                           , Z.ITM_IMG  
+                        FROM TB_CD_ITM  X
+                          OUTER APPLY ( 
+                             SELECT Z.IMG  AS ITM_IMG 
+                               FROM TB_CD_ITM_IMG Z
+                              WHERE 1 = 1
+                                AND X.CHNL_CD = Z.CHNL_CD
+                                AND X.ITM_CD  = Z.ITM_CD
+                          ) Z 
+                       WHERE 1 = 1
+                         AND X.CHNL_CD           = #CHNL_CD#
+                         AND X.ITM_GRP_CLSS_CD   = 'P'  
+                         AND X.DELT_FLG          = 'N'   
+                         AND X.ITM_CD            = T2.ITM_SHP_CD
+                       ) T3
+                WHERE 1 = 1
+                  AND T1.CHNL_CD     = T2.CHNL_CD
+                  AND T1.CHNL_CD     = #CHNL_CD#
+                  AND T1.SL_RLSE_NO  = T2.SL_RLSE_NO
+                  AND T2.RLSE_CMD_NO = #RLSE_CMD_NO#
+                GROUP BY T2.ITM_STL_SZ_CD    
+            ) T1 
+          OUTER APPLY (
+              SELECT  X.GR_NO
+                    , X.INCR_RT
+                    , X.GR_CNTR_NM
+                    , X.GR_CNTR_ROUT_NM
+                    , X.GR_RLSE_KNT_NM
+                    , X.GR_SND_DT
+                    , X.GR_ARR_DT
+                    , X.GR_INV_NO
+                    , X.GR_CAR_NO
+                    , X.ARR_USR_NM
+                    , X.ARR_ADDR
+                    , X.CAR_DRV_USR_NM
+                    , X.N1ST_TEL_NO
+                    , X.N2ND_TEL_NO
+                FROM TB_SL_RLSE_GR_INFO X
+               WHERE 1 = 1  
+                 AND X.GR_NO = #RLSE_CMD_NO#
+          ) T2     
+     </select>
+
+	  <select id="S22223GrRpt2Select" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+		   SELECT CONVERT(VARCHAR(10), T1.SL_RLSE_DT, 23) AS SL_RLSE_DT
+                , T1.SL_CO_CD
+                , T2.SL_RLSE_NO
+                , dbo.F_RPAD(CAST(T2.SL_RLSE_SEQ AS VARCHAR), 3, '0') AS RLSE_NO 
+                , T2.SL_ITM_CD
+                , T2.SL_ITM_QTY
+                , T2.SL_ITM_WGT
+                , T2.ITM_SHP_CD
+                , T2.ITM_STL_CD 
+                , T3.ITM_SHP_NM
+                , T3.ITM_IMG 
+                , T2.ITM_STL_SZ_CD
+                , T2.ITM_STL_LENG 
+                , T2.ITM_STL_PRD_DESC
+                , T2.CUST_PUR_NO
+                , T2.CUST_PUR_SEQ
+                , T2.CNTR_NM
+                , T2.CNTR_PSN_NM 
+                , CONVERT(VARCHAR(10), T2.IN_REQ_DT, 23) AS IN_REQ_DT
+                , T2.CNTR_DE_NM
+                , T2.CHNL_CD   
+                , CASE WHEN T3.SHP_CD IS NULL THEN 'Y' ELSE 'N' END AS VIS_FLG
+                , T4.A_LEN
+                , T4.A_VAL 
+                , T4.B_LEN
+                , T4.B_VAL
+                , T4.C_LEN
+                , T4.C_VAL
+                , T4.D_LEN
+                , T4.D_VAL
+                , T4.E_LEN
+                , T4.E_VAL
+                , T4.F_LEN
+                , T4.F_VAL     
+                , T5.GR_NO    
+                , T5.GR_CNTR_NM      
+                , T5.GR_CNTR_ROUT_NM 
+                , CONVERT(VARCHAR(10), T5.GR_SND_DT, 23) AS GR_SND_DT
+                , CONVERT(VARCHAR(10), T5.GR_ARR_DT, 23) AS GR_ARR_DT
+                , T5.GR_INV_NO 
+                , T5.GR_CAR_NO
+                , T5.GR_WGT  
+            FROM TB_SL_RLSE       T1
+                , TB_SL_RLSE_DTL   T2
+                OUTER APPLY (
+                SELECT X.A_LEN, X.B_LEN, X.C_LEN, X.D_LEN, X.E_LEN, X.F_LEN, X.A_VAL, X.B_VAL, X.C_VAL, X.D_VAL, X.E_VAL, X.F_VAL 
+                    FROM TB_MES_PROD_DESC  X
+                    WHERE 1 = 1
+                    AND X.SL_RLSE_NO   = T2.SL_RLSE_NO
+                    AND X.SL_RLSE_SEQ  = T2.SL_RLSE_SEQ
+                ) T4
+                OUTER APPLY (
+                SELECT X.ITM_NM   AS ITM_SHP_NM
+                    , X.ITM_CD AS SHP_CD
+                    , Z.ITM_IMG  
+                FROM TB_CD_ITM  X
+                    OUTER APPLY ( 
+                        SELECT Z.IMG  AS ITM_IMG 
+                        FROM TB_CD_ITM_IMG Z
+                        WHERE 1 = 1
+                        AND X.CHNL_CD = Z.CHNL_CD
+                        AND X.ITM_CD  = Z.ITM_CD
+                    ) Z 
+                WHERE 1 = 1
+                    AND X.CHNL_CD           = #CHNL_CD#
+                    AND X.ITM_GRP_CLSS_CD   = 'P'  
+                    AND X.DELT_FLG          = 'N'   
+                    AND X.ITM_CD            = T2.ITM_SHP_CD
+                ) T3
+                OUTER APPLY (
+                    SELECT  X.GR_NO
+                        , X.INCR_RT
+                        , X.GR_CNTR_NM, X.GR_CNTR_ROUT_NM, X.GR_RLSE_KNT_NM
+                        , X.GR_SND_DT, X.GR_ARR_DT, X.GR_INV_NO, X.GR_CAR_NO
+                        , X.GR_WGT, X.ARR_USR_NM, X.ARR_ADDR
+                        , X.CAR_DRV_USR_NM, X.N1ST_TEL_NO, X.N2ND_TEL_NO
+                    FROM TB_SL_RLSE_GR_INFO X
+                    WHERE 1 = 1  
+                        AND X.GR_NO = #RLSE_CMD_NO#
+                ) T5            
+        WHERE 1 = 1
+            AND T1.CHNL_CD      = T2.CHNL_CD
+            AND T1.CHNL_CD      = #CHNL_CD#
+            AND T1.SL_RLSE_NO   = T2.SL_RLSE_NO
+            AND T2.RLSE_CMD_NO  = #RLSE_CMD_NO#
+	  </select>
 
   </statements>
 </sqlMap>

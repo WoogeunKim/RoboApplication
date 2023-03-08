@@ -214,8 +214,95 @@ namespace VisualServerApplication.Controllers.Sale
 
 
 
+        /// <summary>
+        /// 납품확인서 Dialog - 조회
+        /// </summary>
+        [Route("dlg")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetDlgSelect([FromBody] SaleVo vo)
+        {
+            try
+            {
+                return Ok<SaleVo>(Properties.EntityMapper.QueryForObject<SaleVo>("S22223GrDlgSelect", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
 
+        /// <summary>
+        /// 납품확인서 Dialog - 추가
+        /// </summary>
+        [Route("dlg/i")]
+        [HttpPost]
+        // POST api/<controller>
+        public async Task<IHttpActionResult> GetDlgInsert([FromBody] SaleVo vo)
+        {
+            try
+            {
+                return Ok<int>(Properties.EntityMapper.Insert("S22223GrDlgInsert", vo) == null ? 1 : 0);
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
 
+        /// <summary>
+        /// 납품확인서 Dialog - 수정
+        /// </summary>
+        [Route("dlg/u")]
+        [HttpPost]
+        // POST api/<controller>
+        public async Task<IHttpActionResult> GetDlgUpdate([FromBody] SaleVo vo)
+        {
+            try
+            {
+                return Ok<int>(Properties.EntityMapper.Update("S22223GrDlgUpdate", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+        /// <summary>
+        /// 납품확인서 Report1 - 조회
+        /// </summary>
+        [Route("rpt1")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetRpt1Select([FromBody] SaleVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<SaleVo>>(Properties.EntityMapper.QueryForList<SaleVo>("S22223GrRpt1Select", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+        /// <summary>
+        /// 납품리스트 Report2 - 조회
+        /// </summary>
+        [Route("rpt2")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetRpt2Select([FromBody] SaleVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<SaleVo>>(Properties.EntityMapper.QueryForList<SaleVo>("S22223GrRpt2Select", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
 
     }
 }
