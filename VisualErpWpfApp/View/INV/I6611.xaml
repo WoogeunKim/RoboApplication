@@ -181,7 +181,7 @@
                 <!--<dxb:BarButtonItem x:Name="M_DTL_INSERT_IMP" Content="발주 (수입)" KeyGesture="F7" Glyph="{dx:DXImage Image=AddFile_16x16.png}" LargeGlyph="{dx:DXImage Image=AddFile_32x32.png}"  RibbonStyle="Large" Command="{Binding NewDtlImpDialogCommand}" />-->
                 <!--<dxb:BarButtonItem x:Name="M_MST_" Content="재고 이동" KeyGesture="F8" Glyph="{dx:DXImage Image=Right_16x16.png}" LargeGlyph="{dx:DXImage Image=Right_32x32.png}" RibbonStyle="Large" IsEnabled="{Binding isM_DELETE}" Command="{Binding DelDialogCommand}" />-->
 
-                <dxb:BarButtonItem x:Name="M_MST_DELETE" Content="삭제" KeyGesture="F10" Glyph="{dx:DXImage Image=RemoveItem_16x16.png}" LargeGlyph="{dx:DXImage Image=RemoveItem_32x32.png}" RibbonStyle="Large" IsEnabled="{Binding isM_DELETE}" Command="{Binding DelContactCommand}" />
+                <dxb:BarButtonItem x:Name="M_MST_DELETE" Content="삭제" KeyGesture="F10" Glyph="{dx:DXImage Image=RemoveItem_16x16.png}" LargeGlyph="{dx:DXImage Image=RemoveItem_32x32.png}" RibbonStyle="Large" IsEnabled="False" Command="{Binding DelContactCommand}" />
 
                 <dxb:BarButtonItem x:Name="M_MST_PRINT" Content="출력" KeyGesture="F9" Glyph="{dx:DXImage Image=PrintDialog_16x16.png}" LargeGlyph="{dx:DXImage Image=PrintDialog_32x32.png}" RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" Command="{Binding ReportContactCommand}" /><!--ItemClick="M_MST_PRINT_ItemClick" />-->
             </dxb:BarManager.Items>
@@ -211,16 +211,13 @@
                                 <!--<dxb:BarEditItemLink BarItemName="M_IN_FLG" EditWidth="80" EditHeight="35"  />-->
                                 <dxb:BarButtonItemLink BarItemName="M_MST_REFRESH"/>
                                 <dxb:BarButtonItemLink BarItemName="M_MST_PRINT"/>
-                                <!--<dxb:BarItemLinkSeparator />-->
+                                <dxb:BarItemLinkSeparator />
                             </dxr:RibbonPageGroup>
                             <dxr:RibbonPageGroup Caption="품목 입고 관리">
                                 <dxb:BarButtonItemLink BarItemName="M_DTL_INSERT_PUR"/>
                                 <!--<dxb:BarButtonItemLink BarItemName="M_DTL_INSERT_IMP"/>-->
                                 <!--<dxb:BarButtonItemLink BarItemName="M_MST_DELETE1"/>-->
-                                <dxb:BarItemLinkSeparator />
-                            </dxr:RibbonPageGroup>
-
-                            <dxr:RibbonPageGroup Caption="">
+                             
                                 <dxb:BarButtonItemLink BarItemName="M_MST_DELETE"/>
                             </dxr:RibbonPageGroup>
                         </dxr:RibbonPage>

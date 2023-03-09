@@ -115,7 +115,7 @@ namespace AquilaErpWpfApp3.ViewModel
 
 
                 //, Y1_FM_DT = (StartSlRlseDt).ToString("yyyy-MM-dd"), Y1_TO_DT = (EndSlRlseDt).ToString("yyyy-MM-dd")
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s22223/mst", new StringContent(JsonConvert.SerializeObject(new SaleVo() { /*CO_CD = M_SL_CO_NM?.CO_NO,*/ FM_DT = (StartInReqDt).ToString("yyyy-MM-dd"), TO_DT = (EndInReqDt).ToString("yyyy-MM-dd"), CHNL_CD = SystemProperties.USER_VO.CHNL_CD, UPD_USR_ID = SystemProperties.USER, AREA_CD = "001" }), System.Text.Encoding.UTF8, "application/json")))
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s22223/mst", new StringContent(JsonConvert.SerializeObject(new SaleVo() {FM_DT = (StartInReqDt).ToString("yyyy-MM-dd"), TO_DT = (EndInReqDt).ToString("yyyy-MM-dd"), CHNL_CD = SystemProperties.USER_VO.CHNL_CD, UPD_USR_ID = SystemProperties.USER, AREA_CD = "001" }), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
@@ -124,7 +124,7 @@ namespace AquilaErpWpfApp3.ViewModel
 
                         //SelectMstList = saleOrderClient.S2217SelectMstList(new SaleVo() { FM_DT = (StartDt).ToString("yyyy-MM-dd"), TO_DT = (EndDt).ToString("yyyy-MM-dd"), AREA_CD = _AreaMap[TXT_SL_AREA_NM], GBN = "Q" });
                         ////
-                        Title = "[판매처]" + M_SL_CO_NM.CO_NM + ",    [납품요청일]" + (StartInReqDt).ToString("yyyy-MM-dd") + "~" + (EndInReqDt).ToString("yyyy-MM-dd");
+                        Title = "[납품요청일]" + (StartInReqDt).ToString("yyyy-MM-dd") + "~" + (EndInReqDt).ToString("yyyy-MM-dd");
                         //Title = "[기간]" + (StartDt).ToString("yyyy-MM-dd") + "~" + (EndDt).ToString("yyyy-MM-dd") + ", " + (string.IsNullOrEmpty(M_SEARCH_TEXT) ? "" : (",   [검 색]" + M_SEARCH_TEXT));
 
                         if (SelectMstList.Count >= 1)
@@ -368,12 +368,12 @@ namespace AquilaErpWpfApp3.ViewModel
 
 
         //거래처
-        private IList<SystemCodeVo> _CoNmList = new List<SystemCodeVo>();
-        public IList<SystemCodeVo> CoNmList
-        {
-            get { return _CoNmList; }
-            set { SetProperty(ref _CoNmList, value, () => CoNmList); }
-        }
+        //private IList<SystemCodeVo> _CoNmList = new List<SystemCodeVo>();
+        //public IList<SystemCodeVo> CoNmList
+        //{
+        //    get { return _CoNmList; }
+        //    set { SetProperty(ref _CoNmList, value, () => CoNmList); }
+        //}
         //private CustomerCodeDao _M_DEPT_DESC;
         //public CustomerCodeDao M_DEPT_DESC
         //{
@@ -381,12 +381,12 @@ namespace AquilaErpWpfApp3.ViewModel
         //    set { SetProperty(ref _M_DEPT_DESC, value, () => M_DEPT_DESC); }
         //}
 
-        private SystemCodeVo _M_SL_CO_NM;
-        public SystemCodeVo M_SL_CO_NM
-        {
-            get { return _M_SL_CO_NM; }
-            set { SetProperty(ref _M_SL_CO_NM, value, () => _M_SL_CO_NM); }
-        }
+        //private SystemCodeVo _M_SL_CO_NM;
+        //public SystemCodeVo M_SL_CO_NM
+        //{
+        //    get { return _M_SL_CO_NM; }
+        //    set { SetProperty(ref _M_SL_CO_NM, value, () => M_SL_CO_NM); }
+        //}
 
         ////사업장
         //private CodeDao _M_SL_AREA_NM;
@@ -1886,16 +1886,16 @@ namespace AquilaErpWpfApp3.ViewModel
             }
 
 
-            using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s143", new StringContent(JsonConvert.SerializeObject(new SystemCodeVo() { DELT_FLG = "N", /*CO_TP_CD = "AR", */ AREA_CD = SystemProperties.USER_VO.EMPE_PLC_NM, CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
-            {
-                if (response.IsSuccessStatusCode)
-                {
-                    CoNmList = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
+            //using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s143", new StringContent(JsonConvert.SerializeObject(new SystemCodeVo() { DELT_FLG = "N", /*CO_TP_CD = "AR", */ AREA_CD = SystemProperties.USER_VO.EMPE_PLC_NM, CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+            //{
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        CoNmList = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
 
-                    CoNmList.Insert(0, new SystemCodeVo() { CO_NM = "전체", CO_NO = "" });
-                    M_SL_CO_NM = CoNmList[0];
-                }
-            }
+            //        CoNmList.Insert(0, new SystemCodeVo() { CO_NM = "전체", CO_NO = "" });
+            //        this.M_SL_CO_NM = CoNmList[0];
+            //    }
+            //}
             Refresh();
         }
     }

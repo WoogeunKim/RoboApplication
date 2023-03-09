@@ -323,7 +323,7 @@
             <dxe:TextEdit x:Name="text_search" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Width="120" NullText="검  색" FontSize="12" Margin="0,10,0,0" />
 
             <dxwui:AppBarSeparator HorizontalContentAlignment="Left" HorizontalAlignment="Left" />
-            <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
+            <!--<Grid VerticalAlignment="Top" HorizontalAlignment="Left">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="95" />
                     <ColumnDefinition Width="150"/>
@@ -368,13 +368,13 @@
                 </dxg:LookUpEdit>
 
                 <dxe:TextEdit x:Name="text_INAUD_RMK" HorizontalAlignment="Stretch" VerticalAlignment="Top" MaxLength="90" Height="50" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Margin="0,10,0,0" Grid.Row="0" Grid.Column="3" Grid.RowSpan="3" IsEnabled="{Binding ElementName=check_INAUD_RMK, Path=IsChecked}" />
-            </Grid>
+            </Grid>-->
 
-            <dxwui:AppBarButton x:Name="btn_apply"  Label="적용" ToolTip="적용"  HorizontalAlignment="Left" AllowGlyphTheming="True" >
+            <!--<dxwui:AppBarButton x:Name="btn_apply"  Label="적용" ToolTip="적용"  HorizontalAlignment="Left" AllowGlyphTheming="True" >
                 <Image Width="25" Height="25" Source="{dx:DXImageGrayscale Image=Edit_32x32.png}" Stretch="Fill"/>
-            </dxwui:AppBarButton>
+            </dxwui:AppBarButton>-->
 
-            <dxwui:AppBarSeparator HorizontalContentAlignment="Left" HorizontalAlignment="Left" />
+            <!--<dxwui:AppBarSeparator HorizontalContentAlignment="Left" HorizontalAlignment="Left" />-->
 
             <TextBlock x:Name="MSG" Text="" FontSize="13"  VerticalAlignment="Center" HorizontalAlignment="Right" TextAlignment="Right" Margin="0,0" Foreground="Pink" FontWeight="Bold" />
 
@@ -382,7 +382,7 @@
 
             <dxwui:AppBarButton Label="확인" ToolTip="확인" x:Name="OKButton" Glyph="{dx:DXImageGrayscale Image=Apply_32x32.png}" HorizontalAlignment="Right" AllowGlyphTheming="True" />
             <dxwui:AppBarButton Label="취소" ToolTip="취소" x:Name="CancelButton" Glyph="{dx:DXImageGrayscale Image=Cancel_32x32.png}" HorizontalAlignment="Right" AllowGlyphTheming="True" />
-            <Label Content="*위 화면을 클릭하시면 선택한 수량/금액의 합계가 나옵니다." HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="326" Margin="388,35,-675,-59" Foreground="#FFE4F573"/>
+            <Label Content="*위 화면을 클릭하시면 선택한 수량/금액의 합계가 나옵니다." HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="326" Margin="1000,35,-675,-59" Foreground="#FFE4F573"/>
         </dxwui:AppBar>
     </Grid>
 </dx:DXWindow>

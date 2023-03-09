@@ -31,6 +31,10 @@ namespace AquilaErpWpfApp3.View.SAL.Report
                 //var aaaaaa = GetImageByte(allItems[x].ITM_IMG);
                 //var aaaaaa = GetImageOcr(allItems[x].ITM_IMG);
 
+                /// <summary>
+                /// 
+                /// </summary>
+                
 
 
                 list.Add(allItems[x]);

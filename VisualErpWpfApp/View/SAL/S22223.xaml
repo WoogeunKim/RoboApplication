@@ -105,7 +105,7 @@
                     </dxb:BarEditItem.EditTemplate>
                 </dxb:BarEditItem>-->
 
-                <dxb:BarEditItem x:Name="M_SL_CO_CD" Content="판매처 : "  EditValue="{Binding M_SL_CO_NM, Mode=TwoWay}" >
+                <!--<dxb:BarEditItem x:Name="M_SL_CO_CD" Content="판매처 : "  EditValue="{Binding M_SL_CO_NM, Mode=TwoWay}" >
                     <dxb:BarEditItem.EditSettings>
                         <dxg:LookUpEditSettings ItemsSource="{Binding CoNmList}"  DisplayMember="CO_NM" ValueMember="CO_NM" ImmediatePopup="True" AutoPopulateColumns ="False"  IsTextEditable="False" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsPopupAutoWidth="True" PopupHeight="240" PopupWidth="370" >
                             <dxg:LookUpEditSettings.PopupContentTemplate>
@@ -136,7 +136,7 @@
 
                         </dxg:LookUpEditSettings>
                     </dxb:BarEditItem.EditSettings>
-                </dxb:BarEditItem>
+                </dxb:BarEditItem>-->
 
 
                 <dxb:BarEditItem x:Name="M_SL_AREA_NM" Content="사업장 : "  EditValue="{Binding M_SL_AREA_NM, Mode=TwoWay}" IsEnabled="False" >
@@ -171,7 +171,7 @@
                     </dxb:BarEditItem.EditSettings>
                 </dxb:BarEditItem>
 
-                <dxb:BarEditItem x:Name="M_SEARCH_TEXT" Content="납품처 : "  EditValue="{Binding M_SEARCH_TEXT, Mode=TwoWay}" >
+                <dxb:BarEditItem x:Name="M_SEARCH_TEXT" Content=" 검 색 : "  EditValue="{Binding M_SEARCH_TEXT, Mode=TwoWay}" >
                     <dxb:BarEditItem.EditTemplate>
                         <DataTemplate>
                             <dxe:TextEdit Width="120" Height="25" FontSize="14" Text="{Binding DataContext.M_SEARCH_TEXT, RelativeSource={RelativeSource AncestorType=dxb:BarEditItemLinkControl}, Mode=TwoWay}"  />
@@ -230,11 +230,11 @@
                         <dxr:RibbonPage Caption="주문별 생산공장/GR확정">
                             <dxr:RibbonPageGroup Caption="조회 조건">
                                 <dxb:BarEditItemLink BarItemName="M_IN_REQ_FM_DT" EditWidth="120" EditHeight="28" />
-                                <dxb:BarEditItemLink BarItemName="M_SL_CO_CD" EditWidth="120" EditHeight="28" />
-
-                                <dxb:BarEditItemLink BarItemName="M_IN_REQ_TO_DT" EditWidth="120" EditHeight="28" />
+                                <!--<dxb:BarEditItemLink BarItemName="M_SL_CO_CD" EditWidth="120" EditHeight="28" />-->
 
                                 <dxb:BarEditItemLink BarItemName="M_SEARCH_TEXT" EditWidth="120" EditHeight="25" />
+
+                                <dxb:BarEditItemLink BarItemName="M_IN_REQ_TO_DT" EditWidth="120" EditHeight="28" />
 
                                 <dxb:BarButtonItemLink BarItemName="M_MST_REFRESH"/>
 

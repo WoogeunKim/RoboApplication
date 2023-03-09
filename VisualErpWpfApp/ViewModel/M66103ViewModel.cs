@@ -136,7 +136,7 @@ namespace AquilaErpWpfApp3.ViewModel
 
                         httpClient.GetAsync(url + value);
 
-                        //using (var playResponse = await httpClient.GetAsync(url+value))
+                        //using (var playResponse = await httpClient.GetAsync(url + value))
                         //{
                         //    if (HttpStatusCode.OK != playResponse.StatusCode)
                         //    {

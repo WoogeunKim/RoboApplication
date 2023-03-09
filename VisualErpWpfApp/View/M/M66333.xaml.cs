@@ -200,11 +200,6 @@ namespace AquilaErpWpfApp3.View.M
                 prtLink.CreateDocument(true);
                 prtLink.ShowPrintPreviewDialog(Application.Current.MainWindow, "수동수주출력");
             }
-
-
         }
     }
-
-
-
 }

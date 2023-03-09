@@ -41,7 +41,7 @@ namespace AquilaErpWpfApp3.View.INV.Dialog
 
 
             this.btn_reset.Click += btn_reset_Click;
-            this.btn_apply.Click += btn_apply_Click;
+            //this.btn_apply.Click += btn_apply_Click;
 
             //this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
             this.OKButton.Click += new RoutedEventHandler(OKButton_Click);
@@ -57,77 +57,77 @@ namespace AquilaErpWpfApp3.View.INV.Dialog
 
         }
 
-        private void btn_apply_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                //if (this.check_IN_QTY.IsChecked == true)
-                //{
-                //    if (string.IsNullOrEmpty(this.text_IN_QTY.Text))
-                //    {
-                //        WinUIMessageBox.Show("[입고수량]입력 값이 맞지 안습니다", "[유효검사]" + _title, MessageBoxButton.OK, MessageBoxImage.Warning);
-                //        this.MSG.Text = "[입고수량]입력 값이 맞지 안습니다";
-                //        return;
-                //    }
-                //}
+        //private void btn_apply_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        //if (this.check_IN_QTY.IsChecked == true)
+        //        //{
+        //        //    if (string.IsNullOrEmpty(this.text_IN_QTY.Text))
+        //        //    {
+        //        //        WinUIMessageBox.Show("[입고수량]입력 값이 맞지 안습니다", "[유효검사]" + _title, MessageBoxButton.OK, MessageBoxImage.Warning);
+        //        //        this.MSG.Text = "[입고수량]입력 값이 맞지 안습니다";
+        //        //        return;
+        //        //    }
+        //        //}
 
-                if (this.check_INAUD_ORG_NM.IsChecked == true)
-                {
-                    if (string.IsNullOrEmpty(this.combo_INAUD_ORG_NM.Text))
-                    {
-                        WinUIMessageBox.Show("[입고창고]입력 값이 맞지 안습니다", "[유효검사]" + _title, MessageBoxButton.OK, MessageBoxImage.Warning);
-                        this.MSG.Text = "[입고창고]입력 값이 맞지 안습니다";
-                        return;
-                    }
-
-
-                }
+        //        if (this.check_INAUD_ORG_NM.IsChecked == true)
+        //        {
+        //            if (string.IsNullOrEmpty(this.combo_INAUD_ORG_NM.Text))
+        //            {
+        //                WinUIMessageBox.Show("[입고창고]입력 값이 맞지 안습니다", "[유효검사]" + _title, MessageBoxButton.OK, MessageBoxImage.Warning);
+        //                this.MSG.Text = "[입고창고]입력 값이 맞지 안습니다";
+        //                return;
+        //            }
 
 
-                IList<InvVo> _checkList = ((IList<InvVo>)this.ViewJOB_ITEMEdit.ItemsSource).Where(w => w.isCheckd == true).ToList<InvVo>();
-                InvVo _tmpVo;
-                for (int x = 0; x < _checkList.Count; x++)
-                {
-                    _tmpVo = _checkList[x];
-                    //if (this.check_IN_QTY.IsChecked == true)
-                    //{
-                    //    _tmpVo.IN_QTY = Convert.ToInt32(string.IsNullOrEmpty(this.text_IN_QTY.Text) ? "0" : this.text_IN_QTY.Text);
+        //        }
 
-                    //    _tmpVo.isCheckd = true;
-                    //    this.OKButton.IsEnabled = true;
-                    //}
 
-                    if (this.check_INAUD_ORG_NM.IsChecked == true)
-                    {
-                        SystemCodeVo inaudOrgVo = this.combo_INAUD_ORG_NM.SelectedItem as SystemCodeVo;
-                        if (inaudOrgVo != null)
-                        {
-                            _tmpVo.INAUD_ORG_NM = inaudOrgVo.CLSS_DESC;
-                            _tmpVo.INAUD_ORG_NO = inaudOrgVo.CLSS_CD;
+        //        IList<InvVo> _checkList = ((IList<InvVo>)this.ViewJOB_ITEMEdit.ItemsSource).Where(w => w.isCheckd == true).ToList<InvVo>();
+        //        InvVo _tmpVo;
+        //        for (int x = 0; x < _checkList.Count; x++)
+        //        {
+        //            _tmpVo = _checkList[x];
+        //            //if (this.check_IN_QTY.IsChecked == true)
+        //            //{
+        //            //    _tmpVo.IN_QTY = Convert.ToInt32(string.IsNullOrEmpty(this.text_IN_QTY.Text) ? "0" : this.text_IN_QTY.Text);
 
-                            _tmpVo.isCheckd = true;
-                            this.OKButton.IsEnabled = true;
-                        }
-                    }
+        //            //    _tmpVo.isCheckd = true;
+        //            //    this.OKButton.IsEnabled = true;
+        //            //}
 
-                    if (this.check_INAUD_RMK.IsChecked == true)
-                    {
-                        _tmpVo.PUR_RMK = this.text_INAUD_RMK.Text;
+        //            if (this.check_INAUD_ORG_NM.IsChecked == true)
+        //            {
+        //                SystemCodeVo inaudOrgVo = this.combo_INAUD_ORG_NM.SelectedItem as SystemCodeVo;
+        //                if (inaudOrgVo != null)
+        //                {
+        //                    _tmpVo.INAUD_ORG_NM = inaudOrgVo.CLSS_DESC;
+        //                    _tmpVo.INAUD_ORG_NO = inaudOrgVo.CLSS_CD;
 
-                        _tmpVo.isCheckd = true;
-                        this.OKButton.IsEnabled = true;
-                    }
-                }
-                this.ViewJOB_ITEMEdit.RefreshData();
+        //                    _tmpVo.isCheckd = true;
+        //                    this.OKButton.IsEnabled = true;
+        //                }
+        //            }
 
-            }
-            catch (Exception eLog)
-            {
-                WinUIMessageBox.Show(eLog.Message, "[에러]" + _title, MessageBoxButton.OK, MessageBoxImage.Error);
-                this.MSG.Text = eLog.Message;
-                return;
-            }
-        }
+        //            if (this.check_INAUD_RMK.IsChecked == true)
+        //            {
+        //                _tmpVo.PUR_RMK = this.text_INAUD_RMK.Text;
+
+        //                _tmpVo.isCheckd = true;
+        //                this.OKButton.IsEnabled = true;
+        //            }
+        //        }
+        //        this.ViewJOB_ITEMEdit.RefreshData();
+
+        //    }
+        //    catch (Exception eLog)
+        //    {
+        //        WinUIMessageBox.Show(eLog.Message, "[에러]" + _title, MessageBoxButton.OK, MessageBoxImage.Error);
+        //        this.MSG.Text = eLog.Message;
+        //        return;
+        //    }
+        //}
 
         private async void searchItem()
         {
@@ -562,7 +562,7 @@ namespace AquilaErpWpfApp3.View.INV.Dialog
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    this.combo_INAUD_ORG_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
+                    //this.combo_INAUD_ORG_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
                     this.lue_INAUD_ORG_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
                 }
             }
@@ -576,7 +576,7 @@ namespace AquilaErpWpfApp3.View.INV.Dialog
                 if (response.IsSuccessStatusCode)
                 {
                     IList<SystemCodeVo> tmpList = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
-                    tmpList.Insert(0, new SystemCodeVo() { CO_NO = "", CO_NM = "" });
+                    tmpList.Insert(0, new SystemCodeVo() { CO_NO = null, CO_NM = "전체" });
                     //
                     this.combo_GRP_NM.ItemsSource = tmpList;
                 }
