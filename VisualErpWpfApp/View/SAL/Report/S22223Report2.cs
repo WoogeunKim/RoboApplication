@@ -26,8 +26,9 @@ namespace AquilaErpWpfApp3.View.SAL.Report
             int size = allItems.Count;
             for (int x = 0; x < size; x++)
             {
+                //*******************************************************************
+                //*******************************************************************  ITM_IMG : byte[] 이미지 입니다.
                 //var aaaaaa = GetImageByte(allItems[x].ITM_IMG);
-
                 //var aaaaaa = GetImageOcr(allItems[x].ITM_IMG);
 
 
@@ -36,6 +37,18 @@ namespace AquilaErpWpfApp3.View.SAL.Report
             }
             this.DataSource = list;
         }
+
+
+
+
+
+
+
+
+
+
+
+
 
         //public object GetImageOcr(byte[] array)
         //{

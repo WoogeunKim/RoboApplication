@@ -811,7 +811,7 @@ namespace AquilaErpWpfApp3.ViewModel
 
                         if (rpt2List.Count > 0)
                         {
-                            // 납품리스트 리포트 2번 출력...
+                            // 납품리스트 리포트 2번 출력...  ****************************************************************** 상단에 조회한 Data
                             Report2 = new S22223Report2(rpt2List);
                             Report2.Margins.Top = 2;
                             Report2.Margins.Bottom = 0;
