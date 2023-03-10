@@ -43,7 +43,7 @@ namespace AquilaErpWpfApp3.ViewModel
             {
                 if (SelectedDtlItem == null) return;
 
-                MessageBoxResult result = WinUIMessageBox.Show("순번 "+ SelectedDtlItem.RN.ToString() + " 을(를) 정말로 투입 하시겠습니까?", "투입자재", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = WinUIMessageBox.Show("순번 " + SelectedDtlItem.RN.ToString() + " 을(를) 정말로 투입 하시겠습니까?", "투입자재", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310/dtl/i", new StringContent(JsonConvert.SerializeObject(this.SelectedDtlItem), System.Text.Encoding.UTF8, "application/json")))
@@ -55,7 +55,7 @@ namespace AquilaErpWpfApp3.ViewModel
                             //실패
                             WinUIMessageBox.Show(resultMsg, _title, MessageBoxButton.OK, MessageBoxImage.Error);
                             return;
-                        }  
+                        }
 
                         WinUIMessageBox.Show("완료 되었습니다", _title, MessageBoxButton.OK, MessageBoxImage.Information);
                         DtlRefresh(SelectedDtlItem.OPMZ_NO);
@@ -104,10 +104,17 @@ namespace AquilaErpWpfApp3.ViewModel
             try
             {
                 if (opmgno == null) return;
-                                
+
                 if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
 
+                this.SelectMstList = null;
+                this.SelectedMstItem = null;
+                this.SelectDtlList = null;
+                this.SelectedDtlItem = null;
+                this.SummaryTableList = null;
+
                 IList<ManVo> MstList = new List<ManVo>();
+                IList<ManVo> SummaryList = new List<ManVo>();
 
                 using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310", new StringContent(JsonConvert.SerializeObject(new ManVo() { OPMZ_NO = opmgno }), System.Text.Encoding.UTF8, "application/json")))
                 {
@@ -116,16 +123,22 @@ namespace AquilaErpWpfApp3.ViewModel
                         MstList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
                     }
                 }
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310/dtl/summary", new StringContent(JsonConvert.SerializeObject(new ManVo() { OPMZ_NO = opmgno }), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        SummaryList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+                    }
+                }
                 using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310/dtl", new StringContent(JsonConvert.SerializeObject(new ManVo() { OPMZ_NO = opmgno }), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
                         // DTL 조회하는데 오래걸려서 같이 보이도록 조절하였음.
                         this.SelectMstList = MstList;
-                        this.SelectedMstItem = null;
+                        this.SummaryTableList = SummaryList;
 
                         this.SelectDtlList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
-                        this.SelectedDtlItem = null;
                     }
                 }
 
@@ -167,6 +180,14 @@ namespace AquilaErpWpfApp3.ViewModel
         {
             get { return _selectedDtlItem; }
             set { SetProperty(ref _selectedDtlItem, value, () => SelectedDtlItem, InputValue); }
+        }
+
+
+        private IList<ManVo> _summaryTableList;
+        public IList<ManVo> SummaryTableList
+        {
+            get { return _summaryTableList; }
+            set { SetProperty(ref _summaryTableList, value, () => SummaryTableList); }
         }
 
         //private IList<SystemCodeVo> _extrStsList;

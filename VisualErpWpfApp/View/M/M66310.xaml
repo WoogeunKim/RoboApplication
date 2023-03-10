@@ -25,7 +25,6 @@
                 <dxr:RibbonPage Caption="투입자재지시관리">
                     <dxr:RibbonPageGroup Caption="조회 조건">
 
-
                         <dxb:BarEditItem x:Name="M_SEARCH_TEXT" Content="검   색 : " EditValue="{Binding M_SEARCH_TEXT, Mode=TwoWay}" EditWidth="120" EditHeight="28">
                             <dxb:BarEditItem.EditTemplate>
                                 <DataTemplate>
@@ -34,136 +33,195 @@
                             </dxb:BarEditItem.EditTemplate>
                         </dxb:BarEditItem>
 
-
                         <dxb:BarButtonItem x:Name="M_ref" Content="조회" KeyGesture="F5" Glyph="{dx:DXImage Image=Refresh2_16x16.png}" LargeGlyph="{dx:DXImage Image=Refresh2_32x32.png}" Command="{Binding RefreshCommand}" />
                     </dxr:RibbonPageGroup>
 
                     <dxr:RibbonPageGroup Caption="자재투입">
                         <dxb:BarButtonItem x:Name="M_Barlist" Content="투입" Command="{Binding BarlistInputCommand}" IsEnabled="{Binding B_UPDATE}" Glyph="{dx:DXImage SvgImages/Outlook Inspired/ReversSort.svg}" LargeGlyph="{dx:DXImage SvgImages/Outlook Inspired/ReversSort.svg}" />
                     </dxr:RibbonPageGroup>
-                    
+
                 </dxr:RibbonPage>
             </dxr:RibbonDefaultPageCategory>
         </dxr:RibbonControl>
 
         <dxd:DockLayoutManager x:Name="CodeManager" Grid.Row="1">
+
             <dxd:LayoutGroup Orientation="Vertical" >
-                <dxd:LayoutPanel Caption="작업중" AllowContextMenu="False" AllowClose="False" ShowCaption="True" CaptionHorizontalAlignment="Center" ItemHeight="1.5*">
-                    <Grid>
-                        <dxg:GridControl x:Name="ConfigViewPage1Edit_Master" ItemsSource="{Binding Path=SelectMstList}" SelectedItem="{Binding Path=SelectedMstItem, Mode=TwoWay}">
-                            <dxg:GridControl.View>
-                                <dxg:TableView x:Name="configViewPage1EditView_Master" ShowFixedTotalSummary="False" AllowEditing="False" AllowMoving="True" AllowResizing="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="False" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupedColumns="True" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="True" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT , Path=EditValue}" RowMinHeight="35"/>
-                            </dxg:GridControl.View>
+                <dxd:LayoutGroup Orientation="Horizontal">
 
-                            <dxg:GridControl.Columns>
-                                <dxg:GridColumn FieldName="RN" Header="순번" Width="70" HorizontalHeaderContentAlignment="Center" VisibleIndex="1">
-                                    <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,##0" MaskUseAsDisplayFormat="True"/>
-                                    </dxg:GridColumn.EditSettings>
-                                </dxg:GridColumn>
+                    <dxd:LayoutPanel Caption="작업중" AllowContextMenu="False" AllowClose="False" ShowCaption="True" ShowPinButton="False" CaptionHorizontalAlignment="Center" ItemHeight="0.8*" ItemWidth="0.7*">
+                        <Grid>
+                            <dxg:GridControl x:Name="ConfigViewPage1Edit_Master" ItemsSource="{Binding Path=SelectMstList}" SelectedItem="{Binding Path=SelectedMstItem, Mode=TwoWay}">
+                                <dxg:GridControl.View>
+                                    <dxg:TableView x:Name="configViewPage1EditView_Master" ShowFixedTotalSummary="False" AllowEditing="False" AllowMoving="True" AllowResizing="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="False" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupedColumns="True" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="True" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT , Path=EditValue}" RowMinHeight="35"/>
+                                </dxg:GridControl.View>
 
-                                <dxg:GridColumn FieldName="ITM_STL_CD" Header="강종" Width="70" HorizontalHeaderContentAlignment="Center" VisibleIndex="2">
-                                    <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
-                                    </dxg:GridColumn.EditSettings>
-                                </dxg:GridColumn>
+                                <dxg:GridControl.Columns>
+                                    <dxg:GridColumn FieldName="RN" Header="순번" Width="50" HorizontalHeaderContentAlignment="Center" VisibleIndex="1">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,##0" MaskUseAsDisplayFormat="True"/>
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="ITM_STL_SZ_CD" Header="규격" Width="70" HorizontalHeaderContentAlignment="Center" VisibleIndex="3">
-                                    <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-                                    </dxg:GridColumn.EditSettings>
-                                </dxg:GridColumn>
+                                    <dxg:GridColumn FieldName="ITM_STL_CD" Header="강종" Width="70" HorizontalHeaderContentAlignment="Center" VisibleIndex="2">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="INTO_RAW_KNT" Header="공급수량" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="4">
-                                    <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,###,##0" MaskUseAsDisplayFormat="True" />
-                                    </dxg:GridColumn.EditSettings>
-                                </dxg:GridColumn>
+                                    <dxg:GridColumn FieldName="ITM_STL_SZ_CD" Header="규격" Width="70" HorizontalHeaderContentAlignment="Center" VisibleIndex="3">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="INTO_RAW_LEN" Header="원자재 길이" Width="140" HorizontalHeaderContentAlignment="Center" VisibleIndex="5">
-                                    <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center"  MaskType="Numeric" Mask="###,###,###,###,##0" MaskUseAsDisplayFormat="True" />
-                                    </dxg:GridColumn.EditSettings>
-                                </dxg:GridColumn>
+                                    <dxg:GridColumn FieldName="INTO_RAW_KNT" Header="공급수량" Width="70" HorizontalHeaderContentAlignment="Center" VisibleIndex="4">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,###,##0" MaskUseAsDisplayFormat="True" />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N1ST_STEP_VAL" Header="절단1" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="7">
-                                    <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
-                                    </dxg:GridColumn.EditSettings>
-                                </dxg:GridColumn>
+                                    <dxg:GridColumn FieldName="INTO_RAW_LEN" Header="원자재 길이" Width="100" HorizontalHeaderContentAlignment="Center" VisibleIndex="5">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center"  MaskType="Numeric" Mask="###,###,###,###,##0" MaskUseAsDisplayFormat="True" />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N2ND_STEP_VAL" Header="절단2" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="8">
-                                    <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
-                                    </dxg:GridColumn.EditSettings>
-                                </dxg:GridColumn>
+                                    <dxg:GridColumn FieldName="N1ST_STEP_VAL" Header="절단1" Width="80" HorizontalHeaderContentAlignment="Center" VisibleIndex="7">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N3RD_STEP_VAL" Header="절단3" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="9">
-                                    <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
-                                    </dxg:GridColumn.EditSettings>
-                                </dxg:GridColumn>
+                                    <dxg:GridColumn FieldName="N2ND_STEP_VAL" Header="절단2" Width="80" HorizontalHeaderContentAlignment="Center" VisibleIndex="8">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N4TH_STEP_VAL" Header="절단4" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="10">
-                                    <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
-                                    </dxg:GridColumn.EditSettings>
-                                </dxg:GridColumn>
+                                    <dxg:GridColumn FieldName="N3RD_STEP_VAL" Header="절단3" Width="80" HorizontalHeaderContentAlignment="Center" VisibleIndex="9">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N5TH_STEP_VAL" Header="절단5" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="12">
-                                    <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-                                    </dxg:GridColumn.EditSettings>
-                                </dxg:GridColumn>
+                                    <dxg:GridColumn FieldName="N4TH_STEP_VAL" Header="절단4" Width="80" HorizontalHeaderContentAlignment="Center" VisibleIndex="10">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N6TH_STEP_VAL" Header="절단6" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="13">
-                                    <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-                                    </dxg:GridColumn.EditSettings>
-                                </dxg:GridColumn>
+                                    <dxg:GridColumn FieldName="N5TH_STEP_VAL" Header="절단5" Width="80" HorizontalHeaderContentAlignment="Center" VisibleIndex="12">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N7TH_STEP_VAL" Header="절단7" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="14">
-                                    <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
-                                    </dxg:GridColumn.EditSettings>
-                                </dxg:GridColumn>
+                                    <dxg:GridColumn FieldName="N6TH_STEP_VAL" Header="절단6" Width="80" HorizontalHeaderContentAlignment="Center" VisibleIndex="13">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N8TH_STEP_VAL" Header="절단8" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="15">
-                                    <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
-                                    </dxg:GridColumn.EditSettings>
-                                </dxg:GridColumn>
+                                    <dxg:GridColumn FieldName="N7TH_STEP_VAL" Header="절단7" Width="80" HorizontalHeaderContentAlignment="Center" VisibleIndex="14">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N9TH_STEP_VAL" Header="절단9" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="16">
-                                    <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
-                                    </dxg:GridColumn.EditSettings>
-                                </dxg:GridColumn>
+                                    <dxg:GridColumn FieldName="N8TH_STEP_VAL" Header="절단8" Width="80" HorizontalHeaderContentAlignment="Center" VisibleIndex="15">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N10TH_STEP_VAL" Header="절단10" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="17">
-                                    <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
-                                    </dxg:GridColumn.EditSettings>
-                                </dxg:GridColumn>
+                                    <dxg:GridColumn FieldName="N9TH_STEP_VAL" Header="절단9" Width="80" HorizontalHeaderContentAlignment="Center" VisibleIndex="16">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="LSS_LEN" Header="LOSS" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="18">
-                                    <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,###,##0" MaskUseAsDisplayFormat="True" />
-                                    </dxg:GridColumn.EditSettings>
-                                </dxg:GridColumn>
-                                
-                                
-                            </dxg:GridControl.Columns>
-                        </dxg:GridControl>
-                    </Grid>
-                </dxd:LayoutPanel>
+                                    <dxg:GridColumn FieldName="N10TH_STEP_VAL" Header="절단10" Width="80" HorizontalHeaderContentAlignment="Center" VisibleIndex="17">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
 
-                <dxd:LayoutPanel Caption="작업대기" ShowCollapseButton="False" AllowContextMenu="False" AllowClose="False" ShowCaption="True" CaptionHorizontalAlignment="Center" ItemHeight="4*">
+                                    <dxg:GridColumn FieldName="LSS_LEN" Header="LOSS" Width="80" HorizontalHeaderContentAlignment="Center" VisibleIndex="18">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,###,##0" MaskUseAsDisplayFormat="True" />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
+                                </dxg:GridControl.Columns>
+                            </dxg:GridControl>
+                        </Grid>
+                    </dxd:LayoutPanel>
+
+                    <dxd:LayoutPanel ShowCollapseButton="False" AllowContextMenu="False" AllowClose="False" ShowCaption="False" CaptionHorizontalAlignment="Center" ItemHeight="1.25*" ItemWidth="0.25*" >
+                        <Grid>
+                            <dxg:GridControl x:Name="summary" AutoExpandAllGroups="True" ItemsSource="{Binding Path=SummaryTableList}">
+
+                                <dxg:GridControl.View>
+                                    <dxg:TableView x:Name="configViewSummary" ShowFixedTotalSummary="False" ShowColumnHeaders="False" AllowEditing="False" AllowMoving="True" AllowResizing="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="False" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="True" NavigationStyle="None" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT , Path=EditValue}" RowMinHeight="55" VerticalScrollbarVisibility="Visible" VerticalAlignment="Stretch"  >
+                                        <dxg:TableView.FormatConditions>
+                                            <dxg:FormatCondition FieldName="ITM_STL_CD"  Expression="Contains([GBN],'작업중')" PredefinedFormatName="LightRedFill"   />
+                                            <dxg:FormatCondition FieldName="ITM_STL_CD"  Expression="Contains([GBN],'1-작업대기')" PredefinedFormatName="YellowFillWithDarkYellowText"   />
+                                            <dxg:FormatCondition FieldName="ITM_STL_CD"  Expression="Contains([GBN],'2-작업대기')" PredefinedFormatName="LightGreenFill"   />
+
+                                            <dxg:FormatCondition FieldName="ITM_STL_SZ_CD"  Expression="Contains([GBN],'작업중')" PredefinedFormatName="LightRedFill"   />
+                                            <dxg:FormatCondition FieldName="ITM_STL_SZ_CD"  Expression="Contains([GBN],'1-작업대기')" PredefinedFormatName="YellowFillWithDarkYellowText"   />
+                                            <dxg:FormatCondition FieldName="ITM_STL_SZ_CD"  Expression="Contains([GBN],'2-작업대기')" PredefinedFormatName="LightGreenFill"   />
+
+
+                                        </dxg:TableView.FormatConditions>
+                                    </dxg:TableView>
+                                </dxg:GridControl.View>
+
+                                <dxg:GridControl.Columns>
+
+                                    <dxg:GridColumn FieldName="GBN" Header="구분" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="0">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
+
+                                    <dxg:GridColumn FieldName="ITM_STL_CD" Header="강종" Width="60" HorizontalHeaderContentAlignment="Center" VisibleIndex="1">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
+
+                                    <dxg:GridColumn FieldName="ITM_STL_SZ_CD" Header="규격" Width="70" HorizontalHeaderContentAlignment="Center" VisibleIndex="2">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
+
+                                    <dxg:GridColumn FieldName="INTO_RAW_KNT" Header="필요수량" Width="60" HorizontalHeaderContentAlignment="Center" VisibleIndex="3">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
+
+                                    <dxg:GridColumn FieldName="INTO_RAW_LEN" Header="원자재 길이" Width="90" HorizontalHeaderContentAlignment="Center" VisibleIndex="4">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,###,##0" MaskUseAsDisplayFormat="True"/>
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
+
+                                </dxg:GridControl.Columns>
+                            </dxg:GridControl>
+                        </Grid>
+                    </dxd:LayoutPanel>
+
+                </dxd:LayoutGroup>
+
+                <dxd:LayoutPanel Caption="작업대기" ShowCollapseButton="False" AllowContextMenu="False" AllowClose="False" ShowPinButton="False" ShowCaption="True" CaptionHorizontalAlignment="Center" ItemHeight="3.5*">
                     <Grid>
                         <dxg:GridControl x:Name="ConfigViewPage1Edit_Detail" AutoExpandAllGroups="True" ItemsSource="{Binding Path=SelectDtlList}" SelectedItem="{Binding Path=SelectedDtlItem, Mode=TwoWay}" >
                             <dxg:GridControl.View>
                                 <!--<dxg:TableView x:Name="ViewTableMst" SearchPanelFindMode="Always" ShowSearchPanelMode="Always" ShowCheckBoxSelectorColumn="True" ShowCheckBoxSelectorInGroupRow="True" CheckBoxSelectorColumnWidth="40" SearchDelay="0" EditorButtonShowMode="ShowForFocusedRow"  FontSize="13" ShowFixedTotalSummary="False" ShowTotalSummary="True" ShowSearchPanelCloseButton="True" AutoWidth="False" AllowPerPixelScrolling="True" ShowGroupPanel="True" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" AllowEditing="False" NavigationStyle="Cell" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="True"  IsColumnMenuEnabled="False" ShowGroupFooters="True" AllowCellMerge="False"  ShowHorizontalLines="True" />-->
-                                <dxg:TableView x:Name="configViewPage1EditView_Detail" AllowEditing="False" AllowMoving="True" AllowResizing="False" ShowSearchPanelCloseButton="True" ShowFixedTotalSummary="True"  ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="True" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" ShowGroupFooters="True" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="True" SearchString="{Binding ElementName=M_SEARCH_TEXT , Path=EditValue}" RowMinHeight="35"/>
+                                <dxg:TableView x:Name="configViewPage1EditView_Detail"  AllowEditing="False" AllowMoving="True" AllowResizing="False" ShowSearchPanelCloseButton="True" ShowFixedTotalSummary="True"  ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="True" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" ShowGroupFooters="True" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="True" SearchString="{Binding ElementName=M_SEARCH_TEXT , Path=EditValue}" RowMinHeight="35"/>
                             </dxg:GridControl.View>
 
                             <dxg:GridControl.TotalSummary>

@@ -46,6 +46,24 @@ namespace VisualServerApplication.Controllers.Man
         }
 
         /// <summary>
+        /// 투입자재지시관리 Summary 관리 - 조회
+        /// </summary>
+        [Route("dtl/summary")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetDtlSummarySelect([FromBody] ManVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<ManVo>>(Properties.EntityMapper.QueryForList<ManVo>("M66310SelectDtlSummaryList", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+        /// <summary>
         /// 투입자재지시관리 DTL 관리 - 추가
         /// </summary>
         [Route("dtl/i")]

@@ -10014,6 +10014,125 @@
          WHERE 1 = 1
            AND OPMZ_NO = #OPMZ_NO# 
 	  </update>
+	  
+     <select id="M66310SelectDtlSummaryList" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
+
+      WITH TMP AS (
+              SELECT ROW_NUMBER() OVER (PARTITION BY T2.ITM_STL_CD, T2.ITM_STL_SZ_CD ORDER BY T1.OPMZ_SEQ) AS RN 
+                   , T1.OPMZ_SEQ
+                   , T1.DMND_IDX
+                   , T1.STEP
+                   , T2.ITM_STL_CD
+                   , T2.ITM_STL_SZ_CD
+                   , T1.INTO_RAW_KNT
+                   , T1.INTO_RAW_LEN
+                   , CUT_VAL
+                   , T2.ITM_LEN
+                   , T2.ITM_QTY
+                   , T2.ITM_SHP_CD
+                   , LSS_LEN
+                   , SUB_STEP
+                   , CASE WHEN KNT > 0 THEN 'Y' ELSE 'N' END AS INTO_FLG                               
+                FROM (
+                    SELECT dbo.FN_splitValue(ORD_ID, '-', 1)
+                         +'-' + dbo.FN_splitValue(ORD_ID, '-', 2)             AS ORD_NO
+                         , CAST(dbo.FN_splitValue(ORD_ID, '-', 3) AS INT)     AS ORD_SEQ 
+                         , DMND_IDX
+                         , STEP
+                         , SUB_STEP                   
+                         , ORD_ID
+                         , CUT_VAL
+                         , INTO_RAW_LEN     
+                         , INTO_RAW_KNT     
+                         , LSS_LEN
+                         , LSS_RT
+                         , CUT_RMN_LEN
+                         , CUT_RMN_QTY
+                         , CUT_RMN_LSS_LEN
+                         , CUT_RMN_LSS_RT 
+                         , OPMZ_NO
+                         , OPMZ_SEQ      
+                      FROM TB_OPMZ_SOL_RSLT T1
+                     WHERE 1 = 1
+                       AND OPMZ_NO = #OPMZ_NO#                                      
+                      ) T1
+                OUTER APPLY ( 
+                          SELECT COUNT(*)  AS KNT 
+                            FROM TB_OPMZ_INTO_MTRL_MAP X
+                           WHERE 1 = 1
+                             AND X.OPMZ_NO    = T1.OPMZ_NO
+                             AND X.ORD_NO     = T1.ORD_NO
+                             AND X.ORD_SEQ    = T1.ORD_SEQ
+                             AND X.STEP       = T1.STEP
+                      ) T3
+                     , TB_OPMZ_DMND T2
+               WHERE 1 = 1
+                 AND T2.OPMZ_NO   = #OPMZ_NO#                
+                 AND T1.OPMZ_NO   = T2.OPMZ_NO
+                 AND T1.ORD_NO    = T2.ORD_NO
+                 AND T1.ORD_SEQ   = T2.ORD_SEQ
+      ) 
+       SELECT '작업중'  AS GBN 
+            , T1.ITM_STL_CD
+            , T1.ITM_STL_SZ_CD
+            , T1.INTO_RAW_KNT
+            , T1.INTO_RAW_LEN           
+        FROM (
+          SELECT  ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY RN DESC) AS RN 
+                , T1.ITM_STL_CD
+                , T1.ITM_STL_SZ_CD
+                , T1.INTO_RAW_KNT
+                , T1.INTO_RAW_LEN           
+                , T1.INTO_FLG
+            FROM (
+              SELECT MAX(RN)  AS RN
+                   , T1.ITM_STL_CD
+                   , T1.ITM_STL_SZ_CD
+                   , T1.INTO_RAW_LEN           
+                   , SUM(T1.INTO_RAW_KNT) AS INTO_RAW_KNT      
+                   , MAX(INTO_FLG)     AS INTO_FLG
+                FROM TMP  T1
+               WHERE 1 = 1
+                 AND INTO_FLG = 'Y' 
+              GROUP BY   T1.ITM_STL_CD
+                       , T1.ITM_STL_SZ_CD
+                       , T1.INTO_RAW_LEN   
+                ) T1      
+        ) T1          
+      WHERE 1 = 1
+        AND RN = 1
+      UNION ALL 
+       SELECT CAST(RN AS VARCHAR) + '-' + '작업대기' 
+            , T1.ITM_STL_CD
+            , T1.ITM_STL_SZ_CD
+            , T1.INTO_RAW_KNT
+            , T1.INTO_RAW_LEN           
+        FROM (        
+          SELECT  ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY RN ) AS RN 
+                , T1.ITM_STL_CD
+                , T1.ITM_STL_SZ_CD
+                , T1.INTO_RAW_KNT
+                , T1.INTO_RAW_LEN           
+                , T1.INTO_FLG
+            FROM (        
+              SELECT MAX(RN)  AS RN
+                   , T1.ITM_STL_CD
+                   , T1.ITM_STL_SZ_CD
+                   , T1.INTO_RAW_LEN 
+                   , SUM(T1.INTO_RAW_KNT) AS INTO_RAW_KNT      
+                   , MAX(INTO_FLG)   AS INTO_FLG
+                FROM TMP  T1
+               WHERE 1 = 1
+                 AND INTO_FLG = 'N' 
+              GROUP BY   T1.ITM_STL_CD
+                       , T1.ITM_STL_SZ_CD
+                       , T1.INTO_RAW_LEN 
+                ) T1   
+            ) T1          
+       WHERE 1 = 1
+         AND RN <![CDATA[<]]> 3
+    
+     </select>
 
   </statements>
 </sqlMap>
