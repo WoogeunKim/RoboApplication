@@ -3098,16 +3098,90 @@
                   , ITM_WGT    = #ITM_WGT#
              WHERE 1=1
                AND CHNL_CD   = #CHNL_CD#
-               AND DE_CHD_NO = #DE_CHD_NO#
+               AND DE_CHD_NO = #DE_CHD_NO#e
                AND CO_NO     = #CO_NO#
      </update>
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+	  <select id="S1415SelectMaster" parameterClass="ModelsLibrary.Code.SystemCodeVo" resultClass="ModelsLibrary.Code.SystemCodeVo">
+		  SELECT ITM_CD
+               , A_LEN
+               , B_LEN
+               , C_LEN
+               , D_LEN
+               , E_LEN
+               , F_LEN
+               , A_VAL
+               , B_VAL
+               , C_VAL
+               , D_VAL
+               , E_VAL
+               , F_VAL
+            FROM TB_SYS_SHAPE_PSN
+           WHERE 1 = 1  
+             AND ITM_CD = #ITM_CD#
+	  </select>
+
+	  <select id="S1415SelectImgArray" parameterClass="ModelsLibrary.Code.SystemCodeVo" resultClass="ModelsLibrary.Code.SystemCodeVo">
+		  SELECT IMG AS ITM_IMG
+		    FROM TB_CD_ITM_IMG
+		   WHERE 1 = 1
+		     AND CHNL_CD = #CHNL_CD#
+		     AND ITM_CD  = #ITM_CD#
+	  </select>
+
+	  <insert id="S1415InsertShapePos" parameterClass="ModelsLibrary.Code.SystemCodeVo">
+		  INSERT INTO TB_SYS_SHAPE_PSN
+          (
+                  ITM_CD
+                , A_LEN
+                , B_LEN
+                , C_LEN
+                , D_LEN
+                , E_LEN 
+                , F_LEN
+                , A_VAL
+                , B_VAL
+                , C_VAL
+                , D_VAL
+                , E_VAL
+                , F_VAL
+          )
+          VALUES 
+          (
+                 #ITM_CD#
+               , #A_LEN#
+               , #B_LEN#
+               , #C_LEN#
+               , #D_LEN#
+               , #E_LEN#
+               , #F_LEN#
+               , #A_VAL#
+               , #B_VAL#
+               , #C_VAL#
+               , #D_VAL#
+               , #E_VAL#
+               , #F_VAL#
+          )
+	  </insert>
+
+	  <update id="S1415UpdateShapePos" parameterClass="ModelsLibrary.Code.SystemCodeVo">
+		  UPDATE TB_SYS_SHAPE_PSN
+             SET A_LEN = #A_LEN# 
+               , B_LEN = #B_LEN#
+               , C_LEN = #C_LEN#
+               , D_LEN = #D_LEN#
+               , E_LEN = #E_LEN#
+               , F_LEN = #F_LEN#
+               , A_VAL = #A_VAL#
+               , B_VAL = #B_VAL#
+               , C_VAL = #C_VAL#
+               , D_VAL = #D_VAL#
+               , E_VAL = #E_VAL#
+               , F_VAL = #F_VAL#
+           WHERE 1 = 1 
+             AND ITM_CD = #ITM_CD#
+	  </update>
+
   </statements>
 </sqlMap>

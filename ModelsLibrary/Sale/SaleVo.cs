@@ -5534,6 +5534,66 @@
             get;
             set;
         }
+        public string A_LEN_POS
+        {
+            get;
+            set;
+        }
+        public string B_LEN_POS
+        {
+            get;
+            set;
+        }
+        public string C_LEN_POS
+        {
+            get;
+            set;
+        }
+        public string D_LEN_POS
+        {
+            get;
+            set;
+        }
+        public string E_LEN_POS
+        {
+            get;
+            set;
+        }
+        public string F_LEN_POS
+        {
+            get;
+            set;
+        }
+        public string A_VAL_POS
+        {
+            get;
+            set;
+        }
+        public string B_VAL_POS
+        {
+            get;
+            set;
+        }
+        public string C_VAL_POS
+        {
+            get;
+            set;
+        }
+        public string D_VAL_POS
+        {
+            get;
+            set;
+        }
+        public string E_VAL_POS
+        {
+            get;
+            set;
+        }
+        public string F_VAL_POS
+        {
+            get;
+            set;
+        }
 
     }
 }

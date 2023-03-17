@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using DevExpress.Xpf.WindowsUI;
 using System.Windows;
+using ShapeImageLib;
 
 namespace AquilaErpWpfApp3.View.SAL.Report
 {
@@ -34,13 +35,49 @@ namespace AquilaErpWpfApp3.View.SAL.Report
                 /// <summary>
                 /// 
                 /// </summary>
-                
 
+                allItems[x] = GetImageByte(allItems[x]);
 
                 list.Add(allItems[x]);
             }
+
             this.DataSource = list;
         }
+
+
+
+
+        /// <summary>
+        /// 레포트시 이미지 변환
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private SaleVo GetImageByte(SaleVo vo)
+        {
+            // 예제1
+            ShapeImageInfo ShapeData = new ShapeImageInfo();
+            ShapeData.Image = vo.ITM_IMG;                                                     // DB 불러오기 - 이미지 정보
+            ShapeData.Datas.Add(new ShapeImagePointInfo("A 길이", vo.A_LEN, vo.A_LEN_POS));   // DB 불러오기 - 형상 좌표 정보(좌표명,값,좌표정보)
+            ShapeData.Datas.Add(new ShapeImagePointInfo("B 길이", vo.B_LEN, vo.B_LEN_POS));
+            ShapeData.Datas.Add(new ShapeImagePointInfo("C 길이", vo.C_LEN, vo.C_LEN_POS));
+            ShapeData.Datas.Add(new ShapeImagePointInfo("D 길이", vo.D_LEN, vo.D_LEN_POS));
+            ShapeData.Datas.Add(new ShapeImagePointInfo("E 길이", vo.E_LEN, vo.E_LEN_POS));
+            ShapeData.Datas.Add(new ShapeImagePointInfo("F 길이", vo.F_LEN, vo.F_LEN_POS));
+            ShapeData.Datas.Add(new ShapeImagePointInfo("A 각도", vo.A_VAL, vo.A_VAL_POS));
+            ShapeData.Datas.Add(new ShapeImagePointInfo("B 각도", vo.B_VAL, vo.B_VAL_POS));
+            ShapeData.Datas.Add(new ShapeImagePointInfo("C 각도", vo.C_VAL, vo.C_VAL_POS));
+            ShapeData.Datas.Add(new ShapeImagePointInfo("D 각도", vo.D_VAL, vo.D_VAL_POS));
+            ShapeData.Datas.Add(new ShapeImagePointInfo("E 각도", vo.E_VAL, vo.E_VAL_POS));
+            ShapeData.Datas.Add(new ShapeImagePointInfo("F 각도", vo.F_VAL, vo.F_VAL_POS));
+
+            vo.ITM_IMG = ShapeImageLibFunc.TransShapeImage(ShapeData);                                                     // 이미지 정보 변경
+
+
+            return vo;             // DB 불러오기 - 실제 보고서 바인딩에서 이 함수 사용 하여 변환
+
+
+        }
+
 
 
 

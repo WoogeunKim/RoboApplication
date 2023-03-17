@@ -1824,5 +1824,80 @@
             get;
             set;
         }
+        public string POS_NM
+        {
+            get;
+            set;
+        }
+        public string POS_VAL
+        {
+            get;
+            set;
+        }
+        public string A_LEN
+        {
+            get;
+            set;
+        }
+        public string B_LEN
+        {
+            get;
+            set;
+        }
+        public string C_LEN
+        {
+            get;
+            set;
+        }
+        public string D_LEN
+        {
+            get;
+            set;
+        }
+        public string E_LEN
+        {
+            get;
+            set;
+        }
+        public string F_LEN
+        {
+            get;
+            set;
+        }
+        public string A_VAL
+        {
+            get;
+            set;
+        }
+        public string B_VAL
+        {
+            get;
+            set;
+        }
+        public string C_VAL
+        {
+            get;
+            set;
+        }
+        public string D_VAL
+        {
+            get;
+            set;
+        }
+        public string E_VAL
+        {
+            get;
+            set;
+        }
+        public string F_VAL
+        {
+            get;
+            set;
+        }
+        public byte[] ITM_IMG
+        {
+            get;
+            set;
+        }
     }
 }

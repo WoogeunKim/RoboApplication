@@ -7355,6 +7355,18 @@
                 , T4.E_VAL
                 , T4.F_LEN
                 , T4.F_VAL     
+                , T6.A_LEN AS A_LEN_POS
+                , T6.A_VAL AS A_VAL_POS
+                , T6.B_LEN AS B_LEN_POS
+                , T6.B_VAL AS B_VAL_POS
+                , T6.C_LEN AS C_LEN_POS
+                , T6.C_VAL AS C_VAL_POS
+                , T6.D_LEN AS D_LEN_POS
+                , T6.D_VAL AS D_VAL_POS
+                , T6.E_LEN AS E_LEN_POS
+                , T6.E_VAL AS E_VAL_POS
+                , T6.F_LEN AS F_LEN_POS
+                , T6.F_VAL AS F_VAL_POS
                 , T5.GR_NO    
                 , T5.GR_CNTR_NM      
                 , T5.GR_CNTR_ROUT_NM 
@@ -7401,6 +7413,13 @@
                     WHERE 1 = 1  
                         AND X.GR_NO = #RLSE_CMD_NO#
                 ) T5            
+                OUTER APPLY (
+                     SELECT A_LEN, B_LEN, C_LEN, D_LEN, E_LEN, F_LEN
+                          , A_VAL, B_VAL, C_VAL, D_VAL, E_VAL, F_VAL
+                       FROM TB_SYS_SHAPE_PSN X
+                      WHERE 1 = 1 
+                        AND X.ITM_CD = T2.ITM_SHP_CD
+                ) T6
         WHERE 1 = 1
             AND T1.CHNL_CD      = T2.CHNL_CD
             AND T1.CHNL_CD      = #CHNL_CD#

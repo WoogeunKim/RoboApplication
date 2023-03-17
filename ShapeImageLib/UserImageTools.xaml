@@ -1,0 +1,106 @@
+﻿<UserControl x:Class="ShapeImageLib.UserImageTools"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ShapeImageLib"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="1000">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="lstViee" Margin="1" SelectionChanged="lstViee_SelectionChanged">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+        <Grid Grid.Column="1" Margin="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1" Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="200"/>
+                </Grid.RowDefinitions>
+                <Border Margin="1" BorderThickness="1">
+                    <Border.BorderBrush>
+                        <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                    </Border.BorderBrush>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Margin="0,1" Orientation="Horizontal">
+                            <TextBlock TextWrapping="Wrap" Text="정렬" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" TextAlignment="Center"/>
+                            <ComboBox x:Name="cbailgn" Width="120" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,1" Orientation="Horizontal" Grid.Row="1">
+                            <TextBlock TextWrapping="Wrap" Text="좌표(X)" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" TextAlignment="Center"/>
+                            <TextBox x:Name="tbX" Width="120" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" TextChanged="tbX_TextChanged" PreviewTextInput="tbX_PreviewTextInput"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,1" Orientation="Horizontal" Grid.Row="2">
+                            <TextBlock TextWrapping="Wrap" Text="좌표(Y)" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" TextAlignment="Center"/>
+                            <TextBox x:Name="tbY" Width="120" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" TextChanged="tbY_TextChanged" PreviewTextInput="tbY_PreviewTextInput"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,1" Orientation="Horizontal" Grid.Row="3">
+                            <TextBlock TextWrapping="Wrap" Text="삭제" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" TextAlignment="Center"/>
+                            <Button x:Name="btndelete" Width="30" Height="25" Click="Button_Click" Content="X"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Grid Grid.Row="1" Margin="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock><Run Text="미리보기"/></TextBlock>
+                    <Border Margin="0" Grid.Row="1" BorderThickness="1" >
+                        <Border.Background>
+                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                        </Border.Background>
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                        </Border.BorderBrush>
+                        <Image x:Name="imgPreview" Stretch="None" />
+                    </Border>
+                </Grid>
+            </Grid>
+            <Grid Margin="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="71*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Border>
+                        <Border.Background>
+                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                        </Border.Background>
+                        <WindowsFormsHost x:Name="wfEdit" Margin="0"/>
+                    </Border>
+                    <Label x:Name="lblView" Content="" Margin="0" Foreground="Red" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                </Grid>
+                <StatusBar Margin="0" Grid.Row="1">
+                    <StatusBarItem>
+                        <TextBlock x:Name="imagesize" />
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <TextBlock x:Name="imagepos" />
+                    </StatusBarItem>
+                </StatusBar>
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</UserControl>
