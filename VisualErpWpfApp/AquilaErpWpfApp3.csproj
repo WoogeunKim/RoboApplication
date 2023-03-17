@@ -35,7 +35,7 @@
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>10</ApplicationRevision>
+    <ApplicationRevision>11</ApplicationRevision>
     <ApplicationVersion>1.0.3.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -1479,6 +1479,9 @@
     </Compile>
     <Compile Include="View\S\S1148.xaml.cs">
       <DependentUpon>S1148.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\S\S1415.xaml.cs">
+      <DependentUpon>S1415.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\S\S1431.xaml.cs">
       <DependentUpon>S1431.xaml</DependentUpon>
@@ -3017,6 +3020,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\S\S1415.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\S\S1431.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -3450,6 +3457,10 @@
     <ProjectReference Include="..\ModelsLibrary\ModelsLibrary.csproj">
       <Project>{45f964ff-989e-473f-83e5-4c5b6ab3b834}</Project>
       <Name>ModelsLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShapeImageLib\ShapeImageLib.csproj">
+      <Project>{61ab5978-ace4-4797-a1d7-21de62797945}</Project>
+      <Name>ShapeImageLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -947,6 +947,21 @@
             이형봉강 조견표 MST - 조회
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Code.S1415Controller.GetMstSelect(ModelsLibrary.Code.SystemCodeVo)">
+            <summary>
+            마스터 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Code.S1415Controller.GetImgArraySelect(ModelsLibrary.Code.SystemCodeVo)">
+            <summary>
+            이미지 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Code.S1415Controller.GetMstInsert(ModelsLibrary.Code.SystemCodeVo)">
+            <summary>
+            마스터 - 추가
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Code.S141Controller.GetMstNewSelect(ModelsLibrary.Code.SystemCodeVo)">
             <summary>
             품목 마스터 등록 MST - 조회  2022-10-21 생성 MST/DTL 따로 조회
