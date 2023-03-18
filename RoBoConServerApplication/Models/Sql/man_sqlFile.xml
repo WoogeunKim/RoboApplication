@@ -10130,9 +10130,69 @@
                 ) T1   
             ) T1          
        WHERE 1 = 1
-         AND RN <![CDATA[<]]> 3
-    
+         AND RN <![CDATA[<]]> 3    
      </select>
+
+
+	 <select id="M66112SelectMstList" parameterClass="ModelsLibrary.Man.ManVo" resultClass="ModelsLibrary.Man.ManVo">		  
+        SELECT  T5.CO_NM + '[' + T5.CO_NO + ']'                     AS CO_NM
+              , CONVERT(VARCHAR(10), T2.SL_RLSE_DT, 23)             AS SL_RLSE_DT
+              , CONVERT(VARCHAR(10), T1.DUE_DT, 23)                 AS DUE_DT
+              , CONVERT(VARCHAR(10), T3.PROD_PLN_DT, 23)            AS PROD_PLN_DT
+              , ROUND(ISNULL(T4.PROD_QTY  / SL_QTY, 0) * 100, 0)    AS PROD_RT
+              , ROUND(ISNULL(T6.SL_ITM_QTY / SL_QTY, 0) * 100 , 0)  AS RLSE_RT
+          FROM (
+              SELECT T1.PUR_CO_CD
+                   , T1.DUE_DT
+                   , T1.PUR_NO            
+                FROM TB_CUST_PUR T1
+               WHERE 1 = 1
+                 AND T1.CHNL_CD = #CHNL_CD#
+                 AND T1.PUR_DT  >= CAST(CONVERT(VARCHAR, #FM_DT#, 112) + ' 00:00:00' AS DATETIME)
+                 AND T1.PUR_DT  <![CDATA[<=]]> CAST(CONVERT(VARCHAR, #TO_DT#, 112) + ' 23:59:59' AS DATETIME)
+              ) T1     
+              OUTER APPLY (
+                    SELECT X.SL_RLSE_DT
+                         , X.SL_RLSE_NO
+                         , X.PUR_NO          
+                         , SUM(Z.SL_ITM_QTY) AS SL_QTY 
+                      FROM TB_SL_RLSE     X
+                        ,  TB_SL_RLSE_DTL Z 
+                     WHERE 1 = 1
+                       AND X.CHNL_CD    = #CHNL_CD#
+                       AND X.SL_RLSE_NO = Z.SL_RLSE_NO         
+                       AND X.PUR_NO     = T1.PUR_NO
+                 GROUP BY  X.SL_RLSE_DT
+                         , X.SL_RLSE_NO
+                         , X.PUR_NO             
+                    ) T2
+              OUTER APPLY (      
+                    SELECT ORD_NO
+                         , PROD_PLN_DT  
+                      FROM TB_PROD_LOT_DIV X
+                     WHERE 1 = 1
+                       AND X.CHNL_CD = #CHNL_CD#
+                       AND X.ORD_NO  = T1.PUR_NO
+                  ) T3
+              OUTER APPLY ( 
+                    SELECT SUM(PROD_GD_QTY)     AS PROD_QTY
+                      FROM TB_PROD_JB_ORD X
+                     WHERE 1 = 1
+                       AND X.CHNL_CD    = #CHNL_CD#
+                       AND X.ORD_NO     =  T1.PUR_NO
+                  ) T4    
+              OUTER APPLY (
+                    SELECT SUM(X.SL_ITM_QTY) AS SL_ITM_QTY
+                      FROM TB_SL_BIL_DTL X
+                     WHERE 1 = 1
+                       AND X.CHNL_CD    = #CHNL_CD#
+                       AND X.PUR_NO     = T1.PUR_NO
+                 ) T6
+            , TB_CD_CO  T5
+        WHERE 1 = 1
+          AND T5.CHNL_CD    = #CHNL_CD#
+          AND T1.PUR_CO_CD  = T5.CO_NO
+	  </select>
 
   </statements>
 </sqlMap>

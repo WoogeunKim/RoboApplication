@@ -2738,5 +2738,17 @@
             set;
         }
 
+        public object PROD_RT
+        {
+            get;
+            set;
+        }
+
+        public object RLSE_RT
+        {
+            get;
+            set;
+        }
+
     }
 }
