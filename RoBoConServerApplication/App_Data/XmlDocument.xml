@@ -2197,6 +2197,7 @@
             Loss 최적화 수행 DTL 다이얼로그 추가
             </summary>
         </member>
+        <!-- Badly formed XML comment ignored for member "M:VisualServerApplication.Controllers.Man.M66112Controller.PostMstSelectList(ModelsLibrary.Man.ManVo)" -->
         <member name="M:VisualServerApplication.Controllers.Man.M66310Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
             <summary>
             투입자재지시관리 Mst 관리 - 조회
