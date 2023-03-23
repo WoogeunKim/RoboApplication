@@ -51,7 +51,7 @@
                , PUR_ORD_SEQ
                , N1ST_ITM_GRP_NM
                , N2ND_ITM_GRP_NM  
-               , CO_CD
+               , CO_CD AS CO_NO
                , CO_NM 
                , PUR_DUE_DT
                , ITM_CD
@@ -144,7 +144,7 @@
  
               #CHNL_CD#
             , #AREA_CD#
-            , #INAUD_DT#s
+            , #INAUD_DT#
             , 'RGU'
             , 'I'
             , '100'
