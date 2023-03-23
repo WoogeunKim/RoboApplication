@@ -3493,9 +3493,9 @@
             원자재 입고 발주 - 조회
             </summary>
         </member>
-        <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetMstInsert(ModelsLibrary.Mobile.MobileVo)">
+        <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetInpMstInsert(ModelsLibrary.Mobile.MobileVo)">
             <summary>
-            품목 가입고  - 추가
+            품목 입고  - 추가
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Pda.PdaController.GetUsrSelect(ModelsLibrary.Pda.PdaVo)">
