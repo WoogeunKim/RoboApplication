@@ -114,7 +114,54 @@
               ) T10        
         ORDER BY RN 
 	 </select>
-	  
+
+
+     <!--입고수불번호 조회-->
+	  <insert id="InpMstInsert" parameterClass="ModelsLibrary.Mobile.MobileVo">
+		  INSERT INTO TB_INAUD_HIS
+           (
+              CHNL_CD
+            , AREA_CD
+            , INAUD_DT
+            , INAUD_TP_CD
+            , IO_CD
+            , FM_LOC_CD
+            , TO_LOC_CD
+            , CO_CD
+            , ITM_CD
+            , ITM_QTY
+            , DELT_FLG
+            , CRE_USR_ID
+            , CRE_DT
+            , CONN_NO
+            , CONN_SEQ
+            , ROUT_CD
+            , INAUD_FLG
+            , LOT_NO
+          )
+          VALUES
+          (
+ 
+              #CHNL_CD#
+            , #AREA_CD#
+            , #INAUD_DT#s
+            , 'RGU'
+            , 'I'
+            , '100'
+            , '100'
+            , #CO_NO#
+            , #ITM_CD#
+            , #ITM_QTY#
+            , 'N'
+            , #CRE_USR_ID#
+            , GETDATE()
+            , #PUR_ORD_NO#
+            , #PUR_ORD_SEQ#
+            , ''
+            , ''
+            , #LOT_NO#
+          )
+	  </insert>
 
   </statements>
 </sqlMap>

@@ -81,7 +81,7 @@ namespace VisualServerApplication.Controllers.Mobile
         /// <summary>
         /// 원자재 입고 거래처 - 조회
         /// </summary>
-        [Route("m/co")]
+        [Route("inp/m/co")]
         [HttpPost]
         // GET api/<controller>
         public async Task<IHttpActionResult> GetMInCoListSelect([FromBody] MobileVo vo)
@@ -99,7 +99,7 @@ namespace VisualServerApplication.Controllers.Mobile
         /// <summary>
         /// 원자재 입고 발주 - 조회
         /// </summary>
-        [Route("m/ord")]
+        [Route("inp/m/ord")]
         [HttpPost]
         // GET api/<controller>
         public async Task<IHttpActionResult> GetMInOrdListSelect([FromBody] MobileVo vo)
@@ -116,33 +116,23 @@ namespace VisualServerApplication.Controllers.Mobile
 
 
         /// <summary>
-        /// 품목 가입고  - 추가
+        /// 품목 입고  - 추가
         /// </summary>
-        [Route("m/i")]
+        [Route("inp/m/i")]
         [HttpPost]
         // POST api/<controller>
-        public async Task<IHttpActionResult> GetMstInsert([FromBody] MobileVo vo)
+        public async Task<IHttpActionResult> GetInpMstInsert([FromBody] MobileVo vo)
         {
             try
             {
-                Properties.EntityMapper.BeginTransaction();
-
-                //voList[0].INAUD_TMP_NO = Properties.EntityMapper.QueryForObject<string>("I6610SelectNo", voList[0]);
-                //Properties.EntityMapper.Update("I6610UpdateNo", voList[0]);
-
-                //foreach (InvVo item in voList)
-                //{
-                //    item.INAUD_TMP_NO = voList[0].INAUD_TMP_NO;
-                //    Properties.EntityMapper.Insert("I6610InsertPurMst", item);
-                //}
-                Properties.EntityMapper.CommitTransaction();
+                Properties.EntityMapper.Insert("InpMstInsert", vo);
                 return Ok<int>(1);
             }
             catch (System.Exception eLog)
             {
-                Properties.EntityMapper.RollBackTransaction();
                 return Ok<string>(eLog.Message);
             }
         }
+
     }
 }
