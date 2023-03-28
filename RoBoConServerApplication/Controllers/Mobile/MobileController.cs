@@ -134,5 +134,24 @@ namespace VisualServerApplication.Controllers.Mobile
             }
         }
 
+        
+
+        /// <summary>
+        /// 원자재 입고 LOT_NO 중복 여부 조회
+        /// </summary>
+        [Route("inp/lot/count")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetLotNoCountSelect([FromBody] MobileVo vo)
+        {
+            try
+            {
+                return Ok<int>(Properties.EntityMapper.QueryForObject<int>("InpLotNoCountSelect", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
     }
 }
