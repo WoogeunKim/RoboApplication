@@ -3498,6 +3498,11 @@
             품목 입고  - 추가
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetLotNoCountSelect(ModelsLibrary.Mobile.MobileVo)">
+            <summary>
+            원자재 입고 LOT_NO 중복 여부 조회
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Pda.PdaController.GetUsrSelect(ModelsLibrary.Pda.PdaVo)">
             <summary>
             로그인 - 조회
