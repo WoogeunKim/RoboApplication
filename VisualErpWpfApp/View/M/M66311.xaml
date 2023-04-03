@@ -65,6 +65,9 @@
                         
                         <dxb:BarButtonItem x:Name="M_ref" Content="조회" KeyGesture="F5" Command="{Binding NewContactCommand}" Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_Reload.svg}" LargeGlyph="{dx:DXImage SvgImages/Icon Builder/Actions_Reload.svg}" />
                     </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="저장/출력">
+                        <dxb:BarButtonItem x:Name="M_MST_PRINT" Content="저장" KeyGesture="F9" Glyph="{dx:DXImage Image=PrintDialog_16x16.png}" LargeGlyph="{dx:DXImage Image=PrintDialog_32x32.png}" RibbonStyle="Large" ItemClick="M_MST_PRINT_ItemClick" />
+                    </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
             </dxr:RibbonDefaultPageCategory>
         </dxr:RibbonControl>

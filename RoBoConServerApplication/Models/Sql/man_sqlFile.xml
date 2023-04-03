@@ -9886,6 +9886,7 @@
 		  
 		  WITH TMP AS (
             SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.OPMZ_SEQ) AS RN 
+                 , T1.OPMZ_NO
                  , T1.OPMZ_SEQ
                  , T1.DMND_IDX
                  , T1.STEP
@@ -9935,6 +9936,7 @@
                AND T1.ORD_SEQ   = T2.ORD_SEQ
         ) 
         SELECT    T1.STEP             AS RN 
+                , T1.OPMZ_NO
                 , T1.ITM_STL_CD
                 , T1.ITM_STL_SZ_CD
                 , T1.INTO_RAW_KNT
@@ -9954,6 +9956,7 @@
           FROM (
                 SELECT ROW_NUMBER() OVER (PARTITION BY STEP, ITM_STL_CD, ITM_STL_SZ_CD, INTO_RAW_LEN ORDER BY SUB_STEP, CUT_NO) SUB_STEP 
                      , T2.CUT_NO
+                     , T1.OPMZ_NO
                      , T1.OPMZ_SEQ
                      , T1.DMND_IDX
                      , T1.STEP
@@ -9981,10 +9984,11 @@
           ) T1
         WHERE 1 = 1
          GROUP BY  T1.ITM_STL_CD
-                , T1.ITM_STL_SZ_CD
-                , T1.INTO_RAW_LEN
-                , T1.STEP
-                , T1.INTO_RAW_KNT
+                 , T1.ITM_STL_SZ_CD
+                 , T1.INTO_RAW_LEN
+                 , T1.STEP
+                 , T1.INTO_RAW_KNT
+                 , T1.OPMZ_NO
 	  </select>
 	  
 	  <insert id="M66310InsertDtl" parameterClass="ModelsLibrary.Man.ManVo">		   
