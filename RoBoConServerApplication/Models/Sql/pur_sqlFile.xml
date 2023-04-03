@@ -283,6 +283,7 @@
         , ITM_CD
         , UOM_CD
         , CO_UT_PRC
+        , PUR_QTY_RMN
         , PUR_QTY
         , PUR_AMT
         , PUR_ITM_RMK
@@ -303,6 +304,7 @@
         , #ITM_CD#
         , #UOM_CD#
         , #CO_UT_PRC#
+        , #PUR_QTY#
         , #PUR_QTY#
         , ROUND(#PUR_AMT#, 0)
         , #PUR_ITM_RMK#

@@ -125,11 +125,19 @@ namespace VisualServerApplication.Controllers.Mobile
         {
             try
             {
+                Properties.EntityMapper.BeginTransaction();
+
+                vo.LOT_NO = Properties.EntityMapper.QueryForObject<string>("InpLotNoSelect", vo);
+                Properties.EntityMapper.Update("InpLotNoUpdate", vo);
+
                 Properties.EntityMapper.Insert("InpMstInsert", vo);
+
+                Properties.EntityMapper.CommitTransaction();
                 return Ok<int>(1);
             }
             catch (System.Exception eLog)
             {
+                Properties.EntityMapper.RollBackTransaction();
                 return Ok<string>(eLog.Message);
             }
         }
@@ -153,5 +161,107 @@ namespace VisualServerApplication.Controllers.Mobile
                 return Ok<string>(eLog.Message);
             }
         }
+
+
+        /// <summary>
+        /// 품목그룹관리 - 조회
+        /// </summary>
+        [Route("itm/grp")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetItmGrpListSelect([FromBody] MobileVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<MobileVo>>(Properties.EntityMapper.QueryForList<MobileVo>("ItmGrpSelectList", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// 품목관리 김이정보 - 조회
+        /// </summary>
+        [Route("itm/len")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetItmLenListSelect([FromBody] MobileVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<MobileVo>>(Properties.EntityMapper.QueryForList<MobileVo>("ItmLenSelectList", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// 입고시 시스템관리 - 조회
+        /// </summary>
+        [Route("inp/sys")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetInpSysListSelect([FromBody] MobileVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<MobileVo>>(Properties.EntityMapper.QueryForList<MobileVo>("InpOtherCaseSelectList", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// 품목 잔량 - 조회
+        /// </summary>
+        [Route("itm/qty")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetItmQtyDataSelect([FromBody] MobileVo vo)
+        {
+            try
+            {
+                return Ok<MobileVo>(Properties.EntityMapper.QueryForObject<MobileVo>("ItmQtyDataSelect", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// 품목 출고  - 추가
+        /// </summary>
+        [Route("out/mtrl")]
+        [HttpPost]
+        // POST api/<controller>
+        public async Task<IHttpActionResult> GetOutMtrlInsert([FromBody] MobileVo vo)
+        {
+            try
+            {
+                Properties.EntityMapper.Insert("OutMtrlInsert", vo);
+                return Ok<int>(1);
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+
+
+
+
+
     }
 }

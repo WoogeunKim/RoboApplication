@@ -40,5 +40,20 @@ namespace ModelsLibrary.Mobile
         public string AREA_CD { get; set; }
         public string LOT_NO { get; set; }
         public string INAUD_DT { get; set; }
+        public object ITM_PAK_QTY { get; set; }
+        public string N1ST_ITM_GRP_CD { get; set; }
+        public string N2ND_ITM_GRP_CD { get; set; }
+        public object ITM_LEN { get; set; }
+        public string ITM_GRP_CLSS_CD { get; set; }
+        public string PRNT_ITM_GRP_CD { get; set; }
+        public string ITM_GRP_CD { get; set; }
+        public string ITM_GRP_NM { get; set; }
+        public string CLSS_CD { get; set; }
+        public string CLSS_DESC { get; set; }
+        public string CLSS_TP_CD { get; set; }
+        public string LOC_CD { get; set; }
+        public string INAUD_CD { get; set; }
+        public string ORD_NO { get; set; }
+        public object ITM_TMP_QTY { get; set; }
     }
 }

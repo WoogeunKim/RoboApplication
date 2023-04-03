@@ -131,7 +131,9 @@
              , ITM_QTY   AS TMP_RMK_QTY          
              , PUR_QTY
              , ITM_MD_QTY
-             , PUR_QTY - ITM_QTY AS RMN_QTY
+             <!--, PUR_QTY - ITM_QTY AS RMN_QTY-->
+             , PUR_QTY_RMN AS RMN_QTY
+             , ISNULL(dbo.FF_ROBO_ITM_QTY (N2ND_ITM_GRP_CD, ITM_LEN),0) AS ITM_PAK_QTY
              , CO_UT_PRC     
              , ITM_QTY * CO_UT_PRC AS PUR_AMT
              , PUR_RMK
@@ -144,12 +146,14 @@
                  , T2.PUR_ORD_NO
                  , T2.PUR_ORD_SEQ
                  , dbo.PUR_N1ST_GRP_NM_FNC(T1.CHNL_CD, T3.ITM_GRP_CLSS_CD, T3.N1ST_ITM_GRP_CD)                   AS N1ST_ITM_GRP_NM
+                 , T3.N2ND_ITM_GRP_CD
                  , dbo.PUR_N2ST_GRP_NM_FNC(T1.CHNL_CD, T3.ITM_GRP_CLSS_CD, T3.N1ST_ITM_GRP_CD,  N2ND_ITM_GRP_CD) AS N2ND_ITM_GRP_NM  
                  , T1.PUR_CO_CD                         AS CO_CD
                  , dbo.CD_COMPANY_NM_FNC(T1.CHNL_CD, T1.PUR_CO_CD)  AS CO_NM 
                  , CONVERT(CHAR(10),T1.PUR_DUE_DT,23) AS PUR_DUE_DT
                  , T3.ITM_CD
                  , T3.ITM_NM
+                 , T3.ITM_LEN
                  , T3.ITM_SZ_NM
                  , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-003', T3.UOM_CD) AS UOM_NM 
                  , T2.PUR_QTY  
@@ -161,6 +165,7 @@
                  , '100' AS INAUD_ORG_NO
                  , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'P-008', '100') AS INAUD_ORG_NM
                  , T1.CHNL_CD
+                 , T2.PUR_QTY_RMN
               FROM TB_PUR_ORD       T1
                  , TB_PUR_ORD_DTL   T2 
                  , TB_CD_ITM        T3
@@ -170,7 +175,8 @@
                AND T1.CHNL_CD    = T3.CHNL_CD
                AND T1.PUR_ORD_NO = T2.PUR_ORD_NO
                AND T2.ITM_CD     = T3.ITM_CD
-               AND T2.PUR_QTY - ISNULL(dbo.FF_INV_ORD_QTY(T1.CHNL_CD, T2.PUR_ORD_NO, T2.PUR_ORD_SEQ), 0)  > 0  
+               AND T2.PUR_QTY_RMN  > 0
+               <!--AND T2.PUR_QTY - ISNULL(dbo.FF_INV_ORD_QTY(T1.CHNL_CD, T2.PUR_ORD_NO, T2.PUR_ORD_SEQ), 0)  > 0-->  
                AND T1.PUR_CLZ_FLG = 'N'          
                AND NOT EXISTS (SELECT 'X'
                                  FROM TB_PUR_CTRT_CLZ  X 
@@ -206,6 +212,7 @@
             , ROUT_CD
             , INAUD_FLG
             , LOT_NO
+			, ORD_NO
           )
           VALUES
           (
@@ -213,10 +220,10 @@
               #CHNL_CD#
             , #AREA_CD#
             , #INAUD_DT#
-            , 'RGU'
+            , #INAUD_CD#
             , 'I'
-            , '100'
-            , '100'
+            , #LOC_CD#
+            , #LOC_CD#
             , #CO_NO#
             , #ITM_CD#
             , #ITM_QTY#
@@ -228,9 +235,22 @@
             , ''
             , ''
             , #LOT_NO#
+			, #ORD_NO#
           )
 	  </insert>
 
+	  <select id="InpLotNoSelect" parameterClass="ModelsLibrary.Mobile.MobileVo" resultClass="string">
+		  SELECT dbo.FF_NO_FMT(#CHNL_CD#, 'ST', #AREA_CD#) FROM CPY_T WHERE NO = 1 
+	  </select>
+
+	  <update id="InpLotNoUpdate" parameterClass="ModelsLibrary.Mobile.MobileVo" resultClass="int">
+		  UPDATE TB_SYS_NO_FMT
+             SET LST_FMT_NO = #LOT_NO#
+           WHERE 1 = 1
+             AND CHNL_CD   = #CHNL_CD#
+             AND TBL_ID    = 'ST'
+             AND AREA_CD   = #AREA_CD#
+	  </update>
 
 	  <select id="InpLotNoCountSelect" parameterClass="ModelsLibrary.Mobile.MobileVo" resultClass="int">
         SELECT COUNT(LOT_NO) 
@@ -239,6 +259,132 @@
            AND CHNL_CD = #CHNL_CD#
            AND LOT_NO  = #LOT_NO#
 	  </select>
+	  
+  
+	  <select id="ItmGrpSelectList"  resultClass="ModelsLibrary.Mobile.MobileVo" parameterClass="ModelsLibrary.Mobile.MobileVo">
+		  SELECT 
+	  	         T1.ITM_GRP_CD
+               , T1.ITM_GRP_NM
+               , T1.ITM_GRP_CLSS_CD
+               , T1.PRNT_ITM_GRP_CD
+               , T1.CHNL_CD
+               , T1.DELT_FLG
+            FROM TB_CD_ITM_GRP T1 
+           WHERE 1 = 1 
+             AND T1.CHNL_CD         = #CHNL_CD#
+             AND T1.ITM_GRP_CLSS_CD = #ITM_GRP_CLSS_CD#
+           <isNotNull property="ITM_GRP_CD">
+             AND T1.PRNT_ITM_GRP_CD = #ITM_GRP_CD#
+	       </isNotNull>
+             AND T1.DELT_FLG        = #DELT_FLG#
+	  </select>
+	  
+  
+	  <select id="ItmLenSelectList"  resultClass="ModelsLibrary.Mobile.MobileVo" parameterClass="ModelsLibrary.Mobile.MobileVo">
+		  SELECT 
+		          T10.ITM_CD
+                , T10.N1ST_ITM_GRP_CD
+                , T10.N2ND_ITM_GRP_CD
+                , T10.ITM_LEN
+            FROM (
+                SELECT 
+				       T1.ITM_CD
+                     , T1.N1ST_ITM_GRP_CD
+                     , T1.N2ND_ITM_GRP_CD
+                     , CONVERT(NUMERIC(12,4), SUBSTRING(T1.ITM_CD, CHARINDEX('-',T1.ITM_CD)+1, LEN(T1.ITM_CD))) AS ITM_LEN
+                     <!--, (T1.ITM_LEN / 100) AS ITM_LEN-->
+                  FROM TB_CD_ITM T1
+                 WHERE 1 = 1 
+                   AND T1.CHNL_CD         = #CHNL_CD#
+                   AND T1.N1ST_ITM_GRP_CD = #N1ST_ITM_GRP_CD#
+                   AND T1.N2ND_ITM_GRP_CD = #N2ND_ITM_GRP_CD#
+                   AND T1.DELT_FLG        = #DELT_FLG#
+                ) AS T10
+            ORDER BY T10.ITM_LEN
+	  </select>
+	  
+  
+	  <select id="InpOtherCaseSelectList" resultClass="ModelsLibrary.Mobile.MobileVo" parameterClass="ModelsLibrary.Mobile.MobileVo">
+	        SELECT 
+			       T1.CLSS_CD
+                 , T1.CLSS_DESC
+              FROM TB_SYS_CLSS_CD T1
+             WHERE 1 = 1 
+               AND T1.CHNL_CD         = #CHNL_CD#
+               AND T1.CLSS_TP_CD      = #CLSS_TP_CD#
+           <isNotNull property="CLSS_CD">
+		       AND T1.CLSS_CD      LIKE 'R%'
+               <!--AND T1.CLSS_CD        != 'RGU'-->
+	       </isNotNull>
+               AND T1.DELT_FLG        = #DELT_FLG#
+	  </select>
+
+
+	  <select id="ItmQtyDataSelect" resultClass="ModelsLibrary.Mobile.MobileVo" parameterClass="ModelsLibrary.Mobile.MobileVo">
+		  SELECT TOP 1
+                 MAX(T1.ITM_CD)    AS ITM_CD
+               , MAX(T1.ORD_NO)    AS ORD_NO
+               , MAX(T1.LOT_NO)    AS LOT_NO
+               , MAX(T1.LOC_CD)    AS LOC_CD
+               , SUM(T1.INAUD_QTY) AS ITM_QTY
+            FROM (
+                  SELECT 
+                         X.ITM_CD
+                       , X.ORD_NO
+                       , X.LOT_NO
+                       , X.LOC_CD
+                       , CASE WHEN X.INAUD_CD LIKE 'R%' THEN X.INAUD_QTY 
+                              WHEN X.INAUD_CD LIKE 'I%' THEN X.INAUD_QTY * -1
+                              ELSE 0 
+                              END AS INAUD_QTY
+                    FROM TB_INAUD_DTL X
+                   WHERE 1 = 1
+                     AND X.CHNL_CD  = #CHNL_CD# 
+                     AND X.LOT_NO   = #LOT_NO#
+               ) T1
+           WHERE 1 = 1
+	  </select>
+
+	  <insert id="OutMtrlInsert" parameterClass="ModelsLibrary.Mobile.MobileVo">
+		  INSERT INTO TB_INAUD_HIS
+          (
+                CHNL_CD
+              , AREA_CD
+              , INAUD_DT
+              , INAUD_TP_CD
+              , IO_CD
+              , FM_LOC_CD
+              , TO_LOC_CD
+              , CO_CD
+              , ITM_CD
+              , ITM_QTY
+              , DELT_FLG
+              , CRE_USR_ID
+              , CRE_DT
+              , LOT_NO
+              , ORD_NO
+          )
+          VALUES
+          ( 
+                #CHNL_CD#
+              , #AREA_CD#
+              , GETDATE()
+              , #INAUD_CD#
+              , 'O'
+              , #LOC_CD#
+              , #LOC_CD#
+              , #CO_NO#
+              , #ITM_CD#
+              , #ITM_QTY#
+              , 'N'
+              , #CRE_USR_ID#
+              , GETDATE()
+              , #LOT_NO#
+              , #ORD_NO#
+          )
+	  </insert>
+	  
+
 
   </statements>
 </sqlMap>

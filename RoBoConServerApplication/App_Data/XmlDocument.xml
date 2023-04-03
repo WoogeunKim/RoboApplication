@@ -3503,6 +3503,31 @@
             원자재 입고 LOT_NO 중복 여부 조회
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetItmGrpListSelect(ModelsLibrary.Mobile.MobileVo)">
+            <summary>
+            품목그룹관리 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetItmLenListSelect(ModelsLibrary.Mobile.MobileVo)">
+            <summary>
+            품목관리 김이정보 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetInpSysListSelect(ModelsLibrary.Mobile.MobileVo)">
+            <summary>
+            입고시 시스템관리 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetItmQtyDataSelect(ModelsLibrary.Mobile.MobileVo)">
+            <summary>
+            품목 잔량 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetOutMtrlInsert(ModelsLibrary.Mobile.MobileVo)">
+            <summary>
+            품목 출고  - 추가
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Pda.PdaController.GetUsrSelect(ModelsLibrary.Pda.PdaVo)">
             <summary>
             로그인 - 조회
