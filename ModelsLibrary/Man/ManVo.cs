@@ -70,10 +70,6 @@
             get;
             set;
         }
-
-
-
-
         
         public string PROD_EQ_NO
         {
@@ -2750,5 +2746,25 @@
             set;
         }
 
+        public string N1ST_EQ_NO
+        {
+            get;
+            set;
+        }
+        public string N1ST_EQ_NM
+        {
+            get;
+            set;
+        }
+        public string N2ND_EQ_NO
+        {
+            get;
+            set;
+        }
+        public string N2ND_EQ_NM
+        {
+            get;
+            set;
+        }
     }
 }

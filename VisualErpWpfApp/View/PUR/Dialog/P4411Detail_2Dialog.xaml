@@ -260,14 +260,14 @@
 
                 <dxg:GridColumn FieldName="CO_UT_PRC" Header="단가*" Width="20" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate" CellStyle="{StaticResource customCellStyle}">
                     <dxg:GridColumn.EditSettings>
-                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0.00"  MaskUseAsDisplayFormat="True" />
+                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True" />
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
 
 
                 <dxg:GridColumn FieldName="PUR_AMT" Header="금액" Width="20" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True"  >
                     <dxg:GridColumn.EditSettings>
-                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0.00"  MaskUseAsDisplayFormat="True" />
+                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True" />
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
 
@@ -288,7 +288,7 @@
                 <dxg:GridSummaryItem SummaryType="Count" Alignment="Right"/>
                 <dxg:GridSummaryItem FieldName="BUN_WGT" SummaryType="Sum" DisplayFormat="###,###,###,##0" />
                 <dxg:GridSummaryItem FieldName="PUR_QTY" SummaryType="Sum" DisplayFormat="###,###,###,##0" />
-                <dxg:GridSummaryItem FieldName="PUR_AMT" SummaryType="Sum" DisplayFormat="###,###,###,##0.00" />
+                <dxg:GridSummaryItem FieldName="PUR_AMT" SummaryType="Sum" DisplayFormat="###,###,###,##0" />
             </dxg:GridControl.TotalSummary>
         </dxg:GridControl>
 

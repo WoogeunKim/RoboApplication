@@ -28,8 +28,7 @@ namespace AquilaErpWpfApp3.ViewModel
         private M66311MasterDialog masterDialog;
         public M66311ViewModel()
         {
-
-
+            SYSTEM_CODE_VO();
         }
 
         // Master
@@ -83,6 +82,50 @@ namespace AquilaErpWpfApp3.ViewModel
             }
         }
 
+        private async void SYSTEM_CODE_VO()
+        {
+            try
+            {
+                // 절단설비
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("M66311/n1st/eq"
+                                                                                                   , new StringContent(JsonConvert.SerializeObject(new ManVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        this.SelectN1stList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+
+                    }
+                }
+
+                // 가공설비
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("M66311/n2nd/eq"
+                                                                                                   , new StringContent(JsonConvert.SerializeObject(new ManVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        this.SelectN2ndList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+
+                    }
+
+                }
+            }
+            catch(Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+        }
+
+
+
+
+
+
+
+
+
+        // MVVM 방식으로 화면과 바이딩을 합니다.
+
         private string _M_SEARCH_TEXT = string.Empty;
         public string M_SEARCH_TEXT
         {
@@ -99,17 +142,21 @@ namespace AquilaErpWpfApp3.ViewModel
         ManVo _selectedMstItem;
         public ManVo SelectedMstItem
         {
-            get
-            {
-                return _selectedMstItem;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    SetProperty(ref _selectedMstItem, value, () => SelectedMstItem);
-                }
-            }
+            get { return _selectedMstItem; }
+            set { SetProperty(ref _selectedMstItem, value, () => SelectedMstItem); }
+        }
+
+        private IList<ManVo> _selectN1stList = new List<ManVo>();
+        public IList<ManVo> SelectN1stList
+        {
+            get { return _selectN1stList; }
+            set { SetProperty(ref _selectN1stList, value, () => SelectN1stList); }
+        }
+        private IList<ManVo> _selectN2ndList = new List<ManVo>();
+        public IList<ManVo> SelectN2ndList
+        {
+            get { return _selectN2ndList; }
+            set { SetProperty(ref _selectN2ndList, value, () => SelectN2ndList); }
         }
 
         string _Title = string.Empty;

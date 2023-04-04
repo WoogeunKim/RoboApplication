@@ -9572,7 +9572,13 @@
              , T4.D_VAL
              , T4.E_VAL
              , T4.F_VAL    
-             , #OPMZ_NO# AS OPMZ_NO
+             , #OPMZ_NO# AS OPMZ_NO           
+             , T4.N1ST_EQ_NO 
+             , T4.N1ST_EQ_NM
+             , T4.N2ND_EQ_NO
+             , T4.N2ND_EQ_NM       
+             , T4.SL_RLSE_NO
+             , T4.SL_RLSE_SEQ
           FROM (
               SELECT dbo.FN_splitValue(ORD_ID, '-', 1)
                    +'-' + dbo.FN_splitValue(ORD_ID, '-', 2)             AS ORD_NO
@@ -9590,7 +9596,8 @@
                    , CUT_RMN_QTY
                    , CUT_RMN_LSS_LEN
                    , CUT_RMN_LSS_RT 
-                   , OPMZ_NO, OPMZ_SEQ                   
+                   , OPMZ_NO
+				   , OPMZ_SEQ                   
                 FROM TB_OPMZ_SOL_RSLT T1
                WHERE 1 = 1
                  AND OPMZ_NO = #OPMZ_NO#    
@@ -9605,7 +9612,27 @@
               , TB_SL_RLSE_DTL    T3
                 OUTER APPLY (
                   SELECT X.A_LEN, X.B_LEN, X.C_LEN, X.D_LEN, X.E_LEN, X.F_LEN, X.A_VAL, X.B_VAL, X.C_VAL, X.D_VAL, X.E_VAL, X.F_VAL 
+                       , X.N1ST_EQ_NO    
+                       , X1.N1ST_EQ_NM
+                       , X.N2ND_EQ_NO
+                       , X2.N2ND_EQ_NM
+                       , X.SL_RLSE_NO   
+                       , X.SL_RLSE_SEQ
                     FROM TB_MES_PROD_DESC  X
+                         OUTER APPLY(
+                             SELECT Y.EQ_NM AS N1ST_EQ_NM
+                               FROM TB_PROD_EQ Y
+                              WHERE 1 = 1
+                                AND Y.CHNL_CD    = #CHNL_CD#
+                                AND Y.PROD_EQ_NO = X.N1ST_EQ_NO  
+                         ) X1
+                         OUTER APPLY(
+                             SELECT Y.EQ_NM AS N2ND_EQ_NM
+                               FROM TB_PROD_EQ Y
+                              WHERE 1 = 1
+                                AND Y.CHNL_CD    = #CHNL_CD#
+                                AND Y.PROD_EQ_NO = X.N2ND_EQ_NO  
+                         ) X2
                    WHERE 1 = 1
                      AND X.SL_RLSE_NO   = T3.SL_RLSE_NO
                      AND X.SL_RLSE_SEQ  = T3.SL_RLSE_SEQ
@@ -9626,6 +9653,43 @@
            AND T2.ORD_SEQ   = T3.SL_RLSE_SEQ
            AND T3.CHNL_CD   = #CHNL_CD#
      </select>
+
+	  <select id="M66311SelectN1stEqNoList" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
+		  SELECT PROD_EQ_NO  
+               , EQ_NM
+            FROM TB_PROD_EQ
+           WHERE 1 = 1
+             AND CHNL_CD    = #CHNL_CD#
+             AND PROD_EQ_NO IN ('CUT01', 'CUT02' )
+        UNION ALL
+          SELECT ''         AS PROD_EQ_NO
+               , '선택안함' AS EQ_NM
+            FROM CPY_T
+           WHERE NO = 1
+	  </select>
+
+	  <select id="M66311SelectN2ndEqNoList" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
+		  SELECT PROD_EQ_NO  
+               , EQ_NM
+            FROM TB_PROD_EQ
+           WHERE 1 = 1
+		     AND CHNL_CD    = #CHNL_CD#
+             AND PROD_EQ_NO NOT IN ('CUT01', 'CUT02' )
+         UNION ALL
+          SELECT ''         AS PROD_EQ_NO
+               , '선택안함' AS EQ_NM
+            FROM CPY_T
+           WHERE NO = 1
+	  </select>
+
+	  <update id="M66311UpdateEqNo" parameterClass="ModelsLibrary.Man.ManVo" >		  
+        UPDATE TB_MES_PROD_DESC
+           SET N1ST_EQ_NO   = #N1ST_EQ_NO#
+             , N2ND_EQ_NO   = #N2ND_EQ_NO#
+         WHERE 1 = 1
+           AND SL_RLSE_NO   = #SL_RLSE_NO#
+           AND SL_RLSE_SEQ  = #SL_RLSE_SEQ#    
+	  </update>
 	  
 	  
 	  

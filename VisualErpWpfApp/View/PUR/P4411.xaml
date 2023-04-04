@@ -671,13 +671,13 @@
 
                                             <dxg:GridColumn FieldName="CO_UT_PRC" Header="단가" Width="60" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="7">
                                                 <dxg:GridColumn.EditSettings>
-                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0.00"  MaskUseAsDisplayFormat="True" />
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True" />
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
                                             
                                             <dxg:GridColumn FieldName="PUR_AMT" Header="금액" Width="70" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="9" >
                                                 <dxg:GridColumn.EditSettings>
-                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0.00"  MaskUseAsDisplayFormat="True" />
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True" />
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
@@ -693,7 +693,7 @@
                                             <dxg:GridSummaryItem FieldName="TOT_USE_QTY" SummaryType="Sum" DisplayFormat="###,###,###,###,##0" />
                                             <dxg:GridSummaryItem FieldName="PUR_QTY" SummaryType="Sum" DisplayFormat="###,###,###,##0" />
                                             <!--<dxg:GridSummaryItem FieldName="CO_UT_PRC" SummaryType="Sum" DisplayFormat="###,###,###,##0" />-->
-                                            <dxg:GridSummaryItem FieldName="PUR_AMT" SummaryType="Sum" DisplayFormat="###,###,###,##0.00" />
+                                            <dxg:GridSummaryItem FieldName="PUR_AMT" SummaryType="Sum" DisplayFormat="###,###,###,##0" />
                                         </dxg:GridControl.TotalSummary>
 
                                     </dxg:GridControl>

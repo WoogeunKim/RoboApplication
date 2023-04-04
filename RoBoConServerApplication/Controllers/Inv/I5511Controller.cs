@@ -59,13 +59,19 @@ namespace VisualServerApplication.Controllers.Inv
         {
             try
             {
+                Properties.EntityMapper.BeginTransaction();
+
                 vo.INSRL_NO = Properties.EntityMapper.QueryForObject<string>("I5511SelectInsrlNo", vo);
                 Properties.EntityMapper.Update("I5511UpdateInsrlNo", vo);
+                Properties.EntityMapper.Insert("I5511InsertMst", vo);
 
-                return Ok<int>(Properties.EntityMapper.Insert("I5511InsertMst", vo) == null ? 1 : 0);
+                Properties.EntityMapper.CommitTransaction();
+
+                return Ok<int>(1);
             }
             catch (System.Exception eLog)
             {
+                Properties.EntityMapper.RollBackTransaction();
                 return Ok<string>(eLog.Message);
             }
         }
