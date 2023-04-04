@@ -9594,12 +9594,12 @@
                 FROM TB_OPMZ_SOL_RSLT T1
                WHERE 1 = 1
                  AND OPMZ_NO = #OPMZ_NO#    
-                 AND STEP    IN ( SELECT STEP
+                 <!--AND STEP    IN ( SELECT STEP
                                     FROM TB_OPMZ_INTO_MTRL_MAP
                                    WHERE 1 = 1
                                      AND OPMZ_NO = #OPMZ_NO#                                   
                                      AND CLZ_FLG = 'Y'
-                                  )
+                                  )-->
                 ) T1
               , TB_OPMZ_DMND      T2
               , TB_SL_RLSE_DTL    T3

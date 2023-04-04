@@ -76,20 +76,22 @@ namespace AquilaErpWpfApp3.View.M.Dialog
                 HttpClient httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                string url = "http://210.217.42.139:8880/robocon/api/optimize_barlist/v2?";
-                string value = "OPMZ_NO=" + orgDao.OPMZ_NO + "&" + "APPLY_ELON=" + _isChecked;
+                //string url = "http://210.217.42.139:8880/robocon/api/optimize_barlist/v2?";  // 2023-04-04 호출주소 변경
+                //string value = "OPMZ_NO=" + orgDao.OPMZ_NO + "&" + "APPLY_ELON=" + _isChecked;
+                string url = "http://aiblue.ddns.net:8880/robocon/api/optimize_barlist/v3?";
+                string value = "OPMZ_NO=" + orgDao.OPMZ_NO + "&" + "PLANNING_MODE=" + _isChecked;
 
-                //httpClient.GetAsync(url + value);
+                httpClient.GetAsync(url + value);
 
-                using (var playResponse = await httpClient.GetAsync(url + value))
-                {
-                    if (HttpStatusCode.OK != playResponse.StatusCode)
-                    {
-                        if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
-                        WinUIMessageBox.Show(playResponse.ReasonPhrase, _title, MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-                }
+                //using (var playResponse = await httpClient.GetAsync(url + value))
+                //{
+                //    if (HttpStatusCode.OK != playResponse.StatusCode)
+                //    {
+                //        if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+                //        WinUIMessageBox.Show(playResponse.ReasonPhrase, _title, MessageBoxButton.OK, MessageBoxImage.Error);
+                //        return;
+                //    }
+                //}
 
                 if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
 
