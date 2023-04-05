@@ -259,7 +259,24 @@ namespace VisualServerApplication.Controllers.Mobile
         }
 
 
-
+        /// <summary>
+        /// 기존 바코드 입고  - 추가
+        /// </summary>
+        [Route("inp/ret/i")]
+        [HttpPost]
+        // POST api/<controller>
+        public async Task<IHttpActionResult> GetInpReturnInsert([FromBody] MobileVo vo)
+        {
+            try
+            {
+                Properties.EntityMapper.Insert("InpMstInsert", vo);
+                return Ok<int>(1);
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
 
 
 

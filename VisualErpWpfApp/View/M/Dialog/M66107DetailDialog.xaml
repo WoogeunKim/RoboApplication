@@ -40,10 +40,12 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-
+        
         <DataTemplate x:Key="ReadOnlyHeaderTemplate">
             <dxe:CheckEdit IsChecked="{Binding ReadOnly, Mode=TwoWay}" Unchecked="CheckEdit_Checked" Checked="CheckEdit_Checked"  />
         </DataTemplate>
+        
+        
     </Window.Resources>
 
     <Grid x:Name="configCode">
@@ -174,8 +176,69 @@
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
+            <dxg:GridColumn FieldName="CLZ_FLG" Header="적용유/무" Width="80" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="17" >
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
             <dxg:GridControl.View>
-                <dxg:TableView x:Name="viewJOB_ITEMView" SearchDelay="0" ShowSearchPanelMode="Never"  ShowSearchPanelCloseButton="True" ShowFixedTotalSummary="True" AutoWidth="False" AllowPerPixelScrolling="True" ShowGroupPanel="False" AllowFilterEditor="True" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Cell" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False"  HiddenEditor="viewPage1EditView_HiddenEditor" SearchString="{Binding ElementName=text_search, Path=Text}" />
+                <dxg:TableView x:Name="viewJOB_ITEMView" SearchDelay="0" ShowSearchPanelMode="Never"  ShowSearchPanelCloseButton="True" ShowFixedTotalSummary="True" AutoWidth="False" AllowPerPixelScrolling="True" ShowGroupPanel="False" AllowFilterEditor="True" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Cell" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False"  HiddenEditor="viewPage1EditView_HiddenEditor" SearchString="{Binding ElementName=text_search, Path=Text}">
+                    <dxg:TableView.FormatConditions>
+                        <dxg:FormatCondition FieldName="RN" Expression="[CLZ_FLG]='Y'">
+                            <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition FieldName="CO_NM"  Expression="Contains([CLZ_FLG],'Y')">
+                            <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition FieldName="IN_REQ_DT"  Expression="Contains([CLZ_FLG],'Y')">
+                            <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition FieldName="CNTR_NM"  Expression="Contains([CLZ_FLG],'Y')">
+                            <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition FieldName="CNTR_PSN_NM"  Expression="Contains([CLZ_FLG],'Y')">
+                            <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition FieldName="EQ_NO"  Expression="Contains([CLZ_FLG],'Y')" >
+                            <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition FieldName="LOC_CD"  Expression="Contains([CLZ_FLG],'Y')" >
+                            <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition FieldName="ITM_SHP_CD"  Expression="Contains([CLZ_FLG],'Y')">
+                            <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition FieldName="ITM_STL_CD"  Expression="Contains([CLZ_FLG],'Y')">
+                            <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition FieldName="ITM_STL_SZ_CD"  Expression="Contains([CLZ_FLG],'Y')" >
+                            <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition FieldName="ITM_STL_LENG"  Expression="Contains([CLZ_FLG],'Y')">
+                            <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition FieldName="SL_ITM_QTY"  Expression="Contains([CLZ_FLG],'Y')" >
+                            <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition FieldName="ITM_STL_PRD_DESC"  Expression="Contains([CLZ_FLG],'Y')">
+                            <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition FieldName="CNTR_DE_NM"  Expression="Contains([CLZ_FLG],'Y')">
+                            <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition FieldName="SL_RLSE_NO"  Expression="Contains([CLZ_FLG],'Y')">
+                            <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition FieldName="SL_RLSE_SEQ"  Expression="Contains([CLZ_FLG],'Y')">
+                            <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition FieldName="CLZ_FLG"  Expression="Contains([CLZ_FLG],'Y')">
+                            <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
+                        </dxg:FormatCondition>
+                    </dxg:TableView.FormatConditions>
+                    
+                </dxg:TableView>
             </dxg:GridControl.View>
             <dxg:GridControl.TotalSummary>
                 <dxg:GridSummaryItem SummaryType="Count" Alignment="Right"/>

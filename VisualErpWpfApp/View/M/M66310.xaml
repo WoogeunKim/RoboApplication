@@ -33,11 +33,16 @@
                             </dxb:BarEditItem.EditTemplate>
                         </dxb:BarEditItem>
 
-                        <dxb:BarButtonItem x:Name="M_ref" Content="조회" KeyGesture="F5" Glyph="{dx:DXImage Image=Refresh2_16x16.png}" LargeGlyph="{dx:DXImage Image=Refresh2_32x32.png}" Command="{Binding RefreshCommand}" />
+                        <dxb:BarButtonItem x:Name="M_ref" Content="생산조회" Command="{Binding RefreshCommand}" Glyph="{dx:DXImage SvgImages/DiagramIcons/TextAlignment/textAlignment0.svg}" LargeGlyph="{dx:DXImage SvgImages/DiagramIcons/TextAlignment/textAlignment0.svg}" />
                     </dxr:RibbonPageGroup>
 
                     <dxr:RibbonPageGroup Caption="자재투입">
-                        <dxb:BarButtonItem x:Name="M_Barlist" Content="투입" Command="{Binding BarlistInputCommand}" IsEnabled="{Binding B_UPDATE}" Glyph="{dx:DXImage SvgImages/Outlook Inspired/ReversSort.svg}" LargeGlyph="{dx:DXImage SvgImages/Outlook Inspired/ReversSort.svg}" />
+                        <dxb:BarButtonItem x:Name="M_Barlist" Content="투입" Command="{Binding BarlistInputCommand}" IsEnabled="{Binding B_INSERT}" Glyph="{dx:DXImage SvgImages/Outlook Inspired/ReversSort.svg}" LargeGlyph="{dx:DXImage SvgImages/Outlook Inspired/ReversSort.svg}" />
+                    </dxr:RibbonPageGroup>
+
+
+                    <dxr:RibbonPageGroup Caption="페이지 새로고침">
+                        <dxb:BarButtonItem x:Name="D_ref" Content="조회" KeyGesture="F5" Command="{Binding DtlRefreshCommand}" IsEnabled="{Binding B_UPDATE}" Glyph="{dx:DXImage Image=Refresh2_16x16.png}" LargeGlyph="{dx:DXImage Image=Refresh2_32x32.png}" />
                     </dxr:RibbonPageGroup>
 
                 </dxr:RibbonPage>
@@ -162,7 +167,7 @@
                             <dxg:GridControl x:Name="summary" AutoExpandAllGroups="True" ItemsSource="{Binding Path=SummaryTableList}">
 
                                 <dxg:GridControl.View>
-                                    <dxg:TableView x:Name="configViewSummary" ShowFixedTotalSummary="False" ShowColumnHeaders="False" AllowEditing="False" AllowMoving="True" AllowResizing="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="False" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="True" NavigationStyle="None" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT , Path=EditValue}" RowMinHeight="55" VerticalScrollbarVisibility="Visible" VerticalAlignment="Stretch"  >
+                                    <dxg:TableView x:Name="configViewSummary" ShowFixedTotalSummary="False" ShowColumnHeaders="False" AllowEditing="False" AllowMoving="False" AllowResizing="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="False" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="True" NavigationStyle="None" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT , Path=EditValue}" RowMinHeight="55" VerticalScrollbarVisibility="Visible" VerticalAlignment="Stretch"  >
                                         <dxg:TableView.FormatConditions>
                                             <dxg:FormatCondition FieldName="ITM_STL_CD"  Expression="Contains([GBN],'작업중')" PredefinedFormatName="LightRedFill"   />
                                             <dxg:FormatCondition FieldName="ITM_STL_CD"  Expression="Contains([GBN],'1-작업대기')" PredefinedFormatName="YellowFillWithDarkYellowText"   />

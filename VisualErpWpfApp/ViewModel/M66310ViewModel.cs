@@ -30,10 +30,11 @@ namespace AquilaErpWpfApp3.ViewModel
 
         private M66311MasterDialog masterDialog;
 
+
         public M66310ViewModel()
         {
             B_UPDATE = false;
-
+            B_INSERT = false;
         }
 
         [Command]
@@ -58,7 +59,7 @@ namespace AquilaErpWpfApp3.ViewModel
                         }
 
                         WinUIMessageBox.Show("완료 되었습니다", _title, MessageBoxButton.OK, MessageBoxImage.Information);
-                        DtlRefresh(SelectedDtlItem.OPMZ_NO);
+                        DtlRefresh(OpmzNo);
                     }
                 }
             }
@@ -86,9 +87,9 @@ namespace AquilaErpWpfApp3.ViewModel
                 bool isDialog = (bool)masterDialog.ShowDialog();
                 if (isDialog)
                 {
-                    string SelectedOPMG_NO = masterDialog.resultDomain.OPMZ_NO;
+                    OpmzNo = masterDialog.resultDomain.OPMZ_NO;
 
-                    DtlRefresh(SelectedOPMG_NO);
+                    DtlRefresh(OpmzNo);
                 }
             }
             catch (System.Exception eLog)
@@ -96,6 +97,16 @@ namespace AquilaErpWpfApp3.ViewModel
                 WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }
+        }
+
+
+
+        [Command]
+        public void DtlRefresh()
+        {
+            if (string.IsNullOrEmpty(OpmzNo)) return;
+
+            DtlRefresh(OpmzNo);
         }
 
 
@@ -139,6 +150,8 @@ namespace AquilaErpWpfApp3.ViewModel
                         this.SummaryTableList = SummaryList;
 
                         this.SelectDtlList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+
+                        B_UPDATE = true;
                     }
                 }
 
@@ -154,6 +167,14 @@ namespace AquilaErpWpfApp3.ViewModel
         }
 
 
+
+
+        private string _opmzNo = default(string);
+        public string OpmzNo
+        {
+            get { return _opmzNo; }
+            set { SetProperty(ref _opmzNo, value, () => OpmzNo); }
+        }
 
         private IList<ManVo> _selectMstList;
         public IList<ManVo> SelectMstList
@@ -211,9 +232,16 @@ namespace AquilaErpWpfApp3.ViewModel
             set { SetProperty(ref _B_UPDATE, value, () => B_UPDATE); }
         }
 
+        bool _B_INSERT;
+        public bool B_INSERT
+        {
+            get { return _B_INSERT; }
+            set { SetProperty(ref _B_INSERT, value, () => B_INSERT); }
+        }
+
         private void InputValue()
         {
-            B_UPDATE = SelectedDtlItem != null ? true : false;
+            B_INSERT = SelectedDtlItem != null ? true : false;
         }
 
 

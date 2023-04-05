@@ -37,7 +37,7 @@ namespace AquilaErpWpfApp3.ViewModel
         {
             try
             {
-                DXSplashScreen.Show<ProgressWindow>();
+                if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
 
                 ManVo _param = new ManVo();
                 _param.OPMZ_NO = _OPMZ_NO;

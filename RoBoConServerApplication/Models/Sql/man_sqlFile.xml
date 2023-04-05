@@ -9481,51 +9481,61 @@
 	  </update>
 
 	  <select id="M66107SelectDtlDia" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
-        SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T2.IN_REQ_DT, T1.SL_RLSE_NO) AS RN
-             , CONVERT(VARCHAR(10),T2.IN_REQ_DT, 23) AS IN_REQ_DT
-             , T6.CO_NM
-             , T2.CNTR_NM
-             , T2.CNTR_PSN_NM
-             , T5.EQ_NO
-             , T2.LOC_CD
-             , T2.ITM_SHP_CD
-             , T2.ITM_STL_CD
-             , T2.ITM_STL_SZ_CD
-             , T2.ITM_STL_LENG
-             , T2.SL_ITM_QTY
-             , T2.ITM_STL_PRD_DESC
-             , T2.CNTR_DE_NM
-             , T2.SL_RLSE_NO
-             , T2.SL_RLSE_SEQ
-             , #OPMZ_NO# AS OPMZ_NO
-             , #UPD_USR_ID# AS UPD_USR_ID
-          FROM TB_SL_RLSE       T1
-         OUTER APPLY (
-          SELECT X.CO_NM
-              FROM TB_CD_CO X
-            WHERE 1 = 1
-              AND X.CHNL_CD    = #CHNL_CD#
-              AND X.CO_NO      = T1.SL_CO_CD
-          ) T6
-            , TB_SL_RLSE_DTL   T2
-         OUTER APPLY (
-          SELECT TOP 1 EQ_NO
-              FROM dbo.ufnSelEq(T2.SL_RLSE_NO, T2.SL_RLSE_SEQ)
-             GROUP BY EQ_NO
-          ) T5
-        WHERE 1 = 1
-          AND T1.CHNL_CD    = T2.CHNL_CD
-          AND T1.CHNL_CD    = #CHNL_CD#
-          AND T1.SL_RLSE_NO = T2.SL_RLSE_NO
-          AND T1.CLZ_FLG    = 'N'
-          AND NOT EXISTS(SELECT 'X' FROM TB_RBK_SOMO_LNK Y WHERE Y.SL_RLSE_NO = T2.SL_RLSE_NO AND Y.SL_RLSE_SEQ = T2.SL_RLSE_SEQ)
-          AND SUBSTRING(T1.SL_RLSE_NO,1,2) <![CDATA[<>]]> 'SR'
-         AND T1.SL_CO_CD = #CO_CD#
-         <isNotNull property="CNTR_PSN_NM" >
-            AND T2.CNTR_PSN_NM = #CNTR_PSN_NM#
-         </isNotNull>
-         ORDER BY T2.SL_RLSE_NO, T2.SL_RLSE_SEQ
+            SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T2.IN_REQ_DT, T1.SL_RLSE_NO) AS RN
+                 , CONVERT(VARCHAR(10),T2.IN_REQ_DT, 23) AS IN_REQ_DT
+                 , T6.CO_NM
+                 , T2.CNTR_NM
+                 , T2.CNTR_PSN_NM
+                 , T5.EQ_NO
+                 , T2.LOC_CD
+                 , T2.ITM_SHP_CD
+                 , T2.ITM_STL_CD
+                 , T2.ITM_STL_SZ_CD
+                 , T2.ITM_STL_LENG
+                 , T2.SL_ITM_QTY
+                 , T2.ITM_STL_PRD_DESC
+                 , T2.CNTR_DE_NM
+                 , T2.SL_RLSE_NO
+                 , T2.SL_RLSE_SEQ
+                 , #OPMZ_NO# AS OPMZ_NO
+                 , #UPD_USR_ID# AS UPD_USR_ID
+                 , CASE WHEN T7.ORD_NO IS NOT NULL THEN 'Y' ELSE 'N' END AS CLZ_FLG
+              FROM TB_SL_RLSE       T1
+                   OUTER APPLY (
+                       SELECT X.CO_NM
+                         FROM TB_CD_CO X
+                        WHERE 1 = 1
+                          AND X.CHNL_CD    = #CHNL_CD#
+                          AND X.CO_NO      = T1.SL_CO_CD
+                 ) T6
+                 , TB_SL_RLSE_DTL   T2
+                   OUTER APPLY (
+                       SELECT TOP 1 EQ_NO
+                         FROM dbo.ufnSelEq(T2.SL_RLSE_NO, T2.SL_RLSE_SEQ)
+                     GROUP BY EQ_NO
+                 ) T5
+                   OUTER APPLY (
+                       SELECT X.ORD_NO
+                            , X.ORD_SEQ 
+                         FROM TB_OPMZ_DMND X
+                        WHERE 1 = 1
+                          AND X.ORD_NO  = T2.SL_RLSE_NO
+                          AND X.ORD_SEQ = T2.SL_RLSE_SEQ           
+                 ) T7
+             WHERE 1 = 1
+               AND T1.CHNL_CD    = T2.CHNL_CD
+               AND T1.CHNL_CD    = #CHNL_CD#
+               AND T1.SL_RLSE_NO = T2.SL_RLSE_NO
+               AND T1.CLZ_FLG    = 'N'
+               AND NOT EXISTS(SELECT 'X' FROM TB_RBK_SOMO_LNK Y WHERE Y.SL_RLSE_NO = T2.SL_RLSE_NO AND Y.SL_RLSE_SEQ = T2.SL_RLSE_SEQ)
+               AND SUBSTRING(T1.SL_RLSE_NO,1,2) <![CDATA[<>]]> 'SR'
+               AND T1.SL_CO_CD = '999'
+             <isNotNull property="CNTR_PSN_NM" >
+               AND T2.CNTR_PSN_NM = #CNTR_PSN_NM#
+             </isNotNull>
+             ORDER BY T2.SL_RLSE_NO, T2.SL_RLSE_SEQ
      </select>
+	  
 
 	  <insert id="M66107InsertDtl" parameterClass="ModelsLibrary.Man.ManVo">
 		  INSERT INTO TB_OPMZ_DMND_TMP
