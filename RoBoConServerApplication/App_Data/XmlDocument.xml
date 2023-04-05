@@ -3528,6 +3528,11 @@
             품목 출고  - 추가
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetInpReturnInsert(ModelsLibrary.Mobile.MobileVo)">
+            <summary>
+            기존 바코드 입고  - 추가
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Pda.PdaController.GetUsrSelect(ModelsLibrary.Pda.PdaVo)">
             <summary>
             로그인 - 조회
