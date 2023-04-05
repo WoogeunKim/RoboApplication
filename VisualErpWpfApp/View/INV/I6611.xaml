@@ -186,6 +186,7 @@
                 <dxb:BarButtonItem x:Name="M_MST_PRINT" Content="출력" KeyGesture="F9" Glyph="{dx:DXImage Image=PrintDialog_16x16.png}" LargeGlyph="{dx:DXImage Image=PrintDialog_32x32.png}" RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" Command="{Binding ReportContactCommand}" /><!--ItemClick="M_MST_PRINT_ItemClick" />-->
                
                 <dxb:BarButtonItem x:Name="M_BarCode_PRINT" Content="출력" RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" Command="{Binding BarCodeContactCommand}" Glyph="{dx:DXImage SvgImages/HybridDemoIcons/BottomPanel/HybridDemo_Print.svg}" LargeGlyph="{dx:DXImage SvgImages/HybridDemoIcons/BottomPanel/HybridDemo_Print.svg}" />
+                <dxb:BarButtonItem x:Name="M_MST_BAR_CONFIG" Content="설정" RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" Command="{Binding BarPrintConfigCommand}" Glyph="{dx:DXImage SvgImages/Business Objects/BO_Unknown.svg}" LargeGlyph="{dx:DXImage SvgImages/Business Objects/BO_Unknown.svg}" />
                 <!--ItemClick="M_MST_PRINT_ItemClick" />-->
             </dxb:BarManager.Items>
             <Grid>
@@ -225,6 +226,7 @@
                             </dxr:RibbonPageGroup>
                             <dxr:RibbonPageGroup Caption="바코드 관리">
                                 <dxb:BarButtonItemLink BarItemName="M_BarCode_PRINT"/>
+                                <dxb:BarButtonItemLink BarItemName="M_MST_BAR_CONFIG"/> 
                             </dxr:RibbonPageGroup>
                         </dxr:RibbonPage>
                     </dxr:RibbonDefaultPageCategory>

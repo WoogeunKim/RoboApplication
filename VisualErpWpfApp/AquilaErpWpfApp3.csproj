@@ -35,7 +35,7 @@
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>16</ApplicationRevision>
+    <ApplicationRevision>18</ApplicationRevision>
     <ApplicationVersion>1.0.3.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -327,6 +327,12 @@
     </Compile>
     <Compile Include="View\INV\Report\I66110BarCodeReport.Designer.cs">
       <DependentUpon>I66110BarCodeReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Report\I6611BarCodeReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\INV\Report\I6611BarCodeReport.Designer.cs">
+      <DependentUpon>I6611BarCodeReport.cs</DependentUpon>
     </Compile>
     <Compile Include="View\M\Dialog\M6521AddMasterDialog.xaml.cs">
       <DependentUpon>M6521AddMasterDialog.xaml</DependentUpon>
@@ -3376,6 +3382,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\INV\Report\I66110BarCodeReport.resx">
       <DependentUpon>I66110BarCodeReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\INV\Report\I6611BarCodeReport.resx">
+      <DependentUpon>I6611BarCodeReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\M\Report\M6628Report.resx">
       <DependentUpon>M6628Report.cs</DependentUpon>

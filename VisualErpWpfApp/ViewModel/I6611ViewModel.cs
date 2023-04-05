@@ -157,9 +157,29 @@ namespace AquilaErpWpfApp3.ViewModel
             }
         }
 
+        [Command]
+        public void BarPrintConfig()
+        {
+
+            try
+            {
+                System.Windows.Controls.PrintDialog dialogue = new System.Windows.Controls.PrintDialog();
+                if (dialogue.ShowDialog() == true)
+                {
+                    Properties.Settings.Default.str_PrnNm = dialogue.PrintQueue.FullName;
+                    Properties.Settings.Default.Save();
+                }
+            }
+            catch (System.Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, "[¿¡·¯]" + _Title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+        }
 
 
-       [Command]
+
+        [Command]
        public async void Refresh()
         {
             try
