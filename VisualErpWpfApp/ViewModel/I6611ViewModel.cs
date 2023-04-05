@@ -16,6 +16,7 @@ using System.Windows.Media;
 using AquilaErpWpfApp3.Util;
 using AquilaErpWpfApp3.View.INV.Dialog;
 using AquilaErpWpfApp3.View.INV.Report;
+using DevExpress.XtraReports.UI;
 
 namespace AquilaErpWpfApp3.ViewModel
 {
@@ -70,6 +71,93 @@ namespace AquilaErpWpfApp3.ViewModel
             SYSTEM_CODE_VO();
            
         }
+
+        [Command]
+        public async void BarCodeContact()
+        {
+            try
+            {
+                if (this.SelectedMstItem != null)
+                {
+                    if (string.IsNullOrEmpty(Properties.Settings.Default.str_PrnNm))
+                    {
+                        System.Windows.Controls.PrintDialog dialogue = new System.Windows.Controls.PrintDialog();
+                        if (dialogue.ShowDialog() == true)
+                        {
+                            Properties.Settings.Default.str_PrnNm = dialogue.PrintQueue.FullName;
+                            Properties.Settings.Default.Save();
+                        }
+                    }
+
+                    InvVo BarcodeDao = new InvVo();
+
+                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("i6611/bar", new StringContent(JsonConvert.SerializeObject(SelectedMstItem), System.Text.Encoding.UTF8, "application/json")))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            BarcodeDao = JsonConvert.DeserializeObject<InvVo>(await response.Content.ReadAsStringAsync());
+
+                            if(BarcodeDao == null)
+                            {
+                                WinUIMessageBox.Show("해당 바코드가 존재하지 않습니다.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                            else if (BarcodeDao.LOT_NO == null)
+                            {
+                                WinUIMessageBox.Show("해당 바코드가 존재하지 않습니다.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                            else if (BarcodeDao.ITM_QTY == null)
+                            {
+                                WinUIMessageBox.Show("해당 바코드의 잔량이 존재하지 않습니다.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                            else if (double.Parse(BarcodeDao.ITM_QTY.ToString()) <= 0)
+                            {
+                                WinUIMessageBox.Show("해당 바코드의 잔량이 존재하지 않습니다.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                        }
+                    }
+
+
+                    MessageBoxResult result = WinUIMessageBox.Show("[" + BarcodeDao.LOT_NO + "] 정말로 바코드 하시겠습니까?", "[바코드 - 출력]" + _title, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                    {
+
+                        I6611BarCodeReport BarCodeReport = new I6611BarCodeReport(BarcodeDao);
+                        BarCodeReport.ShowPrintMarginsWarning = false;
+                        //// 페이지 크기 설정
+                        //BarCodeReport.PageWidth = 1000;
+                        //BarCodeReport.PageHeight = 1000;
+
+                        //// 인쇄 가능한 영역 지정
+                        //float margin = 10; // 여백 값을 조정합니다.
+                        //BarCodeReport.Margins = new System.Drawing.Printing.Margins((int)(margin), (int)(margin), (int)(margin), (int)(margin));
+
+
+                        //var margins = BarCodeReport.Margins;
+                        //margins.Left = 10;
+                        //margins.Right = 50;
+                        //margins.Top = 30;
+                        //margins.Bottom = 30;
+
+                        ReportPrintTool printTool = new ReportPrintTool(BarCodeReport);
+                        printTool.PrinterSettings.Copies = Convert.ToInt16(1);
+                        printTool.PrintingSystem.ShowPrintStatusDialog = false;
+                        printTool.PrintingSystem.ShowMarginsWarning = false;
+                        printTool.Print(Properties.Settings.Default.str_PrnNm);
+                    }
+                }
+            }
+            catch (System.Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+        }
+
+
 
        [Command]
        public async void Refresh()
@@ -313,10 +401,8 @@ namespace AquilaErpWpfApp3.ViewModel
             }
             set
             {
-                if (value != null)
-                {
-                    SetProperty(ref _selectedMstItem, value, () => SelectedMstItem, SelectMstDetail);
-                }
+                SetProperty(ref _selectedMstItem, value, () => SelectedMstItem, SelectMstDetail);
+
             }
         }
 
@@ -393,6 +479,7 @@ namespace AquilaErpWpfApp3.ViewModel
              //    WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]출고의뢰내역등록", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
              //    return;
              //}
+
         }
         //#endregion
 

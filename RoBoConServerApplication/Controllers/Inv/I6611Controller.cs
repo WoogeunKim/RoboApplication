@@ -89,6 +89,32 @@ namespace VisualServerApplication.Controllers.Inv
             }
         }
 
+        //I6611SelectBarCode
+        ///// <summary>
+        ///// 바코드 정보 출력  - 조회
+        ///// </summary>
+        [Route("bar")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetBarCodeSelect([FromBody] InvVo vo)
+        {
+            try
+            {
+                return Ok<InvVo>(Properties.EntityMapper.QueryForObject<InvVo>("I6611SelectBarCode", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+
+
+
+
+
+
+
         ///// <summary>
         ///// 품목 가입고  - 수정
         ///// </summary>

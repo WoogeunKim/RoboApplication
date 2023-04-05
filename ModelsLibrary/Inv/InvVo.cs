@@ -1984,5 +1984,10 @@
             get;
             set;
         }
+        public object ITM_TOT_WGT
+        { 
+            get;
+            set;
+        }
     }
 }

@@ -184,6 +184,9 @@
                 <dxb:BarButtonItem x:Name="M_MST_DELETE" Content="삭제" KeyGesture="F10" Glyph="{dx:DXImage Image=RemoveItem_16x16.png}" LargeGlyph="{dx:DXImage Image=RemoveItem_32x32.png}" RibbonStyle="Large" IsEnabled="False" Command="{Binding DelContactCommand}" />
 
                 <dxb:BarButtonItem x:Name="M_MST_PRINT" Content="출력" KeyGesture="F9" Glyph="{dx:DXImage Image=PrintDialog_16x16.png}" LargeGlyph="{dx:DXImage Image=PrintDialog_32x32.png}" RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" Command="{Binding ReportContactCommand}" /><!--ItemClick="M_MST_PRINT_ItemClick" />-->
+               
+                <dxb:BarButtonItem x:Name="M_BarCode_PRINT" Content="출력" RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" Command="{Binding BarCodeContactCommand}" Glyph="{dx:DXImage SvgImages/HybridDemoIcons/BottomPanel/HybridDemo_Print.svg}" LargeGlyph="{dx:DXImage SvgImages/HybridDemoIcons/BottomPanel/HybridDemo_Print.svg}" />
+                <!--ItemClick="M_MST_PRINT_ItemClick" />-->
             </dxb:BarManager.Items>
             <Grid>
                 <Grid.RowDefinitions>
@@ -219,6 +222,9 @@
                                 <!--<dxb:BarButtonItemLink BarItemName="M_MST_DELETE1"/>-->
                              
                                 <dxb:BarButtonItemLink BarItemName="M_MST_DELETE"/>
+                            </dxr:RibbonPageGroup>
+                            <dxr:RibbonPageGroup Caption="바코드 관리">
+                                <dxb:BarButtonItemLink BarItemName="M_BarCode_PRINT"/>
                             </dxr:RibbonPageGroup>
                         </dxr:RibbonPage>
                     </dxr:RibbonDefaultPageCategory>
@@ -295,6 +301,13 @@
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
+
+                                            <dxg:GridColumn FieldName="LOT_NO" Header="바코드" Width="120" ReadOnly="False" HorizontalHeaderContentAlignment="Center" FilterPopupMode="CheckedList" GroupIndex="1"  >
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
+                                            
                                             <!--<dxg:GridColumn FieldName="ITM_CD" Header="품번" Width="100" ReadOnly="False" HorizontalHeaderContentAlignment="Center" FilterPopupMode="CheckedList"  >
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
@@ -325,7 +338,7 @@
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>-->
 
-                                            <dxg:GridColumn FieldName="INAUD_QTY" Header="번들 수량" Width="70" ReadOnly="False" HorizontalHeaderContentAlignment="Center" FilterPopupMode="CheckedList"  >
+                                            <dxg:GridColumn FieldName="INAUD_QTY" Header="가닥 수량" Width="70" ReadOnly="False" HorizontalHeaderContentAlignment="Center" FilterPopupMode="CheckedList"  >
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,###,##0"  MaskUseAsDisplayFormat="True"  />
                                                 </dxg:GridColumn.EditSettings>
@@ -338,7 +351,7 @@
                                                     </dxg:GridColumn.EditSettings>
                                                 </dxg:GridColumn>-->
 
-                                            <dxg:GridColumn FieldName="TOT_MD_QTY" Header="번들 총 중량" Width="70" ReadOnly="False" HorizontalHeaderContentAlignment="Center" FilterPopupMode="CheckedList"  >
+                                            <dxg:GridColumn FieldName="TOT_MD_QTY" Header="번들 중량" Width="70" ReadOnly="False" HorizontalHeaderContentAlignment="Center" FilterPopupMode="CheckedList"  >
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,###,##0"  MaskUseAsDisplayFormat="True"  />
                                                 </dxg:GridColumn.EditSettings>
@@ -390,12 +403,6 @@
                                             <dxg:GridColumn FieldName="CO_NM" Header="업체" ReadOnly="False" HorizontalHeaderContentAlignment="Center" FilterPopupMode="CheckedList" GroupIndex="0" SortOrder="Ascending" >
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-                                                </dxg:GridColumn.EditSettings>
-                                            </dxg:GridColumn>
-
-                                            <dxg:GridColumn FieldName="LOT_NO" Header="바코드" Width="120" ReadOnly="False" HorizontalHeaderContentAlignment="Center" FilterPopupMode="CheckedList"  >
-                                                <dxg:GridColumn.EditSettings>
-                                                    <dxe:TextEditSettings HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
