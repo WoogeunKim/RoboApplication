@@ -46,6 +46,7 @@ namespace VisualServerApplication.Controllers.Man
         }
 
         /// <summary>
+        /// 
         /// 투입자재지시관리 Summary 관리 - 조회
         /// </summary>
         [Route("dtl/summary")]

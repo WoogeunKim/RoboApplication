@@ -28,23 +28,23 @@ namespace VisualServerApplication.Controllers.Man
             }
         }
 
-        /// <summary>
-        /// Loss 최적화 수행 MST 조회
-        /// </summary>
-        [Route("mst/key")]
-        [HttpPost]
-        // POST api/<controller>
-        public async Task<IHttpActionResult> GetKeySelect([FromBody] ManVo vo)
-        {
-            try
-            {
-                return Ok<string>(Properties.EntityMapper.QueryForObject<string>("M66107SelectKey", vo));
-            }
-            catch (Exception eLog)
-            {
-                return Ok<string>(eLog.Message);
-            }
-        }
+        ///// <summary>
+        ///// Loss 최적화 수행 MST 조회
+        ///// </summary>
+        //[Route("mst/key")]
+        //[HttpPost]
+        //// POST api/<controller>
+        //public async Task<IHttpActionResult> GetKeySelect([FromBody] ManVo vo)
+        //{
+        //    try
+        //    {
+        //        return Ok<string>(Properties.EntityMapper.QueryForObject<string>("M66107SelectKey", vo));
+        //    }
+        //    catch (Exception eLog)
+        //    {
+        //        return Ok<string>(eLog.Message);
+        //    }
+        //}
 
         /// <summary>
         /// Loss 최적화 수행 MST - 추가
@@ -56,10 +56,18 @@ namespace VisualServerApplication.Controllers.Man
         {
             try
             {
-                return Ok<int>(Properties.EntityMapper.Insert("M66107InsertMst", vo) == null ? 1 : 0);
+                Properties.EntityMapper.BeginTransaction();
+
+                vo.OPMZ_NO = Properties.EntityMapper.QueryForObject<string>("M66107SelectKey", vo);
+
+                Properties.EntityMapper.Insert("M66107InsertMst", vo);
+
+                Properties.EntityMapper.CommitTransaction();
+                return Ok<int>(1);
             }
             catch (System.Exception eLog)
             {
+                Properties.EntityMapper.RollBackTransaction();
                 return Ok<string>(eLog.Message);
             }
         }

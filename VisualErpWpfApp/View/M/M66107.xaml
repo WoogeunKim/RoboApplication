@@ -138,7 +138,7 @@
                                                 </dxg:GridControl.InputBindings>
 
                                                 <dxg:GridControl.View>
-                                                    <dxg:TableView x:Name="ViewTableMst" FontSize="12" RowMinHeight="35" ShowFixedTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Always" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupPanel="False" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT, Path=EditValue}" />
+                                                    <dxg:TableView x:Name="ViewTableMst" FontSize="12" RowMinHeight="35" ShowFixedTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Always" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupPanel="True" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT, Path=EditValue}" />
                                                 </dxg:GridControl.View>
 
                                                 <dxg:GridControl.Columns>
@@ -148,7 +148,20 @@
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>-->
 
-                                                    <dxg:GridColumn FieldName="OPMZ_NO" Header="Opti.NO" Width="50" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="1">
+                                                    <dxg:GridColumn FieldName="RUN_CLSS_NM" Header="그룹분류" Width="120" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" dxg:BandBase.GridColumn="1" GroupIndex="1">
+                                                        <dxg:GridColumn.EditSettings>
+                                                            <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
+                                                        </dxg:GridColumn.EditSettings>
+                                                    </dxg:GridColumn>
+
+
+                                                    <dxg:GridColumn FieldName="OPMZ_NO" Header="Opti.NO" Width="50" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="0">
+                                                        <dxg:GridColumn.EditSettings>
+                                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                                        </dxg:GridColumn.EditSettings>
+                                                    </dxg:GridColumn>
+
+                                                    <dxg:GridColumn FieldName="OPMZ_NM" Header="Opti.NM" Width="100" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="1">
                                                         <dxg:GridColumn.EditSettings>
                                                             <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                                         </dxg:GridColumn.EditSettings>
@@ -166,7 +179,7 @@
                                                         </dxg:GridColumn.EditSettings>
                                                     </dxg:GridColumn>
 
-                                                    <dxg:GridColumn FieldName="OPMZ_RMK" Header="비고" Width="120" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="4">
+                                                    <dxg:GridColumn FieldName="OPMZ_RMK" Header="비고" Width="60" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="4">
                                                         <dxg:GridColumn.EditSettings>
                                                             <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
                                                         </dxg:GridColumn.EditSettings>

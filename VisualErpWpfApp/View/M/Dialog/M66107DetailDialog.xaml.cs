@@ -14,6 +14,7 @@ using System.Net.Http;
 using System.Windows;
 using System.Windows.Input;
 using AquilaErpWpfApp3.Util;
+using System.Threading.Tasks;
 //using System.Linq;
 
 namespace AquilaErpWpfApp3.View.M.Dialog
@@ -99,15 +100,9 @@ namespace AquilaErpWpfApp3.View.M.Dialog
 
                     this.updateDao = getDomain();
 
-                    this.search_title.Text = "[조회 조건]   " +  "거래처 : " + updateDao.CO_NM + "  공사부위 : " + updateDao.CNTR_PSN_NM;
+                    this.search_title.Text = "[조회 조건]   " + "거래처 : " + updateDao.CO_NM + "  공사부위 : " + updateDao.CNTR_PSN_NM;
 
-                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66107/dtl/dia", new StringContent(JsonConvert.SerializeObject(this.updateDao), System.Text.Encoding.UTF8, "application/json")))
-                    {
-                        if (response.IsSuccessStatusCode)
-                        {
-                            this.ViewJOB_ITEMEdit.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
-                        }
-                    }
+                    this.ViewJOB_ITEMEdit.ItemsSource = await PostMstItems("m66107/dtl/dia", this.updateDao);
                 }
 
                 if (DXSplashScreen.IsActive == true)
@@ -125,6 +120,36 @@ namespace AquilaErpWpfApp3.View.M.Dialog
                 WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }
+        }
+
+        private async Task<List<ManVo>> PostMstItems(string Path, object obj)
+        {
+            List<ManVo> ret = new List<ManVo>();
+
+            try
+            {
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66107/dtl/dia", new StringContent(JsonConvert.SerializeObject(obj), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        ret = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+
+                        if (this.orgVo.RUN_CLSS_CD.Equals("B"))
+                        {
+                            ret.Where(x => x.COLR_FLG.Equals("B")).ToList().ForEach(x => x.COLR_FLG = "A");
+                        }
+
+                    }
+                }
+            }
+            catch (Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+            }
+
+            return ret;
+
+
         }
 
         private async void OKButton_Click(object sender, RoutedEventArgs e)

@@ -2766,5 +2766,25 @@
             get;
             set;
         }
+        public string OPMZ_NM
+        {
+            get;
+            set;
+        }
+        public string RUN_CLSS_CD
+        {
+            get;
+            set;
+        }
+        public string RUN_CLSS_NM
+        {
+            get;
+            set;
+        }
+        public string COLR_FLG
+        {
+            get;
+            set;
+        }
     }
 }

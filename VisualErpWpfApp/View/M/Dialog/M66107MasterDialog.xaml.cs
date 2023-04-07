@@ -31,13 +31,16 @@ namespace AquilaErpWpfApp3.View.M.Dialog
             orgDao = new ManVo()
             {
                 OPMZ_NO = Dao.OPMZ_NO,
-                OPMZ_RMK = Dao.OPMZ_RMK
+                OPMZ_NM = Dao.OPMZ_NM,
+                OPMZ_RMK = Dao.OPMZ_RMK,
+                RUN_CLSS_CD = Dao.RUN_CLSS_CD
             };
 
             //수정
             if (Dao.OPMZ_NO != null)
             {
                 this.isEdit = true;
+                this.combo_RUN_CLSS_CD.IsReadOnly = true;
             }
             else
             {
@@ -55,7 +58,13 @@ namespace AquilaErpWpfApp3.View.M.Dialog
         {
             try
             {
+                if (string.IsNullOrEmpty(this.combo_RUN_CLSS_CD.Text))
+                {
+                    WinUIMessageBox.Show("[분류]의 값을 선택하세요.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
                 return true;
+                
             }
             catch (System.Exception eLog)
             {
@@ -73,10 +82,12 @@ namespace AquilaErpWpfApp3.View.M.Dialog
                 ManVo Dao = new ManVo();
                 Dao = orgDao;
 
-                Dao.OPMZ_NO = isEdit == true ? orgDao.OPMZ_NO : text_OPMZ_NO.Text;
+                //Dao.OPMZ_NO = isEdit == true ? orgDao.OPMZ_NO : text_OPMZ_NO.Text;
                 this.OPMZ_NO = Dao.OPMZ_NO;
 
                 Dao.OPMZ_RMK = orgDao.OPMZ_RMK;
+                Dao.OPMZ_NM = orgDao.OPMZ_NM;
+                Dao.RUN_CLSS_CD = (this.combo_RUN_CLSS_CD.Text.Equals("생산") ? "A" : "B");
 
                 Dao.CRE_USR_ID = SystemProperties.USER;
                 Dao.UPD_USR_ID = SystemProperties.USER;
@@ -91,10 +102,10 @@ namespace AquilaErpWpfApp3.View.M.Dialog
                 return new ManVo();
             }
         }
-        #endregion
+            #endregion
 
-        #region Functon (OKButton_Click, CancelButton_Click)
-        private async void OKButton_Click(object sender, RoutedEventArgs e)
+            #region Functon (OKButton_Click, CancelButton_Click)
+            private async void OKButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -160,30 +171,30 @@ namespace AquilaErpWpfApp3.View.M.Dialog
             this.Close();
         }
 
-        private async void KeyMake_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                int _Num = 0;
-                //ProgramVo resultVo;
-                if (isEdit == false)
-                {
-                    this.updateDao = getDomain();//this.updateDao
-                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66107/mst/key", new StringContent(JsonConvert.SerializeObject(this.updateDao), System.Text.Encoding.UTF8, "application/json")))
-                    {
-                        if (response.IsSuccessStatusCode)
-                        {
-                            this.text_OPMZ_NO.Text =  JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
-                        }
-                    }
-                }
-            }
-            catch (System.Exception eLog)
-            {
-                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
-                return;
-            }
-        }
+        //private async void KeyMake_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        int _Num = 0;
+        //        //ProgramVo resultVo;
+        //        if (isEdit == false)
+        //        {
+        //            this.updateDao = getDomain();//this.updateDao
+        //            using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66107/mst/key", new StringContent(JsonConvert.SerializeObject(this.updateDao), System.Text.Encoding.UTF8, "application/json")))
+        //            {
+        //                if (response.IsSuccessStatusCode)
+        //                {
+        //                    this.text_OPMZ_NO.Text =  JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (System.Exception eLog)
+        //    {
+        //        WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+        //        return;
+        //    }
+        //}
         #endregion
 
         private void HandleEsc(object sender, KeyEventArgs e)

@@ -86,97 +86,97 @@
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn FieldName="CO_NM" Header="고객사" Width="100" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="2" >
+            <dxg:GridColumn FieldName="COLR_FLG" Header="적용유/무" Width="80" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="2" >
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn FieldName="IN_REQ_DT" Header="납품요청일자" Width="120" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="3" >
+            <dxg:GridColumn FieldName="CO_NM" Header="고객사" Width="100" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="3" >
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn FieldName="CNTR_NM" Header="현장명" Width="130" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="4" >
+            <dxg:GridColumn FieldName="IN_REQ_DT" Header="납품요청일자" Width="120" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="4" >
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn FieldName="CNTR_PSN_NM" Header="공사부위" Width="260" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="5" >
+            <dxg:GridColumn FieldName="CNTR_NM" Header="현장명" Width="130" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="5" >
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn FieldName="EQ_NO" Header="설비" Width="120" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="6" >
+            <dxg:GridColumn FieldName="CNTR_PSN_NM" Header="공사부위" Width="260" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="6" >
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn FieldName="LOC_CD" Header="로케이션" Width="120" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="7" >
+            <dxg:GridColumn FieldName="EQ_NO" Header="설비" Width="120" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="7" >
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn FieldName="ITM_SHP_CD" Header="형상코드" Width="80" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="8" >
+            <dxg:GridColumn FieldName="LOC_CD" Header="로케이션" Width="120" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="8" >
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn FieldName="ITM_STL_CD" Header="강종" Width="80" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="9" >
+            <dxg:GridColumn FieldName="ITM_SHP_CD" Header="형상코드" Width="80" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="9" >
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn FieldName="ITM_STL_SZ_CD" Header="규격" Width="80" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="10" >
+            <dxg:GridColumn FieldName="ITM_STL_CD" Header="강종" Width="80" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="10" >
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn FieldName="ITM_STL_LENG" Header="길이" Width="80" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="11" >
+            <dxg:GridColumn FieldName="ITM_STL_SZ_CD" Header="규격" Width="80" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="11" >
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn FieldName="ITM_STL_LENG" Header="길이" Width="80" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="12" >
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn FieldName="SL_ITM_QTY" Header="수량" Width="80" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="12" >
+            <dxg:GridColumn FieldName="SL_ITM_QTY" Header="수량" Width="80" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="13" >
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn FieldName="ITM_STL_PRD_DESC" Header="가공정보" Width="220" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="13" >
+            <dxg:GridColumn FieldName="ITM_STL_PRD_DESC" Header="가공정보" Width="220" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="14" >
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn FieldName="CNTR_DE_NM" Header="납품지역" Width="100" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="14" >
+            <dxg:GridColumn FieldName="CNTR_DE_NM" Header="납품지역" Width="100" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="15" >
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn FieldName="SL_RLSE_NO" Header="수주번호" Width="124" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="15" >
+            <dxg:GridColumn FieldName="SL_RLSE_NO" Header="수주번호" Width="124" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="16" >
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn FieldName="SL_RLSE_SEQ" Header="수주순번" Width="80" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="16" >
-                <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-                </dxg:GridColumn.EditSettings>
-            </dxg:GridColumn>
-
-            <dxg:GridColumn FieldName="CLZ_FLG" Header="적용유/무" Width="80" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="17" >
+            <dxg:GridColumn FieldName="SL_RLSE_SEQ" Header="수주순번" Width="80" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="17" >
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 </dxg:GridColumn.EditSettings>
@@ -185,55 +185,55 @@
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="viewJOB_ITEMView" SearchDelay="0" ShowSearchPanelMode="Never"  ShowSearchPanelCloseButton="True" ShowFixedTotalSummary="True" AutoWidth="False" AllowPerPixelScrolling="True" ShowGroupPanel="False" AllowFilterEditor="True" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Cell" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False"  HiddenEditor="viewPage1EditView_HiddenEditor" SearchString="{Binding ElementName=text_search, Path=Text}">
                     <dxg:TableView.FormatConditions>
-                        <dxg:FormatCondition FieldName="RN" Expression="[CLZ_FLG]='Y'">
+                        <dxg:FormatCondition FieldName="RN" Expression="[COLR_FLG]='A'">
                             <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
                         </dxg:FormatCondition>
-                        <dxg:FormatCondition FieldName="CO_NM"  Expression="Contains([CLZ_FLG],'Y')">
+                        <dxg:FormatCondition FieldName="CO_NM"  Expression="Contains([COLR_FLG],'A')">
                             <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
                         </dxg:FormatCondition>
-                        <dxg:FormatCondition FieldName="IN_REQ_DT"  Expression="Contains([CLZ_FLG],'Y')">
+                        <dxg:FormatCondition FieldName="IN_REQ_DT"  Expression="Contains([COLR_FLG],'A')">
                             <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
                         </dxg:FormatCondition>
-                        <dxg:FormatCondition FieldName="CNTR_NM"  Expression="Contains([CLZ_FLG],'Y')">
+                        <dxg:FormatCondition FieldName="CNTR_NM"  Expression="Contains([COLR_FLG],'A')">
                             <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
                         </dxg:FormatCondition>
-                        <dxg:FormatCondition FieldName="CNTR_PSN_NM"  Expression="Contains([CLZ_FLG],'Y')">
+                        <dxg:FormatCondition FieldName="CNTR_PSN_NM"  Expression="Contains([COLR_FLG],'A')">
                             <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
                         </dxg:FormatCondition>
-                        <dxg:FormatCondition FieldName="EQ_NO"  Expression="Contains([CLZ_FLG],'Y')" >
+                        <dxg:FormatCondition FieldName="EQ_NO"  Expression="Contains([COLR_FLG],'A')" >
                             <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
                         </dxg:FormatCondition>
-                        <dxg:FormatCondition FieldName="LOC_CD"  Expression="Contains([CLZ_FLG],'Y')" >
+                        <dxg:FormatCondition FieldName="LOC_CD"  Expression="Contains([COLR_FLG],'A')" >
                             <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
                         </dxg:FormatCondition>
-                        <dxg:FormatCondition FieldName="ITM_SHP_CD"  Expression="Contains([CLZ_FLG],'Y')">
+                        <dxg:FormatCondition FieldName="ITM_SHP_CD"  Expression="Contains([COLR_FLG],'A')">
                             <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
                         </dxg:FormatCondition>
-                        <dxg:FormatCondition FieldName="ITM_STL_CD"  Expression="Contains([CLZ_FLG],'Y')">
+                        <dxg:FormatCondition FieldName="ITM_STL_CD"  Expression="Contains([COLR_FLG],'A')">
                             <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
                         </dxg:FormatCondition>
-                        <dxg:FormatCondition FieldName="ITM_STL_SZ_CD"  Expression="Contains([CLZ_FLG],'Y')" >
+                        <dxg:FormatCondition FieldName="ITM_STL_SZ_CD"  Expression="Contains([COLR_FLG],'A')" >
                             <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
                         </dxg:FormatCondition>
-                        <dxg:FormatCondition FieldName="ITM_STL_LENG"  Expression="Contains([CLZ_FLG],'Y')">
+                        <dxg:FormatCondition FieldName="ITM_STL_LENG"  Expression="Contains([COLR_FLG],'A')">
                             <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
                         </dxg:FormatCondition>
-                        <dxg:FormatCondition FieldName="SL_ITM_QTY"  Expression="Contains([CLZ_FLG],'Y')" >
+                        <dxg:FormatCondition FieldName="SL_ITM_QTY"  Expression="Contains([COLR_FLG],'A')" >
                             <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
                         </dxg:FormatCondition>
-                        <dxg:FormatCondition FieldName="ITM_STL_PRD_DESC"  Expression="Contains([CLZ_FLG],'Y')">
+                        <dxg:FormatCondition FieldName="ITM_STL_PRD_DESC"  Expression="Contains([COLR_FLG],'A')">
                             <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
                         </dxg:FormatCondition>
-                        <dxg:FormatCondition FieldName="CNTR_DE_NM"  Expression="Contains([CLZ_FLG],'Y')">
+                        <dxg:FormatCondition FieldName="CNTR_DE_NM"  Expression="Contains([COLR_FLG],'A')">
                             <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
                         </dxg:FormatCondition>
-                        <dxg:FormatCondition FieldName="SL_RLSE_NO"  Expression="Contains([CLZ_FLG],'Y')">
+                        <dxg:FormatCondition FieldName="SL_RLSE_NO"  Expression="Contains([COLR_FLG],'A')">
                             <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
                         </dxg:FormatCondition>
-                        <dxg:FormatCondition FieldName="SL_RLSE_SEQ"  Expression="Contains([CLZ_FLG],'Y')">
+                        <dxg:FormatCondition FieldName="SL_RLSE_SEQ"  Expression="Contains([COLR_FLG],'A')">
                             <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
                         </dxg:FormatCondition>
-                        <dxg:FormatCondition FieldName="CLZ_FLG"  Expression="Contains([CLZ_FLG],'Y')">
+                        <dxg:FormatCondition FieldName="COLR_FLG"  Expression="Contains([COLR_FLG],'A')">
                             <dx:Format Background="LightGray" FontStyle="Italic" FontWeight="Bold" FontSize="12" />
                         </dxg:FormatCondition>
                     </dxg:TableView.FormatConditions>
