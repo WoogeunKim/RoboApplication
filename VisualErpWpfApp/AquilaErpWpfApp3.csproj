@@ -35,7 +35,7 @@
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>18</ApplicationRevision>
+    <ApplicationRevision>19</ApplicationRevision>
     <ApplicationVersion>1.0.3.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -345,6 +345,9 @@
     </Compile>
     <Compile Include="View\M\Dialog\M66107OptiDialog.xaml.cs">
       <DependentUpon>M66107OptiDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\Dialog\M66107PurOpmzDialog.xaml.cs">
+      <DependentUpon>M66107PurOpmzDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\M\Dialog\M66311MasterDialog.xaml.cs">
       <DependentUpon>M66311MasterDialog.xaml</DependentUpon>
@@ -1027,6 +1030,9 @@
     </Compile>
     <Compile Include="View\PUR\Dialog\P441106MasterDialog.xaml.cs">
       <DependentUpon>P441106MasterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PUR\Dialog\P4411PurOpmzDialog.xaml.cs">
+      <DependentUpon>P4411PurOpmzDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PUR\Dialog\P4412Detail_2Dialog.xaml.cs">
       <DependentUpon>P4412Detail_2Dialog.xaml</DependentUpon>
@@ -1870,6 +1876,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\M\Dialog\M66107PurOpmzDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\M\Dialog\M66311MasterDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -2527,6 +2537,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\PUR\Dialog\P441106MasterDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PUR\Dialog\P4411PurOpmzDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -2162,11 +2162,6 @@
             Loss 최적화 수행 MST 조회
             </summary>
         </member>
-        <member name="M:VisualServerApplication.Controllers.Man.M66107Controller.GetKeySelect(ModelsLibrary.Man.ManVo)">
-            <summary>
-            Loss 최적화 수행 MST 조회
-            </summary>
-        </member>
         <member name="M:VisualServerApplication.Controllers.Man.M66107Controller.GetMstInsert(ModelsLibrary.Man.ManVo)">
             <summary>
             Loss 최적화 수행 MST - 추가
@@ -2197,6 +2192,16 @@
             Loss 최적화 수행 DTL 다이얼로그 추가
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66107Controller.GetPurMtrlListSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            Loss 발주최적화 통해 발주원자재리스트 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66107Controller.GetPurMtrlUpdate(System.Collections.Generic.IList{ModelsLibrary.Man.ManVo})">
+            <summary>
+            Loss 발주최적화 통해 발주원자재리스트 조회
+            </summary>
+        </member>
         <!-- Badly formed XML comment ignored for member "M:VisualServerApplication.Controllers.Man.M66112Controller.PostMstSelectList(ModelsLibrary.Man.ManVo)" -->
         <member name="M:VisualServerApplication.Controllers.Man.M66310Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
             <summary>
@@ -2210,6 +2215,7 @@
         </member>
         <member name="M:VisualServerApplication.Controllers.Man.M66310Controller.GetDtlSummarySelect(ModelsLibrary.Man.ManVo)">
             <summary>
+            
             투입자재지시관리 Summary 관리 - 조회
             </summary>
         </member>
@@ -4147,6 +4153,11 @@
         <member name="M:VisualServerApplication.Controllers.Pur.P4411Controller.GetDlg2Select(ModelsLibrary.Pur.PurVo)">
             <summary>
             Dialog2 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Pur.P4411Controller.GetOpmzPurMtrlSelect(ModelsLibrary.Pur.PurVo)">
+            <summary>
+            최적화 발주원자재 요청
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Pur.P4430Controller.GetMstSelect(ModelsLibrary.Pur.PurVo)">
