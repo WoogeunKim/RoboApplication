@@ -347,7 +347,7 @@
             AND PUR_ORD_SEQ   = #PUR_ORD_SEQ#
           </isNotNull>
     </delete>
-    
+
       <!-- P44110 (차종)-->
      <select id="P4411SelectPopUp1List" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
       SELECT  ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY ITM_CD) AS RN 
@@ -458,6 +458,72 @@
 		  AND T1.ITM_GRP_CLSS_CD = #ITM_GRP_CLSS_CD#
     </select>
 
+	  <select id="P4411SelectOpmzPurMtrlList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
+		  SELECT   
+		          T1.OPMZ_NO
+				, T1.OPMZ_SEQ
+				, T1.ITM_STL_CD
+				, T1.ITM_STL_SZ_CD
+				, T1.ITM_LEN
+				, T1.ITM_PCK_QTY                           AS ITM_QTY
+				, ISNULL(T1.ITM_PCK_QTY  * T2.UOM_WGT, 0)  AS ITM_WGT
+				, T1.ITM_STK_QTY
+				, T1.ITM_PUR_QTY
+				, T3.ITM_PRC
+				, T1.MRP_DESC
+				, T1.ITM_CD
+			FROM (
+				SELECT T3.OPMZ_NO
+						, T3.OPMZ_SEQ
+						, T3.ITM_STL_CD
+						, T3.ITM_STL_SZ_CD
+						, T3.ITM_LEN
+						, T3.ITM_PCK_QTY   
+						, T3.ITM_PUR_QTY
+						, T2.ITM_STK_QTY
+						, T3.MRP_DESC
+						, T2.ITM_CD
+					FROM TB_OPTI_MRP        T3
+						OUTER APPLY (
+							SELECT T1.ITM_CD
+							 	 , T1.N1ST_ITM_GRP_CD
+								 , T1.N2ND_ITM_GRP_CD
+								 , T1.ITM_LEN  AS ITM_LEN 
+								 , T2.ITM_QTY  AS ITM_STK_QTY 
+							  FROM TB_CD_ITM          T1
+								 , TB_INVT_DLY_STK    T2
+							 WHERE 1 = 1
+							   AND T1.CHNL_CD = #CHNL_CD#
+							   AND T1.CHNL_CD = T2.CHNL_CD
+							   AND T1.ITM_CD  = T2.ITM_CD   
+							   AND T1.ITM_GRP_CLSS_CD = 'M'
+							   AND T3.ITM_STL_CD = T1.N1ST_ITM_GRP_CD
+							   AND T3.ITM_STL_SZ_CD = T1.N2ND_ITM_GRP_CD
+							   AND T3.ITM_LEN   = T1.ITM_LEN
+						) T2      
+					WHERE 1 = 1
+					  AND T3.ITM_PUR_QTY > 0
+				) T1
+				OUTER APPLY (
+					SELECT X.BAR_UOM_WGT   AS UOM_WGT
+					FROM TB_CD_DEFM_BAR_MATH_TBL X
+					WHERE 1 = 1
+						AND X.BAR_CLSS_CD  = 'B2'  
+						AND X.BAR_SZ_CD    = T1.ITM_STL_SZ_CD 
+						AND X.BAR_SZ_LEN   = (T1.ITM_LEN / 1000)
+				) T2
+				OUTER APPLY (
+				SELECT ITM_PRC
+					FROM VW_PUR_ITM_PRC  X
+					WHERE 1 = 1
+					AND X.ITM_STL_CD      = T1.ITM_STL_CD 
+					AND X.ITM_STL_SZ_CD   = T1.ITM_STL_SZ_CD 
+					AND X.CO_NO           = #PUR_CO_CD#
+				) T3
+	  </select>
+	  
+	  
+	  
 
       <!-- P4420 (SCM 발주)-->
 	<select id="P4420SelectPopUp1List" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">

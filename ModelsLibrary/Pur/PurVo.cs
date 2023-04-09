@@ -2341,5 +2341,50 @@ namespace ModelsLibrary.Pur
             get;
             set;
         }
+        public string OPMZ_NO
+        {
+            get;
+            set;
+        }
+        public int? OPMZ_SEQ
+        {
+            get;
+            set;
+        }
+        public string ITM_STL_CD
+        {
+            get;
+            set;
+        }
+        public string ITM_STL_SZ_CD
+        {
+            get;
+            set;
+        }
+        public object ITM_LEN
+        {
+            get;
+            set;
+        }
+        public object ITM_WGT
+        {
+            get;
+            set;
+        }
+        public int? ITM_QTY
+        {
+            get;
+            set;
+        }
+        public object ITM_PUR_QTY
+        {
+            get;
+            set;
+        }
+        public object ITM_STK_QTY
+        {
+            get;
+            set;
+        }
     }
 }

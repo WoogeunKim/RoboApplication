@@ -41,6 +41,8 @@ namespace AquilaErpWpfApp3.ViewModel
 
         private P4411EmailDialog emailDialog;
 
+        private P4411PurOpmzDialog purOpmzDialog;
+
         //private P4411ExcelDialog excelDialog;
         //private P4411DetailEditDialog detailEditDialog;
 
@@ -1176,6 +1178,25 @@ namespace AquilaErpWpfApp3.ViewModel
             }
         }
 
+
+        [Command]
+        public async void OptiPurMtrl()
+        {
+            if (SelectedMstItem == null) return;
+
+            // 생산최적화 발주 의뢰내역 조회
+            purOpmzDialog = new P4411PurOpmzDialog(SelectedMstItem);
+            purOpmzDialog.Owner = Application.Current.MainWindow;
+            purOpmzDialog.BorderEffect = BorderEffect.Default;
+            purOpmzDialog.BorderEffectActiveColor = new SolidColorBrush(Color.FromRgb(255, 128, 0));
+            purOpmzDialog.BorderEffectInactiveColor = new SolidColorBrush(Color.FromRgb(255, 170, 170));
+            bool isDialog = (bool)purOpmzDialog.ShowDialog();
+            if (isDialog)
+            {
+                SelectMstDetail();
+            }
+
+        }
 
         //public void ShowMasterDialog(PurVo dao)
         //{

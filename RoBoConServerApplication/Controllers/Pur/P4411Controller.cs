@@ -285,5 +285,25 @@ namespace VisualServerApplication.Controllers.Pur
                 return Ok<string>(eLog.Message);
             }
         }
+
+
+        /// <summary>
+        /// 최적화 발주원자재 요청
+        /// </summary>
+        [Route("opmz/mtrl")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetOpmzPurMtrlSelect([FromBody] PurVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<PurVo>>(Properties.EntityMapper.QueryForList<PurVo>("P4411SelectOpmzPurMtrlList", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
     }
 }

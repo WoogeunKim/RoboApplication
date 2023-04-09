@@ -9,8 +9,9 @@
     xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
     xmlns:dxp="http://schemas.devexpress.com/winfx/2008/xaml/printing"
     xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
-    mc:Ignorable="d" x:Class="AquilaErpWpfApp3.View.M.Dialog.M66107DetailDialog"
-    Title="Master Code" Height="768" Width="1800" FontFamily="Arial" WindowState="Maximized" WindowStartupLocation="CenterOwner" ShowIcon="True" ResizeMode="CanResize" FontSize="12" Icon="{dx:DXImage Image=AddItem_16x16.png}">
+    mc:Ignorable="d" 
+    x:Class="AquilaErpWpfApp3.View.M.Dialog.M66107DetailDialog"
+    Title="수주 품목" Height="768" Width="1800" FontFamily="Arial" WindowState="Maximized" WindowStartupLocation="CenterOwner" ShowIcon="True" ResizeMode="CanResize" FontSize="12" Icon="{dx:DXImage Image=AddItem_16x16.png}">
 
     <Window.Resources>
         <ControlTemplate x:Key="checkTemplate">

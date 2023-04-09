@@ -2786,5 +2786,22 @@
             get;
             set;
         }
+        public object ITM_STK_QTY
+        {
+            get;
+            set;
+        }
+        public int? ITM_PUR_QTY
+        {
+            get;
+            set;
+        }
+        public string MRP_DESC
+        {
+            get;
+            set;
+        }
+
+
     }
 }

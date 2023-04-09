@@ -61,6 +61,8 @@
 
                 <dxb:BarButtonItem x:Name="M_OPTI_RUN" Content="Opti Run" RibbonStyle="Large" Command="{Binding OptiRunCommand}" IsEnabled="{Binding isM_UPDATE}" Glyph="{dxc:DXImage SvgImages/Chart/ChartType_RadarArea.svg}" LargeGlyph="{dxc:DXImage SvgImages/Chart/ChartType_RadarArea.svg}" />
                 <dxb:BarButtonItem x:Name="M_OPTI_OK" Content="확정" RibbonStyle="Large" Command="{Binding OptiOkCommand}" IsEnabled="{Binding isM_UPDATE}" LargeGlyph="{dxc:DXImage SvgImages/Snap/FinishMerge.svg}" Glyph="{dxc:DXImage SvgImages/Snap/FinishMerge.svg}" />
+              
+                <dxb:BarButtonItem x:Name="M_OPTI_PUR_MTRL" Content="발주요청" RibbonStyle="Large" Command="{Binding OptiPurMtrlCommand}" IsEnabled="{Binding isM_UPDATE}" Glyph="{dxc:DXImage SvgImages/Outlook Inspired/ProductQuickShippments.svg}" LargeGlyph="{dxc:DXImage SvgImages/Outlook Inspired/ProductQuickShippments.svg}" />
             </dxb:BarManager.Items>
 
             <Grid>
@@ -98,6 +100,10 @@
 
                             <dxr:RibbonPageGroup Caption="출력">
                                 <dxb:BarButtonItemLink BarItemName="M_MST_PRINT"/>
+                            </dxr:RibbonPageGroup> 
+                            
+                            <dxr:RibbonPageGroup Caption="발주최적화 원자재 관리">
+                                <dxb:BarButtonItemLink BarItemName="M_OPTI_PUR_MTRL"/>
                             </dxr:RibbonPageGroup> 
                         </dxr:RibbonPage>
                     </dxr:RibbonDefaultPageCategory>

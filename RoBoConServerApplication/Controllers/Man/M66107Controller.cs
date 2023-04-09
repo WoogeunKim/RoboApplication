@@ -171,5 +171,53 @@ namespace VisualServerApplication.Controllers.Man
             }
         }
 
+
+
+
+        /// <summary>
+        /// Loss 발주최적화 통해 발주원자재리스트 조회
+        /// </summary>
+        [Route("pur/mtrl")]
+        [HttpPost]
+        // POST api/<controller>
+        public async Task<IHttpActionResult> GetPurMtrlListSelect([FromBody] ManVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<ManVo>>(Properties.EntityMapper.QueryForList<ManVo>("M66107SelectPurMtrlList", vo));
+            }
+            catch (Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+        /// <summary>
+        /// Loss 발주최적화 통해 발주원자재리스트 조회
+        /// </summary>
+        [Route("pur/mtrl/u")]
+        [HttpPost]
+        // POST api/<controller>
+        public async Task<IHttpActionResult> GetPurMtrlUpdate([FromBody] IList<ManVo> voList)
+        {
+            try
+            {
+                Properties.EntityMapper.BeginTransaction();
+
+                foreach (ManVo vo in voList)
+                {
+                    Properties.EntityMapper.Update("M66107UpdatePurMtrl", vo);
+                }
+
+                Properties.EntityMapper.CommitTransaction();
+                return Ok<int>(1);
+            }
+            catch (Exception eLog)
+            {
+                Properties.EntityMapper.RollBackTransaction();
+                return Ok<string>(eLog.Message);
+            }
+        }
+
     }
 }

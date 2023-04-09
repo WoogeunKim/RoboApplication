@@ -333,6 +333,7 @@
                 <!--<dxb:BarButtonItem x:Name="M_MST_PRINT" Content="출력" KeyGesture="F9" Glyph="/CpcErp;component/Images/Icons/Print-16x16.png" LargeGlyph="/CpcErp;component/Images/Icons/Print-32x32.png" RibbonStyle="SmallWithText" />-->
                 <dxb:BarButtonItem x:Name="M_DTL_INSERT_1" Content="품목 추가" KeyGesture="Ctrl+F6" Glyph="{dx:DXImage Image=Insert_16x16.png}" LargeGlyph="{dx:DXImage Image=Insert_32x32.png}" RibbonStyle="Large" Command="{Binding NewDtlContactCommand}" IsEnabled="{Binding isM_UPDATE}" />
                 <dxb:BarButtonItem x:Name="M_DTL_INSERT_2" Content="기타 발주" KeyGesture="Ctrl+F7" Glyph="{dx:DXImage Image=Insert_16x16.png}" LargeGlyph="{dx:DXImage Image=Insert_32x32.png}" RibbonStyle="Large" Command="{Binding EditDtlContactCommand}" IsEnabled="{Binding isM_UPDATE}" />
+                <dxb:BarButtonItem x:Name="M_OPTI_PUR_MTRL" Content="발주의뢰" RibbonStyle="Large" Command="{Binding OptiPurMtrlCommand}" IsEnabled="{Binding isM_UPDATE}" Glyph="{dx:DXImage SvgImages/Outlook Inspired/ProductQuickShippments.svg}" LargeGlyph="{dx:DXImage SvgImages/Outlook Inspired/ProductQuickShippments.svg}" />
                 <!--<dxb:BarButtonItem x:Name="M_DTL_UPDATE" Content="수정" KeyGesture="Ctrl+F7" Glyph="{dx:DXImage Image=Edit_16x16.png}" LargeGlyph="{dx:DXImage Image=Edit_32x32.png}"  RibbonStyle="SmallWithText" IsEnabled="{Binding isD_UPDATE}" Command="{Binding EditDtlDialogCommand}" />-->
 
                 <dxb:BarButtonItem x:Name="M_DTL_DELETE" Content="삭제" KeyGesture="Ctrl+F8" Glyph="{dx:DXImage Image=Delete_16x16.png}" LargeGlyph="{dx:DXImage Image=Delete_32x32.png}" RibbonStyle="SmallWithText" IsEnabled="{Binding isD_DELETE}" Command="{Binding DelDtlContactCommand}" />
@@ -344,6 +345,7 @@
                 <dxb:BarButtonItem x:Name="M_TAG_LABEL_PRINT" Content="현품표" RibbonStyle="Large" Command="{Binding PrintTagLabelCommand}" IsEnabled="{Binding isD_DELETE}"  LargeGlyph="{dx:DXImage Images/Print/PrintArea_32x32.png}" />
 
                 <dxb:BarButtonItem x:Name="M_EMAIL" Content="E-MAIL" KeyGesture="F11" RibbonStyle="Large" IsEnabled="{Binding isD_DELETE}" Command="{Binding EmailContactCommand}" Glyph="{dx:DXImage SvgImages/Scheduling/OutlookExport.svg}" LargeGlyph="{dx:DXImage SvgImages/Scheduling/OutlookExport.svg}" />
+               
 
                 <!--<dxb:BarButtonItem x:Name="M_DTL_EXCEL" Content="엑셀" KeyGesture="F12" Glyph="{dx:DXImage Image=ExportToXLSX_16x16.png}" LargeGlyph="{dx:DXImage Image=ExportToXLSX_32x32.png}" RibbonStyle="SmallWithText" IsEnabled="{Binding isM_UPDATE}" Command="{Binding ExcelDtlDialogCommand}" />-->
 
@@ -401,6 +403,11 @@
                                 <dxb:BarButtonItemLink BarItemName="M_DTL_DELETE"/>
                                 <!--<dxb:BarButtonItemLink BarItemName="M_DTL_EXCEL"/>-->
                             </dxr:RibbonPageGroup>
+
+                            <dxr:RibbonPageGroup Caption="최적화 자재 관리">
+                                <dxb:BarButtonItemLink BarItemName="M_OPTI_PUR_MTRL"/>
+                            </dxr:RibbonPageGroup>
+                            
                             <dxr:RibbonPageGroup Caption="출력">
                                 <dxb:BarButtonItemLink BarItemName="M_PRINT"/>
                                 <!--<dxb:BarEditItemLink BarItemName="M_BLANK"  />
