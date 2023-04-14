@@ -967,6 +967,11 @@
             품목 마스터 등록 MST - 조회  2022-10-21 생성 MST/DTL 따로 조회
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Code.S141Controller.GetRoboSelectList(ModelsLibrary.Code.SystemCodeVo)">
+            <summary>
+            품목 조회 ROBO - 조회
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Code.S141Controller.GetMstSelect(ModelsLibrary.Code.SystemCodeVo)">
             <summary>
             품목 마스터 등록 MST - 조회
@@ -2020,6 +2025,11 @@
         <member name="M:VisualServerApplication.Controllers.Inv.I6611Controller.GetMstInsert(System.Collections.Generic.IList{ModelsLibrary.Inv.InvVo})">
             <summary>
             품목 입고  - 추가
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Inv.I6611Controller.GetItmCdInsert(ModelsLibrary.Inv.InvVo)">
+            <summary>
+            품목 생성
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Inv.I6611Controller.GetMstDelete(System.Collections.Generic.IList{ModelsLibrary.Inv.InvVo})">
@@ -3537,6 +3547,11 @@
         <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetInpReturnInsert(ModelsLibrary.Mobile.MobileVo)">
             <summary>
             기존 바코드 입고  - 추가
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Mobile.MobileController.GetItmMstInsert(ModelsLibrary.Mobile.MobileVo)">
+            <summary>
+            품목 등록  - 추가
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Pda.PdaController.GetUsrSelect(ModelsLibrary.Pda.PdaVo)">

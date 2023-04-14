@@ -35,7 +35,7 @@
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>19</ApplicationRevision>
+    <ApplicationRevision>20</ApplicationRevision>
     <ApplicationVersion>1.0.3.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -288,6 +288,9 @@
     </Compile>
     <Compile Include="View\INV\Dialog\I66110DetailPurDialog.xaml.cs">
       <DependentUpon>I66110DetailPurDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\INV\Dialog\I6611DetailOtherCaseDialog.xaml.cs">
+      <DependentUpon>I6611DetailOtherCaseDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\INV\Dialog\I6611DetailPurDialog.xaml.cs">
       <DependentUpon>I6611DetailPurDialog.xaml</DependentUpon>
@@ -1813,6 +1816,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\INV\Dialog\I66110DetailPurDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\INV\Dialog\I6611DetailOtherCaseDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
