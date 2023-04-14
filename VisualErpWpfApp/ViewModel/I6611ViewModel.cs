@@ -739,74 +739,74 @@ namespace AquilaErpWpfApp3.ViewModel
             }
         }
 
-        //public ICommand ReportDialogCommand
+        ////public ICommand ReportDialogCommand
+        ////{
+        ////    get
+        ////    {
+        ////        if (reportDialogCommand == null)
+        ////            reportDialogCommand = new DelegateCommand(ReportContact);
+        ////        return reportDialogCommand;
+        ////    }
+        ////}
+
+        //[Command]
+        //public void ReportContact()
         //{
-        //    get
+        //    try
         //    {
-        //        if (reportDialogCommand == null)
-        //            reportDialogCommand = new DelegateCommand(ReportContact);
-        //        return reportDialogCommand;
+        //        int tmpIMP_ITM_AMT = 0;
+        //        int tmpITM_QTY = 0;
+        //        if (SelectMstList == null)
+        //        {
+        //            return;
+        //        }
+
+        //        IList<InvVo> printDao = new List<InvVo>();
+        //        if (SelectMstList != null)
+        //        {
+        //            if (SelectMstList.Count > 0)
+        //            {
+        //                printDao = SelectMstList;
+
+        //                for (int x = 0; x < printDao.Count; x++)
+        //                {
+        //                    printDao[x].GRP_NM = "[가입고 일자 (From) " + (StartDt).ToString("yyyy-MM-dd") + "~" + (EndDt).ToString("yyyy-MM-dd") + ", 사업장: " + M_SL_AREA_NM.CLSS_DESC + ", 창고: " + M_SL_LOC_NM.CLSS_DESC + "]";
+        //                    tmpIMP_ITM_AMT += Convert.ToInt32(printDao[x].IMP_ITM_AMT);
+        //                    tmpITM_QTY += Convert.ToInt32(printDao[x].ITM_QTY);
+
+        //                    printDao[x].TMP_A_QTY = tmpIMP_ITM_AMT;
+        //                    printDao[x].TMP_B_QTY = tmpITM_QTY;
+        //                }
+
+        //                I6610Report report = new I6610Report(printDao);
+        //                report.Margins.Top = 0;
+        //                report.Margins.Bottom = 0;
+        //                report.Margins.Left = 30;
+        //                report.Margins.Right = 0;
+        //                report.Landscape = true;
+        //                report.PrintingSystem.ShowPrintStatusDialog = true;
+        //                report.PaperKind = System.Drawing.Printing.PaperKind.A4;
+
+        //                var window = new DocumentPreviewWindow();
+        //                window.PreviewControl.DocumentSource = report;
+        //                report.CreateDocument(true);
+        //                window.Title = "품목입고 출력";
+        //                window.Owner = Application.Current.MainWindow;
+        //                window.ShowDialog();
+        //                //XtraReportPreviewModel model = new XtraReportPreviewModel(report);
+        //                //DocumentPreviewWindow window = new DocumentPreviewWindow() { Model = model };
+        //                //report.CreateDocument(true);
+        //                //window.Owner = Application.Current.MainWindow;
+        //                //window.Title = "품목가입고 출력";
+        //                //window.ShowDialog();
+        //            }
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        MessageBox.Show(e.Message);
         //    }
         //}
-
-        [Command]
-        public void ReportContact()
-        {
-            try
-            {
-                int tmpIMP_ITM_AMT = 0;
-                int tmpITM_QTY = 0;
-                if (SelectMstList == null)
-                {
-                    return;
-                }
-
-                IList<InvVo> printDao = new List<InvVo>();
-                if (SelectMstList != null)
-                {
-                    if (SelectMstList.Count > 0)
-                    {
-                        printDao = SelectMstList;
-
-                        for (int x = 0; x < printDao.Count; x++)
-                        {
-                            printDao[x].GRP_NM = "[가입고 일자 (From) " + (StartDt).ToString("yyyy-MM-dd") + "~" + (EndDt).ToString("yyyy-MM-dd") + ", 사업장: " + M_SL_AREA_NM.CLSS_DESC + ", 창고: " + M_SL_LOC_NM.CLSS_DESC + "]";
-                            tmpIMP_ITM_AMT += Convert.ToInt32(printDao[x].IMP_ITM_AMT);
-                            tmpITM_QTY += Convert.ToInt32(printDao[x].ITM_QTY);
-
-                            printDao[x].TMP_A_QTY = tmpIMP_ITM_AMT;
-                            printDao[x].TMP_B_QTY = tmpITM_QTY;
-                        }
-
-                        I6610Report report = new I6610Report(printDao);
-                        report.Margins.Top = 0;
-                        report.Margins.Bottom = 0;
-                        report.Margins.Left = 30;
-                        report.Margins.Right = 0;
-                        report.Landscape = true;
-                        report.PrintingSystem.ShowPrintStatusDialog = true;
-                        report.PaperKind = System.Drawing.Printing.PaperKind.A4;
-
-                        var window = new DocumentPreviewWindow();
-                        window.PreviewControl.DocumentSource = report;
-                        report.CreateDocument(true);
-                        window.Title = "품목입고 출력";
-                        window.Owner = Application.Current.MainWindow;
-                        window.ShowDialog();
-                        //XtraReportPreviewModel model = new XtraReportPreviewModel(report);
-                        //DocumentPreviewWindow window = new DocumentPreviewWindow() { Model = model };
-                        //report.CreateDocument(true);
-                        //window.Owner = Application.Current.MainWindow;
-                        //window.Title = "품목가입고 출력";
-                        //window.ShowDialog();
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
-        }
 
         public async void SYSTEM_CODE_VO()
         {

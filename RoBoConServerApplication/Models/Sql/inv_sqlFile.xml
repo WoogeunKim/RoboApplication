@@ -2841,7 +2841,7 @@
     
   <!-- I6620 재고장 -->
   <select id="I6620SelectDtlList" parameterClass="ModelsLibrary.Inv.InvVo" resultClass="ModelsLibrary.Inv.InvVo">      
-       SELECT  ROW_NUMBER() OVER ( PARTITION BY NULL ORDER BY T1.ITM_CD) AS RN 
+       <!--SELECT  ROW_NUMBER() OVER ( PARTITION BY NULL ORDER BY T1.ITM_CD) AS RN 
              , T1.ITM_CD
              , T1.ITM_NM
              , T1.ITM_SZ_NM
@@ -2980,7 +2980,111 @@
                                   AND X.ORD_SEQ   = T2.IMP_PUR_SEQ
                               )
           GROUP BY T2.IMP_ITM_CD        
-        ) T2 ON ( T1.ITM_CD = T2.IMP_ITM_CD)      
+        ) T2 ON ( T1.ITM_CD = T2.IMP_ITM_CD)-->      
+	  SELECT   T4.ITM_CD
+             , T4.ITM_NM
+             , T4.ITM_GRP_CLSS_CD
+             , T4.ITM_GRP_CLSS_NM
+             , T4.N1ST_ITM_GRP_CD
+             , T4.N1ST_ITM_GRP_NM
+             , T4.N2ND_ITM_GRP_CD
+             , T4.N2ND_ITM_GRP_NM
+             , T4.ITM_LEN
+             , T4.PUR_ITM_QTY                                                          
+             , (T4.PUR_ITM_QTY / T41.BAR_QTY)                        AS PUR_BAR_QTY   
+             , T4.INP_ITM_QTY                                                          
+             , ((T4.PUR_ITM_QTY + T4.INP_ITM_QTY) / T41.BAR_QTY)     AS BAR_QTY        
+             , ((T4.PUR_ITM_QTY + T4.INP_ITM_QTY) * T41.BAR_PER_WGT) AS BAR_WGT       
+          FROM (
+                SELECT T1.ITM_CD
+                     , T1.ITM_NM
+                     , T1.ITM_GRP_CLSS_CD
+                     , T1.ITM_GRP_CLSS_NM
+                     , T1.N1ST_ITM_GRP_CD
+                     , T1.N1ST_ITM_GRP_NM
+                     , T1.N2ND_ITM_GRP_CD
+                     , T1.N2ND_ITM_GRP_NM
+                     , T1.ITM_LEN
+                     , ISNULL(T2.INAUD_QTY, 0) AS PUR_ITM_QTY 
+                     , ISNULL(T3.INAUD_QTY, 0) AS INP_ITM_QTY 
+                  FROM MV_TB_CD_ITM T1
+                       LEFT OUTER JOIN
+                       (
+                         SELECT SUM( CASE WHEN T2.INAUD_CD LIKE 'R%' THEN T2.INAUD_QTY 
+                                          WHEN T2.INAUD_CD LIKE 'I%' THEN T2.INAUD_QTY * -1
+                                          ELSE 0 END ) AS INAUD_QTY 
+                              , T2.ITM_CD
+                              , T2.CHNL_CD
+                           FROM TB_INAUD_DTL T2
+                          WHERE 1 = 1
+                            AND T2.LOT_NO IN (   SELECT T21.LOT_NO
+                                                 FROM (
+                                                       SELECT X.LOT_NO 
+                                                            , ROW_NUMBER() OVER (PARTITION BY X.LOT_NO ORDER BY X.CRE_DT DESC) AS RN
+                                                            , X.INAUD_CD
+                                                         FROM TB_INAUD_DTL X
+                                                        WHERE 1 = 1
+                                                          AND X.CHNL_CD  = #CHNL_CD#
+                                                          AND X.LOT_NO   IS NOT NULL
+                                                    ) T21
+                                                WHERE 1 = 1
+                                                  AND T21.RN       = 1
+                                                  AND T21.INAUD_CD = 'RGU'
+                                            ) 
+                         GROUP BY T2.ITM_CD, T2.CHNL_CD
+                       ) T2
+                    ON 1 = 1
+                   AND T1.ITM_CD          = T2.ITM_CD
+                   AND T1.CHNL_CD         = T2.CHNL_CD
+                       LEFT OUTER JOIN
+                       (
+                         SELECT SUM( CASE WHEN T2.INAUD_CD LIKE 'R%' THEN T2.INAUD_QTY 
+                                          WHEN T2.INAUD_CD LIKE 'I%' THEN T2.INAUD_QTY * -1
+                                          ELSE 0 END ) AS INAUD_QTY 
+                              , T2.ITM_CD
+                              , T2.CHNL_CD
+                           FROM TB_INAUD_DTL T2
+                          WHERE 1 = 1
+                            AND T2.LOT_NO IN ( SELECT T21.LOT_NO
+                                                 FROM (
+                                                       SELECT X.LOT_NO 
+                                                            , ROW_NUMBER() OVER (PARTITION BY X.LOT_NO ORDER BY X.CRE_DT DESC) AS RN
+                                                            , X.INAUD_CD
+                                                         FROM TB_INAUD_DTL X
+                                                        WHERE 1 = 1
+                                                          AND X.CHNL_CD  = #CHNL_CD#
+                                                          AND X.LOT_NO   IS NOT NULL
+                                                    ) T21
+                                                WHERE 1 = 1
+                                                  AND T21.RN = 1
+                                                  AND T21.INAUD_CD LIKE 'R%'
+                                                  AND T21.INAUD_CD   != 'RGU'
+                                            ) 
+                         GROUP BY T2.ITM_CD, T2.CHNL_CD
+                       ) T3
+                    ON 1 = 1
+                   AND T1.ITM_CD          = T3.ITM_CD
+                   AND T1.CHNL_CD         = T3.CHNL_CD
+                 WHERE 1 = 1
+                   AND T1.CHNL_CD         = #CHNL_CD#
+                   <isNotNull property="ITM_GRP_CLSS_CD" >
+                      AND T1.ITM_GRP_CLSS_CD = #ITM_GRP_CLSS_CD#
+                   </isNotNull>
+                   AND T1.DELT_FLG        = 'N'
+                   <!--AND (T2.INAUD_QTY > 0 OR T3.INAUD_QTY > 0)--> 
+             ) T4
+               OUTER APPLY (
+                   SELECT X.BAR_QTY
+                        , X.BAR_WGT
+                        , X.BAR_PER_WGT
+                     FROM TB_CD_DEFM_BAR_MATH_TBL X
+                    WHERE 1 = 1
+                      AND X.CHNL_CD      = #CHNL_CD#
+                      AND X.BAR_CLSS_CD  = 'B2' 
+                      AND X.BAR_SZ_CD    = T4.N2ND_ITM_GRP_CD    
+                      AND X.BAR_SZ_LEN   = T4.ITM_LEN / 1000            
+             ) T41       
+         WHERE 1 = 1
     </select>
 
     

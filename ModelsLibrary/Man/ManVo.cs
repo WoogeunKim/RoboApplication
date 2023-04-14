@@ -2801,7 +2801,46 @@
             get;
             set;
         }
-
+        public string N3RD_EQ_NM
+        {
+            get;
+            set;
+        }
+        public string N4TH_EQ_NM
+        {
+            get;
+            set;
+        }
+        public string N5TH_EQ_NM
+        {
+            get;
+            set;
+        }
+        public string N6TH_EQ_NM
+        {
+            get;
+            set;
+        }
+        public string N7TH_EQ_NM
+        {
+            get;
+            set;
+        }
+        public string N8TH_EQ_NM
+        {
+            get;
+            set;
+        }
+        public string N9TH_EQ_NM
+        {
+            get;
+            set;
+        }
+        public string N10TH_EQ_NM
+        {
+            get;
+            set;
+        }
 
     }
 }

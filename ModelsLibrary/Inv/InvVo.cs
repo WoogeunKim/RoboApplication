@@ -2028,6 +2028,22 @@
             get;
             set;
         }
+        public object PUR_BAR_QTY
+        {
+            get;
+            set;
+        }
+        public object INP_ITM_QTY
+        {
+            get;
+            set;
+        }
+        public object BAR_PER_WGT
+        {
+            get;
+            set;
+        }
+        
 
     }
 }

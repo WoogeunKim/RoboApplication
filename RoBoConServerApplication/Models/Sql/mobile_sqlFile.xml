@@ -133,7 +133,8 @@
              , ITM_MD_QTY
              <!--, PUR_QTY - ITM_QTY AS RMN_QTY-->
              , PUR_QTY_RMN AS RMN_QTY
-             , ISNULL(dbo.FF_ROBO_ITM_QTY (N2ND_ITM_GRP_CD, ITM_LEN),0) AS ITM_PAK_QTY
+             <!--, ISNULL(dbo.FF_ROBO_ITM_QTY (N2ND_ITM_GRP_CD, ITM_LEN),0) AS ITM_PAK_QTY-->
+             , ISNULL(BAR_QTY,0) AS ITM_PAK_QTY
              , CO_UT_PRC     
              , ITM_QTY * CO_UT_PRC AS PUR_AMT
              , PUR_RMK
@@ -186,7 +187,16 @@
                                   AND X.ORD_SEQ   = T2.PUR_ORD_SEQ
                    )
                AND T1.PUR_CO_CD = #CO_NO#  
-            ) T10        
+            ) T10              
+              OUTER APPLY (
+                  SELECT X.BAR_QTY
+                    FROM TB_CD_DEFM_BAR_MATH_TBL X
+                   WHERE 1 = 1
+                     AND X.CHNL_CD      = #CHNL_CD#
+                     AND X.BAR_CLSS_CD  = 'B2' 
+                     AND X.BAR_SZ_CD    = T10.N2ND_ITM_GRP_CD    
+                     AND X.BAR_SZ_LEN   = T10.ITM_LEN / 1000    
+            ) T11
 	 </select>
 
 

@@ -9804,117 +9804,16 @@
 	  
 	  
 
-	  <select id="M66310SelectMstList" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
-	  		  <!--WITH TMP AS (
-            SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.OPMZ_SEQ) AS RN 
-                 , T1.OPMZ_SEQ
-                 , T1.DMND_IDX
-                 , T1.STEP
-                 , T2.ITM_STL_CD
-                 , T2.ITM_STL_SZ_CD
-                 , T1.INTO_RAW_KNT
-                 , T1.INTO_RAW_LEN
-                 , CUT_VAL
-                 , T2.ITM_LEN
-                 , T2.ITM_QTY
-                 , T2.ITM_SHP_CD
-                 , LSS_LEN
-                 , SUB_STEP
-              FROM (
-                  SELECT dbo.FN_splitValue(ORD_ID, '-', 1)
-                       +'-' + dbo.FN_splitValue(ORD_ID, '-', 2)             AS ORD_NO
-                       , CAST(dbo.FN_splitValue(ORD_ID, '-', 3) AS INT)     AS ORD_SEQ 
-                       , DMND_IDX
-                       , STEP
-                       , SUB_STEP                   
-                       , ORD_ID
-                       , CUT_VAL
-                       , INTO_RAW_LEN    
-                       , INTO_RAW_KNT    
-                       , LSS_LEN
-                       , LSS_RT
-                       , CUT_RMN_LEN
-                       , CUT_RMN_QTY
-                       , CUT_RMN_LSS_LEN
-                       , CUT_RMN_LSS_RT 
-                       , OPMZ_NO
-                       , OPMZ_SEQ                   
-                    FROM TB_OPMZ_SOL_RSLT T1
-                   WHERE 1 = 1
-                     AND OPMZ_NO = #OPMZ_NO# 
-                     AND STEP    IN ( SELECT STEP
-                                        FROM TB_OPMZ_INTO_MTRL_MAP
-                                       WHERE 1 = 1
-                                         AND OPMZ_NO = #OPMZ_NO#                                   
-                                         AND CLZ_FLG = 'N'
-                                      )
-                    ) T1, TB_OPMZ_DMND T2
-             WHERE 1 = 1
-               AND T2.OPMZ_NO   = #OPMZ_NO#             
-               AND T1.OPMZ_NO   = T2.OPMZ_NO
-               AND T1.ORD_NO    = T2.ORD_NO
-               AND T1.ORD_SEQ   = T2.ORD_SEQ
-        ) 
-        SELECT    T1.STEP             AS RN 
-                , T1.ITM_STL_CD
-                , T1.ITM_STL_SZ_CD
-                , T1.INTO_RAW_KNT
-                , CEILING(T1.INTO_RAW_LEN) AS INTO_RAW_LEN
-                , MAX(CASE WHEN SUB_STEP = 1 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N1ST_STEP_VAL
-                , MAX(CASE WHEN SUB_STEP = 2 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N2ND_STEP_VAL
-                , MAX(CASE WHEN SUB_STEP = 3 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N3RD_STEP_VAL  
-                , MAX(CASE WHEN SUB_STEP = 4 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N4TH_STEP_VAL      
-                , MAX(CASE WHEN SUB_STEP = 5 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N5TH_STEP_VAL   
-                , MAX(CASE WHEN SUB_STEP = 6 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N6TH_STEP_VAL     
-                , MAX(CASE WHEN SUB_STEP = 7 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N7TH_STEP_VAL   
-                , MAX(CASE WHEN SUB_STEP = 8 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N8TH_STEP_VAL  
-                , MAX(CASE WHEN SUB_STEP = 9 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N9TH_STEP_VAL  
-                , MAX(CASE WHEN SUB_STEP = 10 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N10TH_STEP_VAL          
-                , MAX(CEILING(LSS_LEN))  AS LSS_LEN
-          FROM (
-                SELECT ROW_NUMBER() OVER (PARTITION BY STEP, ITM_STL_CD, ITM_STL_SZ_CD, INTO_RAW_LEN ORDER BY SUB_STEP, CUT_NO) SUB_STEP 
-                     , T2.CUT_NO
-                     , T1.OPMZ_SEQ
-                     , T1.DMND_IDX
-                     , T1.STEP
-                     , T1.ITM_STL_CD
-                     , T1.ITM_STL_SZ_CD
-                     , T1.INTO_RAW_KNT
-                     , T1.INTO_RAW_LEN
-                     , T1.CUT_VAL
-                     , T1.ITM_LEN
-                     , T1.ITM_QTY
-                     , T1.ITM_SHP_CD
-                     , T1.LSS_LEN
-                     , T1.SUB_STEP  AS OLD_SUB_STEP
-                  FROM TMP T1
-                    ,  (
-                      SELECT T2.RN 
-                           , T1.NO      AS CUT_NO
-                        FROM CPY_T  T1
-                           , TMP    T2        
-                       WHERE 1 = 1
-                         AND T1.NO <![CDATA[<=]]> T2.CUT_VAL
-                        ) T2
-                WHERE 1 = 1
-                  AND T1.RN = T2.RN 
-          ) T1
-        WHERE 1 = 1
-         GROUP BY  T1.ITM_STL_CD
-                , T1.ITM_STL_SZ_CD
-                , T1.INTO_RAW_LEN
-                , T1.STEP
-                , T1.INTO_RAW_KNT-->        
 
-		  
-		  
-             WITH TMP AS (
-                        SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.INTO_RAW_SEQ, T1.OPMZ_SEQ ) AS RN 
-                             , INTO_RAW_SEQ
+     <select id="M66310SelectMstList" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
+        
+             <!--WITH TMP AS (
+                        SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY STEP, T1.INTO_RAW_SEQ, T1.OPMZ_SEQ ) AS RN 
+                             , T1.STEP
+                      , INTO_RAW_SEQ
                              , T1.OPMZ_NO
                              , T1.OPMZ_SEQ
                              , T1.DMND_IDX
-                             , T1.STEP
                              , T1.SUB_STEP
                              , T2.ITM_STL_CD
                              , T2.ITM_STL_SZ_CD
@@ -9982,7 +9881,7 @@
                             , MAX(CEILING(LSS_LEN))  AS LSS_LEN
                             , '강종: ' + T1.ITM_STL_CD + ' ,규격: ' + T1.ITM_STL_SZ_CD + ' ,원자재길이: ' + CAST(CEILING(T1.INTO_RAW_LEN) AS VARCHAR) AS GRP_LOT_NO
                       FROM (
-                            SELECT ROW_NUMBER() OVER (PARTITION BY INTO_RAW_SEQ ORDER BY INTO_RAW_SEQ, T1.ITM_LEN DESC , CUT_NO) SUB_STEP 
+                            SELECT ROW_NUMBER() OVER (PARTITION BY STEP, INTO_RAW_SEQ ORDER BY INTO_RAW_SEQ, T1.ITM_LEN DESC , CUT_NO) SUB_STEP 
                                  , INTO_RAW_SEQ
                                  , T2.CUT_NO
                                  , T1.OPMZ_NO
@@ -10019,123 +9918,174 @@
                              , T1.INTO_RAW_KNT
                              , T1.OPMZ_NO
                              , T1.INTO_RAW_SEQ
-            ORDER BY T1.INTO_RAW_SEQ     
-	  </select>
-
-	  <select id="M66310SelectDtlList" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
-		  <!--WITH TMP AS (
-            SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.OPMZ_SEQ) AS RN 
-                 , T1.OPMZ_NO
-                 , T1.OPMZ_SEQ
-                 , T1.DMND_IDX
-                 , T1.STEP
-                 , T2.ITM_STL_CD
-                 , T2.ITM_STL_SZ_CD
-                 , T1.INTO_RAW_KNT
-                 , T1.INTO_RAW_LEN
-                 , CUT_VAL
-                 , T2.ITM_LEN
-                 , T2.ITM_QTY
-                 , T2.ITM_SHP_CD
-                 , LSS_LEN
-                 , SUB_STEP
-              FROM (
-                  SELECT dbo.FN_splitValue(ORD_ID, '-', 1)
-                       +'-' + dbo.FN_splitValue(ORD_ID, '-', 2)             AS ORD_NO
-                       , CAST(dbo.FN_splitValue(ORD_ID, '-', 3) AS INT)     AS ORD_SEQ 
-                       , DMND_IDX
-                       , STEP
-                       , SUB_STEP                   
-                       , ORD_ID
-                       , CUT_VAL
-                       , INTO_RAW_LEN
-                       , INTO_RAW_KNT
-                       , LSS_LEN
-                       , LSS_RT
-                       , CUT_RMN_LEN
-                       , CUT_RMN_QTY
-                       , CUT_RMN_LSS_LEN
-                       , CUT_RMN_LSS_RT 
-                       , OPMZ_NO
-					   , OPMZ_SEQ                   
-                    FROM TB_OPMZ_SOL_RSLTTB_OPMZ_SOL_RSLT T1
-                   WHERE 1 = 1
-                     AND OPMZ_NO = #OPMZ_NO# 
-                     AND NOT EXISTS (SELECT 'X' 
-                                       FROM TB_OPMZ_INTO_MTRL_MAP X
+            ORDER BY T1.STEP, T1.INTO_RAW_SEQ-->     
+     
+                  WITH TMP AS (
+                        SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY STEP, T1.INTO_RAW_SEQ, T1.OPMZ_SEQ ) AS RN 
+                             , T1.STEP
+                             , INTO_RAW_SEQ
+                             , T1.OPMZ_NO
+                             , T1.OPMZ_SEQ
+                             , T1.DMND_IDX
+                             , T1.SUB_STEP
+                             , T2.ITM_STL_CD
+                             , T2.ITM_STL_SZ_CD
+                             , T1.INTO_RAW_KNT
+                             , T1.INTO_RAW_LEN
+                             , CUT_VAL                  
+                             , T2.ITM_LEN
+                             , T2.ITM_QTY
+                             , T2.ITM_SHP_CD
+                             , LSS_LEN
+                             , T1.ORD_NO
+                             , T1.ORD_SEQ 
+                             , T3.N1ST_EQ_NO    
+                             , T3.N1ST_EQ_NM
+                             , T3.N2ND_EQ_NO
+                             , T3.N2ND_EQ_NM                             
+                          FROM (
+                              SELECT  OPMZ_SEQ                   
+                                   , dbo.FN_splitValue(ORD_ID, '-', 1)
+                                   +'-' + dbo.FN_splitValue(ORD_ID, '-', 2)             AS ORD_NO
+                                   , CAST(dbo.FN_splitValue(ORD_ID, '-', 3) AS INT)     AS ORD_SEQ 
+                                   , DMND_IDX
+                                   , STEP
+                                   , SUB_STEP                   
+                                   , ORD_ID
+                                   , CUT_VAL
+                                   , INTO_RAW_LEN
+                                   , INTO_RAW_KNT
+                                   , LSS_LEN
+                                   , LSS_RT
+                                   , CUT_RMN_LEN
+                                   , CUT_RMN_QTY
+                                   , CUT_RMN_LSS_LEN
+                                   , CUT_RMN_LSS_RT 
+                                   , OPMZ_NO             
+                                   , T1.INTO_RAW_SEQ
+                                FROM TB_OPMZ_SOL_RSLT T1
+                               WHERE 1 = 1
+                                 AND OPMZ_NO = #OPMZ_NO#
+                                 AND OPMZ_SEQ    IN ( SELECT STEP
+                                                        FROM TB_OPMZ_INTO_MTRL_MAP
+                                                       WHERE 1 = 1
+                                                         AND OPMZ_NO = #OPMZ_NO#                                   
+                                                         AND CLZ_FLG = 'N'
+                                                  )
+                                ) T1
+                               OUTER APPLY (
+                                     SELECT X.N1ST_EQ_NO    
+                                          , X1.N1ST_EQ_NM
+                                          , X.N2ND_EQ_NO
+                                          , X2.N2ND_EQ_NM
+                                        FROM TB_MES_PROD_DESC  X
+                                             OUTER APPLY(
+                                                 SELECT Y.EQ_NM AS N1ST_EQ_NM
+                                                   FROM TB_PROD_EQ Y
+                                                  WHERE 1 = 1
+                                                    AND Y.CHNL_CD    = #CHNL_CD#
+                                                    AND Y.PROD_EQ_NO = X.N1ST_EQ_NO 
+                                             ) X1
+                                             OUTER APPLY(
+                                                 SELECT Y.EQ_NM AS N2ND_EQ_NM
+                                                   FROM TB_PROD_EQ Y
+                                                  WHERE 1 = 1
+                                                    AND Y.CHNL_CD    = #CHNL_CD#
+                                                    AND Y.PROD_EQ_NO = X.N2ND_EQ_NO  
+                                             ) X2
                                       WHERE 1 = 1
-                                        AND X.OPMZ_NO = #OPMZ_NO# 
-                                        AND X.STEP    = T1.STEP
-                                     )
-                    ) T1, TB_OPMZ_DMND T2
-             WHERE 1 = 1
-               AND T2.OPMZ_NO   = #OPMZ_NO#               
-               AND T1.OPMZ_NO   = T2.OPMZ_NO
-               AND T1.ORD_NO    = T2.ORD_NO
-               AND T1.ORD_SEQ   = T2.ORD_SEQ
-        ) 
-        SELECT    T1.STEP             AS RN 
-                , T1.OPMZ_NO
-                , T1.ITM_STL_CD
-                , T1.ITM_STL_SZ_CD
-                , T1.INTO_RAW_KNT
-                , CEILING(T1.INTO_RAW_LEN) AS INTO_RAW_LEN
-                , MAX(CASE WHEN SUB_STEP = 1 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N1ST_STEP_VAL
-                , MAX(CASE WHEN SUB_STEP = 2 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N2ND_STEP_VAL
-                , MAX(CASE WHEN SUB_STEP = 3 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N3RD_STEP_VAL  
-                , MAX(CASE WHEN SUB_STEP = 4 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N4TH_STEP_VAL      
-                , MAX(CASE WHEN SUB_STEP = 5 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N5TH_STEP_VAL   
-                , MAX(CASE WHEN SUB_STEP = 6 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N6TH_STEP_VAL     
-                , MAX(CASE WHEN SUB_STEP = 7 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N7TH_STEP_VAL   
-                , MAX(CASE WHEN SUB_STEP = 8 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N8TH_STEP_VAL  
-                , MAX(CASE WHEN SUB_STEP = 9 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N9TH_STEP_VAL  
-                , MAX(CASE WHEN SUB_STEP = 10 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N10TH_STEP_VAL          
-                , MAX(CEILING(LSS_LEN))  AS LSS_LEN
-                , '강종: ' + T1.ITM_STL_CD + ' ,규격: ' + T1.ITM_STL_SZ_CD + ' ,원자재길이: ' + CAST(CEILING(T1.INTO_RAW_LEN) AS VARCHAR) AS GRP_LOT_NO
-          FROM (
-                SELECT ROW_NUMBER() OVER (PARTITION BY STEP, ITM_STL_CD, ITM_STL_SZ_CD, INTO_RAW_LEN ORDER BY SUB_STEP, CUT_NO) SUB_STEP 
-                     , T2.CUT_NO
+                                        AND X.SL_RLSE_NO      = T1.ORD_NO
+                                        AND X.SL_RLSE_SEQ     = T1.ORD_SEQ
+                                    ) T3                                
+                                , TB_OPMZ_DMND T2
+                         WHERE 1 = 1
+                           AND T2.OPMZ_NO   = #OPMZ_NO#             
+                           AND T1.OPMZ_NO   = T2.OPMZ_NO
+                           AND T1.ORD_NO    = T2.ORD_NO
+                           AND T1.ORD_SEQ   = T2.ORD_SEQ
+                    ) 
+                    SELECT    T1.INTO_RAW_SEQ             AS RN 
+                            , T1.OPMZ_NO
+                            , T1.ITM_STL_CD
+                            , T1.ITM_STL_SZ_CD
+                            , T1.INTO_RAW_KNT
+                            , CEILING(T1.INTO_RAW_LEN) AS INTO_RAW_LEN
+                            , MAX(CASE WHEN SUB_STEP = 1 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N1ST_STEP_VAL
+                            , MAX(CASE WHEN SUB_STEP = 2 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N2ND_STEP_VAL
+                            , MAX(CASE WHEN SUB_STEP = 3 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N3RD_STEP_VAL  
+                            , MAX(CASE WHEN SUB_STEP = 4 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N4TH_STEP_VAL      
+                            , MAX(CASE WHEN SUB_STEP = 5 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N5TH_STEP_VAL   
+                            , MAX(CASE WHEN SUB_STEP = 6 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N6TH_STEP_VAL     
+                            , MAX(CASE WHEN SUB_STEP = 7 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N7TH_STEP_VAL   
+                            , MAX(CASE WHEN SUB_STEP = 8 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N8TH_STEP_VAL  
+                            , MAX(CASE WHEN SUB_STEP = 9 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N9TH_STEP_VAL  
+                            , MAX(CASE WHEN SUB_STEP = 10 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N10TH_STEP_VAL         
+                            , MAX(CASE WHEN SUB_STEP = 1 THEN  N2ND_EQ_NM  END )  AS N1ST_EQ_NM
+                            , MAX(CASE WHEN SUB_STEP = 2 THEN  N2ND_EQ_NM  END )  AS N2ND_EQ_NM
+                            , MAX(CASE WHEN SUB_STEP = 3 THEN  N2ND_EQ_NM  END )  AS N3RD_EQ_NM 
+                            , MAX(CASE WHEN SUB_STEP = 4 THEN  N2ND_EQ_NM  END )  AS N4TH_EQ_NM     
+                            , MAX(CASE WHEN SUB_STEP = 5 THEN  N2ND_EQ_NM  END )  AS N5TH_EQ_NM   
+                            , MAX(CASE WHEN SUB_STEP = 6 THEN  N2ND_EQ_NM  END )  AS N6TH_EQ_NM     
+                            , MAX(CASE WHEN SUB_STEP = 7 THEN  N2ND_EQ_NM  END )  AS N7TH_EQ_NM   
+                            , MAX(CASE WHEN SUB_STEP = 8 THEN  N2ND_EQ_NM  END )  AS N8TH_EQ_NM 
+                            , MAX(CASE WHEN SUB_STEP = 9 THEN  N2ND_EQ_NM  END )  AS N9TH_EQ_NM                  
+                            , MAX(CASE WHEN SUB_STEP = 10 THEN  N2ND_EQ_NM  END )  AS N10TH_EQ_NM                              
+                            , MAX(CEILING(LSS_LEN))  AS LSS_LEN
+                            , '강종: ' + T1.ITM_STL_CD + ' ,규격: ' + T1.ITM_STL_SZ_CD + ' ,원자재길이: ' + CAST(CEILING(T1.INTO_RAW_LEN) AS VARCHAR) AS GRP_LOT_NO
+                      FROM (
+                            SELECT ROW_NUMBER() OVER (PARTITION BY STEP, INTO_RAW_SEQ ORDER BY INTO_RAW_SEQ, T1.ITM_LEN DESC , CUT_NO) SUB_STEP 
+                                 , INTO_RAW_SEQ
+                                 , T2.CUT_NO
+                                 , T1.OPMZ_NO
+                                 , T1.OPMZ_SEQ
+                                 , T1.DMND_IDX
+                                 , T1.STEP
+                                 , T1.ITM_STL_CD
+                                 , T1.ITM_STL_SZ_CD
+                                 , T1.INTO_RAW_KNT
+                                 , T1.INTO_RAW_LEN
+                                 , T1.CUT_VAL
+                                 , T1.ITM_LEN
+                                 , T1.ITM_QTY
+                                 , T1.ITM_SHP_CD
+                                 , T1.LSS_LEN
+                                 , T1.SUB_STEP  AS OLD_SUB_STEP
+                                 , T1.N1ST_EQ_NO    
+                                 , T1.N1ST_EQ_NM
+                                 , T1.N2ND_EQ_NO
+                                 , T1.N2ND_EQ_NM                                 
+                              FROM TMP T1
+                                ,  (
+                                  SELECT T2.RN 
+                                       , T1.NO      AS CUT_NO
+                                    FROM CPY_T  T1
+                                       , TMP    T2        
+                                   WHERE 1 = 1
+                                     AND T1.NO <![CDATA[<=]]> T2.CUT_VAL
+                                    ) T2
+                            WHERE 1 = 1
+                              AND T1.RN = T2.RN 
+                      ) T1
+                    WHERE 1 = 1
+                     GROUP BY  T1.ITM_STL_CD
+                             , T1.ITM_STL_SZ_CD
+                             , T1.INTO_RAW_LEN
+                             , T1.STEP
+                             , T1.INTO_RAW_KNT
+                             , T1.OPMZ_NO
+                             , T1.INTO_RAW_SEQ
+            ORDER BY T1.STEP, T1.INTO_RAW_SEQ  
+     </select>
+
+	     <select id="M66310SelectDtlList" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
+        
+        <!--WITH TMP AS (
+                SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY STEP, T1.INTO_RAW_SEQ, T1.OPMZ_SEQ ) AS RN 
+                     , T1.STEP
+                , INTO_RAW_SEQ
                      , T1.OPMZ_NO
                      , T1.OPMZ_SEQ
                      , T1.DMND_IDX
-                     , T1.STEP
-                     , T1.ITM_STL_CD
-                     , T1.ITM_STL_SZ_CD
-                     , T1.INTO_RAW_KNT
-                     , T1.INTO_RAW_LEN
-                     , T1.CUT_VAL
-                     , T1.ITM_LEN
-                     , T1.ITM_QTY
-                     , T1.ITM_SHP_CD
-                     , T1.LSS_LEN
-                     , T1.SUB_STEP  AS OLD_SUB_STEP
-                  FROM TMP T1
-                    ,  (
-                      SELECT T2.RN 
-                           , T1.NO      AS CUT_NO
-                        FROM CPY_T  T1
-                           , TMP    T2        
-                       WHERE 1 = 1
-                         AND T1.NO <![CDATA[<=]]> T2.CUT_VAL
-                        ) T2
-                WHERE 1 = 1
-                  AND T1.RN = T2.RN 
-          ) T1
-        WHERE 1 = 1
-         GROUP BY  T1.ITM_STL_CD
-                 , T1.ITM_STL_SZ_CD
-                 , T1.INTO_RAW_LEN
-                 , T1.STEP
-                 , T1.INTO_RAW_KNT
-                 , T1.OPMZ_NO-->
-		  
-		  WITH TMP AS (
-                SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.INTO_RAW_SEQ, T1.OPMZ_SEQ ) AS RN 
-                     , INTO_RAW_SEQ
-                     , T1.OPMZ_NO
-                     , T1.OPMZ_SEQ
-                     , T1.DMND_IDX
-                     , T1.STEP
                      , T1.SUB_STEP
                      , T2.ITM_STL_CD
                      , T2.ITM_STL_SZ_CD
@@ -10175,7 +10125,7 @@
                                            FROM TB_OPMZ_INTO_MTRL_MAP X
                                           WHERE 1 = 1
                                             AND X.OPMZ_NO = #OPMZ_NO#
-                                            <!--AND X.STEP    = T1.STEP-->
+                                            --><!--AND X.STEP    = T1.STEP--><!--
                                             AND X.STEP    = T1.OPMZ_SEQ
                                          )
                         ) T1, TB_OPMZ_DMND T2
@@ -10204,7 +10154,7 @@
                     , MAX(CEILING(LSS_LEN))  AS LSS_LEN
                     , '강종: ' + T1.ITM_STL_CD + ' ,규격: ' + T1.ITM_STL_SZ_CD + ' ,원자재길이: ' + CAST(CEILING(T1.INTO_RAW_LEN) AS VARCHAR) AS GRP_LOT_NO
               FROM (
-                    SELECT ROW_NUMBER() OVER (PARTITION BY INTO_RAW_SEQ ORDER BY INTO_RAW_SEQ, T1.ITM_LEN DESC , CUT_NO) SUB_STEP 
+                    SELECT ROW_NUMBER() OVER (PARTITION BY STEP, INTO_RAW_SEQ ORDER BY INTO_RAW_SEQ, T1.ITM_LEN DESC , CUT_NO) SUB_STEP 
                          , INTO_RAW_SEQ
                          , T2.CUT_NO
                          , T1.OPMZ_NO
@@ -10241,10 +10191,170 @@
                     , T1.INTO_RAW_KNT
                     , T1.OPMZ_NO
                     , T1.INTO_RAW_SEQ
-             ORDER BY T1.INTO_RAW_SEQ                 
-		  
-	  </select>
-	  
+             ORDER BY T1.STEP, T1.INTO_RAW_SEQ-->
+      
+      WITH TMP AS (
+                SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.STEP, T1.INTO_RAW_SEQ, T1.OPMZ_SEQ ) AS RN 
+                     , INTO_RAW_SEQ
+                     , T1.OPMZ_NO
+                     , T1.OPMZ_SEQ
+                     , T1.DMND_IDX
+                     , T1.STEP
+                     , T1.SUB_STEP
+                     , T2.ITM_STL_CD
+                     , T2.ITM_STL_SZ_CD
+                     , T1.INTO_RAW_KNT
+                     , T1.INTO_RAW_LEN
+                     , CUT_VAL                  
+                     , T2.ITM_LEN
+                     , T2.ITM_QTY
+                     , T2.ITM_SHP_CD
+                     , LSS_LEN
+                     , T1.ORD_NO
+                     , T1.ORD_SEQ 
+                     , T1.EQ_NO
+                     , T3.N1ST_EQ_NO    
+                     , T3.N1ST_EQ_NM
+                     , T3.N2ND_EQ_NO
+                     , T3.N2ND_EQ_NM
+                  FROM (
+                      SELECT  OPMZ_SEQ                   
+                           , dbo.FN_splitValue(ORD_ID, '-', 1)
+                           +'-' + dbo.FN_splitValue(ORD_ID, '-', 2)             AS ORD_NO
+                           , CAST(dbo.FN_splitValue(ORD_ID, '-', 3) AS INT)     AS ORD_SEQ 
+                           , DMND_IDX
+                           , STEP
+                           , SUB_STEP                   
+                           , ORD_ID
+                           , CUT_VAL
+                           , INTO_RAW_LEN
+                           , INTO_RAW_KNT
+                           , LSS_LEN
+                           , LSS_RT
+                           , CUT_RMN_LEN
+                           , CUT_RMN_QTY
+                           , CUT_RMN_LSS_LEN
+                           , CUT_RMN_LSS_RT 
+                           , OPMZ_NO             
+                           , T1.INTO_RAW_SEQ
+                           , T1.EQ_NO
+                        FROM TB_OPMZ_SOL_RSLT T1
+                       WHERE 1 = 1
+                         AND OPMZ_NO = #OPMZ_NO#
+                         AND NOT EXISTS (SELECT 'X' 
+                                           FROM TB_OPMZ_INTO_MTRL_MAP X
+                                          WHERE 1 = 1
+                                            AND X.OPMZ_NO = #OPMZ_NO#                 
+                                            AND X.STEP    = T1.OPMZ_SEQ
+                                         )
+                        ) T1
+                   OUTER APPLY (
+                         SELECT X.N1ST_EQ_NO    
+                              , X1.N1ST_EQ_NM
+                              , X.N2ND_EQ_NO
+                              , X2.N2ND_EQ_NM
+                            FROM TB_MES_PROD_DESC  X
+                                 OUTER APPLY(
+                                     SELECT Y.EQ_NM AS N1ST_EQ_NM
+                                       FROM TB_PROD_EQ Y
+                                      WHERE 1 = 1
+                                        AND Y.CHNL_CD    = #CHNL_CD#
+                                        AND Y.PROD_EQ_NO = X.N1ST_EQ_NO 
+                                 ) X1
+                                 OUTER APPLY(
+                                     SELECT Y.EQ_NM AS N2ND_EQ_NM
+                                       FROM TB_PROD_EQ Y
+                                      WHERE 1 = 1
+                                        AND Y.CHNL_CD    = #CHNL_CD#
+                                        AND Y.PROD_EQ_NO = X.N2ND_EQ_NO  
+                                 ) X2
+                          WHERE 1 = 1
+                            AND X.SL_RLSE_NO      = T1.ORD_NO
+                            AND X.SL_RLSE_SEQ     = T1.ORD_SEQ
+                        ) T3
+                        , TB_OPMZ_DMND T2
+                 WHERE 1 = 1
+                   AND T2.OPMZ_NO   = #OPMZ_NO#             
+                   AND T1.OPMZ_NO   = T2.OPMZ_NO
+                   AND T1.ORD_NO    = T2.ORD_NO
+                   AND T1.ORD_SEQ   = T2.ORD_SEQ
+            ) 
+            SELECT    T1.INTO_RAW_SEQ             AS RN 
+                    , T1.OPMZ_NO
+                    , T1.ITM_STL_CD
+                    , T1.ITM_STL_SZ_CD
+                    , T1.INTO_RAW_KNT                   
+                    , CEILING(T1.INTO_RAW_LEN) AS INTO_RAW_LEN
+                    , MAX(CASE WHEN SUB_STEP = 1 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N1ST_STEP_VAL
+                    , MAX(CASE WHEN SUB_STEP = 2 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N2ND_STEP_VAL
+                    , MAX(CASE WHEN SUB_STEP = 3 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N3RD_STEP_VAL  
+                    , MAX(CASE WHEN SUB_STEP = 4 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N4TH_STEP_VAL      
+                    , MAX(CASE WHEN SUB_STEP = 5 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N5TH_STEP_VAL   
+                    , MAX(CASE WHEN SUB_STEP = 6 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N6TH_STEP_VAL     
+                    , MAX(CASE WHEN SUB_STEP = 7 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N7TH_STEP_VAL   
+                    , MAX(CASE WHEN SUB_STEP = 8 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N8TH_STEP_VAL  
+                    , MAX(CASE WHEN SUB_STEP = 9 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N9TH_STEP_VAL                      
+                    , MAX(CASE WHEN SUB_STEP = 10 THEN  CAST(CEILING(T1.ITM_LEN) AS VARCHAR)  END )  AS N10TH_STEP_VAL                              
+                    , MAX(CASE WHEN SUB_STEP = 1 THEN  N2ND_EQ_NM  END )  AS N1ST_EQ_NM
+                    , MAX(CASE WHEN SUB_STEP = 2 THEN  N2ND_EQ_NM  END )  AS N2ND_EQ_NM
+                    , MAX(CASE WHEN SUB_STEP = 3 THEN  N2ND_EQ_NM  END )  AS N3RD_EQ_NM 
+                    , MAX(CASE WHEN SUB_STEP = 4 THEN  N2ND_EQ_NM  END )  AS N4TH_EQ_NM     
+                    , MAX(CASE WHEN SUB_STEP = 5 THEN  N2ND_EQ_NM  END )  AS N5TH_EQ_NM   
+                    , MAX(CASE WHEN SUB_STEP = 6 THEN  N2ND_EQ_NM  END )  AS N6TH_EQ_NM     
+                    , MAX(CASE WHEN SUB_STEP = 7 THEN  N2ND_EQ_NM  END )  AS N7TH_EQ_NM   
+                    , MAX(CASE WHEN SUB_STEP = 8 THEN  N2ND_EQ_NM  END )  AS N8TH_EQ_NM 
+                    , MAX(CASE WHEN SUB_STEP = 9 THEN  N2ND_EQ_NM  END )  AS N9TH_EQ_NM                  
+                    , MAX(CASE WHEN SUB_STEP = 10 THEN  N2ND_EQ_NM  END )  AS N10TH_EQ_NM                                                                             
+                    , MAX(CEILING(LSS_LEN))  AS LSS_LEN
+                    , '강종: ' + T1.ITM_STL_CD + ' ,규격: ' + T1.ITM_STL_SZ_CD + ' ,원자재길이: ' + CAST(CEILING(T1.INTO_RAW_LEN) AS VARCHAR) AS GRP_LOT_NO
+              FROM (
+                    SELECT ROW_NUMBER() OVER (PARTITION BY T1.STEP, INTO_RAW_SEQ ORDER BY INTO_RAW_SEQ, T1.ITM_LEN DESC , CUT_NO) SUB_STEP 
+                         , INTO_RAW_SEQ
+                         , T2.CUT_NO
+                         , T1.OPMZ_NO
+                         , T1.OPMZ_SEQ
+                         , T1.DMND_IDX
+                         , T1.STEP
+                         , T1.ITM_STL_CD
+                         , T1.ITM_STL_SZ_CD
+                         , T1.INTO_RAW_KNT
+                         , T1.INTO_RAW_LEN
+                         , T1.CUT_VAL
+                         , T1.ITM_LEN
+                         , T1.ITM_QTY
+                         , T1.ITM_SHP_CD
+                         , T1.LSS_LEN
+                         , T1.SUB_STEP  AS OLD_SUB_STEP
+                         , T1.EQ_NO   
+                         , T1.N1ST_EQ_NO    
+                         , T1.N1ST_EQ_NM
+                         , T1.N2ND_EQ_NO
+                         , T1.N2ND_EQ_NM
+                      FROM TMP T1
+                        ,  (
+                          SELECT T2.RN 
+                               , T1.NO      AS CUT_NO
+                            FROM CPY_T  T1
+                               , TMP    T2        
+                           WHERE 1 = 1
+                             AND T1.NO <![CDATA[<=]]> T2.CUT_VAL
+                         ) T2
+                     WHERE 1 = 1
+                       AND T1.RN = T2.RN 
+                  ) T1
+             WHERE 1 = 1
+             GROUP BY T1.ITM_STL_CD
+                    , T1.ITM_STL_SZ_CD
+                    , T1.INTO_RAW_LEN
+                    , T1.STEP
+                    , T1.INTO_RAW_KNT
+                    , T1.OPMZ_NO
+                    , T1.INTO_RAW_SEQ
+             ORDER BY T1.STEP, T1.INTO_RAW_SEQ            
+ 
+     
+        
+     </select>
 	  <insert id="M66310InsertDtl" parameterClass="ModelsLibrary.Man.ManVo">		   
 	    INSERT INTO TB_OPMZ_INTO_MTRL_MAP
           (

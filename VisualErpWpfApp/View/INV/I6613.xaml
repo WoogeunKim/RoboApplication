@@ -176,7 +176,7 @@
                 <dxb:BarButtonItem x:Name="M_MST_REFRESH" Content="조회" KeyGesture="F5" Glyph="{dx:DXImage Image=Refresh2_16x16.png}" LargeGlyph="{dx:DXImage Image=Refresh2_32x32.png}" RibbonStyle="Large" Command="{Binding RefreshCommand}" />
                 <dxb:BarButtonItem x:Name="M_MST_PRINT" Content="출력" KeyGesture="F9" Glyph="{dx:DXImage Image=PrintDialog_16x16.png}" LargeGlyph="{dx:DXImage Image=PrintDialog_32x32.png}" RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}"  ItemClick="M_MST_PRINT_ItemClick" />
 
-             
+
             </dxb:BarManager.Items>
             <Grid>
                 <Grid.RowDefinitions>
@@ -188,7 +188,7 @@
                     <dxr:RibbonDefaultPageCategory>
                         <dxr:RibbonPage Caption="입고현황">
                             <dxr:RibbonPageGroup Caption="조회 조건">
-                          
+
                                 <dxb:BarEditItemLink BarItemName="M_FM_DT" EditWidth="120" EditHeight="28" />
                                 <dxb:BarEditItemLink BarItemName="M_AREA_NM" EditWidth="120" EditHeight="28" />
                                 <dxb:BarEditItemLink BarItemName="M_TO_DT" EditWidth="120" EditHeight="28" />
@@ -226,7 +226,7 @@
 
 
                                 <Separator HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Foreground="LightGray"  />
-                               
+
 
                                 <Grid  Grid.Column="0" Grid.Row="1" Grid.RowSpan="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0">
                                     <Grid.RowDefinitions>
@@ -248,7 +248,7 @@
                                         <dxg:GridControl.View>
                                             <dxg:TableView x:Name="ViewTableMst" SearchDelay="0" EditorButtonShowMode="ShowForFocusedRow" FontSize="13" ShowFixedTotalSummary="True" ShowTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Default" AutoWidth="False" AllowPerPixelScrolling="True" ShowGroupPanel="True" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="True"  IsColumnMenuEnabled="False"  CellStyle="{StaticResource GridCellStyle}" ShowGroupFooters="True" AllowCellMerge="False"  ShowHorizontalLines="True" ShowVerticalLines="True" />
                                         </dxg:GridControl.View>
-                                        
+
                                         <dxg:GridControl.Columns>
                                             <dxg:GridColumn FieldName="RN" Header="순번" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowCellMerge="False" >
                                                 <dxg:GridColumn.EditSettings>
@@ -306,19 +306,19 @@
 
                                             <dxg:GridColumn FieldName="INAUD_QTY" Header="수량" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowCellMerge="False" >
                                                 <dxg:GridColumn.EditSettings>
-                                                    <dxe:TextEditSettings HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0.00"  MaskUseAsDisplayFormat="True"  />
+                                                    <dxe:TextEditSettings HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True"  />
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
                                             <dxg:GridColumn FieldName="ITM_WGT" Header="중량" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True"  AllowCellMerge="False">
                                                 <dxg:GridColumn.EditSettings>
-                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0.00"  MaskUseAsDisplayFormat="True"  />
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True"  />
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
                                             <dxg:GridColumn FieldName="INAUD_PRC" Header="단가" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True"  AllowCellMerge="False">
                                                 <dxg:GridColumn.EditSettings>
-                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0.00"  MaskUseAsDisplayFormat="True"  />
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True"  />
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
@@ -345,18 +345,18 @@
                                         <dxg:GridControl.GroupSummary>
 
                                             <dxg:GridSummaryItem FieldName="INAUD_QTY" SummaryType="Sum" ShowInGroupColumnFooter="INAUD_QTY" DisplayFormat="###,###,###,###,##0" />
-                                            <dxg:GridSummaryItem FieldName="ITM_WGT" SummaryType="Sum" ShowInGroupColumnFooter="ITM_WGT" DisplayFormat="###,###,###,###,##0.00" />
+                                            <dxg:GridSummaryItem FieldName="ITM_WGT" SummaryType="Sum" ShowInGroupColumnFooter="ITM_WGT" DisplayFormat="###,###,###,###,##0" />
                                             <dxg:GridSummaryItem FieldName="INAUD_AMT" SummaryType="Sum" ShowInGroupColumnFooter="INAUD_AMT" DisplayFormat="###,###,###,###,##0" />
-                                            
+
                                             <dxg:GridSummaryItem SummaryType="Count" Alignment="Right"/>
                                         </dxg:GridControl.GroupSummary>
 
-                                       <dxg:GridControl.TotalSummary>
+                                        <dxg:GridControl.TotalSummary>
 
                                             <dxg:GridSummaryItem FieldName="INAUD_QTY" SummaryType="Sum" DisplayFormat="###,###,###,###,##0" />
                                             <dxg:GridSummaryItem FieldName="ITM_WGT" SummaryType="Sum" DisplayFormat="###,###,###,###,##0" />
                                             <dxg:GridSummaryItem FieldName="INAUD_AMT" SummaryType="Sum" DisplayFormat="###,###,###,###,##0" />
-                                            
+
                                             <dxg:GridSummaryItem SummaryType="Count" Alignment="Right"/>
                                         </dxg:GridControl.TotalSummary>
 

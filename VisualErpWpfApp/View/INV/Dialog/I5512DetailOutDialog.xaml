@@ -186,7 +186,7 @@
                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>-->
-                
+
                 <dxg:GridColumn FieldName="ITM_CD" Header="품번" Width="20" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" >
                     <dxg:GridColumn.EditSettings>
                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
@@ -221,7 +221,7 @@
                                         <dxg:GridControl.View>
                                             <dxg:TableView Name="View"  ShowColumnHeaders="False" NewItemRowPosition="None" ShowGroupedColumns="True" AutoWidth="True" AllowPerPixelScrolling="True" ScrollAnimationDuration="0" ShowAutoFilterRow="False" ShowTotalSummary="False" />
                                         </dxg:GridControl.View>
-                                        
+
                                         <dxg:GridControl.Columns>
                                             <dxg:GridColumn FieldName="CO_NO" Header="코드" Width="50" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="2">
                                                 <dxg:GridColumn.EditSettings>
@@ -253,14 +253,14 @@
 
                 <dxg:GridColumn FieldName="IMP_ITM_PRC" Header="단가*" Width="13"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate" >
                     <dxg:GridColumn.EditSettings>
-                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0.00"  MaskUseAsDisplayFormat="True" />
+                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True" />
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
 
 
                 <dxg:GridColumn FieldName="IMP_ITM_AMT" Header="금액" Width="15" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True"  >
                     <dxg:GridColumn.EditSettings>
-                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0.00"  MaskUseAsDisplayFormat="True" />
+                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True" />
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
 
@@ -353,13 +353,13 @@
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
-                                            
+
                                             <dxg:GridColumn FieldName="ITM_NM" Header="품명" Width="50" HorizontalHeaderContentAlignment="Center" ToolTip="" VisibleIndex="2"  >
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
-                                            
+
                                             <dxg:GridColumn FieldName="ITM_SZ_NM" Header="규격" Width="60" HorizontalHeaderContentAlignment="Center"  ToolTip="" VisibleIndex="3" >
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
@@ -389,11 +389,11 @@
                 </dxg:GridColumn>
 
             </dxg:GridControl.Columns>
-            
+
             <dxg:GridControl.GroupSummary>
                 <dxg:GridSummaryItem SummaryType="Count" />
             </dxg:GridControl.GroupSummary>
-            
+
             <dxg:GridControl.TotalSummary>
                 <dxg:GridSummaryItem SummaryType="Count" Alignment="Right"/>
                 <dxg:GridSummaryItem ShowInColumn="IN_QTY" FieldName="IN_QTY" SummaryType="Sum" DisplayFormat="###,###,###,###,##0" />
@@ -547,9 +547,9 @@
                 <dxe:CheckEdit x:Name="check_IMP_ITM_PRC"  Content="단가 : " Grid.Row="2" Grid.Column="0" IsChecked="False" Foreground="WhiteSmoke" />
 
                 <dxe:CheckEdit x:Name="check_ROUT_NM"  Content="공정 구분 : " Grid.Row="0" Grid.Column="2" IsChecked="True" Foreground="WhiteSmoke" Margin="5,0,0,0" />
-                
+
                 <dxe:CheckEdit x:Name="check_INAUD_ORG_NM"  Content="출고 창고 : " Grid.Row="1" Grid.Column="2" IsChecked="True" Foreground="WhiteSmoke" Margin="5,0,0,0" />
-                
+
                 <dxe:CheckEdit x:Name="check_PUR_RMK"  Content="비고 : "     Grid.Row="2" Grid.Column="2" IsChecked="True" Foreground="WhiteSmoke" Margin="5,0,0,0" />
 
 

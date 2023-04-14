@@ -268,14 +268,14 @@
 
                 <dxg:GridColumn FieldName="IMP_ITM_PRC" Header="단가*" Width="13"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate" >
                     <dxg:GridColumn.EditSettings>
-                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0.00"  MaskUseAsDisplayFormat="True" />
+                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True" />
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
 
 
                 <dxg:GridColumn FieldName="IMP_ITM_AMT" Header="금액" Width="15" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True"  >
                     <dxg:GridColumn.EditSettings>
-                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0.00"  MaskUseAsDisplayFormat="True" />
+                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True" />
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
 

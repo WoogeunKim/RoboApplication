@@ -183,7 +183,7 @@
 
                 <dxb:BarButtonItem x:Name="M_MST_DELETE" Content="삭제" KeyGesture="F10" Glyph="{dx:DXImage Image=RemoveItem_16x16.png}" LargeGlyph="{dx:DXImage Image=RemoveItem_32x32.png}" RibbonStyle="Large" IsEnabled="False" Command="{Binding DelContactCommand}" />
 
-                <dxb:BarButtonItem x:Name="M_MST_PRINT" Content="출력" KeyGesture="F9" Glyph="{dx:DXImage Image=PrintDialog_16x16.png}" LargeGlyph="{dx:DXImage Image=PrintDialog_32x32.png}" RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" Command="{Binding ReportContactCommand}" /><!--ItemClick="M_MST_PRINT_ItemClick" />-->
+                <dxb:BarButtonItem x:Name="M_MST_PRINT" Content="출력" KeyGesture="F9" Glyph="{dx:DXImage Image=PrintDialog_16x16.png}" LargeGlyph="{dx:DXImage Image=PrintDialog_32x32.png}" RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" ItemClick="M_MST_PRINT_ItemClick" /><!--ItemClick="M_MST_PRINT_ItemClick" /> Command="{Binding ReportContactCommand}" -->
                
                 <dxb:BarButtonItem x:Name="M_BarCode_PRINT" Content="출력" RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" Command="{Binding BarCodeContactCommand}" Glyph="{dx:DXImage SvgImages/HybridDemoIcons/BottomPanel/HybridDemo_Print.svg}" LargeGlyph="{dx:DXImage SvgImages/HybridDemoIcons/BottomPanel/HybridDemo_Print.svg}" />
                 <dxb:BarButtonItem x:Name="M_MST_BAR_CONFIG" Content="설정" RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" Command="{Binding BarPrintConfigCommand}" Glyph="{dx:DXImage SvgImages/Business Objects/BO_Unknown.svg}" LargeGlyph="{dx:DXImage SvgImages/Business Objects/BO_Unknown.svg}" />

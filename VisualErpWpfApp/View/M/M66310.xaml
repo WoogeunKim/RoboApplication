@@ -13,6 +13,11 @@
         xmlns:local="clr-namespace:AquilaErpWpfApp3.View.M"
         FontFamily="Arial" FontSize="12"
         d:DesignHeight="768" d:DesignWidth="1024" mc:Ignorable="d">
+
+    <UserControl.Resources>
+    </UserControl.Resources>
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -58,7 +63,320 @@
                         <Grid>
                             <dxg:GridControl x:Name="ConfigViewPage1Edit_Master" ItemsSource="{Binding Path=SelectMstList}" SelectedItem="{Binding Path=SelectedMstItem, Mode=TwoWay}">
                                 <dxg:GridControl.View>
-                                    <dxg:TableView x:Name="configViewPage1EditView_Master" ShowFixedTotalSummary="False" AllowEditing="False" AllowMoving="True" AllowResizing="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="False" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupedColumns="True" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="True" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT , Path=EditValue}" RowMinHeight="35"/>
+                                    <dxg:TableView x:Name="configViewPage1EditView_Master" ShowFixedTotalSummary="False" AllowEditing="False" AllowMoving="True" AllowResizing="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="False" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupedColumns="True" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="True" NavigationStyle="None" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT , Path=EditValue}" RowMinHeight="35" >
+                                        <dxg:TableView.FormatConditions>
+                                            <dxg:FormatCondition FieldName="N1ST_STEP_VAL" Expression="Contains([N1ST_EQ_NM],'2헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFB266 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N1ST_STEP_VAL" Expression="Contains([N1ST_EQ_NM],'5헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFFF99 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N1ST_STEP_VAL" Expression="Contains([N1ST_EQ_NM],'앙카절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCFFCC "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N1ST_STEP_VAL" Expression="Contains([N1ST_EQ_NM],'코일 1호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#99CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N1ST_STEP_VAL" Expression="Contains([N1ST_EQ_NM],'코일 2호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCE5FF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N1ST_STEP_VAL" Expression="Contains([N1ST_EQ_NM],'수동')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#E5CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+
+                                            <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'2헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFB266 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'5헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FF9999"/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'앙카절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCFFCC "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'코일 1호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#99CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'코일 2호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCE5FF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'수동')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#E5CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            
+                                            <dxg:FormatCondition FieldName="N3RD_STEP_VAL" Expression="Contains([N3RD_EQ_NM],'2헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFB266 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N3RD_STEP_VAL" Expression="Contains([N3RD_EQ_NM],'5헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFFF99 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N3RD_STEP_VAL" Expression="Contains([N3RD_EQ_NM],'앙카절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCFFCC "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N3RD_STEP_VAL" Expression="Contains([N3RD_EQ_NM],'코일 1호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#99CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N3RD_STEP_VAL" Expression="Contains([N3RD_EQ_NM],'코일 2호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCE5FF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N3RD_STEP_VAL" Expression="Contains([N3RD_EQ_NM],'수동')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#E5CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+
+                                            <dxg:FormatCondition FieldName="N4TH_STEP_VAL" Expression="Contains([N4TH_EQ_NM],'2헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFB266 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N4TH_STEP_VAL" Expression="Contains([N4TH_EQ_NM],'5헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFFF99 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N4TH_STEP_VAL" Expression="Contains([N4TH_EQ_NM],'앙카절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCFFCC "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N4TH_STEP_VAL" Expression="Contains([N4TH_EQ_NM],'코일 1호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#99CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N4TH_STEP_VAL" Expression="Contains([N4TH_EQ_NM],'코일 2호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCE5FF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N4TH_STEP_VAL" Expression="Contains([N4TH_EQ_NM],'수동')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#E5CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            
+                                            <dxg:FormatCondition FieldName="N5TH_STEP_VAL" Expression="Contains([N5TH_EQ_NM],'2헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFB266 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N5TH_STEP_VAL" Expression="Contains([N5TH_EQ_NM],'5헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFFF99 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N5TH_STEP_VAL" Expression="Contains([N5TH_EQ_NM],'앙카절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCFFCC "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N5TH_STEP_VAL" Expression="Contains([N5TH_EQ_NM],'코일 1호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#99CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N5TH_STEP_VAL" Expression="Contains([N5TH_EQ_NM],'코일 2호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCE5FF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N5TH_STEP_VAL" Expression="Contains([N5TH_EQ_NM],'수동')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#E5CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            
+                                            <dxg:FormatCondition FieldName="N6TH_STEP_VAL" Expression="Contains([N6TH_EQ_NM],'2헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFB266 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N6TH_STEP_VAL" Expression="Contains([N6TH_EQ_NM],'5헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFFF99 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N6TH_STEP_VAL" Expression="Contains([N6TH_EQ_NM],'앙카절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCFFCC "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N6TH_STEP_VAL" Expression="Contains([N6TH_EQ_NM],'코일 1호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#99CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N6TH_STEP_VAL" Expression="Contains([N6TH_EQ_NM],'코일 2호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCE5FF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N6TH_STEP_VAL" Expression="Contains([N6TH_EQ_NM],'수동')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#E5CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+
+                                            <dxg:FormatCondition FieldName="N7TH_STEP_VAL" Expression="Contains([N7TH_EQ_NM],'2헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFB266 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N7TH_STEP_VAL" Expression="Contains([N7TH_EQ_NM],'5헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFFF99 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N7TH_STEP_VAL" Expression="Contains([N7TH_EQ_NM],'앙카절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCFFCC "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N7TH_STEP_VAL" Expression="Contains([N7TH_EQ_NM],'코일 1호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#99CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N7TH_STEP_VAL" Expression="Contains([N7TH_EQ_NM],'코일 2호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCE5FF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N7TH_STEP_VAL" Expression="Contains([N7TH_EQ_NM],'수동')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#E5CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            
+                                            <dxg:FormatCondition FieldName="N8TH_STEP_VAL" Expression="Contains([N8TH_EQ_NM],'2헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFB266 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N8TH_STEP_VAL" Expression="Contains([N8TH_EQ_NM],'5헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFFF99 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N8TH_STEP_VAL" Expression="Contains([N8TH_EQ_NM],'앙카절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCFFCC "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N8TH_STEP_VAL" Expression="Contains([N8TH_EQ_NM],'코일 1호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#99CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N8TH_STEP_VAL" Expression="Contains([N8TH_EQ_NM],'코일 2호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCE5FF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N8TH_STEP_VAL" Expression="Contains([N8TH_EQ_NM],'수동')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#E5CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            
+                                            <dxg:FormatCondition FieldName="N9TH_STEP_VAL" Expression="Contains([N9TH_EQ_NM],'2헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFB266 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N9TH_STEP_VAL" Expression="Contains([N9TH_EQ_NM],'5헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFFF99 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N9TH_STEP_VAL" Expression="Contains([N9TH_EQ_NM],'앙카절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCFFCC "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N9TH_STEP_VAL" Expression="Contains([N9TH_EQ_NM],'코일 1호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#99CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N9TH_STEP_VAL" Expression="Contains([N9TH_EQ_NM],'코일 2호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCE5FF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N9TH_STEP_VAL" Expression="Contains([N9TH_EQ_NM],'수동')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#E5CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            
+                                            <dxg:FormatCondition FieldName="N10TH_STEP_VAL" Expression="Contains([N10TH_EQ_NM],'2헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFB266 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N10TH_STEP_VAL" Expression="Contains([N10TH_EQ_NM],'5헤드 절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#FFFF99 "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N10TH_STEP_VAL" Expression="Contains([N10TH_EQ_NM],'앙카절곡기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCFFCC "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N10TH_STEP_VAL" Expression="Contains([N10TH_EQ_NM],'코일 1호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#99CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N10TH_STEP_VAL" Expression="Contains([N10TH_EQ_NM],'코일 2호기')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#CCE5FF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+                                            <dxg:FormatCondition FieldName="N10TH_STEP_VAL" Expression="Contains([N10TH_EQ_NM],'수동')" >
+                                                <dxg:FormatCondition.Format>
+                                                    <dx:Format Background="#E5CCFF "/>
+                                                </dxg:FormatCondition.Format>
+                                            </dxg:FormatCondition>
+
+                                        </dxg:TableView.FormatConditions>
+                                    </dxg:TableView>
                                 </dxg:GridControl.View>
 
                                 <dxg:GridControl.Columns>
@@ -92,7 +410,7 @@
                                         </dxg:GridColumn.EditSettings>
                                     </dxg:GridColumn>
 
-                                    <dxg:GridColumn FieldName="N1ST_STEP_VAL" Header="절단1" Width="80" HorizontalHeaderContentAlignment="Center" VisibleIndex="7">
+                                    <dxg:GridColumn FieldName="N1ST_STEP_VAL" Header="절단1" Width="80" HorizontalHeaderContentAlignment="Center" VisibleIndex="7" >
                                         <dxg:GridColumn.EditSettings>
                                             <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                         </dxg:GridColumn.EditSettings>
@@ -157,6 +475,8 @@
                                             <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,###,##0" MaskUseAsDisplayFormat="True" />
                                         </dxg:GridColumn.EditSettings>
                                     </dxg:GridColumn>
+                                    
+
                                 </dxg:GridControl.Columns>
                             </dxg:GridControl>
                         </Grid>
@@ -221,12 +541,327 @@
 
                 </dxd:LayoutGroup>
 
-                <dxd:LayoutPanel Caption="작업대기" ShowCollapseButton="False" AllowContextMenu="False" AllowClose="False" ShowPinButton="False" ShowCaption="True" CaptionHorizontalAlignment="Center" ItemHeight="3.5*">
+                <dxd:LayoutPanel Caption="작업대기 (2헤드 절곡기 : 주황 / 5헤드 절곡기 : 노랑 / 앙카 절곡기 : 연두 / 코일 1호기 : 파랑 / 코일 2호기 : 하늘색 / 수동 : 보라 )" ShowCollapseButton="False" AllowContextMenu="False" AllowClose="False" ShowPinButton="False" ShowCaption="True" CaptionHorizontalAlignment="Center" ItemHeight="3.5*">
                     <Grid>
                         <dxg:GridControl x:Name="ConfigViewPage1Edit_Detail" AutoExpandAllGroups="True" ItemsSource="{Binding Path=SelectDtlList}" SelectedItem="{Binding Path=SelectedDtlItem, Mode=TwoWay}" >
                             <dxg:GridControl.View>
                                 <!--<dxg:TableView x:Name="ViewTableMst" SearchPanelFindMode="Always" ShowSearchPanelMode="Always" ShowCheckBoxSelectorColumn="True" ShowCheckBoxSelectorInGroupRow="True" CheckBoxSelectorColumnWidth="40" SearchDelay="0" EditorButtonShowMode="ShowForFocusedRow"  FontSize="13" ShowFixedTotalSummary="False" ShowTotalSummary="True" ShowSearchPanelCloseButton="True" AutoWidth="False" AllowPerPixelScrolling="True" ShowGroupPanel="True" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" AllowEditing="False" NavigationStyle="Cell" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="True"  IsColumnMenuEnabled="False" ShowGroupFooters="True" AllowCellMerge="False"  ShowHorizontalLines="True" />-->
-                                <dxg:TableView x:Name="configViewPage1EditView_Detail"  AllowEditing="False" AllowMoving="True" AllowResizing="False" ShowSearchPanelCloseButton="True" ShowFixedTotalSummary="True"  ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="True" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" ShowGroupFooters="True" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="True" SearchString="{Binding ElementName=M_SEARCH_TEXT , Path=EditValue}" RowMinHeight="35"/>
+                                <dxg:TableView x:Name="configViewPage1EditView_Detail" FadeSelectionOnLostFocus="False" AllowEditing="False" AllowMoving="True" AllowResizing="False" ShowSearchPanelCloseButton="True" ShowFixedTotalSummary="True"  ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="True" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" ShowGroupFooters="True" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" ShowIndicator="True"  IsColumnMenuEnabled="True" SearchString="{Binding ElementName=M_SEARCH_TEXT , Path=EditValue}" RowMinHeight="35" AllowConditionalFormattingMenu="True"  >
+                                    <dxg:TableView.FormatConditions>
+                                        
+                                        <dxg:FormatCondition FieldName="N1ST_STEP_VAL" Expression="Contains([N1ST_EQ_NM],'2헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFB266 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N1ST_STEP_VAL" Expression="Contains([N1ST_EQ_NM],'5헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFFF99 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N1ST_STEP_VAL" Expression="Contains([N1ST_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCFFCC "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N1ST_STEP_VAL" Expression="Contains([N1ST_EQ_NM],'코일 1호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#99CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N1ST_STEP_VAL" Expression="Contains([N1ST_EQ_NM],'코일 2호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCE5FF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N1ST_STEP_VAL" Expression="Contains([N1ST_EQ_NM],'수동')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#E5CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        
+                                        <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'2헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFB266 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'5헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FF9999"/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCFFCC "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'코일 1호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#99CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'코일 2호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCE5FF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'수동')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#E5CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        
+                                        <dxg:FormatCondition FieldName="N3RD_STEP_VAL" Expression="Contains([N3RD_EQ_NM],'2헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFB266 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N3RD_STEP_VAL" Expression="Contains([N3RD_EQ_NM],'5헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFFF99 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N3RD_STEP_VAL" Expression="Contains([N3RD_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCFFCC "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N3RD_STEP_VAL" Expression="Contains([N3RD_EQ_NM],'코일 1호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#99CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N3RD_STEP_VAL" Expression="Contains([N3RD_EQ_NM],'코일 2호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCE5FF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N3RD_STEP_VAL" Expression="Contains([N3RD_EQ_NM],'수동')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#E5CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        
+                                        <dxg:FormatCondition FieldName="N4TH_STEP_VAL" Expression="Contains([N4TH_EQ_NM],'2헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFB266 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N4TH_STEP_VAL" Expression="Contains([N4TH_EQ_NM],'5헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFFF99 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N4TH_STEP_VAL" Expression="Contains([N4TH_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCFFCC "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N4TH_STEP_VAL" Expression="Contains([N4TH_EQ_NM],'코일 1호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#99CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N4TH_STEP_VAL" Expression="Contains([N4TH_EQ_NM],'코일 2호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCE5FF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N4TH_STEP_VAL" Expression="Contains([N4TH_EQ_NM],'수동')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#E5CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        
+                                        <dxg:FormatCondition FieldName="N5TH_STEP_VAL" Expression="Contains([N5TH_EQ_NM],'2헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFB266 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N5TH_STEP_VAL" Expression="Contains([N5TH_EQ_NM],'5헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFFF99 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N5TH_STEP_VAL" Expression="Contains([N5TH_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCFFCC "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N5TH_STEP_VAL" Expression="Contains([N5TH_EQ_NM],'코일 1호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#99CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N5TH_STEP_VAL" Expression="Contains([N5TH_EQ_NM],'코일 2호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCE5FF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N5TH_STEP_VAL" Expression="Contains([N5TH_EQ_NM],'수동')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#E5CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        
+                                        <dxg:FormatCondition FieldName="N6TH_STEP_VAL" Expression="Contains([N6TH_EQ_NM],'2헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFB266 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N6TH_STEP_VAL" Expression="Contains([N6TH_EQ_NM],'5헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFFF99 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N6TH_STEP_VAL" Expression="Contains([N6TH_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCFFCC "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N6TH_STEP_VAL" Expression="Contains([N6TH_EQ_NM],'코일 1호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#99CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N6TH_STEP_VAL" Expression="Contains([N6TH_EQ_NM],'코일 2호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCE5FF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N6TH_STEP_VAL" Expression="Contains([N6TH_EQ_NM],'수동')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#E5CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        
+                                        <dxg:FormatCondition FieldName="N7TH_STEP_VAL" Expression="Contains([N7TH_EQ_NM],'2헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFB266 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N7TH_STEP_VAL" Expression="Contains([N7TH_EQ_NM],'5헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFFF99 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N7TH_STEP_VAL" Expression="Contains([N7TH_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCFFCC "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N7TH_STEP_VAL" Expression="Contains([N7TH_EQ_NM],'코일 1호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#99CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N7TH_STEP_VAL" Expression="Contains([N7TH_EQ_NM],'코일 2호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCE5FF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N7TH_STEP_VAL" Expression="Contains([N7TH_EQ_NM],'수동')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#E5CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        
+                                        <dxg:FormatCondition FieldName="N8TH_STEP_VAL" Expression="Contains([N8TH_EQ_NM],'2헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFB266 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N8TH_STEP_VAL" Expression="Contains([N8TH_EQ_NM],'5헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFFF99 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N8TH_STEP_VAL" Expression="Contains([N8TH_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCFFCC "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N8TH_STEP_VAL" Expression="Contains([N8TH_EQ_NM],'코일 1호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#99CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N8TH_STEP_VAL" Expression="Contains([N8TH_EQ_NM],'코일 2호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCE5FF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N8TH_STEP_VAL" Expression="Contains([N8TH_EQ_NM],'수동')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#E5CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        
+                                        <dxg:FormatCondition FieldName="N9TH_STEP_VAL" Expression="Contains([N9TH_EQ_NM],'2헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFB266 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N9TH_STEP_VAL" Expression="Contains([N9TH_EQ_NM],'5헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFFF99 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N9TH_STEP_VAL" Expression="Contains([N9TH_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCFFCC "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N9TH_STEP_VAL" Expression="Contains([N9TH_EQ_NM],'코일 1호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#99CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N9TH_STEP_VAL" Expression="Contains([N9TH_EQ_NM],'코일 2호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCE5FF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N9TH_STEP_VAL" Expression="Contains([N9TH_EQ_NM],'수동')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#E5CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        
+                                        <dxg:FormatCondition FieldName="N10TH_STEP_VAL" Expression="Contains([N10TH_EQ_NM],'2헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFB266 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N10TH_STEP_VAL" Expression="Contains([N10TH_EQ_NM],'5헤드 절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#FFFF99 "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N10TH_STEP_VAL" Expression="Contains([N10TH_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCFFCC "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N10TH_STEP_VAL" Expression="Contains([N10TH_EQ_NM],'코일 1호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#99CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N10TH_STEP_VAL" Expression="Contains([N10TH_EQ_NM],'코일 2호기')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#CCE5FF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+                                        <dxg:FormatCondition FieldName="N10TH_STEP_VAL" Expression="Contains([N10TH_EQ_NM],'수동')" >
+                                            <dxg:FormatCondition.Format>
+                                                <dx:Format Background="#E5CCFF "/>
+                                            </dxg:FormatCondition.Format>
+                                        </dxg:FormatCondition>
+
+                                    </dxg:TableView.FormatConditions>
+                                </dxg:TableView>
+
                             </dxg:GridControl.View>
 
                             <dxg:GridControl.TotalSummary>
@@ -276,43 +911,43 @@
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N1ST_STEP_VAL" Header="절단1" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="7">
+                                <dxg:GridColumn FieldName="N1ST_STEP_VAL" Header="절단1" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="7" x:Name="gridColumn_A" >
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N2ND_STEP_VAL" Header="절단2" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="8">
+                                <dxg:GridColumn FieldName="N2ND_STEP_VAL" Header="절단2" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="8" x:Name="gridColumn_B" >
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N3RD_STEP_VAL" Header="절단3" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="9">
+                                <dxg:GridColumn FieldName="N3RD_STEP_VAL" Header="절단3" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="9" x:Name="gridColumn_C" >
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N4TH_STEP_VAL" Header="절단4" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="10">
+                                <dxg:GridColumn FieldName="N4TH_STEP_VAL" Header="절단4" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="10" x:Name="gridColumn_D" >
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N5TH_STEP_VAL" Header="절단5" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="12">
+                                <dxg:GridColumn FieldName="N5TH_STEP_VAL" Header="절단5" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="12" x:Name="gridColumn_E" >
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N6TH_STEP_VAL" Header="절단6" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="13">
+                                <dxg:GridColumn FieldName="N6TH_STEP_VAL" Header="절단6" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="13" x:Name="gridColumn_F" >
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N7TH_STEP_VAL" Header="절단7" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="14">
+                                <dxg:GridColumn FieldName="N7TH_STEP_VAL" Header="절단7" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="14" x:Name="gridColumn_G" >
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
@@ -341,7 +976,6 @@
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,###,##0" MaskUseAsDisplayFormat="True" />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
-
 
                             </dxg:GridControl.Columns>
                         </dxg:GridControl>

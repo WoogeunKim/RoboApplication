@@ -127,7 +127,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 IList<ManVo> MstList = new List<ManVo>();
                 IList<ManVo> SummaryList = new List<ManVo>();
 
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310", new StringContent(JsonConvert.SerializeObject(new ManVo() { OPMZ_NO = opmgno }), System.Text.Encoding.UTF8, "application/json")))
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310", new StringContent(JsonConvert.SerializeObject(new ManVo() { OPMZ_NO = opmgno, CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
@@ -141,7 +141,7 @@ namespace AquilaErpWpfApp3.ViewModel
                         SummaryList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
                     }
                 }
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310/dtl", new StringContent(JsonConvert.SerializeObject(new ManVo() { OPMZ_NO = opmgno }), System.Text.Encoding.UTF8, "application/json")))
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310/dtl", new StringContent(JsonConvert.SerializeObject(new ManVo() { OPMZ_NO = opmgno, CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
