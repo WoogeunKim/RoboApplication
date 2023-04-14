@@ -240,42 +240,43 @@ namespace AquilaErpWpfApp3.ViewModel
                     return;
                 }
 
-                //optiRunDialog = new M66107OptiDialog(SelectedMstItem);
-                //optiRunDialog.Title = title + " - Opti Run";
-                //optiRunDialog.Owner = Application.Current.MainWindow;
-                //optiRunDialog.BorderEffect = BorderEffect.Default;
-                //optiRunDialog.BorderEffectActiveColor = new SolidColorBrush(Color.FromRgb(255, 128, 0));
-                //optiRunDialog.BorderEffectInactiveColor = new SolidColorBrush(Color.FromRgb(255, 170, 170));
-                //bool isDialog = (bool)optiRunDialog.ShowDialog();
-                //if (isDialog)
-                //{
-                //    Refresh(SelectedMstItem.OPMZ_NO);
-                //}
 
-                if (string.IsNullOrEmpty(SelectedMstItem.RUN_CLSS_NM) == true)
+                optiRunDialog = new M66107OptiDialog(SelectedMstItem);
+                optiRunDialog.Title = title + " - Opti Run";
+                optiRunDialog.Owner = Application.Current.MainWindow;
+                optiRunDialog.BorderEffect = BorderEffect.Default;
+                optiRunDialog.BorderEffectActiveColor = new SolidColorBrush(Color.FromRgb(255, 128, 0));
+                optiRunDialog.BorderEffectInactiveColor = new SolidColorBrush(Color.FromRgb(255, 170, 170));
+                bool isDialog = (bool)optiRunDialog.ShowDialog();
+                if (isDialog)
                 {
-                    WinUIMessageBox.Show("최적화 구분이 없습니다.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
-                    return;
-                }
-                MessageBoxResult isResult = WinUIMessageBox.Show(SelectedMstItem.RUN_CLSS_NM + " [ Opti.NO: " + SelectedMstItem.OPMZ_NO + " ] 를 확정하겠습니까? ", title + "[완료]", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (isResult == MessageBoxResult.Yes)
-                {
-                    // A:생산최적화 = N  && B:발주최적화 = Y
-                    string _isChecked = SelectedMstItem.RUN_CLSS_CD.Equals("A") ? "N" : "Y";
-
-                    HttpClient httpClient = new HttpClient();
-                    httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                    //string url = "http://210.217.42.139:8880/robocon/api/optimize_barlist/v2?"; 
-                    //string value = "OPMZ_NO=" + orgDao.OPMZ_NO + "&" + "APPLY_ELON=" + _isChecked;
-                    string url = "http://aiblue.ddns.net:8880/robocon/api/optimize_barlist/v3?"; // 2023-04-04 호출주소 변경
-
-                    string value = "OPMZ_NO=" + SelectedMstItem.OPMZ_NO + "&" + "PLANNING_MODE=" + _isChecked;
-
-                    httpClient.GetAsync(url + value);
-
                     Refresh(SelectedMstItem.OPMZ_NO);
                 }
+
+                //if (string.IsNullOrEmpty(SelectedMstItem.RUN_CLSS_NM) == true)
+                //{
+                //    WinUIMessageBox.Show("최적화 구분이 없습니다.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
+                //    return;
+                //}
+                //MessageBoxResult isResult = WinUIMessageBox.Show(SelectedMstItem.RUN_CLSS_NM + " [ Opti.NO: " + SelectedMstItem.OPMZ_NO + " ] 를 확정하겠습니까? ", title + "[완료]", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                //if (isResult == MessageBoxResult.Yes)
+                //{
+                //    // A:생산최적화 = N  && B:발주최적화 = Y
+                //    string _isChecked = SelectedMstItem.RUN_CLSS_CD.Equals("A") ? "N" : "Y";
+
+                //    HttpClient httpClient = new HttpClient();
+                //    httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                //    //string url = "http://210.217.42.139:8880/robocon/api/optimize_barlist/v2?"; 
+                //    //string value = "OPMZ_NO=" + orgDao.OPMZ_NO + "&" + "APPLY_ELON=" + _isChecked;
+                //    string url = "http://aiblue.ddns.net:8880/robocon/api/optimize_barlist/v3?"; // 2023-04-04 호출주소 변경
+
+                //    string value = "OPMZ_NO=" + SelectedMstItem.OPMZ_NO + "&" + "PLANNING_MODE=" + _isChecked;
+
+                //    httpClient.GetAsync(url + value);
+
+                //    Refresh(SelectedMstItem.OPMZ_NO);
+                //}
             }
             catch (System.Exception eLog)
             {

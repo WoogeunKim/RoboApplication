@@ -29,7 +29,8 @@ namespace AquilaErpWpfApp3.View.M.Dialog
 
             orgDao = new ManVo()
             {
-                  OPMZ_NO = Dao.OPMZ_NO
+                  OPMZ_NO = Dao.OPMZ_NO,
+                  RUN_CLSS_CD = Dao.RUN_CLSS_CD
             };
 
             this.configCode.DataContext = orgDao;
@@ -71,16 +72,18 @@ namespace AquilaErpWpfApp3.View.M.Dialog
             {
                 if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
 
-                string _isChecked = is_checked.IsChecked == true ? "Y" : "N";
+                string _ApplyElon = is_checked.IsChecked == true ? "Y" : "N";
+                string _PlanndingMode = orgDao.RUN_CLSS_CD.Equals("A") ? "N" : "Y";
+
 
                 HttpClient httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
+                // http:// ... /optimize_barlist/v3?OPMZ_NO={ED2BE715}&PLANNING_MODE={N}&APPLY_ELON={Y}
                 //string url = "http://210.217.42.139:8880/robocon/api/optimize_barlist/v2?";  // 2023-04-04 호출주소 변경
                 //string value = "OPMZ_NO=" + orgDao.OPMZ_NO + "&" + "APPLY_ELON=" + _isChecked;
                 string url = "http://aiblue.ddns.net:8880/robocon/api/optimize_barlist/v3?";
 
-                string value = "OPMZ_NO=" + orgDao.OPMZ_NO + "&" + "PLANNING_MODE=" + _isChecked;
+                string value = "OPMZ_NO=" + orgDao.OPMZ_NO + "&" + "PLANNING_MODE=" + _PlanndingMode + "&" + "APPLY_ELON=" + _ApplyElon;
 
                 httpClient.GetAsync(url + value);
 

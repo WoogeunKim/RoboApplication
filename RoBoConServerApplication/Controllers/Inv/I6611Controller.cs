@@ -69,16 +69,18 @@ namespace VisualServerApplication.Controllers.Inv
             {
                 Properties.EntityMapper.BeginTransaction();
 
-                //voList[0].INAUD_TMP_NO = Properties.EntityMapper.QueryForObject<string>("I6610SelectNo", voList[0]);
-                //Properties.EntityMapper.Update("I6610UpdateNo", voList[0]);
-
                 foreach (InvVo item in voList)
                 {
-                    item.INAUD_TMP_NO = item.LOT_NO = Properties.EntityMapper.QueryForObject<string>("I6610SelectNo", item);
-                    Properties.EntityMapper.Insert("I6611InsertMst", item);
-                    Properties.EntityMapper.Update("I6610UpdateNo", item);
+                    int _Num = int.Parse(item.ITM_QTY.ToString());
+
+                    for (int i = 0; i < _Num; i++)
+                    {
+                        item.LOT_NO = Properties.EntityMapper.QueryForObject<string>("I6610SelectNo", item);
+                        Properties.EntityMapper.Update("I6610UpdateNo", item);
+                        Properties.EntityMapper.Insert("I6611InsertMst", item);
+                    }
                 }
-                //return Ok<int>(Properties.EntityMapper.Insert("I6610InsertPurMst", vo) == null ? 1 : 0);
+
                 Properties.EntityMapper.CommitTransaction();
                 return Ok<int>(1);
             }
@@ -111,27 +113,23 @@ namespace VisualServerApplication.Controllers.Inv
 
 
 
-
-
-
-
-        ///// <summary>
-        ///// 품목 가입고  - 수정
-        ///// </summary>
-        //[Route("u")]
-        //[HttpPost]
-        //// PUT api/<controller>/5
-        //public async Task<IHttpActionResult> GetMstUpdate([FromBody]InvVo vo)
-        //{
-        //    try
-        //    {
-        //        return Ok<int>(Properties.EntityMapper.Update("M6611UpdateMaster", vo));
-        //    }
-        //    catch (System.Exception eLog)
-        //    {
-        //        return Ok<string>(eLog.Message);
-        //    }
-        //}
+        /// <summary>
+        /// 품목 생성
+        /// </summary>
+        [Route("itm/i")]
+        [HttpPost]
+        // PUT api/<controller>/5
+        public async Task<IHttpActionResult> GetItmCdInsert([FromBody] InvVo vo)
+        {
+            try
+            {
+                return Ok<int>(Properties.EntityMapper.Insert("I6611InsertItmCd", vo) == null ? 1 : 0);
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
 
         /// <summary>
         /// 품목 입고  - 삭제
@@ -168,7 +166,14 @@ namespace VisualServerApplication.Controllers.Inv
         // GET api/<controller>
         public async Task<IHttpActionResult> GetPurSelect([FromBody]InvVo vo)
         {
-            return Ok<IEnumerable<InvVo>>(Properties.EntityMapper.QueryForList<InvVo>("I6610SelectDtlPurList", vo));
+            try
+            {
+                return Ok<IEnumerable<InvVo>>(Properties.EntityMapper.QueryForList<InvVo>("I6610SelectDtlPurList", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
         }
 
 

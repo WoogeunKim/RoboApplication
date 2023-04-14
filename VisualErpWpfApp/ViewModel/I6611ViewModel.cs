@@ -32,7 +32,7 @@ namespace AquilaErpWpfApp3.ViewModel
         //private IList<InvVo> selectedDtlList = new List<InvVo>();
 
         private I6611DetailPurDialog detailPurDialog;
-        //private I6610DetailImpDialog detailImpDialog;
+        private I6611DetailOtherCaseDialog detailOtherCaseDialog;
 
 
         //private ICommand _newDetailPurDialogCommand;
@@ -89,43 +89,43 @@ namespace AquilaErpWpfApp3.ViewModel
                         }
                     }
 
-                    InvVo BarcodeDao = new InvVo();
+                    //InvVo BarcodeDao = new InvVo();
 
-                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("i6611/bar", new StringContent(JsonConvert.SerializeObject(SelectedMstItem), System.Text.Encoding.UTF8, "application/json")))
-                    {
-                        if (response.IsSuccessStatusCode)
-                        {
-                            BarcodeDao = JsonConvert.DeserializeObject<InvVo>(await response.Content.ReadAsStringAsync());
+                    //using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("i6611/bar", new StringContent(JsonConvert.SerializeObject(SelectedMstItem), System.Text.Encoding.UTF8, "application/json")))
+                    //{
+                    //    if (response.IsSuccessStatusCode)
+                    //    {
+                    //        BarcodeDao = JsonConvert.DeserializeObject<InvVo>(await response.Content.ReadAsStringAsync());
 
-                            if(BarcodeDao == null)
-                            {
-                                WinUIMessageBox.Show("해당 바코드가 존재하지 않습니다.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Error);
-                                return;
-                            }
-                            else if (BarcodeDao.LOT_NO == null)
-                            {
-                                WinUIMessageBox.Show("해당 바코드가 존재하지 않습니다.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Error);
-                                return;
-                            }
-                            else if (BarcodeDao.ITM_QTY == null)
-                            {
-                                WinUIMessageBox.Show("해당 바코드의 잔량이 존재하지 않습니다.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Error);
-                                return;
-                            }
-                            else if (double.Parse(BarcodeDao.ITM_QTY.ToString()) <= 0)
-                            {
-                                WinUIMessageBox.Show("해당 바코드의 잔량이 존재하지 않습니다.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Error);
-                                return;
-                            }
-                        }
-                    }
+                    //        if(BarcodeDao == null)
+                    //        {
+                    //            WinUIMessageBox.Show("해당 바코드가 존재하지 않습니다.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //            return;
+                    //        }
+                    //        else if (BarcodeDao.LOT_NO == null)
+                    //        {
+                    //            WinUIMessageBox.Show("해당 바코드가 존재하지 않습니다.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //            return;
+                    //        }
+                    //        else if (BarcodeDao.ITM_QTY == null)
+                    //        {
+                    //            WinUIMessageBox.Show("해당 바코드의 잔량이 존재하지 않습니다.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //            return;
+                    //        }
+                    //        else if (double.Parse(BarcodeDao.ITM_QTY.ToString()) <= 0)
+                    //        {
+                    //            WinUIMessageBox.Show("해당 바코드의 잔량이 존재하지 않습니다.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //            return;
+                    //        }
+                    //    }
+                    //}SelectedMstItem
 
-
-                    MessageBoxResult result = WinUIMessageBox.Show("[" + BarcodeDao.LOT_NO + "] 정말로 바코드 하시겠습니까?", "[바코드 - 출력]" + _title, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    //MessageBoxResult result = WinUIMessageBox.Show("[" + BarcodeDao.LOT_NO + "] 정말로 바코드 하시겠습니까?", "[바코드 - 출력]" + _title, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    MessageBoxResult result = WinUIMessageBox.Show("[" + SelectedMstItem.LOT_NO + "] 정말로 바코드 하시겠습니까?", "[바코드 - 출력]" + _title, MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (result == MessageBoxResult.Yes)
                     {
 
-                        I6611BarCodeReport BarCodeReport = new I6611BarCodeReport(BarcodeDao);
+                        I6611BarCodeReport BarCodeReport = new I6611BarCodeReport(SelectedMstItem);
                         BarCodeReport.ShowPrintMarginsWarning = false;
                         //// 페이지 크기 설정
                         //BarCodeReport.PageWidth = 1000;
@@ -184,6 +184,7 @@ namespace AquilaErpWpfApp3.ViewModel
         {
             try
             {
+                if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
 
                 using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("i6611/mst", new StringContent(JsonConvert.SerializeObject(new InvVo() {CHNL_CD = SystemProperties.USER_VO.CHNL_CD, FM_DT = (StartDt).ToString("yyyy-MM-dd"), TO_DT = (EndDt).ToString("yyyy-MM-dd"), AREA_CD = M_SL_AREA_NM.CLSS_CD, GBN = (string.IsNullOrEmpty(M_CHECKD) ? null : M_CHECKD), LOC_CD = M_SL_LOC_NM.CLSS_CD, IN_FLG = (IN_FLG == true ? "Y" : "N") }), System.Text.Encoding.UTF8, "application/json")))
                 {
@@ -194,7 +195,7 @@ namespace AquilaErpWpfApp3.ViewModel
 
                         //SelectMstList = invClient.I6610SelectMstList(new InvVo() { FM_DT = (StartDt).ToString("yyyy-MM-dd"), TO_DT = (EndDt).ToString("yyyy-MM-dd"), AREA_CD = (string.IsNullOrEmpty(TXT_SL_AREA_NM) ? null : _AreaMap[TXT_SL_AREA_NM]), GBN = (string.IsNullOrEmpty(M_CHECKD) ? "%" : M_CHECKD), LOC_CD = (string.IsNullOrEmpty(TXT_SL_LOC_NM) ? null : _LocMap[TXT_SL_LOC_NM]), IN_FLG = (IN_FLG == true ? "Y" : "N") });
                         ////+ ",   [입고여부]" + (IN_FLG == true ? "Y" : "N") 
-                        Title = "[기간]" + (StartDt).ToString("yyyy-MM-dd") + "~" + (EndDt).ToString("yyyy-MM-dd") + ",   [사업장]" + M_SL_AREA_NM.CLSS_DESC + ",   [구분]" + (string.IsNullOrEmpty(M_CHECKD_NAME) ? "전체" : M_CHECKD_NAME) + ",   [창고]" + M_SL_LOC_NM.CLSS_DESC;
+                        Title = "[기간]" + (StartDt).ToString("yyyy-MM-dd") + "~" + (EndDt).ToString("yyyy-MM-dd") + ",   [사업장]" + M_SL_AREA_NM.CLSS_DESC + ",   [창고]" + M_SL_LOC_NM.CLSS_DESC;
 
                         if (SelectMstList.Count >= 1)
                         {
@@ -214,9 +215,13 @@ namespace AquilaErpWpfApp3.ViewModel
                         //DXSplashScreen.Close();
                     }
                 }
+
+                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
             }
             catch (System.Exception eLog)
             {
+                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+
                 WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }
@@ -710,7 +715,6 @@ namespace AquilaErpWpfApp3.ViewModel
         }
 
 
-
         //public ICommand NewDtlImpDialogCommand
         //{
         //    get
@@ -721,50 +725,19 @@ namespace AquilaErpWpfApp3.ViewModel
         //    }
         //}
 
-        //public void NewDtlImpContact()
-        //{
-        //    ////if (SelectedMstItem == null)
-        //    ////{
-        //    ////    return;
-        //    ////}
-
-            
-        //    ////SelectedMstItem.FM_DT = (StartDt).ToString("yyyy-MM-dd");
-        //    ////SelectedMstItem.TO_DT = (EndDt).ToString("yyyy-MM-dd");
-        //    ////SelectedMstItem.GRP_ID = (string.IsNullOrEmpty(M_DEPT_DESC) ? null : _DeptMap[M_DEPT_DESC]);
-        //    ////SelectedMstItem.GRP_NM = M_DEPT_DESC;
-
-
-        //    ////if (string.IsNullOrEmpty(SelectedMstItem.GRP_ID))
-        //    ////{
-        //    ////    WinUIMessageBox.Show("[부서]전체를 선택 하실수 없습니다", "[조회 조건]품목 입고 관리", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
-        //    ////    return;
-        //    ////}
-        //    //try
-        //    //{
-        //    //    detailImpDialog = new I6610DetailImpDialog(new InvVo() { FM_DT = (StartDt).ToString("yyyy-MM-dd"), TO_DT = (EndDt).ToString("yyyy-MM-dd") });
-        //    //    detailImpDialog.Title = "수입 입고 자재 관리 ";
-        //    //    detailImpDialog.Owner = Application.Current.MainWindow;
-        //    //    detailImpDialog.BorderEffect = BorderEffect.Default;
-        //    //    ////masterDialog.BorderEffectActiveColor = new SolidColorBrush(Color.FromRgb(255, 128, 0));
-        //    //    ////masterDialog.BorderEffectInactiveColor = new SolidColorBrush(Color.FromRgb(255, 170, 170));
-        //    //    bool isDialog = (bool)detailImpDialog.ShowDialog();
-        //    //    //if (isDialog)
-        //    //    {
-              
-        //    //            DXSplashScreen.Show<ProgressWindow>();
-        //    //            Refresh();
-        //    //            DXSplashScreen.Close();
-               
-        //    //    }
-        //    //}
-        //    //catch (System.Exception)
-        //    //{
-        //    //      DXSplashScreen.Close();
-        //    //      //WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
-        //    //      return;
-        //    //}
-        //}
+        [Command]
+        public void NewDtlOtherCaseDialog()
+        {
+            detailOtherCaseDialog = new I6611DetailOtherCaseDialog();
+            detailOtherCaseDialog.Title = "기타 입고 등록";
+            detailOtherCaseDialog.Owner = Application.Current.MainWindow;
+            detailOtherCaseDialog.BorderEffect = BorderEffect.Default;
+            bool isDialog = (bool)detailOtherCaseDialog.ShowDialog();
+            if (isDialog)
+            {
+                Refresh();
+            }
+        }
 
         //public ICommand ReportDialogCommand
         //{
@@ -783,27 +756,29 @@ namespace AquilaErpWpfApp3.ViewModel
             {
                 int tmpIMP_ITM_AMT = 0;
                 int tmpITM_QTY = 0;
-                if (SelectedMstItem == null)
+                if (SelectMstList == null)
                 {
                     return;
                 }
 
                 IList<InvVo> printDao = new List<InvVo>();
-                if (SelectedMstItem != null)
+                if (SelectMstList != null)
                 {
-                    if (SelectedMstItems.Count > 0)
+                    if (SelectMstList.Count > 0)
                     {
-                        for (int x = 0; x < SelectedMstItems.Count; x++)
-                        {
-                            SelectedMstItems[x].GRP_NM = "[가입고 일자 (From) " + (StartDt).ToString("yyyy-MM-dd HH:mm") + " ~ (To) " + (EndDt).ToString("yyyy-MM-dd HH:mm") + ", 사업장: " + SelectedMstItems[x].AREA_NM + "]";
-                            tmpIMP_ITM_AMT += Convert.ToInt32(SelectedMstItems[x].IMP_ITM_AMT);
-                            tmpITM_QTY += Convert.ToInt32(SelectedMstItems[x].ITM_QTY);
+                        printDao = SelectMstList;
 
-                            SelectedMstItems[x].TMP_A_QTY = tmpIMP_ITM_AMT;
-                            SelectedMstItems[x].TMP_B_QTY = tmpITM_QTY;
+                        for (int x = 0; x < printDao.Count; x++)
+                        {
+                            printDao[x].GRP_NM = "[가입고 일자 (From) " + (StartDt).ToString("yyyy-MM-dd") + "~" + (EndDt).ToString("yyyy-MM-dd") + ", 사업장: " + M_SL_AREA_NM.CLSS_DESC + ", 창고: " + M_SL_LOC_NM.CLSS_DESC + "]";
+                            tmpIMP_ITM_AMT += Convert.ToInt32(printDao[x].IMP_ITM_AMT);
+                            tmpITM_QTY += Convert.ToInt32(printDao[x].ITM_QTY);
+
+                            printDao[x].TMP_A_QTY = tmpIMP_ITM_AMT;
+                            printDao[x].TMP_B_QTY = tmpITM_QTY;
                         }
 
-                        I6610Report report = new I6610Report(SelectedMstItems);
+                        I6610Report report = new I6610Report(printDao);
                         report.Margins.Top = 0;
                         report.Margins.Bottom = 0;
                         report.Margins.Left = 30;
@@ -815,7 +790,7 @@ namespace AquilaErpWpfApp3.ViewModel
                         var window = new DocumentPreviewWindow();
                         window.PreviewControl.DocumentSource = report;
                         report.CreateDocument(true);
-                        window.Title = "품목가입고 출력";
+                        window.Title = "품목입고 출력";
                         window.Owner = Application.Current.MainWindow;
                         window.ShowDialog();
                         //XtraReportPreviewModel model = new XtraReportPreviewModel(report);

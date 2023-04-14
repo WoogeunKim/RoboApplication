@@ -50,6 +50,24 @@ namespace VisualServerApplication.Controllers.Code
         }
 
         /// <summary>
+        /// 품목 조회 ROBO - 조회
+        /// </summary>
+        [Route("robo")]
+        [HttpPost]
+        // POST api/<controller>
+        public async Task<IHttpActionResult> GetRoboSelectList([FromBody] SystemCodeVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<SystemCodeVo>>(Properties.EntityMapper.QueryForList<SystemCodeVo>("S141SelectRoboList", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+        /// <summary>
         /// 품목 마스터 등록 MST - 조회
         /// </summary>
         [Route("")]

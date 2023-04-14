@@ -237,6 +237,34 @@
 	  </select>
 	  
 	<!--20221021 품목 마스터 등록 MST/DTL 수정-->
+	    <select id="S141SelectRoboList" parameterClass="ModelsLibrary.Code.SystemCodeVo" resultClass="ModelsLibrary.Code.SystemCodeVo">
+		   SELECT
+                  T1.ITM_CD
+                , T1.ITM_GRP_CLSS_CD
+                , T1.N1ST_ITM_GRP_CD
+                , T1.N2ND_ITM_GRP_CD
+                , T1.ITM_LEN
+                , T1.CHNL_CD     
+            FROM TB_CD_ITM T1  
+            WHERE 1 = 1
+                AND T1.CHNL_CD         = #CHNL_CD#
+	        <isNotNull property="N1ST_ITM_GRP_CD" >   
+                AND T1.N1ST_ITM_GRP_CD = #N1ST_ITM_GRP_CD#
+            </isNotNull>
+	        <isNotNull property="N2ND_ITM_GRP_CD" >   
+                AND T1.N2ND_ITM_GRP_CD = #N2ND_ITM_GRP_CD#
+            </isNotNull>
+	        <isNotNull property="ITM_LEN" >   
+                AND T1.ITM_LEN         = #ITM_LEN#
+            </isNotNull>
+	        <isNotNull property="ITM_GRP_CLSS_CD" >
+				AND T1.ITM_GRP_CLSS_CD = #ITM_GRP_CLSS_CD#
+			</isNotNull>
+	        <isNotNull property="DELT_FLG" >
+				AND T1.DELT_FLG        = #DELT_FLG#
+			</isNotNull>
+	  </select>
+	  
 	  <select id="S141SelectItemMstList" parameterClass="ModelsLibrary.Code.SystemCodeVo" resultClass="ModelsLibrary.Code.SystemCodeVo">
 		  SELECT
 		        T1.ITM_CD

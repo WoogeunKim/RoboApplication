@@ -291,14 +291,17 @@
 				       T1.ITM_CD
                      , T1.N1ST_ITM_GRP_CD
                      , T1.N2ND_ITM_GRP_CD
-                     , CONVERT(NUMERIC(12,4), SUBSTRING(T1.ITM_CD, CHARINDEX('-',T1.ITM_CD)+1, LEN(T1.ITM_CD))) AS ITM_LEN
-                     <!--, (T1.ITM_LEN / 100) AS ITM_LEN-->
+                     <!--, CONVERT(NUMERIC(12,4), SUBSTRING(T1.ITM_CD, CHARINDEX('-',T1.ITM_CD)+1, LEN(T1.ITM_CD))) AS ITM_LEN-->
+                     , T1.ITM_LEN  AS ITM_LEN
                   FROM TB_CD_ITM T1
                  WHERE 1 = 1 
                    AND T1.CHNL_CD         = #CHNL_CD#
                    AND T1.N1ST_ITM_GRP_CD = #N1ST_ITM_GRP_CD#
                    AND T1.N2ND_ITM_GRP_CD = #N2ND_ITM_GRP_CD#
                    AND T1.DELT_FLG        = #DELT_FLG#
+               <isNotNull property="ITM_LEN">
+				   AND T1.ITM_LEN = #ITM_LEN#
+			   </isNotNull>
                 ) AS T10
             ORDER BY T10.ITM_LEN
 	  </select>
@@ -383,8 +386,54 @@
               , #ORD_NO#
           )
 	  </insert>
-	  
 
-
+	  <insert id="ItmMstInsert" parameterClass="ModelsLibrary.Mobile.MobileVo">
+	    INSERT INTO TB_CD_ITM
+        (
+              CHNL_CD
+            , ITM_CD
+            , ITM_NM
+            , ITM_SZ_NM
+            , ITM_GRP_CLSS_CD
+            , N1ST_ITM_GRP_CD
+            , N2ND_ITM_GRP_CD
+            , ITM_LEN
+            , DELT_FLG
+            , CRE_USR_ID
+            , CRE_DT
+            , UPD_USR_ID
+            , UPD_DT
+        )
+        SELECT CHNL_CD
+             , N1ST_ITM_CD + N3RD_ITM_CD + N2ND_ITM_CD + '-' + N4TH_ITM_CD
+             , N1ST_ITM_CD + N3RD_ITM_CD + N2ND_ITM_CD + '-' + N4TH_ITM_CD
+             , N1ST_ITM_CD + N3RD_ITM_CD + N2ND_ITM_CD + '-' + N4TH_ITM_CD     
+             , #ITM_GRP_CLSS_CD#
+             , #N1ST_ITM_GRP_CD#
+             , #N2ND_ITM_GRP_CD#
+             , #ITM_LEN#
+             , 'N' 
+             , #USR_ID#
+             , GETDATE()
+             , #USR_ID#
+             , GETDATE()     
+         FROM (
+             SELECT CHNL_CD
+                  , dbo.FN_splitValue(ABBR_NM, '-', 1)             AS N1ST_ITM_CD 
+                  , ISNULL(dbo.FN_splitValue(ABBR_NM, '-', 2),'')  AS N2ND_ITM_CD
+                  , #N2ND_ITM_GRP_CD#                              AS N3RD_ITM_CD
+                  <!--, FORMAT(#ITM_LEN# / 1000.0, '##0.#')            AS N4TH_ITM_CD-->
+                  , CASE WHEN RIGHT(FORMAT(#ITM_LEN# / 1000.0, '0.0'),1) = 0 
+                         THEN FORMAT(#ITM_LEN# / 1000.0, '0')
+                         ELSE FORMAT(#ITM_LEN# / 1000.0, '0.0') END AS N4TH_ITM_CD
+               FROM TB_CD_ITM_GRP
+              WHERE 1 = 1
+                AND CHNL_CD          = #CHNL_CD#
+                AND ITM_GRP_CLSS_CD  = #ITM_GRP_CLSS_CD#
+                AND PRNT_ITM_GRP_CD  = 'T' 
+                AND ITM_GRP_CD       = #N1ST_ITM_GRP_CD#
+                AND DELT_FLG         = 'N'
+             ) T1  
+	  </insert>
   </statements>
 </sqlMap>

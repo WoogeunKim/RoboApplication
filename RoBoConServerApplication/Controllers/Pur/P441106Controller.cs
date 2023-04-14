@@ -69,12 +69,18 @@ namespace VisualServerApplication.Controllers.Pur
         {
             try
             {
+                Properties.EntityMapper.BeginTransaction();
+
                 vo.PUR_NO = Properties.EntityMapper.QueryForObject<string>("P441106SelectPurOrdNo", vo);  // 키생성
                 Properties.EntityMapper.Update("P441106UpdatePurOrdNo", vo);                              // 생성된 키를 업데이트
-                return Ok<int>(Properties.EntityMapper.Insert("P441106InsertMst", vo) == null ? 1 : 0);  // 업데이트된걸 인서트
+                Properties.EntityMapper.Insert("P441106InsertMst", vo);                                   // 업데이트된걸 인서트
+
+                Properties.EntityMapper.CommitTransaction();
+                return Ok<int>(1);  
             }
             catch (System.Exception eLog)
             {
+                Properties.EntityMapper.RollBackTransaction();
                 return Ok<string>(eLog.Message);
             }
         }
@@ -108,11 +114,17 @@ namespace VisualServerApplication.Controllers.Pur
         {
             try
             {
+                Properties.EntityMapper.BeginTransaction();
+
                 Properties.EntityMapper.Delete("P441106DeleteDtl", vo);
-                return Ok<int>(Properties.EntityMapper.Delete("P441106DeleteMst", vo));
+                Properties.EntityMapper.Delete("P441106DeleteMst", vo);
+
+                Properties.EntityMapper.CommitTransaction();
+                return Ok<int>(1);
             }
             catch (System.Exception eLog)
             {
+                Properties.EntityMapper.RollBackTransaction();
                 return Ok<string>(eLog.Message);
             }
         }
@@ -156,13 +168,7 @@ namespace VisualServerApplication.Controllers.Pur
         {
             try
             {
-                //Properties.EntityMapper.BeginTransaction();  // ????
-                //foreach (PurVo item in voList)
-                //{
-                //Properties.EntityMapper.Insert("P441106InsertDtl", vo);
-                //}
-                //Properties.EntityMapper.CommitTransaction();  // ?????
-                //return Ok<int>(1);
+                Properties.EntityMapper.BeginTransaction(); 
 
                 vo.FLR_FILE_ID = System.Guid.NewGuid().ToString();
 
@@ -173,17 +179,17 @@ namespace VisualServerApplication.Controllers.Pur
                 {
                     Directory.CreateDirectory(_dirPath);
                 }
-
-                //string changePath = System.IO.Path.ChangeExtension(filePath, ".zip");
                 File.WriteAllBytes(filePath, vo.FLR_FILE);
                 vo.FLR_FILE = new byte[0];
 
+                Properties.EntityMapper.Insert("P441106InsertDtl", vo);
 
-                return Ok<int>(Properties.EntityMapper.Insert("P441106InsertDtl", vo) == null ? 1 : 0);
+                Properties.EntityMapper.CommitTransaction();
+                return Ok<int>(1);
             }
             catch (System.Exception eLog)
             {
-                //Properties.EntityMapper.RollBackTransaction();
+                Properties.EntityMapper.RollBackTransaction();
                 return Ok<string>(eLog.Message);
             }
         }

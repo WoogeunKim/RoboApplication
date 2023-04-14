@@ -169,7 +169,7 @@ namespace AquilaErpWpfApp3.View.INV.Report
             this.xrLabel11.BorderWidth = 2F;
             this.xrLabel11.Dpi = 254F;
             this.xrLabel11.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[ITM_TOT_WGT]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[UOM_WGT]")});
             this.xrLabel11.Font = new System.Drawing.Font("한컴 고딕", 12F, System.Drawing.FontStyle.Bold);
             this.xrLabel11.LocationFloat = new DevExpress.Utils.PointFloat(668.2629F, 616.9169F);
             this.xrLabel11.Multiline = true;
@@ -210,7 +210,7 @@ namespace AquilaErpWpfApp3.View.INV.Report
             this.xrLabel18.BorderWidth = 2F;
             this.xrLabel18.Dpi = 254F;
             this.xrLabel18.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[ITM_QTY]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[INAUD_QTY]")});
             this.xrLabel18.Font = new System.Drawing.Font("한컴 고딕", 12F, System.Drawing.FontStyle.Bold);
             this.xrLabel18.LocationFloat = new DevExpress.Utils.PointFloat(201.0866F, 616.9169F);
             this.xrLabel18.Multiline = true;

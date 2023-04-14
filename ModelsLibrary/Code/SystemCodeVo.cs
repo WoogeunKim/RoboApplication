@@ -1899,5 +1899,10 @@
             get;
             set;
         }
+        public object ITM_LEN
+        {
+            get;
+            set;
+        }
     }
 }

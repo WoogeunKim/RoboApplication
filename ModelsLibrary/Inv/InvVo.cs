@@ -282,8 +282,14 @@
             get;
             set;
         }
-        
         public string INAUD_ORG_NM
+        {
+            get;
+            set;
+        }
+        
+
+        public string LOC_CD
         {
             get;
             set;
@@ -464,13 +470,6 @@
 
         
         public string ITM_RQST_RMK
-        {
-            get;
-            set;
-        }
-
-        
-        public string LOC_CD
         {
             get;
             set;
@@ -1989,5 +1988,46 @@
             get;
             set;
         }
+        public string SL_ORD_NO
+        {
+            get;
+            set;
+        }
+        public string PUR_DUE_DT
+        {
+            get;
+            set;
+        }
+        public object ITM_LEN
+        {
+            get;
+            set;
+        }
+        public object PUR_QTY_RMN
+        {
+            get;
+            set;
+        }
+        public int? BAR_QTY
+        {
+            get;
+            set;
+        }
+        public object BAR_TOT_QTY
+        {
+            get;
+            set;
+        }
+        public object BAR_WGT
+        {
+            get;
+            set;
+        }
+        public string PUR_ITM_RMK
+        {
+            get;
+            set;
+        }
+
     }
 }

@@ -278,6 +278,24 @@ namespace VisualServerApplication.Controllers.Mobile
             }
         }
 
+        /// <summary>
+        /// 품목 등록  - 추가
+        /// </summary>
+        [Route("itm/i")]
+        [HttpPost]
+        // POST api/<controller>
+        public async Task<IHttpActionResult> GetItmMstInsert([FromBody] MobileVo vo)
+        {
+            try
+            {
+                return Ok<int>(Properties.EntityMapper.Insert("ItmMstInsert", vo) == null ? 1 : 0);
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
 
 
     }

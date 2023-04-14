@@ -344,12 +344,12 @@
 	  </select>
 
   <select id="I6610SelectNo" resultClass="string">
-    SELECT dbo.FF_NO_FMT(#CHNL_CD#, 'ST', #AREA_CD#) AS LST_FMT_NO FROM CPY_T WHERE NO = 1 
+    SELECT dbo.FF_NO_FMT(#CHNL_CD#, 'ST', #AREA_CD#) FROM CPY_T WHERE NO = 1 
   </select>
 
   <update id="I6610UpdateNo" parameterClass="ModelsLibrary.Inv.InvVo">
     UPDATE TB_SYS_NO_FMT
-        SET LST_FMT_NO = #INAUD_TMP_NO#
+        SET LST_FMT_NO = #LOT_NO#
       WHERE 1 = 1
         AND CHNL_CD   = #CHNL_CD#
         AND TBL_ID    = 'ST'
@@ -512,7 +512,7 @@
 
 	  
 	<select id="I6610SelectDtlPurList" parameterClass="ModelsLibrary.Inv.InvVo" resultClass="ModelsLibrary.Inv.InvVo">
-        SELECT   #CHNL_CD#  AS CHNL_CD
+        <!--SELECT   #CHNL_CD#  AS CHNL_CD
            , RN
            , PUR_ORD_NO
            , PUR_ORD_SEQ
@@ -579,14 +579,108 @@
               AND T1.PUR_CO_CD   = #CO_NO#   
             </isNotNull>
           ) T1        
-          ORDER BY RN 
+          ORDER BY RN--> 
+	
+	    SELECT T3.PUR_ORD_NO
+             , T3.PUR_ORD_SEQ
+             , T3.AREA_CD
+             , T3.CO_CD
+             , T3.CO_NM
+             , CONVERT(VARCHAR(10), T3.PUR_DT, 23)     AS PUR_DT
+             , CONVERT(VARCHAR(10), T3.PUR_DUE_DT, 23) AS PUR_DUE_DT
+             , T3.PUR_RMK
+             , T3.ITM_CD
+             , T3.ITM_NM
+             , T3.ITM_GRP_CLSS_CD
+             , T3.N1ST_ITM_GRP_CD
+             , T3.N2ND_ITM_GRP_CD
+             , T3.ITM_LEN
+             , T3.CO_UT_PRC
+             , T3.PUR_AMT
+             , T3.PUR_QTY
+             , T3.PUR_QTY_RMN
+             , T31.BAR_QTY
+             , (T3.PUR_QTY_RMN * T31.BAR_QTY)     AS BAR_TOT_QTY
+             , T31.BAR_WGT
+             , (T3.PUR_QTY_RMN * T31.BAR_WGT)     AS UOM_WGT
+             , T3.PUR_ITM_RMK
+             , T3.CHNL_CD
+          FROM (
+                SELECT T1.PUR_ORD_NO
+                     , T2.PUR_ORD_SEQ
+                     , T1.AREA_CD
+                     , T1.PUR_CO_CD AS CO_CD
+                     , T11.CO_NM
+                     , T1.PUR_DT
+                     , T1.PUR_DUE_DT
+                     , T1.PUR_RMK
+                     , T2.ITM_CD
+                     , T21.ITM_NM
+                     , T21.ITM_GRP_CLSS_CD
+                     , T21.N1ST_ITM_GRP_CD
+                     , T21.N2ND_ITM_GRP_CD
+                     , T21.ITM_LEN
+                     , ISNULL(T2.CO_UT_PRC, 0) AS CO_UT_PRC
+                     , T2.PUR_AMT
+                     , T2.PUR_QTY
+                     , T2.PUR_QTY_RMN
+                     , T2.PUR_ITM_RMK
+                     , T2.CHNL_CD
+                  FROM TB_PUR_ORD     T1
+                       OUTER APPLY(
+                           SELECT X.CO_NM
+                             FROM TB_CD_CO X
+                            WHERE 1 = 1
+                              AND X.CHNL_CD = #CHNL_CD#
+                              AND X.CO_NO   = T1.PUR_CO_CD
+                       ) T11        
+                     , TB_PUR_ORD_DTL T2
+                       OUTER APPLY(
+                           SELECT X.ITM_NM
+                                , X.ITM_GRP_CLSS_CD
+                                , X.N1ST_ITM_GRP_CD
+                                , X.N2ND_ITM_GRP_CD
+                                , X.ITM_LEN
+                             FROM TB_CD_ITM X
+                            WHERE 1 = 1
+                              AND X.CHNL_CD = #CHNL_CD#
+                              AND X.ITM_CD  = T2.ITM_CD
+                       ) T21
+                 WHERE 1 = 1
+                   AND T1.PUR_ORD_NO  = T2.PUR_ORD_NO
+                   AND T1.CHNL_CD     = T2.CHNL_CD 
+                   AND T1.CHNL_CD     = #CHNL_CD#
+                   AND T1.AREA_CD     = #AREA_CD#
+                   AND T1.PUR_DT     >= CAST(CONVERT(VARCHAR, #FM_DT#, 112) + ' 00:00:00' AS DATETIME)
+                   AND T1.PUR_DT     <![CDATA[<=]]> CAST(CONVERT(VARCHAR, #TO_DT#, 112) + ' 23:59:59' AS DATETIME) 
+                   AND T2.PUR_QTY_RMN > 0
+                 <isNotNull property="CO_NO">
+                   AND T1.PUR_CO_CD   = #CO_NO#   
+                 </isNotNull>
+             ) T3
+               OUTER APPLY (
+                   SELECT TOP 1 
+                          X.BAR_QTY
+                        , X.BAR_WGT
+                     FROM TB_CD_DEFM_BAR_MATH_TBL X
+                    WHERE 1 = 1
+                      AND X.BAR_CLSS_CD = 'B2'
+                      AND X.BAR_SZ_CD   = T3.N2ND_ITM_GRP_CD
+                      AND X.BAR_SZ_LEN  IN ( SELECT Y.ITM_LEN / 1000
+                                               FROM TB_CD_ITM Y
+                                              WHERE 1 = 1 
+                                                AND Y.CHNL_CD = #CHNL_CD#
+                                                AND Y.ITM_CD  = T3.ITM_CD  
+                                          ) 
+             ) T31
+         WHERE 1 = 1 
     </select>
 
 
 
       <!--품목 입고-->
      <select id="I6611SelectMstList" parameterClass="ModelsLibrary.Inv.InvVo" resultClass="ModelsLibrary.Inv.InvVo">  
-       SELECT 
+       <!--SELECT 
 			     CHNL_CD
                , INSRL_NO
                , INSRL_SEQ
@@ -631,7 +725,6 @@
                , T1.INAUD_QTY
                , T2.UOM_CD
                , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-003', T2.UOM_CD)  AS UOM_NM 
-               <!--, ROUND(T1.INAUD_QTY * T2.UOM_WGT, 0) AS ITM_WGT--> 
               , (SELECT TOP 1 X.BUN_WGT FROM TB_PUR_ORD_DTL AS X WHERE 1=1 AND X.PUR_ORD_NO = T1.ORD_NO AND X.PUR_ORD_SEQ = T1.ORD_SEQ) AS ITM_WGT
                , T1.ORD_NO
                , T1.ORD_SEQ
@@ -657,12 +750,120 @@
              AND T1.INSRL_NO   = T3.INSRL_NO 
              AND T1.ITM_CD     = T2.ITM_CD
              AND T3.IO_CD      = 'I'
-        ) AS T10
+        ) AS T10-->
+	 
+	    SELECT 
+               T3.CHNL_CD
+             , T3.INSRL_NO
+             , CONVERT(VARCHAR(10), T3.INAUD_DT, 23) AS INAUD_DT
+             , T3.AREA_CD
+             , T3.INAUD_CD
+             , T3.INAUD_NM
+             , T3.ITM_CD
+             , T3.ITM_NM
+             , T31.INAUD_QTY
+             , (T32.BAR_UOM_WGT * T31.INAUD_QTY * (T3.ITM_LEN / 1000)) AS UOM_WGT
+             , T3.ORD_NO
+             , T3.ORD_SEQ
+             , T3.LOC_CD
+			 , T3.LOC_NM
+             , T3.CO_NO
+             , T3.CO_NM
+             , T3.LOT_NO
+             , T3.SL_ORD_NO
+          FROM (
+              SELECT ROW_NUMBER() OVER (PARTITION BY T2.LOT_NO ORDER BY T2.CRE_DT DESC) AS RN
+                   , T1.CHNL_CD
+                   , T1.INSRL_NO
+                   , T1.INAUD_DT
+                   , T1.AREA_CD  
+                   , T2.INAUD_CD
+                   , T22.INAUD_NM
+                   , T2.ITM_CD
+                   , T23.ITM_NM
+                   , T23.N2ND_ITM_GRP_CD
+                   , T23.ITM_LEN
+                   , T2.INAUD_QTY
+                   , T2.ORD_NO
+                   , T2.ORD_SEQ
+                   , T2.LOC_CD
+				   , T24.LOC_NM
+                   , T2.CO_NO
+                   , T21.CO_NM
+                   , T2.LOT_NO
+                   , T2.SL_ORD_NO
+                FROM TB_INAUD_MAST T1
+                   , TB_INAUD_DTL T2
+                     OUTER APPLY(
+                         SELECT X.CO_NM
+                           FROM TB_CD_CO X
+                          WHERE 1 = 1
+                            AND X.CHNL_CD = #CHNL_CD#
+                            AND X.CO_NO   = T2.CO_NO
+                     ) T21
+                     OUTER APPLY(
+                         SELECT TOP 1 CLSS_DESC AS INAUD_NM
+                           FROM TB_SYS_CLSS_CD X
+                          WHERE 1 = 1
+                            AND X.CHNL_CD    = #CHNL_CD#
+                            AND X.CLSS_TP_CD = 'L-007'
+                            AND X.CLSS_CD    = T2.INAUD_CD
+                          ORDER BY USE_ST_DT DESC
+                     ) T22
+                     OUTER APPLY(
+                         SELECT X.ITM_NM
+                              , X.N2ND_ITM_GRP_CD
+                              , X.ITM_LEN
+                           FROM TB_CD_ITM X
+                          WHERE 1 = 1
+                            AND X.CHNL_CD = #CHNL_CD#
+                            AND X.ITM_CD  = T2.ITM_CD
+                     ) T23
+                     OUTER APPLY(
+                         SELECT TOP 1 CLSS_DESC AS LOC_NM
+                           FROM TB_SYS_CLSS_CD X
+                          WHERE 1 = 1
+                            AND X.CHNL_CD    = #CHNL_CD#
+                            AND X.CLSS_TP_CD = 'P-008'
+                            AND X.CLSS_CD    = T2.LOC_CD
+                          ORDER BY USE_ST_DT DESC
+                     ) T24
+               WHERE 1 = 1 
+                 AND T1.INSRL_NO  = T2.INSRL_NO
+                 AND T1.CHNL_CD   = T2.CHNL_CD
+                 AND T1.CHNL_CD   = #CHNL_CD#
+                 AND T1.IO_CD     = 'I'
+                 AND T1.AREA_CD   = #AREA_CD#
+                 AND T1.INAUD_DT >= CAST(CONVERT(VARCHAR, #FM_DT#, 112) + ' 00:00:00' AS DATETIME)
+                 AND T1.INAUD_DT <![CDATA[<=]]>  CAST(CONVERT(VARCHAR, #TO_DT#, 112) + ' 23:59:59' AS DATETIME)
+                 AND T2.LOC_CD    = #LOC_CD#
+                 AND T2.CLZ_FLG   = 'N'
+                 AND T2.LOT_NO    IS NOT NULL
+             ) T3
+               OUTER APPLY(
+                   SELECT SUM( CASE WHEN X.INAUD_CD LIKE 'R%' THEN X.INAUD_QTY 
+                                    WHEN X.INAUD_CD LIKE 'I%' THEN X.INAUD_QTY * -1
+                                    ELSE 0 
+                               END ) AS INAUD_QTY 
+                     FROM TB_INAUD_DTL X
+                    WHERE 1 = 1
+                      AND X.CHNL_CD = #CHNL_CD#
+                      AND X.LOT_NO  = T3.LOT_NO
+             ) T31
+               OUTER APPLY(
+                   SELECT MAX(BAR_UOM_WGT) AS BAR_UOM_WGT
+                     FROM TB_CD_DEFM_BAR_MATH_TBL
+                    WHERE 1 = 1
+                      AND BAR_CLSS_CD  = 'B2' 
+                      AND BAR_SZ_CD    = T3.N2ND_ITM_GRP_CD
+             ) T32
+         WHERE 1 = 1
+           AND T3.RN = 1
     </select>
 
     
     <insert id="I6611InsertMst" parameterClass="ModelsLibrary.Inv.InvVo">
-      INSERT INTO TB_INAUD_HIS
+      <!--INSERT INTO TB_INAUD_HIS
       (
           CHNL_CD
         , AREA_CD
@@ -710,7 +911,53 @@
         , ''
         , ''
         , #LOT_NO#
-      )
+      )-->
+	
+	    INSERT INTO TB_INAUD_HIS
+           (
+              CHNL_CD
+            , AREA_CD
+            , INAUD_DT
+            , INAUD_TP_CD
+            , IO_CD
+            , FM_LOC_CD
+            , TO_LOC_CD
+            , CO_CD
+            , ITM_CD
+            , ITM_QTY
+            , DELT_FLG
+            , CRE_USR_ID
+            , CRE_DT
+            , CONN_NO
+            , CONN_SEQ
+            , ROUT_CD
+            , INAUD_FLG
+            , LOT_NO
+			, ORD_NO
+          )
+          VALUES
+          (
+ 
+              #CHNL_CD#
+            , #AREA_CD#
+            , GETDATE()
+            , #INAUD_CD#
+            , 'I'
+            , #LOC_CD#
+            , #LOC_CD#
+            , #CO_CD#
+            , #ITM_CD#
+            , #BAR_QTY#
+            , 'N'
+            , #CRE_USR_ID#
+            , GETDATE()
+            , #PUR_ORD_NO#
+            , #PUR_ORD_SEQ#
+            , ''
+            , ''
+            , #LOT_NO#
+			, #ORD_NO#
+          )
     </insert>
 
 	  <select id="I6611SelectBarCode" parameterClass="ModelsLibrary.Inv.InvVo" resultClass="ModelsLibrary.Inv.InvVo">  
@@ -766,6 +1013,54 @@
 	  </select>
 
 
+	  <insert id="I6611InsertItmCd" parameterClass="ModelsLibrary.Inv.InvVo">
+	    INSERT INTO TB_CD_ITM
+        (
+              CHNL_CD
+            , ITM_CD
+            , ITM_NM
+            , ITM_SZ_NM
+            , ITM_GRP_CLSS_CD
+            , N1ST_ITM_GRP_CD
+            , N2ND_ITM_GRP_CD
+            , ITM_LEN
+            , DELT_FLG
+            , CRE_USR_ID
+            , CRE_DT
+            , UPD_USR_ID
+            , UPD_DT
+        )
+        SELECT CHNL_CD
+             , N1ST_ITM_CD + N3RD_ITM_CD + N2ND_ITM_CD + '-' + N4TH_ITM_CD
+             , N1ST_ITM_CD + N3RD_ITM_CD + N2ND_ITM_CD + '-' + N4TH_ITM_CD
+             , N1ST_ITM_CD + N3RD_ITM_CD + N2ND_ITM_CD + '-' + N4TH_ITM_CD     
+             , #ITM_GRP_CLSS_CD#
+             , #N1ST_ITM_GRP_CD#
+             , #N2ND_ITM_GRP_CD#
+             , #ITM_LEN#
+             , 'N' 
+             , #CRE_USR_ID#
+             , GETDATE()
+             , #CRE_USR_ID#
+             , GETDATE()     
+         FROM (
+             SELECT CHNL_CD
+                  , dbo.FN_splitValue(ABBR_NM, '-', 1)             AS N1ST_ITM_CD 
+                  , ISNULL(dbo.FN_splitValue(ABBR_NM, '-', 2),'')  AS N2ND_ITM_CD
+                  , #N2ND_ITM_GRP_CD#                              AS N3RD_ITM_CD
+                  <!--, FORMAT(#ITM_LEN# / 1000.0, '##0.#')            AS N4TH_ITM_CD-->
+                  , CASE WHEN RIGHT(FORMAT(#ITM_LEN# / 1000.0, '0.0'),1) = 0 
+                         THEN FORMAT(#ITM_LEN# / 1000.0, '0')
+                         ELSE FORMAT(#ITM_LEN# / 1000.0, '0.0') END AS N4TH_ITM_CD
+               FROM TB_CD_ITM_GRP
+              WHERE 1 = 1
+                AND CHNL_CD          = #CHNL_CD#
+                AND ITM_GRP_CLSS_CD  = #ITM_GRP_CLSS_CD#
+                AND PRNT_ITM_GRP_CD  = 'T' 
+                AND ITM_GRP_CD       = #N1ST_ITM_GRP_CD#
+                AND DELT_FLG         = 'N'
+             ) T1   
+	  </insert>
 
 
     <!--품목 입고-->

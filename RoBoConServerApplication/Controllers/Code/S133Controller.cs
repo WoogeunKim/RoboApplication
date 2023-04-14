@@ -47,7 +47,14 @@ namespace VisualServerApplication.Controllers.Code
         // GET api/<controller>
         public async Task<IHttpActionResult> GetMstSelect([FromBody]SystemCodeVo vo)
         {
-            return Ok<IEnumerable<SystemCodeVo>>(Properties.EntityMapper.QueryForList<SystemCodeVo>("S133SelectCodeItemGroupList", vo));
+            try
+            {
+                return Ok<IEnumerable<SystemCodeVo>>(Properties.EntityMapper.QueryForList<SystemCodeVo>("S133SelectCodeItemGroupList", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }            
         }
 
         /// <summary>
