@@ -19,7 +19,7 @@
             <RowDefinition Height="35"/>
             <RowDefinition Height="65"/>
             <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="0"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -115,7 +115,7 @@
         <dxe:TextEdit x:Name="text_CNTR_NM" Grid.Column="1" Grid.Row="5" VerticalAlignment="Stretch" Text="{Binding CNTR_NM}"  Margin="2" HorizontalContentAlignment="Left" />
 
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0"  Grid.Row="6" Text="컨버팅프로그램 : " HorizontalAlignment="Right" TextAlignment="Right"/>
-        <dxg:LookUpEdit HorizontalContentAlignment="Center" Grid.Column="1" Margin="2" Grid.Row="6" VerticalAlignment="Stretch" x:Name="combo_CD_DE" Text="{Binding PRG_TP_NM}" IsSynchronizedWithCurrentItem="True" DisplayMember="CLSS_DESC" ValueMember="CLSS_DESC" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="280" PopupWidth="320">
+        <dxg:LookUpEdit HorizontalContentAlignment="Center" Grid.Column="1" Margin="2" Grid.Row="6" VerticalAlignment="Stretch" x:Name="combo_CD_DE" Text="{Binding PRG_TP_NM}" IsSynchronizedWithCurrentItem="True" DisplayMember="CLSS_DESC" ValueMember="CLSS_DESC" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="240" PopupWidth="280">
             <dxg:LookUpEdit.PopupContentTemplate>
                 <ControlTemplate>
                     <dxg:GridControl Name="PART_GridControl" >

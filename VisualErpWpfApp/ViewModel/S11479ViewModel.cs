@@ -26,7 +26,7 @@ namespace AquilaErpWpfApp3.ViewModel
 
         public S11479ViewModel() 
         {
-            StartDt = System.DateTime.Now;
+            StartDt = Convert.ToDateTime(System.DateTime.Now.ToString("yyyy-MM-01"));
             EndDt = System.DateTime.Now;
           
             //SYSTEM_CODE_VO();
@@ -39,7 +39,7 @@ namespace AquilaErpWpfApp3.ViewModel
             try
             {
                 SystemCodeVo _param = new SystemCodeVo();
-                _param.FM_DT = (StartDt).ToString("yyyy-MM-01");
+                _param.FM_DT = (StartDt).ToString("yyyy-MM-dd");
                 _param.TO_DT = (EndDt).ToString("yyyy-MM-dd");
                 _param.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
 

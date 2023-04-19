@@ -5,7 +5,7 @@
     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" mc:Ignorable="d"
     x:Class="AquilaErpWpfApp3.View.S.Dialog.S11479MasterDialog"
-    Title="Master Code" Height="430" Width="400" FontFamily="Arial" WindowStartupLocation="CenterOwner" ShowIcon="True" ResizeMode="NoResize" FontSize="13" Icon="{dx:DXImage Image=AddItem_16x16.png}">
+    Title="Master Code" Height="380" Width="400" FontFamily="Arial" WindowStartupLocation="CenterOwner" ShowIcon="True" ResizeMode="NoResize" FontSize="13" Icon="{dx:DXImage Image=AddItem_16x16.png}">
 
     <Grid Width="380" x:Name="configCode">
         <Grid.RowDefinitions>
@@ -17,7 +17,7 @@
             <RowDefinition Height="0"/>
             <RowDefinition Height="65"/>
             <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="0"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -66,7 +66,7 @@
 
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0"  Grid.Row="1" Text="고객사 : " HorizontalAlignment="Right" TextAlignment="Right" />
         <!--<dxe:TextEdit x:Name="text_CO_NO" Grid.Column="1"  Grid.Row="1"  VerticalAlignment="Stretch" Text="{Binding CO_NO}" Margin="2" />-->
-        <dxg:LookUpEdit HorizontalContentAlignment="Left" Grid.Column="1" Margin="2" Grid.Row="1" VerticalAlignment="Stretch" x:Name="combo_CO_NM" Text="{Binding CO_NM}" IsSynchronizedWithCurrentItem="True" DisplayMember="CO_NM" ValueMember="CO_NM" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="280" PopupWidth="320">
+        <dxg:LookUpEdit HorizontalContentAlignment="Left" Grid.Column="1" Margin="2" Grid.Row="1" VerticalAlignment="Stretch" x:Name="combo_CO_NM" Text="{Binding CO_NM}" IsSynchronizedWithCurrentItem="True" DisplayMember="CO_NM" ValueMember="CO_NO" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True " HorizontalAlignment="Stretch" IsTextEditable="False" ShowSizeGrip="False" PopupHeight="280" PopupWidth="320">
             <dxg:LookUpEdit.PopupContentTemplate>
                 <ControlTemplate>
                     <dxg:GridControl Name="PART_GridControl" >

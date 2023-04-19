@@ -2841,6 +2841,10 @@
             get;
             set;
         }
-
+        public object PUR_SUM_AMT
+        {
+            get;
+            set;
+        }
     }
 }

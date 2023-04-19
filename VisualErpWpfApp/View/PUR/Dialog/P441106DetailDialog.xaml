@@ -39,7 +39,20 @@
 
         <dxg:GridControl x:Name="grid_File" Margin="5" Grid.Row="3"  AutoGenerateColumns="None"  Grid.ColumnSpan="4"  EnableSmartColumnsGeneration="False"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"   >
             <dxg:GridControl.View>
-                <dxg:TableView FontSize="15"  ShowTotalSummary="True" RowMinHeight="35" ShowGroupPanel="False" AllowBestFit="True"  ShowFixedTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Default" AllowPerPixelScrolling="True" AllowFilterEditor="False" ShowGroupedColumns="True" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="True" NavigationStyle="Cell" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="True"  IsColumnMenuEnabled="False" AutoWidth="True"/>
+                <dxg:TableView FontSize="15"  ShowTotalSummary="True" RowMinHeight="35" ShowGroupPanel="False" AllowBestFit="True"  ShowFixedTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Default" AllowPerPixelScrolling="True" AllowFilterEditor="False" ShowGroupedColumns="True" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="True" NavigationStyle="Cell" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="True"  IsColumnMenuEnabled="False" AutoWidth="True">
+                    <dxg:TableView.FormatConditions>
+                        <dxg:FormatCondition FieldName="IN_REQ_DT" Expression="IsNullOrEmpty([IN_REQ_DT])" PredefinedFormatName="YellowFillWithDarkYellowText"/>
+                        <dxg:FormatCondition FieldName="IN_REQ_DT" Expression="Not IsNullOrEmpty([IN_REQ_DT])" PredefinedFormatName="YellowFillWithDarkYellowText"/>
+                        <dxg:FormatCondition FieldName="DE_CO_NM" Expression="IsNullOrEmpty([DE_CO_NM])" PredefinedFormatName="YellowFillWithDarkYellowText"/>
+                        <dxg:FormatCondition FieldName="DE_CO_NM" Expression="Not IsNullOrEmpty([DE_CO_NM])" PredefinedFormatName="YellowFillWithDarkYellowText"/>
+                        <dxg:FormatCondition FieldName="CNTR_NM" Expression="IsNullOrEmpty([CNTR_NM])" PredefinedFormatName="YellowFillWithDarkYellowText"/>
+                        <dxg:FormatCondition FieldName="CNTR_NM" Expression="Not IsNullOrEmpty([CNTR_NM])" PredefinedFormatName="YellowFillWithDarkYellowText"/>
+                        <dxg:FormatCondition FieldName="PUR_WGT" Expression="IsNullOrEmpty([PUR_WGT])" PredefinedFormatName="YellowFillWithDarkYellowText"/>
+                        <dxg:FormatCondition FieldName="PUR_WGT" Expression="Not IsNullOrEmpty([PUR_WGT])" PredefinedFormatName="YellowFillWithDarkYellowText"/>
+                        <dxg:FormatCondition FieldName="PRG_TP_NM" Expression="IsNullOrEmpty([PRG_TP_NM])" PredefinedFormatName="YellowFillWithDarkYellowText"/>
+                        <dxg:FormatCondition FieldName="PRG_TP_NM" Expression="Not IsNullOrEmpty([PRG_TP_NM])" PredefinedFormatName="YellowFillWithDarkYellowText"/>
+                    </dxg:TableView.FormatConditions>
+                </dxg:TableView>
             </dxg:GridControl.View>
 
             <dxg:GridControl.Columns>
@@ -54,17 +67,21 @@
                         <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
-
-                <!--<dxg:GridColumn FieldName="FLR_NO" Header="도면번호"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" >
+                
+                <!--<dxg:GridColumn FieldName="IN_REQ_DT" Header="납품요청일*"  Width="120" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate">
                     <dxg:GridColumn.EditSettings>
-                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                        <dxe:DateEditSettings HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Mask="yyyy-MM-dd" DisplayFormat="yyyy-MM-dd"/>
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>-->
-
-                <dxg:GridColumn FieldName="IN_REQ_DT" Header="납품요청일*"  Width="120" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate">
+                <dxg:GridColumn FieldName="IN_REQ_DT" Header="납품요청일*"  Width="120" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate" dxe:DateTimeMaskOptions.DateTimeKind="Utc">
                     <dxg:GridColumn.EditSettings>
-                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Mask="yyyy-MM-dd" MaskType="DateTime" MaskUseAsDisplayFormat="True"/>
                     </dxg:GridColumn.EditSettings>
+                    <dxg:GridColumn.EditTemplate>
+                        <ControlTemplate>
+                            <dxe:DateEdit Margin="5" DisplayFormatString="yyyy-MM-dd" DateTime="{Binding RowData.Row.IN_REQ_DT, Mode=TwoWay}" HorizontalContentAlignment="Center" ShowBorder="False"/>
+                        </ControlTemplate>
+                    </dxg:GridColumn.EditTemplate>
                 </dxg:GridColumn>
 
                 <dxg:GridColumn FieldName="DE_CO_NM" Header="납품처*"  Width="150"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate" >
@@ -152,7 +169,7 @@
 
                 <dxg:GridColumn FieldName="PUR_WGT" Header="도면중량*" Width="80"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate">
                     <dxg:GridColumn.EditSettings>
-                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0.0000"  MaskUseAsDisplayFormat="True" />
+                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True" />
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
 
@@ -195,7 +212,7 @@
                 <!--<dxg:GridSummaryItem FieldName="PUR_QTY" SummaryType="Sum" DisplayFormat="###,###,###,##0" />-->
                 <!--<dxg:GridSummaryItem FieldName="CO_UT_PRC" SummaryType="Sum" DisplayFormat="###,###,###,##0" />-->
                 <!--<dxg:GridSummaryItem FieldName="PUR_QTY" SummaryType="Sum" DisplayFormat="###,###,###,##0.00" />-->
-                <dxg:GridSummaryItem FieldName="PUR_WGT" SummaryType="Sum" DisplayFormat="###,###,###,##0.00" />
+                <dxg:GridSummaryItem FieldName="PUR_WGT" SummaryType="Sum" DisplayFormat="###,###,###,##0" />
             </dxg:GridControl.TotalSummary>
             
         </dxg:GridControl>

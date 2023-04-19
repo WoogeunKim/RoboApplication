@@ -15,6 +15,235 @@
         d:DesignHeight="768" d:DesignWidth="1024" mc:Ignorable="d">
 
     <UserControl.Resources>
+        <Style x:Key="gridColumn_A" TargetType="{x:Type dxg:LightweightCellEditor}" >
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Data.N1ST_EQ_NM}" Value="2헤드 절곡기">
+                    <Setter Property="Background" Value="#FFB266"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N1ST_EQ_NM}" Value="5헤드 절곡기">
+                    <Setter Property="Background" Value="#FFFF99"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N1ST_EQ_NM}" Value="앙카 절곡기">
+                    <Setter Property="Background" Value="#CCFFCC"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N1ST_EQ_NM}" Value="코일 1호기">
+                    <Setter Property="Background" Value="#99CCFF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N1ST_EQ_NM}" Value="코일 2호기">
+                    <Setter Property="Background" Value="#CCE5FF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N1ST_EQ_NM}" Value="수동">
+                    <Setter Property="Background" Value="#E5CCFF"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="gridColumn_B" TargetType="{x:Type dxg:LightweightCellEditor}" >
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Data.N2ND_EQ_NM}" Value="2헤드 절곡기">
+                    <Setter Property="Background" Value="#FFB266"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N2ND_EQ_NM}" Value="5헤드 절곡기">
+                    <Setter Property="Background" Value="#FFFF99"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N2ND_EQ_NM}" Value="앙카 절곡기">
+                    <Setter Property="Background" Value="#CCFFCC"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N2ND_EQ_NM}" Value="코일 1호기">
+                    <Setter Property="Background" Value="#99CCFF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N2ND_EQ_NM}" Value="코일 2호기">
+                    <Setter Property="Background" Value="#CCE5FF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N2ND_EQ_NM}" Value="수동">
+                    <Setter Property="Background" Value="#E5CCFF"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="gridColumn_C" TargetType="{x:Type dxg:LightweightCellEditor}" >
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Data.N3RD_EQ_NM}" Value="2헤드 절곡기">
+                    <Setter Property="Background" Value="#FFB266"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N3RD_EQ_NM}" Value="5헤드 절곡기">
+                    <Setter Property="Background" Value="#FFFF99"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N3RD_EQ_NM}" Value="앙카 절곡기">
+                    <Setter Property="Background" Value="#CCFFCC"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N3RD_EQ_NM}" Value="코일 1호기">
+                    <Setter Property="Background" Value="#99CCFF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N3RD_EQ_NM}" Value="코일 2호기">
+                    <Setter Property="Background" Value="#CCE5FF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N3RD_EQ_NM}" Value="수동">
+                    <Setter Property="Background" Value="#E5CCFF"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="gridColumn_D" TargetType="{x:Type dxg:LightweightCellEditor}" >
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Data.N4TH_EQ_NM}" Value="2헤드 절곡기">
+                    <Setter Property="Background" Value="#FFB266"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N4TH_EQ_NM}" Value="5헤드 절곡기">
+                    <Setter Property="Background" Value="#FFFF99"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N4TH_EQ_NM}" Value="앙카 절곡기">
+                    <Setter Property="Background" Value="#CCFFCC"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N4TH_EQ_NM}" Value="코일 1호기">
+                    <Setter Property="Background" Value="#99CCFF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N4TH_EQ_NM}" Value="코일 2호기">
+                    <Setter Property="Background" Value="#CCE5FF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N4TH_EQ_NM}" Value="수동">
+                    <Setter Property="Background" Value="#E5CCFF"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="gridColumn_E" TargetType="{x:Type dxg:LightweightCellEditor}" >
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Data.N5TH_EQ_NM}" Value="2헤드 절곡기">
+                    <Setter Property="Background" Value="#FFB266"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N5TH_EQ_NM}" Value="5헤드 절곡기">
+                    <Setter Property="Background" Value="#FFFF99"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N5TH_EQ_NM}" Value="앙카 절곡기">
+                    <Setter Property="Background" Value="#CCFFCC"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N5TH_EQ_NM}" Value="코일 1호기">
+                    <Setter Property="Background" Value="#99CCFF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N5TH_EQ_NM}" Value="코일 2호기">
+                    <Setter Property="Background" Value="#CCE5FF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N5TH_EQ_NM}" Value="수동">
+                    <Setter Property="Background" Value="#E5CCFF"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="gridColumn_F" TargetType="{x:Type dxg:LightweightCellEditor}" >
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Data.N6TH_EQ_NM}" Value="2헤드 절곡기">
+                    <Setter Property="Background" Value="#FFB266"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N6TH_EQ_NM}" Value="5헤드 절곡기">
+                    <Setter Property="Background" Value="#FFFF99"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N6TH_EQ_NM}" Value="앙카 절곡기">
+                    <Setter Property="Background" Value="#CCFFCC"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N6TH_EQ_NM}" Value="코일 1호기">
+                    <Setter Property="Background" Value="#99CCFF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N6TH_EQ_NM}" Value="코일 2호기">
+                    <Setter Property="Background" Value="#CCE5FF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N6TH_EQ_NM}" Value="수동">
+                    <Setter Property="Background" Value="#E5CCFF"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="gridColumn_G" TargetType="{x:Type dxg:LightweightCellEditor}" >
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Data.N7TH_EQ_NM}" Value="2헤드 절곡기">
+                    <Setter Property="Background" Value="#FFB266"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N7TH_EQ_NM}" Value="5헤드 절곡기">
+                    <Setter Property="Background" Value="#FFFF99"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N7TH_EQ_NM}" Value="앙카 절곡기">
+                    <Setter Property="Background" Value="#CCFFCC"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N7TH_EQ_NM}" Value="코일 1호기">
+                    <Setter Property="Background" Value="#99CCFF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N7TH_EQ_NM}" Value="코일 2호기">
+                    <Setter Property="Background" Value="#CCE5FF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N7TH_EQ_NM}" Value="수동">
+                    <Setter Property="Background" Value="#E5CCFF"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="gridColumn_H" TargetType="{x:Type dxg:LightweightCellEditor}" >
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Data.N8TH_EQ_NM}" Value="2헤드 절곡기">
+                    <Setter Property="Background" Value="#FFB266"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N8TH_EQ_NM}" Value="5헤드 절곡기">
+                    <Setter Property="Background" Value="#FFFF99"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N8TH_EQ_NM}" Value="앙카 절곡기">
+                    <Setter Property="Background" Value="#CCFFCC"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N8TH_EQ_NM}" Value="코일 1호기">
+                    <Setter Property="Background" Value="#99CCFF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N8TH_EQ_NM}" Value="코일 2호기">
+                    <Setter Property="Background" Value="#CCE5FF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N8TH_EQ_NM}" Value="수동">
+                    <Setter Property="Background" Value="#E5CCFF"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="gridColumn_I" TargetType="{x:Type dxg:LightweightCellEditor}" >
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Data.N9TH_EQ_NM}" Value="2헤드 절곡기">
+                    <Setter Property="Background" Value="#FFB266"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N9TH_EQ_NM}" Value="5헤드 절곡기">
+                    <Setter Property="Background" Value="#FFFF99"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N9TH_EQ_NM}" Value="앙카 절곡기">
+                    <Setter Property="Background" Value="#CCFFCC"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N9TH_EQ_NM}" Value="코일 1호기">
+                    <Setter Property="Background" Value="#99CCFF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N9TH_EQ_NM}" Value="코일 2호기">
+                    <Setter Property="Background" Value="#CCE5FF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N9TH_EQ_NM}" Value="수동">
+                    <Setter Property="Background" Value="#E5CCFF"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="gridColumn_J" TargetType="{x:Type dxg:LightweightCellEditor}" >
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Data.N10TH_EQ_NM}" Value="2헤드 절곡기">
+                    <Setter Property="Background" Value="#FFB266"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N10TH_EQ_NM}" Value="5헤드 절곡기">
+                    <Setter Property="Background" Value="#FFFF99"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N10TH_EQ_NM}" Value="앙카 절곡기">
+                    <Setter Property="Background" Value="#CCFFCC"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N10TH_EQ_NM}" Value="코일 1호기">
+                    <Setter Property="Background" Value="#99CCFF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N10TH_EQ_NM}" Value="코일 2호기">
+                    <Setter Property="Background" Value="#CCE5FF"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Data.N10TH_EQ_NM}" Value="수동">
+                    <Setter Property="Background" Value="#E5CCFF"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
 
@@ -45,9 +274,16 @@
                         <dxb:BarButtonItem x:Name="M_Barlist" Content="투입" Command="{Binding BarlistInputCommand}" IsEnabled="{Binding B_INSERT}" Glyph="{dx:DXImage SvgImages/Outlook Inspired/ReversSort.svg}" LargeGlyph="{dx:DXImage SvgImages/Outlook Inspired/ReversSort.svg}" />
                     </dxr:RibbonPageGroup>
 
-
                     <dxr:RibbonPageGroup Caption="페이지 새로고침">
                         <dxb:BarButtonItem x:Name="D_ref" Content="조회" KeyGesture="F5" Command="{Binding DtlRefreshCommand}" IsEnabled="{Binding B_UPDATE}" Glyph="{dx:DXImage Image=Refresh2_16x16.png}" LargeGlyph="{dx:DXImage Image=Refresh2_32x32.png}" />
+                    </dxr:RibbonPageGroup>
+
+                    <dxr:RibbonPageGroup Caption="연신율 적용 여부">
+                        <dxb:BarEditItem x:Name="S_barEditItem1" EditValue="{Binding Path=BL_CLZ_FLG, Mode=TwoWay}" >
+                            <dxb:BarEditItem.EditSettings>
+                                <dxe:CheckEditSettings Content="연신율 적용 길이 표현" />
+                            </dxb:BarEditItem.EditSettings>
+                        </dxb:BarEditItem>
                     </dxr:RibbonPageGroup>
 
                 </dxr:RibbonPage>
@@ -75,7 +311,7 @@
                                                     <dx:Format Background="#FFFF99 "/>
                                                 </dxg:FormatCondition.Format>
                                             </dxg:FormatCondition>
-                                            <dxg:FormatCondition FieldName="N1ST_STEP_VAL" Expression="Contains([N1ST_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition FieldName="N1ST_STEP_VAL" Expression="Contains([N1ST_EQ_NM],'앙카 절곡기')" >
                                                 <dxg:FormatCondition.Format>
                                                     <dx:Format Background="#CCFFCC "/>
                                                 </dxg:FormatCondition.Format>
@@ -103,10 +339,10 @@
                                             </dxg:FormatCondition>
                                             <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'5헤드 절곡기')" >
                                                 <dxg:FormatCondition.Format>
-                                                    <dx:Format Background="#FF9999"/>
+                                                    <dx:Format Background="#FFFF99"/>
                                                 </dxg:FormatCondition.Format>
                                             </dxg:FormatCondition>
-                                            <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'앙카 절곡기')" >
                                                 <dxg:FormatCondition.Format>
                                                     <dx:Format Background="#CCFFCC "/>
                                                 </dxg:FormatCondition.Format>
@@ -137,7 +373,7 @@
                                                     <dx:Format Background="#FFFF99 "/>
                                                 </dxg:FormatCondition.Format>
                                             </dxg:FormatCondition>
-                                            <dxg:FormatCondition FieldName="N3RD_STEP_VAL" Expression="Contains([N3RD_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition FieldName="N3RD_STEP_VAL" Expression="Contains([N3RD_EQ_NM],'앙카 절곡기')" >
                                                 <dxg:FormatCondition.Format>
                                                     <dx:Format Background="#CCFFCC "/>
                                                 </dxg:FormatCondition.Format>
@@ -168,7 +404,7 @@
                                                     <dx:Format Background="#FFFF99 "/>
                                                 </dxg:FormatCondition.Format>
                                             </dxg:FormatCondition>
-                                            <dxg:FormatCondition FieldName="N4TH_STEP_VAL" Expression="Contains([N4TH_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition FieldName="N4TH_STEP_VAL" Expression="Contains([N4TH_EQ_NM],'앙카 절곡기')" >
                                                 <dxg:FormatCondition.Format>
                                                     <dx:Format Background="#CCFFCC "/>
                                                 </dxg:FormatCondition.Format>
@@ -199,7 +435,7 @@
                                                     <dx:Format Background="#FFFF99 "/>
                                                 </dxg:FormatCondition.Format>
                                             </dxg:FormatCondition>
-                                            <dxg:FormatCondition FieldName="N5TH_STEP_VAL" Expression="Contains([N5TH_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition FieldName="N5TH_STEP_VAL" Expression="Contains([N5TH_EQ_NM],'앙카 절곡기')" >
                                                 <dxg:FormatCondition.Format>
                                                     <dx:Format Background="#CCFFCC "/>
                                                 </dxg:FormatCondition.Format>
@@ -230,7 +466,7 @@
                                                     <dx:Format Background="#FFFF99 "/>
                                                 </dxg:FormatCondition.Format>
                                             </dxg:FormatCondition>
-                                            <dxg:FormatCondition FieldName="N6TH_STEP_VAL" Expression="Contains([N6TH_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition FieldName="N6TH_STEP_VAL" Expression="Contains([N6TH_EQ_NM],'앙카 절곡기')" >
                                                 <dxg:FormatCondition.Format>
                                                     <dx:Format Background="#CCFFCC "/>
                                                 </dxg:FormatCondition.Format>
@@ -261,7 +497,7 @@
                                                     <dx:Format Background="#FFFF99 "/>
                                                 </dxg:FormatCondition.Format>
                                             </dxg:FormatCondition>
-                                            <dxg:FormatCondition FieldName="N7TH_STEP_VAL" Expression="Contains([N7TH_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition FieldName="N7TH_STEP_VAL" Expression="Contains([N7TH_EQ_NM],'앙카 절곡기')" >
                                                 <dxg:FormatCondition.Format>
                                                     <dx:Format Background="#CCFFCC "/>
                                                 </dxg:FormatCondition.Format>
@@ -292,7 +528,7 @@
                                                     <dx:Format Background="#FFFF99 "/>
                                                 </dxg:FormatCondition.Format>
                                             </dxg:FormatCondition>
-                                            <dxg:FormatCondition FieldName="N8TH_STEP_VAL" Expression="Contains([N8TH_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition FieldName="N8TH_STEP_VAL" Expression="Contains([N8TH_EQ_NM],'앙카 절곡기')" >
                                                 <dxg:FormatCondition.Format>
                                                     <dx:Format Background="#CCFFCC "/>
                                                 </dxg:FormatCondition.Format>
@@ -323,7 +559,7 @@
                                                     <dx:Format Background="#FFFF99 "/>
                                                 </dxg:FormatCondition.Format>
                                             </dxg:FormatCondition>
-                                            <dxg:FormatCondition FieldName="N9TH_STEP_VAL" Expression="Contains([N9TH_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition FieldName="N9TH_STEP_VAL" Expression="Contains([N9TH_EQ_NM],'앙카 절곡기')" >
                                                 <dxg:FormatCondition.Format>
                                                     <dx:Format Background="#CCFFCC "/>
                                                 </dxg:FormatCondition.Format>
@@ -354,7 +590,7 @@
                                                     <dx:Format Background="#FFFF99 "/>
                                                 </dxg:FormatCondition.Format>
                                             </dxg:FormatCondition>
-                                            <dxg:FormatCondition FieldName="N10TH_STEP_VAL" Expression="Contains([N10TH_EQ_NM],'앙카절곡기')" >
+                                            <dxg:FormatCondition FieldName="N10TH_STEP_VAL" Expression="Contains([N10TH_EQ_NM],'앙카 절곡기')" >
                                                 <dxg:FormatCondition.Format>
                                                     <dx:Format Background="#CCFFCC "/>
                                                 </dxg:FormatCondition.Format>
@@ -541,7 +777,26 @@
 
                 </dxd:LayoutGroup>
 
-                <dxd:LayoutPanel Caption="작업대기 (2헤드 절곡기 : 주황 / 5헤드 절곡기 : 노랑 / 앙카 절곡기 : 연두 / 코일 1호기 : 파랑 / 코일 2호기 : 하늘색 / 수동 : 보라 )" ShowCollapseButton="False" AllowContextMenu="False" AllowClose="False" ShowPinButton="False" ShowCaption="True" CaptionHorizontalAlignment="Center" ItemHeight="3.5*">
+                <dxd:LayoutPanel ShowCollapseButton="False" AllowContextMenu="False" AllowClose="False" ShowPinButton="False" ShowCaption="True" CaptionHorizontalAlignment="Center" ItemHeight="3.5*">
+                    <dxd:LayoutPanel.Caption>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="작업대기 "/>
+                            <TextBlock Text=" ( "/>
+                            <TextBlock Text="2헤드 절곡기 : " />
+                            <TextBlock Text="    " Background="#FFB266"/>
+                            <TextBlock Text="   /   5헤드 절곡기 : "/>
+                            <TextBlock Text="    " Background="#FFFF99"/>
+                            <TextBlock Text="   /   앙카 절곡기 : " />
+                            <TextBlock Text="    " Background="#CCFFCC"/>
+                            <TextBlock Text="   /   코일 1호기 : " />
+                            <TextBlock Text="    " Background="#99CCFF"/>
+                            <TextBlock Text="   /   코일 2호기 : " />
+                            <TextBlock Text="    " Background="#CCE5FF"/>
+                            <TextBlock Text="   /   수동 : " />
+                            <TextBlock Text="    " Background="#E5CCFF"/>
+                            <TextBlock Text=" )" />
+                        </StackPanel>
+                    </dxd:LayoutPanel.Caption>
                     <Grid>
                         <dxg:GridControl x:Name="ConfigViewPage1Edit_Detail" AutoExpandAllGroups="True" ItemsSource="{Binding Path=SelectDtlList}" SelectedItem="{Binding Path=SelectedDtlItem, Mode=TwoWay}" >
                             <dxg:GridControl.View>
@@ -559,7 +814,7 @@
                                                 <dx:Format Background="#FFFF99 "/>
                                             </dxg:FormatCondition.Format>
                                         </dxg:FormatCondition>
-                                        <dxg:FormatCondition FieldName="N1ST_STEP_VAL" Expression="Contains([N1ST_EQ_NM],'앙카절곡기')" >
+                                        <dxg:FormatCondition FieldName="N1ST_STEP_VAL" Expression="Contains([N1ST_EQ_NM],'앙카 절곡기')" >
                                             <dxg:FormatCondition.Format>
                                                 <dx:Format Background="#CCFFCC "/>
                                             </dxg:FormatCondition.Format>
@@ -587,10 +842,10 @@
                                         </dxg:FormatCondition>
                                         <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'5헤드 절곡기')" >
                                             <dxg:FormatCondition.Format>
-                                                <dx:Format Background="#FF9999"/>
+                                                <dx:Format Background="#FFFF99"/>
                                             </dxg:FormatCondition.Format>
                                         </dxg:FormatCondition>
-                                        <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'앙카절곡기')" >
+                                        <dxg:FormatCondition FieldName="N2ND_STEP_VAL" Expression="Contains([N2ND_EQ_NM],'앙카 절곡기')" >
                                             <dxg:FormatCondition.Format>
                                                 <dx:Format Background="#CCFFCC "/>
                                             </dxg:FormatCondition.Format>
@@ -621,7 +876,7 @@
                                                 <dx:Format Background="#FFFF99 "/>
                                             </dxg:FormatCondition.Format>
                                         </dxg:FormatCondition>
-                                        <dxg:FormatCondition FieldName="N3RD_STEP_VAL" Expression="Contains([N3RD_EQ_NM],'앙카절곡기')" >
+                                        <dxg:FormatCondition FieldName="N3RD_STEP_VAL" Expression="Contains([N3RD_EQ_NM],'앙카 절곡기')" >
                                             <dxg:FormatCondition.Format>
                                                 <dx:Format Background="#CCFFCC "/>
                                             </dxg:FormatCondition.Format>
@@ -652,7 +907,7 @@
                                                 <dx:Format Background="#FFFF99 "/>
                                             </dxg:FormatCondition.Format>
                                         </dxg:FormatCondition>
-                                        <dxg:FormatCondition FieldName="N4TH_STEP_VAL" Expression="Contains([N4TH_EQ_NM],'앙카절곡기')" >
+                                        <dxg:FormatCondition FieldName="N4TH_STEP_VAL" Expression="Contains([N4TH_EQ_NM],'앙카 절곡기')" >
                                             <dxg:FormatCondition.Format>
                                                 <dx:Format Background="#CCFFCC "/>
                                             </dxg:FormatCondition.Format>
@@ -683,7 +938,7 @@
                                                 <dx:Format Background="#FFFF99 "/>
                                             </dxg:FormatCondition.Format>
                                         </dxg:FormatCondition>
-                                        <dxg:FormatCondition FieldName="N5TH_STEP_VAL" Expression="Contains([N5TH_EQ_NM],'앙카절곡기')" >
+                                        <dxg:FormatCondition FieldName="N5TH_STEP_VAL" Expression="Contains([N5TH_EQ_NM],'앙카 절곡기')" >
                                             <dxg:FormatCondition.Format>
                                                 <dx:Format Background="#CCFFCC "/>
                                             </dxg:FormatCondition.Format>
@@ -714,7 +969,7 @@
                                                 <dx:Format Background="#FFFF99 "/>
                                             </dxg:FormatCondition.Format>
                                         </dxg:FormatCondition>
-                                        <dxg:FormatCondition FieldName="N6TH_STEP_VAL" Expression="Contains([N6TH_EQ_NM],'앙카절곡기')" >
+                                        <dxg:FormatCondition FieldName="N6TH_STEP_VAL" Expression="Contains([N6TH_EQ_NM],'앙카 절곡기')" >
                                             <dxg:FormatCondition.Format>
                                                 <dx:Format Background="#CCFFCC "/>
                                             </dxg:FormatCondition.Format>
@@ -745,7 +1000,7 @@
                                                 <dx:Format Background="#FFFF99 "/>
                                             </dxg:FormatCondition.Format>
                                         </dxg:FormatCondition>
-                                        <dxg:FormatCondition FieldName="N7TH_STEP_VAL" Expression="Contains([N7TH_EQ_NM],'앙카절곡기')" >
+                                        <dxg:FormatCondition FieldName="N7TH_STEP_VAL" Expression="Contains([N7TH_EQ_NM],'앙카 절곡기')" >
                                             <dxg:FormatCondition.Format>
                                                 <dx:Format Background="#CCFFCC "/>
                                             </dxg:FormatCondition.Format>
@@ -776,7 +1031,7 @@
                                                 <dx:Format Background="#FFFF99 "/>
                                             </dxg:FormatCondition.Format>
                                         </dxg:FormatCondition>
-                                        <dxg:FormatCondition FieldName="N8TH_STEP_VAL" Expression="Contains([N8TH_EQ_NM],'앙카절곡기')" >
+                                        <dxg:FormatCondition FieldName="N8TH_STEP_VAL" Expression="Contains([N8TH_EQ_NM],'앙카 절곡기')" >
                                             <dxg:FormatCondition.Format>
                                                 <dx:Format Background="#CCFFCC "/>
                                             </dxg:FormatCondition.Format>
@@ -807,7 +1062,7 @@
                                                 <dx:Format Background="#FFFF99 "/>
                                             </dxg:FormatCondition.Format>
                                         </dxg:FormatCondition>
-                                        <dxg:FormatCondition FieldName="N9TH_STEP_VAL" Expression="Contains([N9TH_EQ_NM],'앙카절곡기')" >
+                                        <dxg:FormatCondition FieldName="N9TH_STEP_VAL" Expression="Contains([N9TH_EQ_NM],'앙카 절곡기')" >
                                             <dxg:FormatCondition.Format>
                                                 <dx:Format Background="#CCFFCC "/>
                                             </dxg:FormatCondition.Format>
@@ -838,7 +1093,7 @@
                                                 <dx:Format Background="#FFFF99 "/>
                                             </dxg:FormatCondition.Format>
                                         </dxg:FormatCondition>
-                                        <dxg:FormatCondition FieldName="N10TH_STEP_VAL" Expression="Contains([N10TH_EQ_NM],'앙카절곡기')" >
+                                        <dxg:FormatCondition FieldName="N10TH_STEP_VAL" Expression="Contains([N10TH_EQ_NM],'앙카 절곡기')" >
                                             <dxg:FormatCondition.Format>
                                                 <dx:Format Background="#CCFFCC "/>
                                             </dxg:FormatCondition.Format>
@@ -911,61 +1166,61 @@
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N1ST_STEP_VAL" Header="절단1" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="7" x:Name="gridColumn_A" >
+                                <dxg:GridColumn FieldName="N1ST_STEP_VAL" Header="절단1" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="7" x:Name="gridColumn_A" CellStyle="{StaticResource gridColumn_A}">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N2ND_STEP_VAL" Header="절단2" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="8" x:Name="gridColumn_B" >
+                                <dxg:GridColumn FieldName="N2ND_STEP_VAL" Header="절단2" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="8" x:Name="gridColumn_B" CellStyle="{StaticResource gridColumn_B}" >
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N3RD_STEP_VAL" Header="절단3" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="9" x:Name="gridColumn_C" >
+                                <dxg:GridColumn FieldName="N3RD_STEP_VAL" Header="절단3" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="9" x:Name="gridColumn_C" CellStyle="{StaticResource gridColumn_C}">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N4TH_STEP_VAL" Header="절단4" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="10" x:Name="gridColumn_D" >
+                                <dxg:GridColumn FieldName="N4TH_STEP_VAL" Header="절단4" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="10" x:Name="gridColumn_D" CellStyle="{StaticResource gridColumn_D}">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N5TH_STEP_VAL" Header="절단5" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="12" x:Name="gridColumn_E" >
+                                <dxg:GridColumn FieldName="N5TH_STEP_VAL" Header="절단5" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="12" x:Name="gridColumn_E" CellStyle="{StaticResource gridColumn_E}">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N6TH_STEP_VAL" Header="절단6" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="13" x:Name="gridColumn_F" >
+                                <dxg:GridColumn FieldName="N6TH_STEP_VAL" Header="절단6" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="13" x:Name="gridColumn_F" CellStyle="{StaticResource gridColumn_F}">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N7TH_STEP_VAL" Header="절단7" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="14" x:Name="gridColumn_G" >
+                                <dxg:GridColumn FieldName="N7TH_STEP_VAL" Header="절단7" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="14" x:Name="gridColumn_G" CellStyle="{StaticResource gridColumn_G}">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N8TH_STEP_VAL" Header="절단8" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="15">
+                                <dxg:GridColumn FieldName="N8TH_STEP_VAL" Header="절단8" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="15" CellStyle="{StaticResource gridColumn_H}">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N9TH_STEP_VAL" Header="절단9" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="16">
+                                <dxg:GridColumn FieldName="N9TH_STEP_VAL" Header="절단9" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="16" CellStyle="{StaticResource gridColumn_I}">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N10TH_STEP_VAL" Header="절단10" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="17">
+                                <dxg:GridColumn FieldName="N10TH_STEP_VAL" Header="절단10" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="17" CellStyle="{StaticResource gridColumn_J}">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>

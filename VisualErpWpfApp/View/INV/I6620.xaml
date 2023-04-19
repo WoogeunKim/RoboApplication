@@ -257,7 +257,7 @@
                                                 </dxg:GridColumn>
                                             </dxg:GridControlBand>
 
-                                            <dxg:GridControlBand Header="구매 잔량" HorizontalHeaderContentAlignment="Center">
+                                            <dxg:GridControlBand Header="원자재 재고" HorizontalHeaderContentAlignment="Center">
                                                 <dxg:GridColumn FieldName="PUR_BAR_QTY" Header="번들 수량" Width="65" AllowAutoFilter="False" AllowSearchPanel="False" AllowSorting="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" x:Name="PUR_BAR_QTY" CellStyle="{StaticResource GridCellStyle_A}" >
                                                     <dxg:GridColumn.EditSettings>
                                                         <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0.0" MaskUseAsDisplayFormat="True" />
@@ -271,7 +271,7 @@
                                                 </dxg:GridColumn>
                                             </dxg:GridControlBand>
 
-                                            <dxg:GridControlBand Header="기타 잔량" HorizontalHeaderContentAlignment="Center">
+                                            <dxg:GridControlBand Header="단척 재고" HorizontalHeaderContentAlignment="Center">
                                                 <dxg:GridColumn FieldName="INP_ITM_QTY" Header="본수" Width="65" AllowAutoFilter="False" AllowSearchPanel="False" AllowSorting="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" x:Name="INP_ITM_QTY" CellStyle="{StaticResource GridCellStyle_A}" >
                                                     <dxg:GridColumn.EditSettings>
                                                         <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0 EA" MaskUseAsDisplayFormat="True" />

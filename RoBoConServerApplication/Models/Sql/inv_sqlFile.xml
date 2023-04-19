@@ -3071,7 +3071,7 @@
                       AND T1.ITM_GRP_CLSS_CD = #ITM_GRP_CLSS_CD#
                    </isNotNull>
                    AND T1.DELT_FLG        = 'N'
-                   <!--AND (T2.INAUD_QTY > 0 OR T3.INAUD_QTY > 0)--> 
+                   AND (T2.INAUD_QTY > 0 OR T3.INAUD_QTY > 0) 
              ) T4
                OUTER APPLY (
                    SELECT X.BAR_QTY

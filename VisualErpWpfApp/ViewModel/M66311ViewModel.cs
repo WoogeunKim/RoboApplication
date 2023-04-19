@@ -21,7 +21,7 @@ namespace AquilaErpWpfApp3.ViewModel
 {
     public sealed class M66311ViewModel : ViewModelBase, INotifyPropertyChanged
     {
-        private string _title = "BarList 추출검증";
+        private string _title = "가공생산지시관리";
 
         private IList<ManVo> selectedMstList = new List<ManVo>();
 
@@ -29,6 +29,8 @@ namespace AquilaErpWpfApp3.ViewModel
         public M66311ViewModel()
         {
             SYSTEM_CODE_VO();
+
+            BL_CLZ_FLG = false;
         }
 
         // Master
@@ -42,6 +44,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 ManVo _param = new ManVo();
                 _param.OPMZ_NO = _OPMZ_NO;
                 _param.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
+                _param.CLZ_FLG = BL_CLZ_FLG == true ? "Y" : "N";
 
                 using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("M66311/mst", new StringContent(JsonConvert.SerializeObject(_param), System.Text.Encoding.UTF8, "application/json")))
                 {
@@ -63,6 +66,21 @@ namespace AquilaErpWpfApp3.ViewModel
             }
         }
 
+        public void CheckRefresh()
+        {
+            try
+            {
+                if (OptiVo == null) return;
+
+                Refresh(OptiVo.OPMZ_NO);
+            }
+            catch (System.Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+        }
+
         // Dialog
         [Command]
         public async void NewContact()
@@ -76,7 +94,11 @@ namespace AquilaErpWpfApp3.ViewModel
             bool isDialog = (bool)masterDialog.ShowDialog();
             if (isDialog)
             {
+                OptiVo = masterDialog.resultDomain;
+
                 string Selected_OPMZ_NO = masterDialog.resultDomain.OPMZ_NO;
+                string Selected_OPMZ_LSS_RT = masterDialog.resultDomain.OPMZ_LSS_RT == null ? "" : masterDialog.resultDomain.OPMZ_LSS_RT.ToString();
+                TxtRefreshOptmNm = "[조회 조건] OPMZ_NO : " + Selected_OPMZ_NO + "   /   최적화 LOSS : " + Selected_OPMZ_LSS_RT + "   /   비고 : " + masterDialog.resultDomain.OPMZ_RMK;
 
                 Refresh(Selected_OPMZ_NO);
             }
@@ -159,11 +181,33 @@ namespace AquilaErpWpfApp3.ViewModel
             set { SetProperty(ref _selectN2ndList, value, () => SelectN2ndList); }
         }
 
+        string _txtRefreshOptmNm = string.Empty;
+        public string TxtRefreshOptmNm
+        {
+            get { return _txtRefreshOptmNm; }
+            set { SetProperty(ref _txtRefreshOptmNm, value, () => TxtRefreshOptmNm); }
+        }
+
         string _Title = string.Empty;
         public string Title
         {
             get { return _Title; }
             set { SetProperty(ref _Title, value, () => Title); }
+        }
+
+
+        ManVo _optiVo;
+        public ManVo OptiVo
+        {
+            get { return _optiVo; }
+            set { SetProperty(ref _optiVo, value, () => OptiVo); }
+        }
+
+        bool blClzFlg = false;
+        public bool BL_CLZ_FLG
+        {
+            get { return blClzFlg; }
+            set { SetProperty(ref blClzFlg, value, () => BL_CLZ_FLG, CheckRefresh); }
         }
     }  
 }

@@ -575,7 +575,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 return;
             }
 
-            detailDialog = new P441106DetailDialog(new PurVo() { PUR_NO = SelectedMstItem.PUR_NO/*, DE_CO_NM = SelectedMstItem.DE_CO_NM*/, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, CRE_USR_ID = SystemProperties.USER_VO.USR_ID, UPD_USR_ID = SystemProperties.USER_VO.USR_ID });
+            detailDialog = new P441106DetailDialog(new PurVo() { PUR_NO = SelectedMstItem.PUR_NO/*, DE_CO_NM = SelectedMstItem.DE_CO_NM*/, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, CRE_USR_ID = SystemProperties.USER_VO.USR_ID, UPD_USR_ID = SystemProperties.USER_VO.USR_ID, DUE_DT = SelectedMstItem.DUE_DT });
             detailDialog.Title = "도면등록 - " + SelectedMstItem.PUR_NO + " / " + SelectedMstItem.CO_NM;
             detailDialog.Owner = Application.Current.MainWindow;
             detailDialog.BorderEffect = BorderEffect.Default;

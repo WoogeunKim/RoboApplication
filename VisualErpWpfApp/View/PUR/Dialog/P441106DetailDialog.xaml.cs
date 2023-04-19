@@ -109,7 +109,8 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                         , CRE_DT = DateTime.Now.ToString("yyyy-MM-dd")  // 현재 날짜 대입
                         , FLR_FILE = _fileSize                          // 파일을 바이너리로 변환해서 대입
                         , FLR_NM = Path.GetFileName(item)               // 파일 경로의 파일명만 추출해서 대입
-                        , IN_REQ_DT = DateTime.Now.ToString("yyyy-MM-dd")
+                        //, IN_REQ_DT = DateTime.Now.ToString("yyyy-MM-dd")
+                        , IN_REQ_DT = this.OrgDao.DUE_DT
                         , CHNL_CD = SystemProperties.USER_VO.CHNL_CD
                         , CRE_USR_ID = SystemProperties.USER_VO.CRE_USR_ID
                         , UPD_USR_ID = SystemProperties.USER_VO.UPD_USR_ID
@@ -200,7 +201,7 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
             //    return false;
             //}
             //else
-         
+
             return true;
         }
         #endregion
@@ -278,25 +279,50 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
 
                 if (in_req_dt)
                 {
-                    if(e.IsValid)
+                    if (e.IsValid)
                     {
-                        DateTime date;
-                        if (DateTime.TryParseExact(e.Value.ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date) == false)
-                        {
-                            e.ErrorType = DevExpress.XtraEditors.DXErrorProvider.ErrorType.Critical;
-                            e.ErrorContent = "[" + e.Value.ToString() + "] (yyyy-MM-dd) 입력 값이 맞지 않습니다";
-                            e.SetError(e.ErrorContent, e.ErrorType);
-                            return;
-                        }
-                        if (string.IsNullOrEmpty(masterDomain.IN_REQ_DT))
-                        {
-                            masterDomain.IN_REQ_DT = "";
-                        }
-                        if (!masterDomain.IN_REQ_DT.Equals(e.Value == null ? "" : e.Value.ToString()))
-                        {
-                            masterDomain.IN_REQ_DT = e.Value.ToString();
-                            masterDomain.isCheckd = true;
-                        }
+                        //if (e.Value == null)
+                        //{
+                        //    masterDomain.IN_REQ_DT = "";
+                        //}
+                        //else
+                        //{
+                        //    if (DateTime.Parse(e.Value.ToString()) <= DateTime.Now)
+                        //    {
+                        //        e.ErrorType = DevExpress.XtraEditors.DXErrorProvider.ErrorType.Critical;
+                        //        e.ErrorContent = "[" + e.Value.ToString() + "] 납품요청일이 잘못되었습니다.";
+                        //        e.SetError(e.ErrorContent, e.ErrorType);
+                        //        return;
+                        //    }
+                        //    if (masterDomain.IN_REQ_DT == null)
+                        //    {
+                        //        masterDomain.IN_REQ_DT = "";
+                        //    }
+
+                        //    if (!masterDomain.IN_REQ_DT.Equals((e.Value == null ? "" : e.Value.ToString())))
+                        //    {
+                        //        masterDomain.IN_REQ_DT = e.Value.ToString();
+                        //        masterDomain.isCheckd = true;
+                        //    }
+                        //}
+
+                        //DateTime date;
+                        //if (DateTime.TryParseExact(e.Value.ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date) == false)
+                        //{
+                        //    e.ErrorType = DevExpress.XtraEditors.DXErrorProvider.ErrorType.Critical;
+                        //    e.ErrorContent = "[" + e.Value.ToString() + "] (yyyy-MM-dd) 입력 값이 맞지 않습니다";
+                        //    e.SetError(e.ErrorContent, e.ErrorType);
+                        //    return;
+                        //}
+                        //if (string.IsNullOrEmpty(masterDomain.IN_REQ_DT))
+                        //{
+                        //    masterDomain.IN_REQ_DT = "";
+                        //}
+                        //if (!masterDomain.IN_REQ_DT.Equals(e.Value == null ? "" : e.Value.ToString()))
+                        //{
+                        //    masterDomain.IN_REQ_DT = e.Value.ToString();
+                        //    masterDomain.isCheckd = true;
+                        //}
                     }
                 }
                 else if (cntr_nm)

@@ -21,7 +21,7 @@ namespace AquilaErpWpfApp3.View.S.Dialog
         private SystemCodeVo orgDao;
         private bool isEdit = false;
         private SystemCodeVo updateDao;
-        private string _title = "납품처 관리";
+        private string _title = "고객사 관리";
 
         public S11479MasterDialog(SystemCodeVo Dao)
         {
