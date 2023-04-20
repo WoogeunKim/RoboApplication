@@ -35,7 +35,7 @@
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>22</ApplicationRevision>
+    <ApplicationRevision>23</ApplicationRevision>
     <ApplicationVersion>1.0.3.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -246,12 +246,14 @@
     <Compile Include="ViewModel\M6521ViewModel.cs" />
     <Compile Include="ViewModel\M6511ViewModel.cs" />
     <Compile Include="ViewModel\M6500ViewModel.cs" />
+    <Compile Include="ViewModel\M661010ViewModel.cs" />
     <Compile Include="ViewModel\M66103ViewModel.cs" />
     <Compile Include="ViewModel\M66105ViewModel.cs" />
     <Compile Include="ViewModel\M66107ViewModel.cs" />
     <Compile Include="ViewModel\M66112ViewModel.cs" />
     <Compile Include="ViewModel\M66310ViewModel.cs" />
     <Compile Include="ViewModel\M66311ViewModel.cs" />
+    <Compile Include="ViewModel\M66320ViewModel.cs" />
     <Compile Include="ViewModel\M66333ViewModel.cs" />
     <Compile Include="ViewModel\M7711ViewModel.cs" />
     <Compile Include="ViewModel\M6641ViewModel.cs" />
@@ -779,6 +781,9 @@
     <Compile Include="View\M\M6500.xaml.cs">
       <DependentUpon>M6500.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\M\M661010.xaml.cs">
+      <DependentUpon>M661010.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\M\M66103.xaml.cs">
       <DependentUpon>M66103.xaml</DependentUpon>
     </Compile>
@@ -796,6 +801,9 @@
     </Compile>
     <Compile Include="View\M\M66311.xaml.cs">
       <DependentUpon>M66311.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\M\M66320.xaml.cs">
+      <DependentUpon>M66320.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\M\M66333.xaml.cs">
       <DependentUpon>M66333.xaml</DependentUpon>
@@ -2255,6 +2263,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\M\M661010.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\M\M66103.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -2276,6 +2288,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\M\M66311.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\M\M66320.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

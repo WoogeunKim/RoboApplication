@@ -2142,6 +2142,26 @@
             품목그룹별 중그룹 재고장 - 조회
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M661010Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            오더매니저 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M661010Controller.GetDtlSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            오더매니저 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M661010Controller.GetImgSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            오더매니저 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M661010Controller.GetDtlUpdate(ModelsLibrary.Man.ManVo)">
+            <summary>
+            오더매니저 - 수정
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Man.M66103Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
             <summary>
             도면바리스트형상추출 Mst 관리 - 조회
@@ -2232,6 +2252,22 @@
         <member name="M:VisualServerApplication.Controllers.Man.M66310Controller.GetDtlInsert(ModelsLibrary.Man.ManVo)">
             <summary>
             투입자재지시관리 DTL 관리 - 추가
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66320Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            투입자재지시관리 Mst 관리 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66320Controller.GetDtlSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            투입자재지시관리 DTL 관리 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M66320Controller.GetDtlSummarySelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            
+            투입자재지시관리 Summary 관리 - 조회
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Man.M66333Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">

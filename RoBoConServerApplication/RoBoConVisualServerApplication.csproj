@@ -237,12 +237,14 @@
     <Compile Include="Controllers\Inv\I6610Controller.cs" />
     <Compile Include="Controllers\Inv\I66210Controller.cs" />
     <Compile Include="Controllers\Inv\I6621Controller.cs" />
+    <Compile Include="Controllers\Man\M661010Controller.cs" />
     <Compile Include="Controllers\Man\M66103Controller.cs" />
     <Compile Include="Controllers\Man\M66105Controller.cs" />
     <Compile Include="Controllers\Man\M66107Controller.cs" />
     <Compile Include="Controllers\Man\M66112Controller.cs" />
     <Compile Include="Controllers\Man\M66310Controller.cs" />
     <Compile Include="Controllers\Man\M66311Controller.cs" />
+    <Compile Include="Controllers\Man\M66320Controller.cs" />
     <Compile Include="Controllers\Man\M66333Controller.cs" />
     <Compile Include="Controllers\Man\M6638Controller.cs" />
     <Compile Include="Controllers\Man\M6521Controller.cs" />
