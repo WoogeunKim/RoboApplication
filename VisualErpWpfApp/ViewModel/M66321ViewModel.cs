@@ -1,8 +1,7 @@
-﻿using AquilaErpWpfApp3.Util;
-using DevExpress.Mvvm;
+﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
-using DevExpress.Xpf.Core;
 using DevExpress.Xpf.WindowsUI;
+using ModelsLibrary.Code;
 using ModelsLibrary.Man;
 using Newtonsoft.Json;
 using System;
@@ -11,15 +10,115 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Windows;
+using System.Windows.Input;
+using AquilaErpWpfApp3.Util;
+using AquilaErpWpfApp3.View.M.Dialog;
+using AquilaErpWpfApp3.M.View.Dialog;
+using DevExpress.Xpf.Core;
+using System.Windows.Media;
 
 namespace AquilaErpWpfApp3.ViewModel
 {
     public sealed class M66321ViewModel : ViewModelBase, INotifyPropertyChanged
     {
+        private string _title = "가공지시";
         private IList<ManVo> selectedMstList = new List<ManVo>();
-        private string title = "칭량현황";
 
-        #region 바인딩 변수
+        public M66321ViewModel()
+        {
+            StartDt = System.DateTime.Now;
+            EndDt = System.DateTime.Now;
+
+            SYSTEM_CODE_VO();
+
+
+
+            BL_CLZ_FLG = false;
+        }
+
+        // Master
+        [Command]
+        public async void Refresh()
+        {
+            try
+            {
+                if (M_EQ_NO == null) return;
+
+                if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
+
+                ManVo _param = new ManVo();
+                _param.N1ST_EQ_NO = M_EQ_NO.PROD_EQ_NO;
+                _param.FM_DT = (StartDt).ToString("yyyy-MM-dd");
+                _param.TO_DT = (EndDt).ToString("yyyy-MM-dd");
+                _param.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
+                _param.CLZ_FLG = BL_CLZ_FLG == true ? "Y" : "N";
+
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("M66321/mst", new StringContent(JsonConvert.SerializeObject(_param), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        this.SelectMstList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+
+                    }
+                }
+
+                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+            }
+            catch (System.Exception eLog)
+            {
+                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+        }
+
+
+
+
+        private async void SYSTEM_CODE_VO()
+        {
+            try
+            {
+                // 절단설비
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("M66311/n1st/eq"
+                                                                                                   , new StringContent(JsonConvert.SerializeObject(new ManVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        this.SelectN1stList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+                        M_EQ_NO = SelectN1stList[0];
+                    }
+                }
+
+                //// 가공설비
+                //using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("M66311/n2nd/eq"
+                //                                                                                   , new StringContent(JsonConvert.SerializeObject(new ManVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+                //{
+                //    if (response.IsSuccessStatusCode)
+                //    {
+                //        this.SelectN2ndList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+
+                //    }
+
+                //}
+            }
+            catch (Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+        }
+
+
+
+
+
+
+
+
+
+        // MVVM 방식으로 화면과 바이딩을 합니다.
         DateTime _startDt;
         public DateTime StartDt
         {
@@ -34,24 +133,6 @@ namespace AquilaErpWpfApp3.ViewModel
             set { SetProperty(ref _endDt, value, () => EndDt); }
         }
 
-        public IList<ManVo> SelectMstList
-        {
-            get { return selectedMstList; }
-            set { SetProperty(ref selectedMstList, value, () => SelectMstList); }
-        }
-
-        ManVo _selectMasterItem;
-        public ManVo SelectedMasterItem
-        {
-            get
-            {
-                return _selectMasterItem;
-            }
-            set
-            {
-                SetProperty(ref _selectMasterItem, value, () => SelectedMasterItem);
-            }
-        }
 
 
         private string _M_SEARCH_TEXT = string.Empty;
@@ -61,6 +142,41 @@ namespace AquilaErpWpfApp3.ViewModel
             set { SetProperty(ref _M_SEARCH_TEXT, value, () => M_SEARCH_TEXT); }
         }
 
+        public IList<ManVo> SelectMstList
+        {
+            get { return selectedMstList; }
+            set { SetProperty(ref selectedMstList, value, () => SelectMstList); }
+        }
+
+        ManVo _selectedMstItem;
+        public ManVo SelectedMstItem
+        {
+            get { return _selectedMstItem; }
+            set { SetProperty(ref _selectedMstItem, value, () => SelectedMstItem); }
+        }
+
+        private IList<ManVo> _selectN1stList = new List<ManVo>();
+        public IList<ManVo> SelectN1stList
+        {
+            get { return _selectN1stList; }
+            set { SetProperty(ref _selectN1stList, value, () => SelectN1stList); }
+        }
+
+        private ManVo _M_EQ_NO;
+        public ManVo M_EQ_NO
+        {
+            get { return _M_EQ_NO; }
+            set { SetProperty(ref _M_EQ_NO, value, () => M_EQ_NO); }
+        }
+
+
+        string _txtRefreshOptmNm = string.Empty;
+        public string TxtRefreshOptmNm
+        {
+            get { return _txtRefreshOptmNm; }
+            set { SetProperty(ref _txtRefreshOptmNm, value, () => TxtRefreshOptmNm); }
+        }
+
         string _Title = string.Empty;
         public string Title
         {
@@ -68,79 +184,25 @@ namespace AquilaErpWpfApp3.ViewModel
             set { SetProperty(ref _Title, value, () => Title); }
         }
 
-        private bool? _isM_UPDATE = false;
-        public bool? isM_UPDATE
+
+        ManVo _optiVo;
+        public ManVo OptiVo
         {
-            get { return _isM_UPDATE; }
-            set { SetProperty(ref _isM_UPDATE, value, () => isM_UPDATE); }
+            get { return _optiVo; }
+            set { SetProperty(ref _optiVo, value, () => OptiVo); }
         }
 
-        private bool? _isM_DELETE = false;
-        public bool? isM_DELETE
+        bool blClzFlg = false;
+        public bool BL_CLZ_FLG
         {
-            get { return _isM_DELETE; }
-            set { SetProperty(ref _isM_DELETE, value, () => isM_DELETE); }
-        } 
-        #endregion
-
-        public M66321ViewModel()
-        {
-            StartDt = System.DateTime.Now;
-            EndDt = System.DateTime.Now;
-
-            //Refresh();
+            get { return blClzFlg; }
+            set { SetProperty(ref blClzFlg, value, () => BL_CLZ_FLG, Refresh); }
         }
-
-        public void setTitle()
+        String eqno = string.Empty;
+        public String EQ_NO
         {
-            title = "[기간]" + (StartDt).ToString("yyyy-MM-dd") + "~" + (EndDt).ToString("yyyy-MM-dd") + "~" + (EndDt).ToString("yyyy-MM-dd");
+            get { return eqno; }
+            set { SetProperty(ref eqno, value, () => EQ_NO); }
         }
-
-
-        #region 커맨드
-
-        [Command]
-        public async void Refresh()
-        {
-            try
-            {
-                DXSplashScreen.Show<ProgressWindow>();
-
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66321/mst", new StringContent(JsonConvert.SerializeObject(new ManVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD, FM_DT = StartDt.ToString("yyyy-MM-dd"), TO_DT = EndDt.ToString("yyyy-MM-dd") }), System.Text.Encoding.UTF8, "application/json")))  //MAN-SQL->M66321 만들었음 
-                {
-                    if (response.IsSuccessStatusCode)
-                    {
-                        this.SelectMstList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
-                    }  
-                    Title = "[기간]" + (StartDt).ToString("yyyy-MM-dd") + "~" + (EndDt).ToString("yyyy-MM-dd");
-                    if (SelectMstList.Count > 0)
-                    {
-                        isM_UPDATE = true;
-                        isM_DELETE = true;
-
-                        SelectedMasterItem = SelectMstList[0];
-                    }
-
-                    else
-                    {
-                        isM_UPDATE = false;
-                        isM_DELETE = false;
-
-                    }
-
-                }
-                DXSplashScreen.Close();
-            }
-            catch (System.Exception eLog)
-            {
-                if (DXSplashScreen.IsActive == true)
-                {
-                    DXSplashScreen.Close();
-                }
-                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + MessageBoxButton.OK);
-                return;
-            }
-        } 
-        #endregion
     }
 }

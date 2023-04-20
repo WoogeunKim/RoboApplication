@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using ModelsLibrary.Fproof;
 using VisualServerApplication.Config;
+using System;
 
 namespace VisualServerApplication.Controllers.Man
 {
@@ -44,7 +45,14 @@ namespace VisualServerApplication.Controllers.Man
         // GET api/<controller>
         public async Task<IHttpActionResult> GetMstSelect([FromBody] ManVo vo)
         {
-            return Ok<IEnumerable<ManVo>>(Properties.EntityMapper.QueryForList<ManVo>("M66321SelectMaster", vo));
+            try
+            {
+                return Ok<IEnumerable<ManVo>>(Properties.EntityMapper.QueryForList<ManVo>("M66321SelectMstList", vo));
+            }
+            catch (Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
         }
 
     }

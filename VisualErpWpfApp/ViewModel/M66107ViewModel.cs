@@ -324,7 +324,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 {
                     int _Num = 0;
 
-                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66107/mst/u", new StringContent(JsonConvert.SerializeObject(new ManVo() { OPMZ_NO = SelectedMstItem.OPMZ_NO, CLZ_FLG = "Y", UPD_USR_ID = SystemProperties.USER }), System.Text.Encoding.UTF8, "application/json")))
+                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66107/mst/u", new StringContent(JsonConvert.SerializeObject(new ManVo() { OPMZ_NO = SelectedMstItem.OPMZ_NO, OPMZ_NM = SelectedMstItem.OPMZ_NM, OPMZ_RMK = SelectedMstItem.OPMZ_RMK, CLZ_FLG = "Y", UPD_USR_ID = SystemProperties.USER }), System.Text.Encoding.UTF8, "application/json")))
                     {
                         if (response.IsSuccessStatusCode)
                         {

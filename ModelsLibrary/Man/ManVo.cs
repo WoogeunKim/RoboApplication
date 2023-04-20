@@ -2846,5 +2846,25 @@
             get;
             set;
         }
+        public object PROD_DIR_DT
+        {
+            get;
+            set;
+        }
+        public object PROD_TK_TM
+        {
+            get;
+            set;
+        }
+        public object PROD_DIR_QTY
+        {
+            get;
+            set;
+        }
+        public object PROD_WRK_TM
+        {
+            get;
+            set;
+        }
     }
 }

@@ -3126,7 +3126,7 @@
                   , ITM_WGT    = #ITM_WGT#
              WHERE 1=1
                AND CHNL_CD   = #CHNL_CD#
-               AND DE_CHD_NO = #DE_CHD_NO#e
+               AND DE_CHD_NO = #DE_CHD_NO#
                AND CO_NO     = #CO_NO#
      </update>
 
