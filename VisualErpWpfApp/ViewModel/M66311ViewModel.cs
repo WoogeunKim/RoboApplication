@@ -108,28 +108,28 @@ namespace AquilaErpWpfApp3.ViewModel
         {
             try
             {
-                // 절단설비
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("M66311/n1st/eq"
-                                                                                                   , new StringContent(JsonConvert.SerializeObject(new ManVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
-                {
-                    if (response.IsSuccessStatusCode)
-                    {
-                        this.SelectN1stList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+                //// 절단설비
+                //using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("M66311/n1st/eq"
+                //                                                                                   , new StringContent(JsonConvert.SerializeObject(new ManVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+                //{
+                //    if (response.IsSuccessStatusCode)
+                //    {
+                //        this.SelectN1stList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
 
-                    }
-                }
+                //    }
+                //}
 
-                // 가공설비
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("M66311/n2nd/eq"
-                                                                                                   , new StringContent(JsonConvert.SerializeObject(new ManVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
-                {
-                    if (response.IsSuccessStatusCode)
-                    {
-                        this.SelectN2ndList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+                //// 가공설비
+                //using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("M66311/n2nd/eq"
+                //                                                                                   , new StringContent(JsonConvert.SerializeObject(new ManVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+                //{
+                //    if (response.IsSuccessStatusCode)
+                //    {
+                //        this.SelectN2ndList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
 
-                    }
+                //    }
 
-                }
+                //}
             }
             catch(Exception eLog)
             {

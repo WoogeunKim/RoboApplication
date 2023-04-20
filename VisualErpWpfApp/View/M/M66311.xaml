@@ -109,12 +109,12 @@
                         
                         <dxg:GridControl x:Name="ConfigViewPage1Edit_Master" ItemsSource="{Binding Path=SelectMstList}" SelectedItem="{Binding Path=SelectedMstItem, Mode=TwoWay}" Grid.Row="1" AutoExpandAllGroups="True" >
                             <dxg:GridControl.View>
-                                <dxg:TableView x:Name="configViewPage1EditView_Master" ShowFixedTotalSummary="True" ShowGroupFooters="True" AllowEditing="False" AllowMoving="True" AllowResizing="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="True" AutoWidth="False" AllowPerPixelScrolling="True" ShowGroupedColumns="True" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="True" NavigationStyle="Cell" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT , Path=EditValue}" RowMinHeight="35">
+                                <dxg:TableView x:Name="configViewPage1EditView_Master" ShowFixedTotalSummary="True" ShowGroupFooters="True" AllowEditing="False" AllowMoving="True" AllowResizing="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="True" AutoWidth="False" AllowPerPixelScrolling="True" ShowGroupedColumns="True" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="True" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT , Path=EditValue}" RowMinHeight="35">
                                     <dxg:TableView.FormatConditions>
-                                        <dxg:FormatCondition FieldName="N2ND_EQ_NM" Expression="Not IsNullOrEmpty([N2ND_EQ_NM])" PredefinedFormatName="YellowFillWithDarkYellowText"/>
+                                        <!--<dxg:FormatCondition FieldName="N2ND_EQ_NM" Expression="Not IsNullOrEmpty([N2ND_EQ_NM])" PredefinedFormatName="YellowFillWithDarkYellowText"/>
                                         <dxg:FormatCondition FieldName="N2ND_EQ_NM" Expression="IsNullOrEmpty([N2ND_EQ_NM])" PredefinedFormatName="YellowFillWithDarkYellowText"/>
                                         <dxg:FormatCondition FieldName="N1ST_EQ_NM" Expression="Not IsNullOrEmpty([N1ST_EQ_NM])" PredefinedFormatName="YellowFillWithDarkYellowText"/>
-                                        <dxg:FormatCondition FieldName="N1ST_EQ_NM" Expression="IsNullOrEmpty([N1ST_EQ_NM])" PredefinedFormatName="YellowFillWithDarkYellowText"/>
+                                        <dxg:FormatCondition FieldName="N1ST_EQ_NM" Expression="IsNullOrEmpty([N1ST_EQ_NM])" PredefinedFormatName="YellowFillWithDarkYellowText"/>-->
                                     </dxg:TableView.FormatConditions>
                                 </dxg:TableView>
                             </dxg:GridControl.View>
@@ -142,8 +142,20 @@
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
+                                <dxg:GridColumn FieldName="N1ST_EQ_NM" Header="절단설비" Width="150" HorizontalHeaderContentAlignment="Center"  AllowMoving="False" VisibleIndex="3">
+                                    <dxg:GridColumn.EditSettings>
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                    </dxg:GridColumn.EditSettings>
+                                </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="N1ST_EQ_NM" Header="절단설비*"  Width="150"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowMoving="False" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate" VisibleIndex="4">
+                                <dxg:GridColumn FieldName="N2ND_EQ_NM" Header="가공설비" Width="150" HorizontalHeaderContentAlignment="Center"  AllowMoving="False" VisibleIndex="4">
+                                    <dxg:GridColumn.EditSettings>
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                    </dxg:GridColumn.EditSettings>
+                                </dxg:GridColumn>
+
+
+                                <!--<dxg:GridColumn FieldName="N1ST_EQ_NM" Header="절단설비*"  Width="150"  AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowMoving="False" AllowEditing="True" AllowResizing="True" Validate="GridColumn_Validate" VisibleIndex="4">
                                     <dxg:GridColumn.EditSettings>
                                         <dxg:LookUpEditSettings Name="lue_N1ST_EQ_NM" ItemsSource="{Binding SelectN1stList}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsSynchronizedWithCurrentItem="False" DisplayMember="EQ_NM" ValueMember="EQ_NM" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="True" >
                                             <dxg:LookUpEditSettings.PopupContentTemplate>
@@ -203,7 +215,7 @@
                                             </dxg:LookUpEditSettings.StyleSettings>
                                         </dxg:LookUpEditSettings>
                                     </dxg:GridColumn.EditSettings>
-                                </dxg:GridColumn>
+                                </dxg:GridColumn>-->
 
 
 

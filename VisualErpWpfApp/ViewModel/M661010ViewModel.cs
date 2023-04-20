@@ -25,7 +25,35 @@ namespace AquilaErpWpfApp3.ViewModel
         {
             StartDt = DateTime.Now;
             EndDt = DateTime.Now;
+
+            SYSTEM_CODE_VO();
         }
+
+        /// <summary>
+        /// DTL 설비 : 설비 ComboBox 정보들을 가져옵니다.
+        /// </summary>
+        private async void SYSTEM_CODE_VO()
+        {
+            try
+            {
+                var eqObj = new ManVo()
+                {
+                    CHNL_CD = SystemProperties.USER_VO.CHNL_CD
+                };
+
+                // 서버로부터 절단설비 정보를 가져옵니다.
+                SelectN1stList = await PostJsonList<ManVo>("M66311/n1st/eq", eqObj);
+
+                // 서버로부터 가공설비 정보를 가져옵니다.
+                SelectN2ndList = await PostJsonList<ManVo>("M66311/n2nd/eq", eqObj);
+            }
+            catch (Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
 
         /// <summary>
         /// MST : Loss최적화 배정된 설비 조회
@@ -65,9 +93,36 @@ namespace AquilaErpWpfApp3.ViewModel
                     CHNL_CD = SystemProperties.USER_VO.CHNL_CD,
                     FM_DT = StartDt.ToString("yyyy-MM-dd"),
                     TO_DT = EndDt.ToString("yyyy-MM-dd"),
-                    // Z1 : 전체설비 기준 최적화 지시 정보 조회
-                    PROD_EQ_NO = SelectedMstItem.PROD_EQ_NO.Equals("Z1") ? null : SelectedMstItem.PROD_EQ_NO
+                    // 여러 경우의 수로 인해 삭제
+                    // PROD_EQ_NO = SelectedMstItem.PROD_EQ_NO
                 };
+
+                switch (SelectedMstItem.PROD_EQ_NO)
+                {
+                    // Z1 : 전체설비 기준 최적화 지시 정보 조회
+                    case "Z1":
+                        break;
+
+                    // Z2 : 설비미정 기준 최적화 지시 정보 조회
+                    case "Z2":
+                        dtlObj.PROD_EQ_NO = "";
+                        break;
+
+                    // CUT01 : 절단설비 기준 최적화 지시 정보 조회
+                    case "CUT01":
+                        dtlObj.N1ST_EQ_NO = SelectedMstItem.PROD_EQ_NO;
+                        break;
+
+                    // CUT02 : 절단설비 기준 최적화 지시 정보 조회
+                    case "CUT02":
+                        dtlObj.N1ST_EQ_NO = SelectedMstItem.PROD_EQ_NO;
+                        break;
+
+                    // 나머지 : 가공설비별 최적화 지시 정보 조회
+                    default:
+                        dtlObj.N2ND_EQ_NO = SelectedMstItem.PROD_EQ_NO;
+                        break;
+                }
 
                 // 조회 스플레쉬 기능
                 if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
@@ -214,6 +269,19 @@ namespace AquilaErpWpfApp3.ViewModel
         {
             get { return _imgArray; }
             set { SetProperty(ref _imgArray, value, () => ImgArray); }
+        }
+
+        private IList<ManVo> _selectN1stList = new List<ManVo>();
+        public IList<ManVo> SelectN1stList
+        {
+            get { return _selectN1stList; }
+            set { SetProperty(ref _selectN1stList, value, () => SelectN1stList); }
+        }
+        private IList<ManVo> _selectN2ndList = new List<ManVo>();
+        public IList<ManVo> SelectN2ndList
+        {
+            get { return _selectN2ndList; }
+            set { SetProperty(ref _selectN2ndList, value, () => SelectN2ndList); }
         }
 
 
