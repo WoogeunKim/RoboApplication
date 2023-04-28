@@ -36,6 +36,7 @@
                 <dxb:BarButtonItem x:Name="M_del" Content="삭제" KeyGesture="F8" Glyph="{dx:DXImage Image=RemoveItem_16x16.png}" LargeGlyph="{dx:DXImage Image=RemoveItem_32x32.png}" Command="{Binding DelMasterContactCommand}" IsEnabled="{Binding isM_DELETE}"  />
                 <dxb:BarButtonItem x:Name="M_ref" Content="조회" KeyGesture="F5" Glyph="{dx:DXImage Image=Refresh2_16x16.png}" LargeGlyph="{dx:DXImage Image=Refresh2_32x32.png}" Command="{Binding MasterSearchDialogCommand}" />
                 <dxb:BarButtonItem x:Name="M_MST_PRINT" Content="출력" KeyGesture="F9" Glyph="{dx:DXImage Image=PrintDialog_16x16.png}" LargeGlyph="{dx:DXImage Image=PrintDialog_32x32.png}" RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}"  ItemClick="M_MST_PRINT_ItemClick" />
+                <dxb:BarButtonItem x:Name="M_Opti" Content="적용" RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" Command="{Binding OptiContactCommand}" Glyph="{dx:DXImage SvgImages/Business Objects/BO_Security_Permission_Model.svg}" LargeGlyph="{dx:DXImage SvgImages/Business Objects/BO_Security_Permission_Model.svg}" />
             </dxb:BarManager.Items>
             <Grid>
                 <Grid.RowDefinitions>
@@ -54,6 +55,9 @@
                                 <dxb:BarEditItemLink BarItemName="M_SEARCH_TEXT"  />
                                 <dxb:BarButtonItemLink BarItemName="M_ref"/>
                                 <dxb:BarButtonItemLink BarItemName="M_MST_PRINT"/>
+                            </dxr:RibbonPageGroup>
+                            <dxr:RibbonPageGroup Caption="최적화 적용">
+                                <dxb:BarButtonItemLink BarItemName="M_Opti"/>
                             </dxr:RibbonPageGroup>
                         </dxr:RibbonPage>
                     </dxr:RibbonDefaultPageCategory>
@@ -140,13 +144,13 @@
                                                     </DataTemplate>
                                                 </dxg:GridColumn.CellTemplate>
                                             </dxg:GridColumn>
-                                            
-                                            
-                                            <!--<dxg:GridColumn FieldName="EQ_TP_NM" Header="설비 유형" Width="70" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" >
+
+
+                                            <dxg:GridColumn FieldName="OPTI_FLG" Header="최적화 적용" Width="70" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" >
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                                 </dxg:GridColumn.EditSettings>
-                                            </dxg:GridColumn>-->
+                                            </dxg:GridColumn>
                                             
                                             
                                             <dxg:GridColumn FieldName="PROD_EQ_NO" Header="코드" Width="60" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" >

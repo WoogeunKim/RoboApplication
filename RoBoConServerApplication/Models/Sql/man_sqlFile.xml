@@ -8293,61 +8293,70 @@
     
    <!-- 설비 관리  -->
     <select id="M6641SelectMaster" parameterClass="ModelsLibrary.Man.ManVo" resultClass="ModelsLibrary.Man.ManVo">
-      SELECT 
-           ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY PROD_EQ_NO) AS RN
-         , PROD_EQ_NO
-         , EQ_MDL_NM
-         , EQ_NM
-         , EQ_SZ_NM
-         , MN_MTR_CSM_CTNT
-         , EQ_QTY
-         , EQ_MKR_NM
-         , EQ_PUR_AMT
-         , EQ_PUR_YRMON
-         , EQ_GRD_CD
-         , BALL_STAR_AREA_CTNT
-         , USG_DESC
-         , EQ_LOC_CD
-         , dbo.CD_SYS_CLSS_FNC(CHNL_CD, 'L-002', EQ_LOC_CD) AS EQ_LOC_NM
-         , EQ_DESC
-         , CHNL_CD
-         , CONVERT(VARCHAR, INSP_DT, 23) AS INSP_DT
-         , EQ_IMG
-         , EQ_SNOR_NO
-         , EQ_SNOR_IMG
-         , EQ_TP_CD
-         , dbo.CD_SYS_CLSS_FNC(CHNL_CD, 'L-700', EQ_TP_CD) AS EQ_TP_NM
-         , CONVERT(VARCHAR, WRK_DT, 23) AS  WRK_DT 
-         , CONVERT(VARCHAR, WRK_UPD_DT, 23) AS  WRK_UPD_DT  
-         , CT_VAL
-         , MTRL_CD   AS MTRL_ITM_CD
-	       , dbo.CD_ITEM_NM_FNC( CHNL_CD, MTRL_CD) AS MTRL_ITM_NM
-         , LOW_STND_LMT_CD
-	       , dbo.CD_SYS_CLSS_FNC(CHNL_CD, 'L-910', LOW_STND_LMT_CD) AS LOW_STND_LMT_NM  
-         , UPPR_STND_LMT_CD  
-	       , dbo.CD_SYS_CLSS_FNC(CHNL_CD, 'L-910', UPPR_STND_LMT_CD) AS UPPR_STND_LMT_NM 
-         , LOW_LEN_LMT_VAL  
-         , UPPR_LEN_LMT_VAL 
-         , LOW_CRV_LMT_CD   
-         , UPPR_CRV_LMT_CD  
-         , SPL_TM_VAL       
-         , ROUT_TM_VAL      
-         , BEND_TM_VAL      
-         , N1ST_PCK_WGT     
-         , N2ND_PCK_WGT     
-         , PROD_HR          
-         , PROD_DY          
-         , PROD_REQ_CAPA_QTY 
-         , DELT_FLG
-        FROM TB_PROD_EQ
-          WHERE CHNL_CD = #CHNL_CD#  
-        <isNotNull property="PROD_EQ_NO" >
+		SELECT
+		ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY PROD_EQ_NO) AS RN
+		, PROD_EQ_NO
+		, EQ_MDL_NM
+		, EQ_NM
+		, EQ_SZ_NM
+		, MN_MTR_CSM_CTNT
+		, EQ_QTY
+		, EQ_MKR_NM
+		, EQ_PUR_AMT
+		, EQ_PUR_YRMON
+		, EQ_GRD_CD
+		, BALL_STAR_AREA_CTNT
+		, USG_DESC
+		, EQ_LOC_CD
+		, dbo.CD_SYS_CLSS_FNC(CHNL_CD, 'L-002', EQ_LOC_CD) AS EQ_LOC_NM
+		, EQ_DESC
+		, CHNL_CD
+		, CONVERT(VARCHAR, INSP_DT, 23) AS INSP_DT
+		, EQ_IMG
+		, EQ_SNOR_NO
+		, EQ_SNOR_IMG
+		, EQ_TP_CD
+		, dbo.CD_SYS_CLSS_FNC(CHNL_CD, 'L-700', EQ_TP_CD) AS EQ_TP_NM
+		, CONVERT(VARCHAR, WRK_DT, 23) AS  WRK_DT
+		, CONVERT(VARCHAR, WRK_UPD_DT, 23) AS  WRK_UPD_DT
+		, CT_VAL
+		, MTRL_CD   AS MTRL_ITM_CD
+		, dbo.CD_ITEM_NM_FNC( CHNL_CD, MTRL_CD) AS MTRL_ITM_NM
+		, LOW_STND_LMT_CD
+		, dbo.CD_SYS_CLSS_FNC(CHNL_CD, 'L-910', LOW_STND_LMT_CD) AS LOW_STND_LMT_NM
+		, UPPR_STND_LMT_CD
+		, dbo.CD_SYS_CLSS_FNC(CHNL_CD, 'L-910', UPPR_STND_LMT_CD) AS UPPR_STND_LMT_NM
+		, LOW_LEN_LMT_VAL
+		, UPPR_LEN_LMT_VAL
+		, LOW_CRV_LMT_CD
+		, UPPR_CRV_LMT_CD
+		, SPL_TM_VAL
+		, ROUT_TM_VAL
+		, BEND_TM_VAL
+		, N1ST_PCK_WGT
+		, N2ND_PCK_WGT
+		, PROD_HR
+		, PROD_DY
+		, PROD_REQ_CAPA_QTY
+		, DELT_FLG
+		, CASE WHEN OPTI_FLG = 'Y' THEN '적용' ELSE '미적용' END OPTI_FLG
+		FROM TB_PROD_EQ
+		WHERE CHNL_CD = #CHNL_CD#
+		<isNotNull property="PROD_EQ_NO" >
             AND PROD_EQ_NO = #PROD_EQ_NO#
         </isNotNull>
         <isNotNull property="EQ_TP_CD" >
             AND EQ_TP_CD = #EQ_TP_CD#
         </isNotNull>
     </select>
+	  
+	<update id="M6641UpdateOpti" parameterClass="ModelsLibrary.Man.ManVo">
+		UPDATE TB_PROD_EQ
+           SET OPTI_FLG = #OPTI_FLG#
+         WHERE 1 = 1 
+           AND CHNL_CD    = #CHNL_CD#
+           AND PROD_EQ_NO = #PROD_EQ_NO#
+	</update>
 
     <insert id="M6641InsertMaster" parameterClass="ModelsLibrary.Man.ManVo">
        INSERT INTO TB_PROD_EQ (

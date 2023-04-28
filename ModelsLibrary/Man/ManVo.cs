@@ -2866,5 +2866,10 @@
             get;
             set;
         }
+        public string OPTI_FLG
+        {
+            get;
+            set;
+        }
     }
 }

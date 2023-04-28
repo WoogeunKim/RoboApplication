@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Media;
 using AquilaErpWpfApp3.Util;
 using AquilaErpWpfApp3.View.M.Dialog;
+using System;
 
 namespace AquilaErpWpfApp3.ViewModel
 {
@@ -49,28 +50,28 @@ namespace AquilaErpWpfApp3.ViewModel
                     if (response.IsSuccessStatusCode)
                     {
                         this.SelectedMasterViewList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
-                    }
 
-                    //SelectedMasterViewList = manClient.M6622SelectMaster(new ManVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD });
-                    if (SelectedMasterViewList.Count > 0)
-                    {
-                        isM_UPDATE = true;
-                        isM_DELETE = true;
-
-                        if (string.IsNullOrEmpty(_PROD_EQ_NO))
+                        //SelectedMasterViewList = manClient.M6622SelectMaster(new ManVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD });
+                        if (SelectedMasterViewList.Count > 0)
                         {
-                            SelectedMasterItem = SelectedMasterViewList[0];
+                            isM_UPDATE = true;
+                            isM_DELETE = true;
+
+                            if (string.IsNullOrEmpty(_PROD_EQ_NO))
+                            {
+                                SelectedMasterItem = SelectedMasterViewList[0];
+                            }
+                            else
+                            {
+                                SelectedMasterItem = SelectedMasterViewList.Where(x => x.PROD_EQ_NO.Equals(_PROD_EQ_NO)).LastOrDefault<ManVo>();
+                            }
                         }
                         else
                         {
-                            SelectedMasterItem = SelectedMasterViewList.Where(x => x.PROD_EQ_NO.Equals(_PROD_EQ_NO)).LastOrDefault<ManVo>();
-                        }
-                    }
-                    else
-                    {
-                        isM_UPDATE = false;
-                        isM_DELETE = false;
+                            isM_UPDATE = false;
+                            isM_DELETE = false;
 
+                        }
                     }
                 }
             }
@@ -248,6 +249,47 @@ namespace AquilaErpWpfApp3.ViewModel
                 return;
             }
         }
+
+        // 최적화적용
+        [Command]
+        public async void OptiContact()
+        {
+            try
+            {
+                if (SelectedMasterItem == null) return;
+
+                // 적용일 때는 => 미적용 'N' ,  미적용일 경우 => 적용 'Y'
+                SelectedMasterItem.OPTI_FLG = SelectedMasterItem.OPTI_FLG.Equals("적용") ? "N" : "Y";
+
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m6641/opti/u", new StringContent(JsonConvert.SerializeObject(this.SelectedMasterItem), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        int _Num = 0;
+                        string result = await response.Content.ReadAsStringAsync();
+                        if (int.TryParse(result, out _Num) == false)
+                        {
+                            //실패
+                            WinUIMessageBox.Show(result, _title, MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        //성공
+                        WinUIMessageBox.Show("적용 되었습니다", _title, MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        Refresh(SelectedMasterItem.PROD_EQ_NO);
+                    }
+                }
+
+            }
+            catch (Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+        }
+
+
         #endregion
 
 

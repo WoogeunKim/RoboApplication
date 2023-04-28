@@ -103,5 +103,23 @@ namespace VisualServerApplication.Controllers.Man
             }
         }
 
+        /// <summary>
+        /// 최적화 적용 - 수정
+        /// </summary>
+        [Route("opti/u")]
+        [HttpPost]
+        // PUT api/<controller>/5
+        public async Task<IHttpActionResult> GetOptiUpdate([FromBody] ManVo vo)
+        {
+            try
+            {
+                return Ok<int>(Properties.EntityMapper.Update("M6641UpdateOpti", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
     }
 }

@@ -144,7 +144,25 @@
                                                 </dxg:GridControl.InputBindings>
 
                                                 <dxg:GridControl.View>
-                                                    <dxg:TableView x:Name="ViewTableMst" FontSize="12" RowMinHeight="35" ShowFixedTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Always" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupPanel="True" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT, Path=EditValue}" />
+                                                    <dxg:TableView x:Name="ViewTableMst" FontSize="12" RowMinHeight="35" ShowFixedTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Always" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupPanel="True" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False" SearchString="{Binding ElementName=M_SEARCH_TEXT, Path=EditValue}">
+                                                        <dxg:TableView.FormatConditions>
+                                                            <dxg:FormatCondition FieldName="OPMZ_NO" Expression="[CLZ_FLG]='Y'" >
+                                                                <dx:Format Background="LightGray" FontWeight="Bold" />
+                                                            </dxg:FormatCondition>
+                                                            <dxg:FormatCondition FieldName="OPMZ_NM" Expression="[CLZ_FLG]='Y'" >
+                                                                <dx:Format Background="LightGray" FontWeight="Bold" />
+                                                            </dxg:FormatCondition>
+                                                            <dxg:FormatCondition FieldName="OPMZ_STS_CD" Expression="[CLZ_FLG]='Y'" >
+                                                                <dx:Format Background="LightGray" FontWeight="Bold" />
+                                                            </dxg:FormatCondition>
+                                                            <dxg:FormatCondition FieldName="OPMZ_LSS_RT" Expression="[CLZ_FLG]='Y'" >
+                                                                <dx:Format Background="LightGray" FontWeight="Bold" />
+                                                            </dxg:FormatCondition>
+                                                            <dxg:FormatCondition FieldName="OPMZ_RMK" Expression="[CLZ_FLG]='Y'" >
+                                                                <dx:Format Background="LightGray" FontWeight="Bold" />
+                                                            </dxg:FormatCondition>
+                                                        </dxg:TableView.FormatConditions>
+                                                    </dxg:TableView>
                                                 </dxg:GridControl.View>
 
                                                 <dxg:GridControl.Columns>

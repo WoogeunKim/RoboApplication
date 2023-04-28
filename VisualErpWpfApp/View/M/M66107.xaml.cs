@@ -14,7 +14,7 @@ namespace AquilaErpWpfApp3.View.M
     /// </summary>
     public partial class M66107 : UserControl
     {
-        private string _title = "거래처별 판가기준표";
+        private string _title = "Loss 최적화 수행";
 
         public M66107()
         {
