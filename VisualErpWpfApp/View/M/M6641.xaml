@@ -146,7 +146,7 @@
                                             </dxg:GridColumn>
 
 
-                                            <dxg:GridColumn FieldName="OPTI_FLG" Header="최적화 적용" Width="70" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" >
+                                            <dxg:GridColumn FieldName="OPTI_FLG" Header="최적화 적용" Width="90" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" >
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                                 </dxg:GridColumn.EditSettings>

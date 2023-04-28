@@ -8,7 +8,7 @@
     xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
                   xmlns:local="clr-namespace:AquilaErpWpfApp3.Utillity"
    Icon="pack://application:,,,/AquilaErpWpfApp3;component/Images/logo1_128.ico" 
-    Title="Aquila ERP" Height="700" Width="1100" WindowState="Maximized" SnapsToDevicePixels="True" UseLayoutRounding="True" FontFamily="Arial" FontSize="12">
+    Title="AToZ ERP" Height="700" Width="1100" WindowState="Maximized" SnapsToDevicePixels="True" UseLayoutRounding="True" FontFamily="Arial" FontSize="12">
     
     <!--<dxr:DXRibbonWindow.Resources>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">

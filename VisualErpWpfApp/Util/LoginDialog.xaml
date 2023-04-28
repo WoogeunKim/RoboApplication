@@ -4,7 +4,7 @@
     xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
     TextElement.FontWeight="Regular" TextElement.FontSize="13" TextOptions.TextFormattingMode="Ideal" TextOptions.TextRenderingMode="Auto" Background="LightGray" 
-    Title="Aquila ERP" Height="490" Width="350" WindowStyle="None" FontFamily="Arial" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"  AllowsTransparency="True" WindowState="Normal" Topmost="True" BorderThickness="0" >
+    Title="AToZ ERP" Height="490" Width="350" WindowStyle="None" FontFamily="Arial" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"  AllowsTransparency="True" WindowState="Normal" Topmost="True" BorderThickness="0" >
 
     <!--<Window.Resources>
         <ResourceDictionary>

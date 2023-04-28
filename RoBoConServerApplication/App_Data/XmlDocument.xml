@@ -2380,6 +2380,11 @@
             설비 관리 - 삭제
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M6641Controller.GetOptiUpdate(ModelsLibrary.Man.ManVo)">
+            <summary>
+            최적화 적용 - 수정
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Man.M66521Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
             <summary>
             충전 일일생산 계획 MST  - 조회
