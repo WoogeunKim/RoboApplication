@@ -101,6 +101,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 {
                     // Z1 : 전체설비 기준 최적화 지시 정보 조회
                     case "Z1":
+                        dtlObj.EQ_MDL_NM = "";
                         break;
 
                     // Z2 : 설비미정 기준 최적화 지시 정보 조회

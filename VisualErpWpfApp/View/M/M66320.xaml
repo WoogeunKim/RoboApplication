@@ -426,9 +426,15 @@
                                 </dxg:GridControl.View>
 
                                 <dxg:GridControl.Columns>
-                                    <dxg:GridColumn FieldName="RN" Header="순번" Width="50" HorizontalHeaderContentAlignment="Center" VisibleIndex="1">
+                                    <dxg:GridColumn FieldName="RN" Header="순번" Width="40" HorizontalHeaderContentAlignment="Center" VisibleIndex="1">
                                         <dxg:GridColumn.EditSettings>
                                             <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,##0" MaskUseAsDisplayFormat="True"/>
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
+
+                                    <dxg:GridColumn FieldName="OPMZ_NO" Header="OPMZ.NO" Width="90" HorizontalHeaderContentAlignment="Center" VisibleIndex="2">
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                         </dxg:GridColumn.EditSettings>
                                     </dxg:GridColumn>
 
@@ -945,9 +951,14 @@
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="RN" Header="순번" Width="50" HorizontalHeaderContentAlignment="Center" VisibleIndex="1">
+                                <dxg:GridColumn FieldName="RN" Header="순번" Width="40" HorizontalHeaderContentAlignment="Center" VisibleIndex="1">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,##0" MaskUseAsDisplayFormat="True"/>
+                                    </dxg:GridColumn.EditSettings>
+                                </dxg:GridColumn>
+                                <dxg:GridColumn FieldName="OPMZ_NO" Header="OPMZ.NO" Width="90" HorizontalHeaderContentAlignment="Center" VisibleIndex="2">
+                                    <dxg:GridColumn.EditSettings>
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
