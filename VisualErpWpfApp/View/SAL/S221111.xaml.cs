@@ -15,7 +15,12 @@ namespace AquilaErpWpfApp3.View.SAL
             DataContext = new S221111ViewModel();
             //
             InitializeComponent();
+            this.ViewGridDtl.MouseLeftButtonUp += VeiwGridDtl_MouseLeftButtonUp;
+        }
 
+        private void VeiwGridDtl_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            this.ViewGridDtl.RefreshData();
         }
 
         private void CheckEdit_Checked(object sender, RoutedEventArgs e)

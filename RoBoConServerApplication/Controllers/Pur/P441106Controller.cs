@@ -150,10 +150,6 @@ namespace VisualServerApplication.Controllers.Pur
         }
 
 
-
-
-
-
         /// <summary>
         /// 고객사발주등록 DTL - 추가(도면등록)
         /// </summary>
@@ -280,6 +276,24 @@ namespace VisualServerApplication.Controllers.Pur
             }
         }
 
+
+        /// <summary>
+        /// 고객사발주등록 DTL - 수정
+        /// </summary>
+        [Route("dtl/u")]
+        [HttpPost]
+        // PUT api/<controller>/5
+        public async Task<IHttpActionResult> GetDtlUpdate([FromBody] PurVo vo)
+        {
+            try
+            {
+                return Ok<int>(Properties.EntityMapper.Update("P441106UpdateDtl", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
 
     }
 }

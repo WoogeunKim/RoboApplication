@@ -3276,7 +3276,7 @@
      <!-- 고객사발주관리 DTL - 도면조회-->
      <select id="P441106SelectDtlList" parameterClass="ModelsLibrary.Pur.PurVo" resultClass="ModelsLibrary.Pur.PurVo">
         SELECT  
-		      CONVERT(INT, ROW_NUMBER() OVER (PARTITION BY  T1.PUR_NO ORDER BY  T1.PUR_SEQ  )) AS RN
+		      CONVERT(INT, ROW_NUMBER() OVER (PARTITION BY  T1.CRE_USR_ID ORDER BY  T1.PUR_SEQ  )) AS RN
 			, T1.CHNL_CD
             , T1.PUR_NO
             , T1.PUR_SEQ
@@ -3289,12 +3289,16 @@
             , T1.PUR_WGT
             , T1.FLR_FILE
             , T1.CRE_USR_ID
-            , CONVERT(NVARCHAR, T1.UPD_DT, 23) AS UPD_DT
+			, dbo.USR_NM_FNC(T1.CHNL_CD , T1.CRE_USR_ID) AS CRE_USR_NM
+			, CONVERT(NVARCHAR, T1.CRE_DT, 20) AS CRE_DT
+            , CONVERT(NVARCHAR, T1.UPD_DT, 20) AS UPD_DT
             , T1.UPD_USR_ID
+			, dbo.USR_NM_FNC(T1.CHNL_CD , T1.UPD_USR_ID) AS UPD_USR_NM
             , CONVERT(NVARCHAR, T1.IN_REQ_DT, 23) AS IN_REQ_DT
             , T1.FLR_FILE_ID
-            , T1.PRG_TP_CD
+            , T1.PRG_TP_CD 
             , T2.PRG_TP_NM
+			, (SELECT Y.PRNT_GRP_ID FROM TB_SYS_USR X, TB_SYS_GRP Y WHERE 1=1 AND X.CHNL_CD = #CHNL_CD# AND X.CHNL_CD = Y.CHNL_CD AND X.GRP_ID = Y.GRP_ID AND T1.CRE_USR_ID = X.USR_ID) AS N1ST_RVW_USR_ID
          FROM TB_CUST_PUR_DTL  T1
              OUTER APPLY (
                 SELECT X.CLSS_DESC AS PRG_TP_NM
@@ -3307,6 +3311,9 @@
          WHERE 1 = 1
            AND T1.CHNL_CD = #CHNL_CD#
            AND T1.PUR_NO  = #PUR_NO#
+		<isNotEqual property="OSTR_FLG" compareValue="Y">
+			AND T1.CRE_USR_ID = #CRE_USR_ID#
+		</isNotEqual>
      </select>
 
 
@@ -3328,8 +3335,8 @@
            , FLR_FILE
            , CRE_USR_ID
            , CRE_DT
-           , UPD_USR_ID
-           , UPD_DT
+           <!--, UPD_USR_ID-->
+           <!--, UPD_DT-->
            , IN_REQ_DT
            , FLR_FILE_ID
 		   , PRG_TP_CD
@@ -3349,8 +3356,8 @@
            , #FLR_FILE#
            , #CRE_USR_ID#
            , GETDATE()
-           , #UPD_USR_ID#
-           , GETDATE()
+           <!--, #UPD_USR_ID#-->
+           <!--, GETDATE()-->
            , #IN_REQ_DT#
            , #FLR_FILE_ID#
 		   , #PRG_TP_CD#
@@ -3778,8 +3785,18 @@
 		  <isNotNull property="PUR_ORD_SEQ">
 		     AND PUR_ORD_SEQ   = #PUR_ORD_SEQ#
 		  </isNotNull>
-	  </delete>
-    
-
+	  </delete>  
+	  
+	  
+    <update id="P441106UpdateDtl" parameterClass="ModelsLibrary.Pur.PurVo">
+      UPDATE TB_CUST_PUR_DTL
+		 SET UPD_USR_ID  = #UPD_USR_ID#
+			     UPD_DT  = GETDATE()
+	   WHERE 1 = 1
+	     AND CHNL_CD   = #CHNL_CD#
+	     AND PUR_NO    = #PUR_NO#
+	     AND PUR_SEQ   = #PUR_SEQ#
+    </update>
+	  
   </statements>
 </sqlMap>

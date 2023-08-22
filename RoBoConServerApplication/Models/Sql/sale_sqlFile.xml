@@ -7426,6 +7426,506 @@
             AND T1.SL_RLSE_NO   = T2.SL_RLSE_NO
             AND T2.RLSE_CMD_NO  = #RLSE_CMD_NO#
 	  </select>
+	  
+	  
+<!--##주문별 생산공장/GR확정##-->		  
+	  <select id="S22227LeftTopMstSelect" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+        SELECT T1.SL_CO_CD
+             , T2.CUST_PUR_NO
+             , T3.CO_NM
+          FROM TB_SL_RLSE       T1
+             , TB_SL_RLSE_DTL   T2
+             , TB_CD_CO         T3
+         WHERE 1= 1
+           AND T1.CHNL_CD     = #CHNL_CD#
+           AND T1.CHNL_CD     = T2.CHNL_CD
+           AND T1.SL_RLSE_NO  = T2.SL_RLSE_NO
+           AND T1.SL_CO_CD    = T3.CO_NO
+           AND T1.SL_RLSE_DT  >= CAST(#FM_DT# + ' 00:00:00' AS DATETIME)
+           AND T1.SL_RLSE_DT  <![CDATA[<=]]> CAST(#TO_DT# + ' 23:59:59' AS DATETIME)
+        GROUP BY T1.SL_CO_CD
+               , T2.CUST_PUR_NO   
+               , T3.CO_NM
+	  </select>	  
+	  
+	  <select id="S22227RightTopDtlSelect" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+        SELECT  CONVERT(VARCHAR, T1.IN_REQ_DT, 23) AS IN_REQ_DT
+              , T1.DE_CO_NM AS GBN
+              , T2.CNTR_NM
+              , T2.CNTR_PSN_NM
+              , T1.FLR_NO
+              , ISNULL(T2.OK_Y_WGT, 0)        AS OK_Y_WGT
+              , ISNULL(T2.OK_N_WGT, 0)        AS OK_N_WGT
+              , ISNULL(T2.TOT_WGT, 0)         AS OK_WGT
+              , CONVERT(VARCHAR, T1.UPD_DT, 23) AS DUE_DT
+              , T1.PUR_NO
+              , T1.PUR_SEQ
+          FROM TB_CUST_PUR_DTL    T1
+         OUTER APPLY ( 
+            SELECT X.CNTR_NM
+                 , X.CNTR_PSN_NM
+                 , ISNULL(SUM(CASE WHEN X.OK_FLG = 'Y' THEN X.SL_ITM_WGT END), 0) AS OK_Y_WGT
+                 , ISNULL(SUM(CASE WHEN X.OK_FLG = 'N' THEN X.SL_ITM_WGT END), 0) AS OK_N_WGT
+                 , ISNULL(SUM(X.SL_ITM_WGT), 0) AS TOT_WGT
+              FROM (
+               SELECT 'Y'   AS OK_FLG
+                    , X.CNTR_NM
+                    , X.CNTR_PSN_NM
+                    , X.SL_ITM_WGT            
+                 FROM TB_SL_RLSE_DTL  X
+                WHERE 1= 1
+                  AND X.CHNL_CD        = #CHNL_CD#
+                  AND X.CUST_PUR_NO    = T1.PUR_NO
+                  AND X.CUST_PUR_SEQ   = T1.PUR_SEQ   
+                  AND X.OK_FLG         = 'Y'
+              UNION ALL          
+               SELECT 'N'   AS OK_FLG
+                    , X.CNTR_NM
+                    , X.CNTR_PSN_NM
+                    , X.SL_ITM_WGT
+                 FROM TB_SL_RLSE_DTL  X
+                WHERE 1= 1
+                  AND X.CHNL_CD        = #CHNL_CD#
+                  AND X.CUST_PUR_NO    = T1.PUR_NO
+                  AND X.CUST_PUR_SEQ   = T1.PUR_SEQ   
+                  AND X.OK_FLG         = 'N'
+                  ) X
+            GROUP BY X.CNTR_NM
+                   , X.CNTR_PSN_NM          
+              ) T2
+          WHERE 1 = 1
+            AND T1.PUR_NO = #CUST_PUR_NO#
+	  </select>	  
 
+	  <select id="S22227LeftBottomDtlSelect" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+	  SELECT  T2.RLSE_CMD_NO    
+            , T2.LOC_CD
+			, T2.CUST_PUR_NO
+        FROM TB_SL_RLSE       T1
+           , TB_SL_RLSE_DTL   T2
+       WHERE 1 = 1
+         AND T1.CHNL_CD       = #CHNL_CD#
+         AND T1.CHNL_CD       = T2.CHNL_CD
+         AND T2.OK_FLG        = 'Y'              
+         AND T2.RLSE_CMD_NO   IS NOT NULL      
+         AND T2.CUST_PUR_NO   = #CUST_PUR_NO# 
+         AND NOT EXISTS (SELECT 'X'
+                           FROM TB_SL_RLSE_GR_INFO X
+                          WHERE 1 = 1
+                            AND X.GR_NO = T2.RLSE_CMD_NO)
+       GROUP BY T2.RLSE_CMD_NO
+              , T2.LOC_CD
+              , T2.SL_RLSE_NO
+			  , T2.CUST_PUR_NO
+	  </select>
+	  
+	  <select id="S22227RightBottomDtlSelect" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+		   SELECT  'N' AS CHK_FLG
+		          , T1.FLR_NO
+		          , T2.RLSE_CMD_NO
+		          , T2.CNTR_NM
+		          , T2.CNTR_PSN_NM
+		          , T2.SL_ITM_CD
+		          , T2.ITM_SHP_CD
+		          , T2.ITM_STL_CD
+		          , T2.ITM_STL_SZ_CD
+		          , T2.SL_ITM_QTY
+		          , T2.SL_ITM_WGT
+		          , T2.LOC_CD
+		          , T2.SL_RLSE_NO
+		          , T2.SL_RLSE_SEQ
+		          , T1.PUR_NO
+		  FROM  TB_CUST_PUR_DTL   T1
+		      , TB_SL_RLSE_DTL    T2
+		  WHERE 1=1
+		   AND T1.CHNL_CD     = #CHNL_CD#
+		   AND T1.CHNL_CD     = T2.CHNL_CD
+		   AND T1.PUR_NO      = T2.CUST_PUR_NO
+		   AND T1.PUR_SEQ     = T2.CUST_PUR_SEQ
+		   AND T1.PUR_NO      = #PUR_NO#
+		   AND T2.OK_FLG      = #OK_FLG#
+		  <isNotNull property="A_PUR_NO">
+			  <iterate property="A_PUR_NO" prepend=" AND (T1.PUR_NO + '_' + T2.CNTR_NM + '_' + T2.CNTR_PSN_NM) IN " open = "(" close=")" conjunction=",">
+				  #A_PUR_NO[]#
+			  </iterate>
+		   </isNotNull>
+	  </select>	  
+	  
+	  <!--확정된 GRList조회-->
+	  <select id="S22227GrListDtlSelect" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+       SELECT  'N' AS CHK_FLG
+              , T1.FLR_NO
+              , T2.RLSE_CMD_NO
+              , T2.CNTR_NM
+              , T2.CNTR_PSN_NM
+              , T2.SL_ITM_CD
+              , T2.ITM_SHP_CD
+              , T2.ITM_STL_CD
+              , T2.ITM_STL_SZ_CD
+              , T2.SL_ITM_QTY
+              , T2.SL_ITM_WGT
+              , T2.LOC_CD
+              , T2.SL_RLSE_NO
+              , T2.SL_RLSE_SEQ
+              , T1.PUR_NO
+        FROM   TB_CUST_PUR_DTL   T1
+             , TB_SL_RLSE_DTL    T2
+        WHERE 1=1
+         AND T1.CHNL_CD     = #CHNL_CD#
+         AND T1.CHNL_CD     = T2.CHNL_CD
+         AND T1.PUR_NO      = T2.CUST_PUR_NO
+         AND T1.PUR_SEQ     = T2.CUST_PUR_SEQ
+         AND T1.PUR_NO      = #CUST_PUR_NO#
+         AND T2.OK_FLG      = #OK_FLG#
+		 AND T2.RLSE_CMD_NO = #RLSE_CMD_NO#
+	  </select>	  
+	  
+<!--GR번호 신규 부여 함수-->
+      <select id="S22227SelectGRNo" resultClass="string">
+          SELECT dbo.FF_ROBO_GR_CRT()
+      </select>
+  
+	  
+    <update id="S22227UpdateGRApply" parameterClass="ModelsLibrary.Sale.SaleVo">
+	  UPDATE TB_SL_RLSE_DTL   
+         SET OK_FLG         = 'Y'
+           , RLSE_CMD_NO    = #RLSE_CMD_NO#
+           , LOC_CD         = #LOC_CD#
+      WHERE 1 = 1
+       AND CHNL_CD     = #CHNL_CD#
+       AND SL_RLSE_NO  = #SL_RLSE_NO# 
+       AND SL_RLSE_SEQ = #SL_RLSE_SEQ#
+    </update> 
+	  
+<!--LOC창고 콤보박스조회-->
+    <select id="S22227SelectLocList" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+       WITH TMP AS (
+            SELECT T2.LOC_CD
+                 , MAX(T2.LOC_CD) AS MAX_LOC_CD
+              FROM TB_SL_RLSE       T1
+                 , TB_SL_RLSE_DTL   T2
+             WHERE 1 = 1
+               AND T1.CHNL_CD       = #CHNL_CD#
+               AND T1.CHNL_CD       = T2.CHNL_CD
+               AND T2.OK_FLG        = 'Y'     
+               AND T2.RLSE_CMD_NO   IS NOT NULL 
+               AND T2.LOC_CD        IS NOT NULL
+               AND NOT EXISTS (SELECT 'X'
+                                 FROM TB_SL_RLSE_GR_INFO X
+                                WHERE 1 = 1
+                                  AND X.GR_NO = T2.RLSE_CMD_NO)
+            GROUP BY  T2.LOC_CD
+            ), LOC_INFO AS (
+            SELECT LOC_CD
+                 , LOC_NM
+              FROM (
+                    SELECT CLSS_CD      AS LOC_CD
+                         , CLSS_DESC    AS LOC_NM
+                      FROM TB_SYS_CLSS_CD  T1
+                     WHERE 1 = 1
+                      AND CHNL_CD     = #CHNL_CD#
+                      AND CLSS_TP_CD  = 'C-008'
+                      AND USE_ST_DT  <![CDATA[<=]]> GETDATE()
+                      AND USE_END_DT >= GETDATE()
+                      AND DELT_FLG    = 'N'
+                 ) T1
+          )
+            SELECT LOC_CD
+                 , '우선 창고 권장 > ' + LOC_NM AS LOC_NM
+              FROM (
+                      SELECT T1.LOC_CD
+                           , T1.LOC_NM
+                           , ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.LOC_CD) AS RN 
+                        FROM LOC_INFO   T1
+             LEFT OUTER JOIN  TMP        T2
+                      ON ( 1 = 1  
+                       AND T1.LOC_CD > T2.MAX_LOC_CD 
+                         )
+                   ) T1
+             WHERE 1  = 1
+               AND RN = 1
+             UNION ALL
+             SELECT T1.LOC_CD
+                   , T1.LOC_NM       
+               FROM LOC_INFO   T1
+              WHERE 1 = 1
+                AND NOT EXISTS (
+                                SELECT 'X'
+                                  FROM TMP X 
+                                WHERE 1 = 1
+                                  AND X.LOC_CD = T1.LOC_CD 
+                                )
+            GROUP BY T1.LOC_CD
+                   , T1.LOC_NM   
+    </select>	  
+	  
+	  
+    <update id="S22227UpdateLoc" parameterClass="ModelsLibrary.Sale.SaleVo">
+    UPDATE TB_SL_RLSE_DTL
+       SET LOC_CD = #LOC_CD# 
+      WHERE 1 = 1
+        AND RLSE_CMD_NO = #RLSE_CMD_NO#
+		AND CHNL_CD     = #CHNL_CD#
+    </update> 
+ 
+<!--GR번호 삭제 버튼-->
+    <update id="S22227UpdateGR_RollBack" parameterClass="ModelsLibrary.Sale.SaleVo">
+	UPDATE TB_SL_RLSE_DTL
+		SET OK_FLG         = 'N'
+		  , RLSE_CMD_NO    = NULL
+		  , LOC_CD         = NULL
+	 	WHERE 1 = 1
+		 AND CHNL_CD     = #CHNL_CD#
+		 AND RLSE_CMD_NO = #RLSE_CMD_NO#
+	</update>	  
+
+<!--LOC번호 삭제 버튼-->
+    <update id="S22227UpdateLoc_RollBack" parameterClass="ModelsLibrary.Sale.SaleVo">
+    UPDATE TB_SL_RLSE_DTL   
+       SET LOC_CD     = NULL
+      WHERE 1 = 1
+      AND CHNL_CD     = #CHNL_CD#
+      AND RLSE_CMD_NO = #RLSE_CMD_NO#
+    </update>
+	  
+
+<!--출하등록-->
+	<select id="S221111SelectMst" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+    SELECT T1.CHNL_CD
+         , T1.SL_BIL_NO
+         , T1.SL_AREA_CD
+		 , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-002', T1.SL_AREA_CD) AS SL_AREA_NM
+         , T1.SL_CO_CD
+		 , dbo.CD_COMPANY_NM_FNC(T1.CHNL_CD, T1.SL_CO_CD) AS SL_CO_NM
+         , T1.CAR_NO
+         , CONVERT(VARCHAR, T1.SL_BIL_DT, 23) AS SL_BIL_DT
+         , T1.SL_BIL_RMK
+         , T1.CRE_USR_ID
+         , T1.MV_CAR_AMT
+         , T1.CRE_DT
+         , T1.UPD_USR_ID
+         , T1.UPD_DT
+         , T2.HDQTR_PHN_NO
+         , T2.HDQTR_ADDR
+		 , T2.HDQTR_FAX_NO
+      FROM TB_SL_BIL T1
+        OUTER APPLY (
+                SELECT * FROM TB_CD_CO
+                WHERE 1=1
+                AND CHNL_CD = #CHNL_CD#
+                AND CO_NO = T1.SL_CO_CD 
+                ) T2
+      WHERE 1=1
+       AND T1.CHNL_CD = #CHNL_CD#
+	   AND T1.SL_BIL_DT >= CAST(CONVERT(VARCHAR, #FM_DT#, 112) + ' 00:00:00' AS DATETIME)
+       AND T1.SL_BIL_DT <![CDATA[<=]]> CAST(CONVERT(VARCHAR, #TO_DT#, 112) + ' 23:59:59' AS DATETIME)
+    </select>	
+	  
+ <!-- 운송장번호 생성 -->
+    <select id="S221111SelectSLBILNo" resultClass="string">
+      SELECT dbo.FF_NO_FMT(#CHNL_CD#, 'ARTAX', '001') 
+    </select>
+	  
+	  
+	<insert id="S221111InsertMst" parameterClass="ModelsLibrary.Sale.SaleVo">
+      INSERT INTO TB_SL_BIL
+     (
+        SL_BIL_NO
+      , SL_AREA_CD
+      , SL_CO_CD
+      , CAR_NO
+      , SL_BIL_DT
+      , SL_BIL_RMK
+      , MV_CAR_AMT
+      , CRE_USR_ID
+      , CRE_DT
+      , UPD_USR_ID
+      , UPD_DT
+      , CHNL_CD
+     )
+    VALUES
+    (  
+        #SL_BIL_NO#
+      , #SL_AREA_CD#
+      , #SL_CO_CD#
+      , #CAR_NO#
+      , #SL_BIL_DT#
+      , #SL_BIL_RMK#
+      , #MV_CAR_AMT#
+      , #CRE_USR_ID#
+      , GETDATE()
+      , #UPD_USR_ID#
+      , GETDATE()
+      , #CHNL_CD#
+     )
+    </insert>
+	  
+	  <!--운송장번호 업데이트-->
+	<update id="S221111UpdateSLBILNo" parameterClass="ModelsLibrary.Sale.SaleVo">
+    UPDATE TB_SYS_NO_FMT
+       SET LST_FMT_NO = #SL_BIL_NO#
+     WHERE 1 = 1 
+       AND CHNL_CD  = #CHNL_CD#
+       AND TBL_ID   = 'ARTAX'
+       AND AREA_CD  = '001'
+    </update>	  
+	  
+	<update id="S221111UpdateMst" parameterClass="ModelsLibrary.Sale.SaleVo">
+      UPDATE TB_SL_BIL
+         SET   
+              SL_AREA_CD = #SL_AREA_CD#
+            , SL_CO_CD   = #SL_CO_CD# 
+            , CAR_NO     = #CAR_NO#
+            , SL_BIL_DT  = #SL_BIL_DT#
+            , SL_BIL_RMK = #SL_BIL_RMK#
+            , MV_CAR_AMT = #MV_CAR_AMT#
+            , UPD_USR_ID = #UPD_USR_ID#
+            , UPD_DT     = GETDATE()
+            , CHNL_CD    = #CHNL_CD#
+         WHERE 1=1
+          AND CHNL_CD = #CHNL_CD#
+          AND SL_BIL_NO = #SL_BIL_NO#
+    </update>
+	  
+    <delete id="S221111DeleteMst" parameterClass="ModelsLibrary.Sale.SaleVo">
+      DELETE FROM TB_SL_BIL
+         WHERE 1=1
+         AND CHNL_CD   = #CHNL_CD#
+         AND SL_BIL_NO = #SL_BIL_NO#
+    </delete>	  
+	  
+	<select id="S221111SelectDtlPopupList" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">  
+        SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.LOT_DIV_NO) AS RN
+		     , T1.LOT_DIV_NO
+             , T1.LOT_DIV_SEQ
+             , T1.SL_RLSE_NO
+             , T1.SL_RLSE_SEQ
+             , T5.CO_NM
+             , T2.RLSE_CMD_NO
+             , T2.CNTR_NM
+             , CONVERT(VARCHAR, T2.IN_REQ_DT, 23) AS IN_REQ_DT
+             , T2.CNTR_PSN_NM
+             , T2.ITM_SHP_CD
+             , T2.ITM_STL_CD
+             , T2.ITM_STL_SZ_CD
+             , T2.ITM_STL_LENG
+             , T2.SL_ITM_WGT
+             , T2.SL_ITM_QTY
+             , T1.PROD_GD_QTY     
+             , T2.LOC_CD
+           FROM TB_RBK_MORD      T1
+              , TB_SL_RLSE_DTL   T2   
+              , TB_SL_RLSE       T4
+              , TB_CD_CO         T5
+        WHERE 1 = 1
+         AND T1.SL_RLSE_NO   = T2.SL_RLSE_NO
+         AND T1.SL_RLSE_SEQ  = T2.SL_RLSE_SEQ
+         AND T2.SL_RLSE_NO   = T4.SL_RLSE_NO 
+         AND T2.CHNL_CD      = T4.CHNL_CD
+         AND T2.CHNL_CD      = T5.CHNL_CD
+         AND T2.CHNL_CD     = #CHNL_CD#
+         AND T1.PROD_GD_QTY > 0 
+         AND T4.CLZ_FLG       = 'N'
+         AND T4.SL_CO_CD      = T5.CO_NO
+         AND NOT EXISTS (SELECT 'X'
+                           FROM TB_SL_BIL_DTL X
+                          WHERE 1 = 1
+                            AND X.PUR_NO  = T1.LOT_DIV_NO
+                            AND X.PUR_SEQ = T1.LOT_DIV_SEQ
+                         )
+    </select>	
+	  
+	<insert id="S221111InsertDtl" parameterClass="ModelsLibrary.Sale.SaleVo">
+    INSERT INTO TB_SL_BIL_DTL
+    (     
+          CHNL_CD
+        , SL_BIL_NO
+        , SL_BIL_SEQ
+        , SL_ITM_CD
+        , SL_ITM_QTY
+        , SL_ITM_PRC_VAL
+        , SL_ITM_AMT
+        , SL_ITM_TAX_AMT
+        , SL_ITM_RMK
+        , CRE_USR_ID
+        , CRE_DT
+        , UPD_USR_ID
+        , UPD_DT
+        , SL_RLSE_NO
+        , SL_RLSE_SEQ
+        , RLSE_CMD_NO 
+		, PUR_NO
+		, PUR_SEQ
+    )
+    VALUES
+    (
+         #CHNL_CD#
+       , #SL_BIL_NO#
+       , (SELECT ISNULL(MAX(SL_BIL_SEQ), 0) + 1 FROM TB_SL_BIL_DTL WHERE 1=1 AND CHNL_CD = #CHNL_CD# AND SL_BIL_NO = #SL_BIL_NO#) 
+       , #SL_ITM_CD#
+       , #SL_ITM_QTY#
+       , #SL_ITM_PRC_VAL#
+       , #SL_ITM_AMT#
+       , #SL_ITM_TAX_AMT#
+       , #SL_ITM_RMK#
+       , #CRE_USR_ID#
+       , GETDATE()
+       , #UPD_USR_ID#
+       , GETDATE()
+       , #SL_RLSE_NO#
+       , #SL_RLSE_SEQ#
+       , #RLSE_CMD_NO# 
+	   , #LOT_DIV_NO#
+	   , #LOT_DIV_SEQ#
+    )
+    </insert>	  
+
+	<delete id="S221111DeleteDtl" parameterClass="ModelsLibrary.Sale.SaleVo">
+       DELETE FROM TB_SL_BIL_DTL
+        WHERE 1=1
+         AND CHNL_CD    = #CHNL_CD#
+         AND SL_BIL_NO  = #SL_BIL_NO#
+		 AND SL_BIL_SEQ = #SL_BIL_SEQ#
+    </delete>	 
+	  
+	<select id="S221111SelectDtl" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">  
+       SELECT  ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T2.SL_BIL_NO) AS RN 
+	         , T2.SL_BIL_NO
+	         , T2.SL_BIL_SEQ
+             , T1.SL_CO_CD
+             , T4.CO_NM                         
+             , T2.SL_RLSE_NO
+             , T2.SL_RLSE_SEQ
+             , T3.SL_ITM_CD
+             , T3.RLSE_CMD_NO
+             , T3.CNTR_NM      
+             , CONVERT(VARCHAR, T3.IN_REQ_DT, 23) AS IN_REQ_DT      
+             , T3.CNTR_PSN_NM  
+             , T3.ITM_SHP_CD   
+             , T3.ITM_STL_CD  
+             , T3.ITM_STL_SZ_CD  
+             , T3.ITM_STL_LENG   
+             , T3.SL_ITM_WGT     
+             , T3.SL_ITM_QTY 
+             , T3.LOC_CD 
+             , T2.SL_ITM_AMT
+             , T2.SL_ITM_TAX_AMT
+             , T2.SL_ITM_RMK
+         FROM TB_SL_BIL       T1
+            , TB_SL_BIL_DTL   T2
+            , TB_SL_RLSE_DTL  T3
+            , TB_CD_CO        T4
+     WHERE 1 = 1
+       AND T1.CHNL_CD     = T2.CHNL_CD     
+       AND T1.CHNL_CD     = T3.CHNL_CD     
+       AND T1.CHNL_CD     = T4.CHNL_CD     
+       AND T1.SL_BIL_NO   = T2.SL_BIL_NO
+       AND T2.SL_RLSE_NO  = T3.SL_RLSE_NO
+       AND T2.SL_RLSE_SEQ = T3.SL_RLSE_SEQ
+       AND T1.SL_CO_CD    = T4.CO_NO
+       AND T2.SL_BIL_NO   = #SL_BIL_NO#
+       AND T2.CHNL_CD     = #CHNL_CD#
+    </select>	  
+	   
   </statements>
 </sqlMap>

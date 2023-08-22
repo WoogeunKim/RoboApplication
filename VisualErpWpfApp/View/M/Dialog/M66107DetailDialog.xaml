@@ -165,11 +165,11 @@
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn FieldName="CNTR_DE_NM" Header="납품지역" Width="100" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="15" >
+            <!--<dxg:GridColumn FieldName="CNTR_DE_NM" Header="납품지역" Width="100" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="15" >
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 </dxg:GridColumn.EditSettings>
-            </dxg:GridColumn>
+            </dxg:GridColumn>-->
 
             <dxg:GridColumn FieldName="SL_RLSE_NO" Header="수주번호" Width="124" AllowEditing="False" AllowColumnFiltering="True" FilterPopupMode="CheckedList" AllowMoving="False"  HorizontalHeaderContentAlignment="Center" AllowResizing="True" VisibleIndex="16" >
                 <dxg:GridColumn.EditSettings>
@@ -288,13 +288,14 @@
                     </dxg:LookUpEdit.StyleSettings>
                 </dxg:LookUpEdit>
 
-                <TextBlock Height="20"  VerticalAlignment="Center"  Grid.Column="2" Text="공사부위 : " HorizontalAlignment="Right" TextAlignment="Right" FontSize="15" Foreground="White" />
-                <dxe:TextEdit x:Name="text_CNTR_PSN_NM" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="3" MaxLength="90" Height="40" FontSize="15" />
+
+                <dxwui:AppBarButton x:Name="Refresh"  Label="조회" ToolTip="조회"  HorizontalAlignment="Left" AllowGlyphTheming="True" Grid.Column="2">
+                    <Image Width="25" Height="25" Source="{dx:DXImageGrayscale Image=Find_32x32.png}" Stretch="Fill"/>
+                </dxwui:AppBarButton>
+                <!--<TextBlock Height="20"  VerticalAlignment="Center"  Grid.Column="2" Text="공사부위 : " HorizontalAlignment="Right" TextAlignment="Right" FontSize="15" Foreground="White" />
+                <dxe:TextEdit x:Name="text_CNTR_PSN_NM" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="3" MaxLength="90" Height="40" FontSize="15" />-->
             </Grid>
 
-            <dxwui:AppBarButton x:Name="Refresh"  Label="조회" ToolTip="조회"  HorizontalAlignment="Left" AllowGlyphTheming="True" >
-                <Image Width="25" Height="25" Source="{dx:DXImageGrayscale Image=Find_32x32.png}" Stretch="Fill"/>
-            </dxwui:AppBarButton>
 
             <dxwui:AppBarSeparator HorizontalContentAlignment="Left" HorizontalAlignment="Left"/>
 

@@ -51,7 +51,7 @@ namespace AquilaErpWpfApp3.View.M.Dialog
             ManVo vo = new ManVo();
 
             //vo.CNTR_PSN_NM = getRemoveWhiteSpaces(this.text_CNTR_PSN_NM.Text);
-            vo.CNTR_PSN_NM = (this.text_CNTR_PSN_NM.Text).Trim();
+            //vo.CNTR_PSN_NM = (this.text_CNTR_PSN_NM.Text).Trim();
             if (vo.CNTR_PSN_NM == "") vo.CNTR_PSN_NM = null;
 
             SystemCodeVo CO_NM = this.combo_CO_NM.SelectedItem as SystemCodeVo;

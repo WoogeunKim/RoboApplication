@@ -21,12 +21,15 @@ namespace AquilaErpWpfApp3.View.S.Dialog
         //private static AuthorServiceClient authClient = SystemProperties.AuthClient;
         private bool isEdit = false;
         private string GRP_ID = string.Empty;
+        private GroupUserVo orgdao;
 
         private GroupUserVo updateDao;
 
         public S136GroupDialog(GroupUserVo Dao)
         {
             InitializeComponent();
+
+            this.orgdao = Dao;
 
             GROUP_VO();
             //this.combo_PRNT_GRP_NM.ItemsSource = GROUP_VO();
@@ -36,11 +39,26 @@ namespace AquilaErpWpfApp3.View.S.Dialog
             {
                 this.isEdit = true;
                 this.GRP_ID = Dao.GRP_ID;
+                if (Dao.OSTR_FLG != null)
+                {
+                    if (Dao.OSTR_FLG.Equals("Y"))
+                    {
+                        this.check_OSTR_FLG.IsChecked = true;
+                    }
+                }
             }
             else
             {
                 //추가
                 this.isEdit = false;
+
+                if (Dao.OSTR_FLG != null)
+                {
+                    if (Dao.OSTR_FLG.Equals("N"))
+                    {
+                        this.check_OSTR_FLG.IsChecked = false;
+                    }
+                }
             }
             this.configCode.DataContext = Dao;
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
@@ -198,6 +216,19 @@ namespace AquilaErpWpfApp3.View.S.Dialog
             {
                 Dao.GRP_ID = this.GRP_ID;
             }
+
+            //고객사 체크
+            if (this.check_OSTR_FLG.IsChecked == true)
+            {
+                Dao.OSTR_FLG = "Y";
+                Dao.GRP_NM = this.text_GRP_NM.Text + "(고객사)";
+            }
+
+            if (this.check_OSTR_FLG.IsChecked == false)
+            {
+                Dao.OSTR_FLG = "N";
+            }
+
             return Dao;
         }
         #endregion
@@ -217,13 +248,77 @@ namespace AquilaErpWpfApp3.View.S.Dialog
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    List<GroupUserVo> _groupList =  JsonConvert.DeserializeObject<IEnumerable<GroupUserVo>>(await response.Content.ReadAsStringAsync()).Cast<GroupUserVo>().ToList();
+                    IList<GroupUserVo> _groupList =  JsonConvert.DeserializeObject<IEnumerable<GroupUserVo>>(await response.Content.ReadAsStringAsync()).Cast<GroupUserVo>().ToList();
+
+                    //추가
                     _groupList.Insert(0, new GroupUserVo() { GRP_ID = null, GRP_NM = " " });
                     this.combo_PRNT_GRP_NM.ItemsSource = _groupList;
-                    //this.combo_PRNT_GRP_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<GroupUserVo>>(await response.Content.ReadAsStringAsync()).Cast<GroupUserVo>().ToList();
+
+                    //if (this.orgdao.GRP_ID == null)
+                    //{
+                    //    //추가
+                    //    _groupList.Insert(0, new GroupUserVo() { GRP_ID = null, GRP_NM = " " });
+                    //    this.combo_PRNT_GRP_NM.ItemsSource = _groupList;
+                    //}
+                    //else
+                    //{
+                    //    //특정 그룹을 클릭하고 그룹추가 버튼을 눌렀을시
+                    //    _groupList = _groupList.Where<GroupUserVo>(x => x.GRP_ID.Equals(orgdao.GRP_ID)).ToList();
+                    //    _groupList.Insert(0, new GroupUserVo() { GRP_ID = null, GRP_NM = " " });
+                    //    this.combo_PRNT_GRP_NM.ItemsSource = _groupList;
+                    //}
                 }
             }
         }
+
+        //private void Combo_PRNT_GRP_NM_Value_Change(object sender, DevExpress.Xpf.Editors.EditValueChangedEventArgs e)
+        //{
+        //    GroupUserVo PrntGrpNmVo = this.combo_PRNT_GRP_NM.SelectedItem as GroupUserVo;
+        //    if (PrntGrpNmVo != null)
+        //    {   //고객사인 행을 선택
+        //        if(PrntGrpNmVo.OSTR_FLG != null)
+        //        {
+        //            if (PrntGrpNmVo.OSTR_FLG.Equals("Y"))
+        //            {
+        //                this.check_OSTR_FLG.IsChecked = true;
+        //                this.check_OSTR_FLG.IsEnabled = false;
+        //            }
+        //        }
+        //    }
+        //    //상위그룹이 없는걸 선택
+        //    if( PrntGrpNmVo.GRP_ID == null) this.check_OSTR_FLG.IsEnabled = true;
+        //}
+
+        //private async void Check_OSTR_FLG_Changed(object sender, DevExpress.Xpf.Editors.EditValueChangedEventArgs e)
+        //{
+        //    IList<GroupUserVo> _groupList = new List<GroupUserVo>();
+        //    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s136/g", new StringContent(JsonConvert.SerializeObject(new GroupUserVo() { GRP_TP_CD = "G", CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+        //    {
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            _groupList = JsonConvert.DeserializeObject<IEnumerable<GroupUserVo>>(await response.Content.ReadAsStringAsync()).Cast<GroupUserVo>().ToList();
+        //        }
+        //    }
+        //    //고객사 체크시
+        //    if (this.check_OSTR_FLG.IsChecked == true)
+        //    {
+        //        _groupList = _groupList.Where<GroupUserVo>(x => x.OSTR_FLG.Equals("Y")).ToList();
+        //        _groupList.Insert(0, new GroupUserVo() { GRP_ID = null, GRP_NM = " " });
+        //        this.combo_PRNT_GRP_NM.ItemsSource = _groupList;
+        //    }
+            
+        //    //고객사 체크 안했을시
+        //    if(this.check_OSTR_FLG.IsChecked == false)
+        //    {
+        //        _groupList = _groupList.Where<GroupUserVo>(x => !x.OSTR_FLG.Equals("Y")).ToList();
+        //        _groupList.Insert(0, new GroupUserVo() { GRP_ID = null, GRP_NM = " " });
+        //        this.combo_PRNT_GRP_NM.ItemsSource = _groupList;
+
+        //    }
+        //}
+
+
+
 
         //public static IList<CodeDao> GROUP_VO()
         //{

@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
     x:Class="AquilaErpWpfApp3.View.S.Dialog.S136GroupDialog"
     Title="Group Code" Height="220" Width="465" FontFamily="Arial" WindowStartupLocation="CenterOwner" ShowIcon="True" ResizeMode="NoResize" FontSize="12" Icon="{dx:DXImage Image=UserGroup_16x16.png}">
-
+    
     <Grid Width="431" x:Name="configCode">
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
@@ -16,7 +16,6 @@
             <RowDefinition Height="0"/>
             <RowDefinition Height="28"/>
             <RowDefinition Height="0"/>
-
             <RowDefinition Height="80"/>
             <RowDefinition Height="18*"/>
         </Grid.RowDefinitions>
@@ -27,7 +26,7 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Height="22" Margin="0,7,0,0" VerticalAlignment="Top" Text="상위 그룹* : " HorizontalAlignment="Left" Width="80" Foreground="Blue" TextAlignment="Right" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" />
-        <dxg:LookUpEdit Height="22" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" x:Name="combo_PRNT_GRP_NM" Text="{Binding PRNT_GRP_NM}" IsSynchronizedWithCurrentItem="True" DisplayMember="GRP_NM" ValueMember="GRP_NM" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="False" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsTextEditable="False" ShowSizeGrip="False" Grid.Column="2" Grid.Row="1" >
+        <dxg:LookUpEdit Height="22" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" x:Name="combo_PRNT_GRP_NM" Text="{Binding PRNT_GRP_NM}" IsSynchronizedWithCurrentItem="True" DisplayMember="GRP_NM" ValueMember="GRP_NM" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="False" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsTextEditable="False" ShowSizeGrip="False" Grid.Column="2" Grid.Row="1"> <!--EditValueChanged="Combo_PRNT_GRP_NM_Value_Change"-->
             <dxg:LookUpEdit.PopupContentTemplate>
                 <ControlTemplate>
                     <dxg:GridControl Name="PART_GridControl" >
@@ -59,6 +58,8 @@
 
         <TextBlock Height="22" Margin="1,1,0,0" VerticalAlignment="Top" Grid.Column="1" Text="그룹 설명 : " HorizontalAlignment="Left" Width="80" TextAlignment="Right" Grid.Row="5" Grid.ColumnSpan="2"/>
         <dxe:TextEdit x:Name="text_GRP_DESC" Grid.Column="2" VerticalAlignment="Stretch" Text="{Binding GRP_DESC}" MaxLength="350" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Grid.Row="5" />
+
+        <dxe:CheckEdit x:Name="check_OSTR_FLG" Margin="15,0,0,0" Content=": 고객사 " Grid.Row="6" Grid.Column="1"/> <!--EditValueChanged="Check_OSTR_FLG_Changed"-->
 
         <Button x:Name="OKButton" Height="30" Margin="146,0,0,2" Grid.Column="2" VerticalAlignment="Center" Width="100" HorizontalAlignment="Left" Grid.Row="6">
             <StackPanel HorizontalAlignment="Left" Width="62" Height="Auto" Orientation="Horizontal">

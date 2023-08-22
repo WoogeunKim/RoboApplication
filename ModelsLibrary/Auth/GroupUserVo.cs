@@ -200,5 +200,10 @@
             get;
             set;
         }
+        public string OSTR_FLG
+        {
+            get;
+            set;
+        }
     }
 }

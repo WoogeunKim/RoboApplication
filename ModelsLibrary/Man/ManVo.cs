@@ -1626,7 +1626,6 @@
             set;
         }
 
-
         public string LOT_DIV_NO
         {
             get;
@@ -2867,6 +2866,56 @@
             set;
         }
         public string OPTI_FLG
+        {
+            get;
+            set;
+        }
+        public int? EQ_KNT
+        {
+            get;
+            set;
+        }
+        public string PROD_FLG
+        {
+            get;
+            set;
+        }
+        public object PROD_USE_TM
+        {
+            get;
+            set;
+        }
+        public string LOC_NM
+        {
+            get;
+            set;
+        }
+        public object TK_TM
+        {
+            get;
+            set;
+        }
+        public string PROD_FM_DT
+        {
+            get;
+            set;
+        }
+        public string ORD_STT_DT
+        {
+            get;
+            set;
+        }
+        public object PROD_WGT
+        {
+            get;
+            set;
+        }
+        public string[] A_LOT_DIV_NO
+        {
+            get;
+            set;
+        }
+        public string PROD_ITM_NO
         {
             get;
             set;

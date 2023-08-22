@@ -1663,9 +1663,11 @@
             get;
             set;
         }
-
-
-
+        public string CAR_ID
+        {
+            get;
+            set;
+        }
         public string CAR_NO
         {
             get;
@@ -1676,7 +1678,16 @@
             get;
             set;
         }
-
+        public string CAR_PHN_NO
+        {
+            get;
+            set;
+        }
+        public string CAR_DESC
+        {
+            get;
+            set;
+        }
         public string CAR_OWN_CLSS
         {
             get;

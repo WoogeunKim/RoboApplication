@@ -1,4 +1,5 @@
 ﻿using AquilaErpWpfApp3.Util;
+using AquilaErpWpfApp3.View.M.Dialog;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Xpf.Core;
@@ -10,9 +11,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace AquilaErpWpfApp3.ViewModel
 {
@@ -21,6 +22,7 @@ namespace AquilaErpWpfApp3.ViewModel
 
         string _title = "오더매니저 설비";
 
+        private M661010DetailDialog lovDialog;
         public M661010ViewModel()
         {
             StartDt = DateTime.Now;
@@ -73,7 +75,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 // 서버로부터 MST 정보를 가져옵니다.
                 SelectMstList = await PostJsonList<ManVo>("m661010/mst", mstObj);
             }
-            catch(Exception eLog)
+            catch (Exception eLog)
             {
                 WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -93,55 +95,61 @@ namespace AquilaErpWpfApp3.ViewModel
                     CHNL_CD = SystemProperties.USER_VO.CHNL_CD,
                     FM_DT = StartDt.ToString("yyyy-MM-dd"),
                     TO_DT = EndDt.ToString("yyyy-MM-dd"),
-                    // 여러 경우의 수로 인해 삭제
-                    // PROD_EQ_NO = SelectedMstItem.PROD_EQ_NO
+
                 };
 
-                switch (SelectedMstItem.PROD_EQ_NO)
-                {
-                    // Z1 : 전체설비 기준 최적화 지시 정보 조회
-                    case "Z1":
-                        dtlObj.EQ_MDL_NM = "";
-                        break;
-
-                    // Z2 : 설비미정 기준 최적화 지시 정보 조회
-                    case "Z2":
-                        dtlObj.PROD_EQ_NO = "";
-                        break;
-
-                    // CUT01 : 절단설비 기준 최적화 지시 정보 조회
-                    case "CUT01":
-                        dtlObj.N1ST_EQ_NO = SelectedMstItem.PROD_EQ_NO;
-                        break;
-
-                    // CUT02 : 절단설비 기준 최적화 지시 정보 조회
-                    case "CUT02":
-                        dtlObj.N1ST_EQ_NO = SelectedMstItem.PROD_EQ_NO;
-                        break;
-
-                    // 나머지 : 가공설비별 최적화 지시 정보 조회
-                    default:
-                        dtlObj.N2ND_EQ_NO = SelectedMstItem.PROD_EQ_NO;
-                        break;
-                }
 
                 // 조회 스플레쉬 기능
                 if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
 
-                // 서버로부터 DTL 정보를 가져옵니다.
-                SelectDtlList = await PostJsonList<ManVo>("m661010/dtl", dtlObj);
+                IList<ManVo> voList = new List<ManVo>();
 
-                if (SelectDtlList.Count > 0)
+                // 서버로부터 DTL 정보를 가져옵니다.
+                voList = await PostJsonList<ManVo>("m661010/dtl", dtlObj);
+                if (voList != null)
                 {
-                    SelectedDtlItem = SelectDtlList[0];
-                }
-                else
-                {
-                    SelectedDtlItem = null;
+                    if (voList.Count > 0)
+                    {
+                        switch (SelectedMstItem.EQ_NO)
+                        {
+                            // Z1 : 전체설비 기준 최적화 지시 정보 조회
+                            case "Z1":
+                                SelectDtlList = voList;
+                                break;
+
+                            // Z2 : 설비미지정 기준 최적화 지시 정보 조회
+                            case "Z2":
+                                SelectDtlList = voList.Where<ManVo>(x => x.N1ST_EQ_NO == null).ToList();
+                                break;
+
+                            // CUT01 : 절단설비 기준 최적화 지시 정보 조회
+                            case "CUT01":
+                                SelectDtlList = voList.Where<ManVo>(x => x.N1ST_EQ_NO != null).ToList();
+                                break;
+
+                            // 나머지 : 가공설비별 최적화 지시 정보 조회
+                            default:
+                                voList = voList.Where<ManVo>(x => x.N2ND_EQ_NO != null).ToList();
+                                SelectDtlList = voList.Where<ManVo>(x => x.N2ND_EQ_NO.Equals(SelectedMstItem.EQ_NO)).ToList();
+                                break;
+                        }
+
+                        if (SelectDtlList.Count > 0)
+                        {
+                            SelectedDtlItem = SelectDtlList[0];
+                        }
+
+                    }
+                    else
+                    {
+                        SelectedDtlItem = null;
+                    }
                 }
 
                 // 성공
                 if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+
+                SelectLovListDetail();
 
             }
             catch (Exception eLog)
@@ -152,6 +160,144 @@ namespace AquilaErpWpfApp3.ViewModel
                 WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        //SL리스트 선택 시 
+        [Command]
+        public async void SelectDetailCheckd()
+        {
+
+            try
+            {
+                if (SelectedDtlItem == null)
+                {
+                    return;
+                }
+
+
+                if (SelectedDtlItem.isCheckd)
+                {
+                    SelectedDtlItem.isCheckd = false;
+                }
+                else
+                {
+                    SelectedDtlItem.isCheckd = true;
+                }
+
+
+
+                //작업지시리스트 조회
+                SelectLovListDetail();
+            }
+            catch (System.Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+            }
+        }
+
+
+        //작업지시리스트 선택 시 체크 박스 자동 선택
+        [Command]
+        public async void SelectLovCheckd()
+        {
+
+            try
+            {
+                if (SelectLovItem == null)
+                {
+                    return;
+                }
+
+
+                if (SelectLovItem.isCheckd)
+                {
+                    SelectLovItem.isCheckd = false;
+                }
+                else
+                {
+                    SelectLovItem.isCheckd = true;
+                }
+
+            }
+            catch (System.Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+            }
+        }
+
+
+
+        //작업지시리스트
+        public async void SelectLovListDetail(string _LOT_DIV_NO = null)
+        {
+            try
+            {
+                if (this.SelectDtlList.Any<ManVo>(x => x.isCheckd == true))
+                {
+                    SelectedDtlItem.A_LOT_DIV_NO = this.SelectDtlList.Where<ManVo>(w => w.isCheckd == true).Select(x => (x.SL_RLSE_NO + "_" + x.SL_RLSE_SEQ)).ToArray<string>();
+
+                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m661010/dtl/lov", new StringContent(JsonConvert.SerializeObject(SelectedDtlItem), System.Text.Encoding.UTF8, "application/json")))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            this.SelectLovList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
+
+                            // //
+                            if (SelectLovList.Count >= 1)
+                            {
+                                if (!string.IsNullOrEmpty(_LOT_DIV_NO))
+                                {
+                                    this.SelectLovItem = this.SelectLovList.Where(x => x.LOT_DIV_NO.Equals(_LOT_DIV_NO)).FirstOrDefault<ManVo>();
+                                }
+
+                            }
+                            else
+                            {
+                                SelectLovItem = null;
+                            }
+                        }
+                    }
+                    ////// 조회 스플레쉬 기능
+                    ////if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
+
+                    //// 서버로부터 DTL 정보를 가져옵니다.
+                    //SelectLovList = await PostJsonList<ManVo>("m661010/dtl/lov", lovObj);
+
+                    //if (SelectLovList != null)
+                    //{
+                    //    if (SelectLovList.Count >= 1)
+                    //    {
+                    //        if (!string.IsNullOrEmpty(_LOT_DIV_NO))
+                    //        {
+                    //            this.SelectLovItem = this.SelectLovList.Where(x => x.LOT_DIV_NO.Equals(_LOT_DIV_NO)).FirstOrDefault<ManVo>();
+                    //        }
+
+                    //    }
+                    //    else
+                    //    {
+                    //        SelectLovItem = null;
+                    //    }
+
+                    //}
+                }
+                else
+                {
+                    this.SelectLovList = null;
+                }
+
+                // 성공
+                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+
+
+            }
+            catch (Exception eLog)
+            {
+                // 실패
+                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+
+                WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
 
         /// <summary>
         /// IMG : 형상 이미지 정보를 가져옵니다.
@@ -180,7 +326,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 {
                     if (ImgList.Count >= 1)
                     {
-                        if(ImgList[0].IMG != null)
+                        if (ImgList[0].IMG != null)
                         {
                             // 이미지 있음.
                             ImgArray = ImgList[0].IMG;
@@ -188,9 +334,10 @@ namespace AquilaErpWpfApp3.ViewModel
                         }
                     }
                 }
-
                 // 이미지 없음.
                 ImgArray = new byte[0];
+
+                SelectLovListDetail();
             }
             catch (Exception eLog)
             {
@@ -199,6 +346,96 @@ namespace AquilaErpWpfApp3.ViewModel
                 WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        //생산계획 관리
+        [Command]
+        public async void LovPlan()
+        {
+            try
+            {
+                IList<ManVo> CheckDtlList = SelectDtlList.Where<ManVo>(x => x.isCheckd == true).ToList();
+
+                for (int i = 0; i < CheckDtlList.Count; i++)
+                {
+                    if (Convert.ToDouble(CheckDtlList[i].RMN_QTY) <= 0)
+                    {
+                        WinUIMessageBox.Show("오더잔여수량이 0 입니다.", _title, MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+
+                if (CheckDtlList.Count > 0)
+                {
+                    lovDialog = new M661010DetailDialog(CheckDtlList);
+                    lovDialog.Title = " 생산 게획 관리 ";
+                    lovDialog.Owner = Application.Current.MainWindow;
+                    lovDialog.BorderEffect = BorderEffect.Default;
+                    lovDialog.BorderEffectActiveColor = new SolidColorBrush(Color.FromRgb(255, 128, 0));
+                    lovDialog.BorderEffectInactiveColor = new SolidColorBrush(Color.FromRgb(255, 170, 170));
+                    bool isDialog = (bool)lovDialog.ShowDialog();
+                    if (isDialog)
+                    {
+                        SelectLovListDetail();
+                    }
+                }
+                else
+                {
+                    WinUIMessageBox.Show("[생산계획]을 선택하지 않았습니다.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+
+            }
+            catch (Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        [Command]
+        public async void LovDelete()
+        {
+            try
+            {
+                if (this.SelectLovList.Any<ManVo>(x => x.isCheckd == true))
+                {
+                    IList<ManVo> checkedList = this.SelectLovList.Where(x => x.isCheckd == true).ToList();
+                    MessageBoxResult result = WinUIMessageBox.Show(checkedList.Count + "개를 삭제하시겠습니까?", _title, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("M661010/lov/d", new StringContent(JsonConvert.SerializeObject(checkedList), System.Text.Encoding.UTF8, "application/json")))
+                        {
+                            if (response.IsSuccessStatusCode)
+                            {
+                                int _Num = 0;
+                                string resultMsg = await response.Content.ReadAsStringAsync();
+                                if (int.TryParse(resultMsg, out _Num) == false)
+                                {
+                                    //실패
+                                    WinUIMessageBox.Show(resultMsg, _title, MessageBoxButton.OK, MessageBoxImage.Error);
+                                    return;
+                                }
+                                //성공
+                                SelectLovListDetail();
+                                WinUIMessageBox.Show("삭제되었습니다.", _title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    return;
+                }
+
+            }
+            catch (Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+
+
+
 
 
 
@@ -215,8 +452,7 @@ namespace AquilaErpWpfApp3.ViewModel
 
             try
             {
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync(Path
-                                                                                                  , new StringContent(JsonConvert.SerializeObject(obj), System.Text.Encoding.UTF8, "application/json")))
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync(Path, new StringContent(JsonConvert.SerializeObject(obj), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
@@ -230,12 +466,7 @@ namespace AquilaErpWpfApp3.ViewModel
             }
 
             return ret;
-        }  
-
-
-
-
-
+        }
 
 
         #region MVVM 패턴 각 객체를 바이딩 합니다.
@@ -265,6 +496,22 @@ namespace AquilaErpWpfApp3.ViewModel
             get { return _selectedDtlItem; }
             set { SetProperty(ref _selectedDtlItem, value, () => SelectedDtlItem, DtlImgRefresh); }
         }
+
+        private IList<ManVo> _selectLovList = new List<ManVo>();
+        public IList<ManVo> SelectLovList
+        {
+            get { return _selectLovList; }
+            set { SetProperty(ref _selectLovList, value, () => SelectLovList); }
+        }
+
+        private ManVo _selectLovItem;
+        public ManVo SelectLovItem
+        {
+            get { return _selectLovItem; }
+            set { SetProperty(ref _selectLovItem, value, () => SelectLovItem); }
+        }
+
+
         private byte[] _imgArray = new byte[0];
         public byte[] ImgArray
         {
@@ -304,7 +551,7 @@ namespace AquilaErpWpfApp3.ViewModel
         {
             get { return _m_SEARCH_TEXT; }
             set { SetProperty(ref _m_SEARCH_TEXT, value, () => M_SEARCH_TEXT); }
-        } 
+        }
         #endregion
 
 

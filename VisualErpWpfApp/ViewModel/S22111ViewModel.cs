@@ -407,7 +407,7 @@ namespace AquilaErpWpfApp3.ViewModel
             bool isDialog = (bool)masterDialog.ShowDialog();
             if (isDialog)
             {
-                Refresh(masterDialog.SL_RLSE_NO);
+                Refresh(masterDialog.SL_BIL_NO);
                 //if (masterDialog.IsEdit == false)
                 //{
                 //    try
@@ -472,7 +472,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 bool isDialog = (bool)masterDialog.ShowDialog();
                 if (isDialog)
                 {
-                    Refresh(masterDialog.SL_RLSE_NO);
+                    Refresh(masterDialog.SL_BIL_NO);
                     //if (masterDialog.IsEdit == false)
                     //{
                     //    DXSplashScreen.Show<ProgressWindow>();

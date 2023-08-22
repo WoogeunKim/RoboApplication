@@ -83,7 +83,7 @@ namespace AquilaErpWpfApp3.View.S
                 this.ConfigViewPage1Edit_Master.ShowLoadingPanel = true;
                 Master_Search((this.M_SEARCH_TEXT.EditValue == null ? "" : this.M_SEARCH_TEXT.EditValue.ToString()));
 
-                
+
                 //this.GridEditView_menu.SearchString = (this.M_SEARCH_TEXT.EditValue == null ? "" : this.M_SEARCH_TEXT.EditValue.ToString());
                 //this.txt_Search.SelectAll();
                 this.M_SEARCH_TEXT.Focus();
@@ -132,19 +132,23 @@ namespace AquilaErpWpfApp3.View.S
             }
 
         }
+
         async void ConfigViewPage1Edit_Master_SelectedItemChanged(object sender, SelectedItemChangedEventArgs e)
         {
             //IList<ProgramVo> resultMenuList;
             GroupUserVo dao = (GroupUserVo)ConfigViewPage1Edit_Master.GetFocusedRow();
-            if(dao == null){
+            if (dao == null)
+            {
                 return;
             }
-            //
+            //그룹클릭시
             if (dao.IS_GROUP.Equals("G"))
             {
                 DetailView_user.Visibility = Visibility.Hidden;
                 //
                 DetailView_group.Visibility = Visibility.Visible;
+                //
+                DetailView_user_ostr.Visibility = Visibility.Hidden;
                 DetailView_group.Content = dao;
                 //
                 //resultMenuList = SystemProperties.AuthClient.SelectProgramGroupList(new ProgramVo() { GRP_ID = dao.GRP_ID, CHNL_CD = SystemProperties.USER_VO.CHNL_CD });
@@ -158,11 +162,15 @@ namespace AquilaErpWpfApp3.View.S
                     }
                 }
             }
-            else
+
+            //유저클릭시 + 일반유저
+            if (!dao.IS_GROUP.Equals("G") && !dao.OSTR_FLG.Equals("Y"))
             {
                 DetailView_group.Visibility = Visibility.Hidden;
                 //
                 DetailView_user.Visibility = Visibility.Visible;
+                //
+                DetailView_user_ostr.Visibility = Visibility.Hidden;
                 //DetailView_user.Content = SystemProperties.AuthClient.SelectUserList(new GroupUserVo() { USR_ID = dao.USR_ID, DELT_FLG = "N", CHNL_CD = SystemProperties.USER_VO.CHNL_CD });
                 //
                 //resultMenuList = SystemProperties.AuthClient.SelectProgramUserList(new ProgramVo() { GRP_ID = dao.PRNT_GRP_ID, USR_ID = dao.USR_ID, CHNL_CD = SystemProperties.USER_VO.CHNL_CD });
@@ -185,13 +193,41 @@ namespace AquilaErpWpfApp3.View.S
                     }
                 }
             }
+            //유저클릭시 + 고객사
+            if (!dao.IS_GROUP.Equals("G") && dao.OSTR_FLG.Equals("Y"))
+            {
+                DetailView_group.Visibility = Visibility.Hidden;
+                //
+                DetailView_user.Visibility = Visibility.Hidden;
+                //
+                DetailView_user_ostr.Visibility = Visibility.Visible;
+
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s136/usr", new StringContent(JsonConvert.SerializeObject(new GroupUserVo() { USR_ID = dao.USR_ID, DELT_FLG = "N", CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        //DetailView_user.Content = JsonConvert.DeserializeObject<GroupUserVo>(await response.Content.ReadAsStringAsync());
+                        DetailView_user_ostr.Content = JsonConvert.DeserializeObject<IEnumerable<GroupUserVo>>(await response.Content.ReadAsStringAsync()).Cast<GroupUserVo>().ToList();
+                    }
+                }
+
+                //
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s136/u/menu", new StringContent(JsonConvert.SerializeObject(new ProgramVo() { GRP_ID = dao.PRNT_GRP_ID, USR_ID = dao.USR_ID, CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        this.menuGridControl.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<ProgramVo>>(await response.Content.ReadAsStringAsync()).Cast<ProgramVo>().ToList();
+                        this.menuGridEditView.ExpandAllNodes();
+                    }
+                }
+            }
             selectItemIsMenu(dao);
             //
             //SystemProperties.MENU_IMG_SET(resultMenuList);
             //this.menuGridControl.ItemsSource = resultMenuList;
             //this.menuGridEditView.ExpandAllNodes();
+        } 
 
-        }
         void selectItemIsMenu(GroupUserVo dao)
         {
             if(dao == null){
@@ -210,7 +246,7 @@ namespace AquilaErpWpfApp3.View.S
             else
             {
                 this.group_add.IsEnabled = true;
-                this.group_edit.IsEnabled = true;
+                this.group_edit.IsEnabled = false;
                 this.group_del.IsEnabled = false;
                 this.user_add.IsEnabled = true;
                 this.user_edit.IsEnabled = true;
@@ -346,7 +382,7 @@ namespace AquilaErpWpfApp3.View.S
             }
             int selectedRowhandle = this.GridEditView_menu.FocusedRowHandle;
 
-            groupDialog = new S136GroupDialog(new GroupUserVo() { PRNT_GRP_NM = dao.PRNT_GRP_NM, CHNL_CD = SystemProperties.USER_VO.CHNL_CD });
+            groupDialog = new S136GroupDialog(new GroupUserVo() { PRNT_GRP_NM = dao.PRNT_GRP_NM, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, OSTR_FLG = dao.OSTR_FLG, GRP_ID = dao.GRP_ID });
             groupDialog.Title = "그룹 추가";
             groupDialog.Owner = Application.Current.MainWindow;
             groupDialog.BorderEffect = BorderEffect.Default;
@@ -357,8 +393,8 @@ namespace AquilaErpWpfApp3.View.S
             {
                 //if (groupDialog.IsEdit == false)
                 //{
-                    Master_Search("", selectedRowhandle);
-                    //this.GridEditView_menu.FocusedRowHandle = selectedRowhandle;
+                Master_Search("", selectedRowhandle);
+                //this.GridEditView_menu.FocusedRowHandle = selectedRowhandle;
                 //}
             }
 
@@ -478,7 +514,7 @@ namespace AquilaErpWpfApp3.View.S
 
             int selectedRowhandle = this.GridEditView_menu.FocusedRowHandle;
 
-            userDialog = new S136UserDialog(new GroupUserVo() { GRP_NM = dao.PRNT_GRP_NM, CHNL_CD = SystemProperties.USER_VO.CHNL_CD });
+            userDialog = new S136UserDialog(new GroupUserVo() { GRP_NM = dao.PRNT_GRP_NM, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, OSTR_FLG = dao.OSTR_FLG });
             userDialog.Title = "유저 추가";
             userDialog.Owner = Application.Current.MainWindow;
             userDialog.BorderEffect = BorderEffect.Default;

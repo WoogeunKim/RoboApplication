@@ -13,36 +13,9 @@ namespace VisualServerApplication.Controllers.Man
     [RoutePrefix("m661010")]
     public class M661010Controller : ApiController
     {
-        //// GET api/<controller>
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET api/<controller>/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        //// POST api/<controller>
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //// PUT api/<controller>/5
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE api/<controller>/5
-        //public void Delete(int id)
-        //{
-        //}
-
 
         /// <summary>
-        /// 오더매니저 - 조회
+        /// 오더매니저 설비 MST-  설비번호, 설비명, 배정건수 조회
         /// </summary>
         [Route("mst")]
         [HttpPost]
@@ -59,28 +32,8 @@ namespace VisualServerApplication.Controllers.Man
             }
         }
 
-
         /// <summary>
-        /// 오더매니저 - 조회
-        /// </summary>
-        [Route("dtl")]
-        [HttpPost]
-        // GET api/<controller>
-        public async Task<IHttpActionResult> GetDtlSelect([FromBody] ManVo vo)
-        {
-            try
-            {
-                return Ok<IEnumerable<ManVo>>(Properties.EntityMapper.QueryForList<ManVo>("M661010SelectDtlList", vo));
-            }
-            catch (System.Exception eLog)
-            {
-                return Ok<string>(eLog.Message);
-            }
-        }
-
-
-        /// <summary>
-        /// 오더매니저 - 조회
+        /// 오더매니저 설비 MST - 강종 및 규격별 이미지 조회
         /// </summary>
         [Route("dtl/img")]
         [HttpPost]
@@ -98,20 +51,184 @@ namespace VisualServerApplication.Controllers.Man
         }
 
         /// <summary>
-        /// 오더매니저 - 수정
+        /// 오더매니저 설비 DTL - 조회
         /// </summary>
-        [Route("dtl/u")]
+        [Route("dtl")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetDtlSelect([FromBody] ManVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<ManVo>>(Properties.EntityMapper.QueryForList<ManVo>("M661010SelectDtlList", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+
+
+        }
+
+        /// <summary>
+        /// 오더매니저 설비 DTL - 작업지시리스트 조회
+        /// </summary>
+        [Route("dtl/lov")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetDtlLovSelect([FromBody] ManVo vo)
+        {
+            try
+            {
+
+                return Ok<IEnumerable<ManVo>>(Properties.EntityMapper.QueryForList<ManVo>("M661010SelectLotDivList", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+        // <summary>
+        /// 오더매니저 - 작업지시리스트 중량 컬럼 조회
+        /// </summary>
+        [Route("lov/wgt")]
+        [HttpPost]
+        // POST api/<controller>
+        public async Task<IHttpActionResult> GetLovWgtSelect([FromBody] ManVo vo)
+        {
+            try
+            {
+                return Ok<ManVo>(Properties.EntityMapper.QueryForObject<ManVo>("M661010SelectWeight", vo));
+            }
+            catch (System.Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+
+
+        /// <summary>
+        /// 오더매니저 - 생산 관리 중량 컬럼 업데이트
+        /// </summary>
+        [Route("wgt/u")]
+        [HttpPost]
+        // POST api/<controller>
+        public async Task<IHttpActionResult> GetWgtUpdate([FromBody] IList<ManVo> voList)
+        {
+            try
+            {
+                Properties.EntityMapper.BeginTransaction();
+                foreach (ManVo item in voList)
+                {
+                    Properties.EntityMapper.Update("M661010UpdateWeight", item);
+                }
+                Properties.EntityMapper.CommitTransaction();
+                return Ok<int>(1);
+            }
+            catch (System.Exception eLog)
+            {
+                Properties.EntityMapper.RollBackTransaction();
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+
+
+        // <summary>
+        /// 오더매니저 - 작업지시리스트 중량 컬럼 업데이트
+        /// </summary>
+        [Route("lov/wgt/u")]
+        [HttpPost]
+        // POST api/<controller>
+        public async Task<IHttpActionResult> GetLovWgtUpdate([FromBody] ManVo vo)
+        {
+            try
+            {
+                Properties.EntityMapper.BeginTransaction();
+                Properties.EntityMapper.Update("M661010UpdateLovWeight", vo);
+                Properties.EntityMapper.CommitTransaction();
+                return Ok<int>(1);
+
+            }
+            catch (System.Exception eLog)
+            {
+                Properties.EntityMapper.RollBackTransaction();
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// 오더매니저 - 생산계획관리 추가
+        /// </summary>
+        [Route("dtl/prod/i")]
+        [HttpPost]
+        // POST api/<controller>
+        public async Task<IHttpActionResult> GetDtlProdInsert([FromBody] IList<ManVo> voList)
+        {
+            try
+            {
+                Properties.EntityMapper.BeginTransaction();
+                //
+                //Properties.EntityMapper.Delete("M6710DeleteDtl1", voList.GetEnumerator().Current);
+                foreach (ManVo item in voList)
+                {
+                    Properties.EntityMapper.Insert("M661010InsertProdDetail", item);
+                }
+                Properties.EntityMapper.CommitTransaction();
+                return Ok<int>(1);
+            }
+            catch (System.Exception eLog)
+            {
+                Properties.EntityMapper.RollBackTransaction();
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+        /// <summary>
+        /// 오더매니저 - 작업지시리스트 수정
+        /// </summary>
+        [Route("lov/u")]
         [HttpPost]
         // PUT api/<controller>/5
-        public async Task<IHttpActionResult> GetDtlUpdate([FromBody] ManVo vo)
+        public async Task<IHttpActionResult> GetDtlLovUpdate([FromBody] ManVo vo)
         {
             try
             {
                 Properties.EntityMapper.BeginTransaction();
 
-                Properties.EntityMapper.Update("M661010UpdateDtl_1", vo);
-                Properties.EntityMapper.Update("M661010UpdateDtl_2", vo);
+                Properties.EntityMapper.Update("M661010UpdateLov", vo);
 
+                Properties.EntityMapper.CommitTransaction();
+                return Ok<int>(1);
+            }
+            catch (System.Exception eLog)
+            {
+                Properties.EntityMapper.RollBackTransaction();
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+        /// <summary>
+        /// 오더매니저 - 작업지시리스트 삭제
+        /// </summary>
+        [Route("lov/d")]
+        [HttpPost]
+        // GET api/<controller>
+        public async Task<IHttpActionResult> GetDtlLovDelete([FromBody] IList<ManVo> voList)
+        {
+            try
+            {
+                Properties.EntityMapper.BeginTransaction();
+
+                foreach (ManVo vo in voList)
+                {
+                    Properties.EntityMapper.Update("M661010DeleteLov", vo);
+                }
                 Properties.EntityMapper.CommitTransaction();
                 return Ok<int>(1);
             }

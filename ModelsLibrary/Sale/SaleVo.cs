@@ -5595,5 +5595,64 @@
             set;
         }
 
+        public object OK_Y_WGT
+        {
+            get;
+            set;
+        }
+
+        public object OK_N_WGT
+        {
+            get;
+            set;
+        }
+
+        public object OK_WGT
+        {
+            get;
+            set;
+        }
+
+        public string[] A_PUR_NO
+        {
+            get;
+            set;
+        }
+
+        public object MV_CAR_AMT
+        {
+            get;
+            set;
+        }
+
+        public string CAR_NO
+        {
+            get;
+            set;
+        }
+
+        public string CAR_NM
+        {
+            get;
+            set;
+        }
+
+        public object PROD_GD_QTY
+        {
+            get;
+            set;
+        }
+
+        public string LOT_DIV_NO
+        {
+            get;
+            set;
+        }
+
+        public int? LOT_DIV_SEQ
+        {
+            get;
+            set;
+        }
     }
 }

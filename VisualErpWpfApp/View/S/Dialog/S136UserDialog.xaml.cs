@@ -130,31 +130,66 @@ namespace AquilaErpWpfApp3.View.S.Dialog
 
             //
             //
-            if (ValueCheckd())
+            GroupUserVo Grp_nm_vo = Create_Selected_GrpNm_Value();
+            if(Grp_nm_vo != null && Grp_nm_vo.OSTR_FLG.Equals("Y"))
             {
-                int _Num = 0;
-                this.updateDao = getDomain();
-                //초기 값 패스워드 
-                System.Security.Cryptography.SHA256Managed sha256Managed = new System.Security.Cryptography.SHA256Managed();
-                this.updateDao.USR_PWD = Convert.ToBase64String(sha256Managed.ComputeHash(System.Text.Encoding.UTF8.GetBytes(this.text_USR_PWD_RE.Text)));
-
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s136/u/u", new StringContent(JsonConvert.SerializeObject(this.updateDao), System.Text.Encoding.UTF8, "application/json")))
+                if (ValueOstrCheckd())
                 {
-                    if (response.IsSuccessStatusCode)
+                    int _Num = 0;
+                    this.updateDao = getDomain();
+                    //초기 값 패스워드 
+                    System.Security.Cryptography.SHA256Managed sha256Managed = new System.Security.Cryptography.SHA256Managed();
+                    this.updateDao.USR_PWD = Convert.ToBase64String(sha256Managed.ComputeHash(System.Text.Encoding.UTF8.GetBytes(this.text_USR_PWD_RE.Text)));
+
+                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s136/u/u", new StringContent(JsonConvert.SerializeObject(this.updateDao), System.Text.Encoding.UTF8, "application/json")))
                     {
-                        string result = await response.Content.ReadAsStringAsync();
-                        if (int.TryParse(result, out _Num) == false)
+                        if (response.IsSuccessStatusCode)
                         {
-                            //실패
-                            WinUIMessageBox.Show(result, title, MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
+                            string result = await response.Content.ReadAsStringAsync();
+                            if (int.TryParse(result, out _Num) == false)
+                            {
+                                //실패
+                                WinUIMessageBox.Show(result, title, MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+
+                            //성공
+                            WinUIMessageBox.Show("패스워드 변경 되었습니다", title, MessageBoxButton.OK, MessageBoxImage.Information);
+
+                            this.text_USR_PWD_RE.Text = string.Empty;
+                            this.text_USR_PWD_RE_OK.Text = string.Empty;
                         }
+                    }
+                }
+            }
+            else
+            {
+                if (ValueCheckd())
+                {
+                    int _Num = 0;
+                    this.updateDao = getDomain();
+                    //초기 값 패스워드 
+                    System.Security.Cryptography.SHA256Managed sha256Managed = new System.Security.Cryptography.SHA256Managed();
+                    this.updateDao.USR_PWD = Convert.ToBase64String(sha256Managed.ComputeHash(System.Text.Encoding.UTF8.GetBytes(this.text_USR_PWD_RE.Text)));
 
-                        //성공
-                        WinUIMessageBox.Show("패스워드 변경 되었습니다", title, MessageBoxButton.OK, MessageBoxImage.Information);
+                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s136/u/u", new StringContent(JsonConvert.SerializeObject(this.updateDao), System.Text.Encoding.UTF8, "application/json")))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string result = await response.Content.ReadAsStringAsync();
+                            if (int.TryParse(result, out _Num) == false)
+                            {
+                                //실패
+                                WinUIMessageBox.Show(result, title, MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
 
-                        this.text_USR_PWD_RE.Text = string.Empty;
-                        this.text_USR_PWD_RE_OK.Text = string.Empty;
+                            //성공
+                            WinUIMessageBox.Show("패스워드 변경 되었습니다", title, MessageBoxButton.OK, MessageBoxImage.Information);
+
+                            this.text_USR_PWD_RE.Text = string.Empty;
+                            this.text_USR_PWD_RE_OK.Text = string.Empty;
+                        }
                     }
                 }
             }
@@ -178,85 +213,147 @@ namespace AquilaErpWpfApp3.View.S.Dialog
         #region Functon (OKButton_Click, CancelButton_Click)
         private async void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ValueCheckd())
+            GroupUserVo Grp_nm_vo = Create_Selected_GrpNm_Value();
+            if (Grp_nm_vo != null && Grp_nm_vo.OSTR_FLG.Equals("Y"))
             {
-                int _Num = 0;
-                //SystemCodeVo resultVo;
-                if (isEdit == false)
+                //고객사 체크
+                if (ValueOstrCheckd())
                 {
-                    this.updateDao = getDomain();
-
-                    //초기 값 패스워드 
-                    System.Security.Cryptography.SHA256Managed sha256Managed = new System.Security.Cryptography.SHA256Managed();
-                    this.updateDao.USR_PWD = Convert.ToBase64String(sha256Managed.ComputeHash(System.Text.Encoding.UTF8.GetBytes(this.text_USR_PWD.Text)));
-
-                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s136/u/i", new StringContent(JsonConvert.SerializeObject(this.updateDao), System.Text.Encoding.UTF8, "application/json")))
+                    int _Num = 0;
+                    //SystemCodeVo resultVo;
+                    if (isEdit == false)
                     {
-                        if (response.IsSuccessStatusCode)
-                        {
-                            string result = await response.Content.ReadAsStringAsync();
-                            if (int.TryParse(result, out _Num) == false)
-                            {
-                                //실패
-                                WinUIMessageBox.Show(result, title, MessageBoxButton.OK, MessageBoxImage.Error);
-                                return;
-                            }
+                        this.updateDao = getDomain();
 
-                            //성공
-                            WinUIMessageBox.Show(this.updateDao.USR_ID + "/(패스워드 : " + 1 + ") 완료 되었습니다", title, MessageBoxButton.OK, MessageBoxImage.Information);
+                        //초기 값 패스워드 
+                        System.Security.Cryptography.SHA256Managed sha256Managed = new System.Security.Cryptography.SHA256Managed();
+                        this.updateDao.USR_PWD = Convert.ToBase64String(sha256Managed.ComputeHash(System.Text.Encoding.UTF8.GetBytes(this.text_USR_PWD.Text)));
+
+                        using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s136/u/i", new StringContent(JsonConvert.SerializeObject(this.updateDao), System.Text.Encoding.UTF8, "application/json")))
+                        {
+                            if (response.IsSuccessStatusCode)
+                            {
+                                string result = await response.Content.ReadAsStringAsync();
+                                if (int.TryParse(result, out _Num) == false)
+                                {
+                                    //실패
+                                    WinUIMessageBox.Show(result, title, MessageBoxButton.OK, MessageBoxImage.Error);
+                                    return;
+                                }
+
+                                //성공
+                                WinUIMessageBox.Show(this.updateDao.USR_ID + "/(패스워드 : " + 1 + ") 완료 되었습니다", title, MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
                         }
                     }
-                }
-                else
-                {
-                    this.updateDao = getDomain();
-
-                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s136/u/u", new StringContent(JsonConvert.SerializeObject(this.updateDao), System.Text.Encoding.UTF8, "application/json")))
+                    else
                     {
-                        if (response.IsSuccessStatusCode)
-                        {
-                            string result = await response.Content.ReadAsStringAsync();
-                            if (int.TryParse(result, out _Num) == false)
-                            {
-                                //실패
-                                WinUIMessageBox.Show(result, title, MessageBoxButton.OK, MessageBoxImage.Error);
-                                return;
-                            }
+                        this.updateDao = getDomain();
 
-                            //성공
-                            WinUIMessageBox.Show("완료 되었습니다", title, MessageBoxButton.OK, MessageBoxImage.Information);
+                        using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s136/u/u", new StringContent(JsonConvert.SerializeObject(this.updateDao), System.Text.Encoding.UTF8, "application/json")))
+                        {
+                            if (response.IsSuccessStatusCode)
+                            {
+                                string result = await response.Content.ReadAsStringAsync();
+                                if (int.TryParse(result, out _Num) == false)
+                                {
+                                    //실패
+                                    WinUIMessageBox.Show(result, title, MessageBoxButton.OK, MessageBoxImage.Error);
+                                    return;
+                                }
+
+                                //성공
+                                WinUIMessageBox.Show("완료 되었습니다", title, MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
                         }
                     }
+                    this.DialogResult = true;
+                    this.Close();
                 }
 
+            }
+            else
+            {
+                if (ValueCheckd())
+                {
+                    int _Num = 0;
+                    //SystemCodeVo resultVo;
+                    if (isEdit == false)
+                    {
+                        this.updateDao = getDomain();
 
-                //GroupUserVo resultVo;
-                //if (isEdit == false)
-                //{
-                //    resultVo = authClient.InsertUserInfo(getDomain());
-                //    if (!resultVo.isSuccess)
-                //    {
-                //        //실패
-                //        WinUIMessageBox.Show(resultVo.Message, "[" + SystemProperties.PROGRAM_TITLE + "]사용자 권한 관리", MessageBoxButton.OK, MessageBoxImage.Error);
-                //        return;
-                //    }
-                //    //성공
-                //    WinUIMessageBox.Show("완료 되었습니다", "[추가]사용자 권한 관리", MessageBoxButton.OK, MessageBoxImage.Information);
-                //}
-                //else
-                //{
-                //    resultVo = authClient.UpdateUserInfo(getDomain());
-                //    if (!resultVo.isSuccess)
-                //    {
-                //        //실패
-                //        WinUIMessageBox.Show(resultVo.Message, "[" + SystemProperties.PROGRAM_TITLE + "]사용자 권한 관리", MessageBoxButton.OK, MessageBoxImage.Error);
-                //        return;
-                //    }
-                //    //성공
-                //    WinUIMessageBox.Show("완료 되었습니다", "[수정]사용자 권한 관리", MessageBoxButton.OK, MessageBoxImage.Information);
-                //}
-                this.DialogResult = true;
-                this.Close();
+                        //초기 값 패스워드 
+                        System.Security.Cryptography.SHA256Managed sha256Managed = new System.Security.Cryptography.SHA256Managed();
+                        this.updateDao.USR_PWD = Convert.ToBase64String(sha256Managed.ComputeHash(System.Text.Encoding.UTF8.GetBytes(this.text_USR_PWD.Text)));
+
+                        using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s136/u/i", new StringContent(JsonConvert.SerializeObject(this.updateDao), System.Text.Encoding.UTF8, "application/json")))
+                        {
+                            if (response.IsSuccessStatusCode)
+                            {
+                                string result = await response.Content.ReadAsStringAsync();
+                                if (int.TryParse(result, out _Num) == false)
+                                {
+                                    //실패
+                                    WinUIMessageBox.Show(result, title, MessageBoxButton.OK, MessageBoxImage.Error);
+                                    return;
+                                }
+
+                                //성공
+                                WinUIMessageBox.Show(this.updateDao.USR_ID + "/(패스워드 : " + 1 + ") 완료 되었습니다", title, MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        this.updateDao = getDomain();
+
+                        using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s136/u/u", new StringContent(JsonConvert.SerializeObject(this.updateDao), System.Text.Encoding.UTF8, "application/json")))
+                        {
+                            if (response.IsSuccessStatusCode)
+                            {
+                                string result = await response.Content.ReadAsStringAsync();
+                                if (int.TryParse(result, out _Num) == false)
+                                {
+                                    //실패
+                                    WinUIMessageBox.Show(result, title, MessageBoxButton.OK, MessageBoxImage.Error);
+                                    return;
+                                }
+
+                                //성공
+                                WinUIMessageBox.Show("완료 되었습니다", title, MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                        }
+                    }
+
+
+                    //GroupUserVo resultVo;
+                    //if (isEdit == false)
+                    //{
+                    //    resultVo = authClient.InsertUserInfo(getDomain());
+                    //    if (!resultVo.isSuccess)
+                    //    {
+                    //        //실패
+                    //        WinUIMessageBox.Show(resultVo.Message, "[" + SystemProperties.PROGRAM_TITLE + "]사용자 권한 관리", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //        return;
+                    //    }
+                    //    //성공
+                    //    WinUIMessageBox.Show("완료 되었습니다", "[추가]사용자 권한 관리", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //}
+                    //else
+                    //{
+                    //    resultVo = authClient.UpdateUserInfo(getDomain());
+                    //    if (!resultVo.isSuccess)
+                    //    {
+                    //        //실패
+                    //        WinUIMessageBox.Show(resultVo.Message, "[" + SystemProperties.PROGRAM_TITLE + "]사용자 권한 관리", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //        return;
+                    //    }
+                    //    //성공
+                    //    WinUIMessageBox.Show("완료 되었습니다", "[수정]사용자 권한 관리", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //}
+                    this.DialogResult = true;
+                    this.Close();
+                }
             }
         }
 
@@ -404,6 +501,41 @@ namespace AquilaErpWpfApp3.View.S.Dialog
         }
         #endregion
 
+
+        #region Functon (ValueOstrCheckd)
+        public Boolean ValueOstrCheckd()
+        {
+            if (string.IsNullOrEmpty(this.text_USR_ID.Text))
+            {
+                WinUIMessageBox.Show("[아이디] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                this.text_USR_ID.IsTabStop = true;
+                this.text_USR_ID.Focus();
+                return false;
+            }
+            else if (string.IsNullOrEmpty(this.combo_GRP_NM.Text))
+            {
+                WinUIMessageBox.Show("[고객사] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                this.combo_GRP_NM.IsTabStop = true;
+                this.combo_GRP_NM.Focus();
+                return false;
+            }
+            else if (string.IsNullOrEmpty(this.text_USR_N1ST_NM.Text))
+            {
+                WinUIMessageBox.Show("[업체명] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                this.text_USR_N1ST_NM.IsTabStop = true;
+                this.text_USR_N1ST_NM.Focus();
+                return false;
+            }
+            else if (((this.text_Image.EditValue ?? new byte[0]) as byte[]).Length > 2197152)
+            {
+                WinUIMessageBox.Show("이미지 파일 크기가 2Mbyte 초과 하였습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Information);
+                return false;
+            }
+
+            return true;
+        }
+        #endregion
+
         #region Functon (getDomain - ConfigView1Dao)
         private GroupUserVo getDomain()
         {
@@ -419,10 +551,21 @@ namespace AquilaErpWpfApp3.View.S.Dialog
             //Dao.USR_PWD = Convert.ToBase64String(sha256Managed.ComputeHash(System.Text.Encoding.UTF8.GetBytes(this.text_USR_PWD.Text)));
 
             //Dao.USR_PWD = this.text_USR_PWD.Text;
-            Dao.EMPE_PLC_NM = EMPE_PLC_NMVo.CLSS_CD;
-            Dao.EMPE_PLC_CD = EMPE_PLC_NMVo.CLSS_DESC;
-            Dao.GRP_ID = GRP_NMVo.GRP_ID;
-            Dao.GRP_NM = GRP_NMVo.GRP_NM;
+            if (EMPE_PLC_NMVo != null)
+            {
+                Dao.EMPE_PLC_NM = EMPE_PLC_NMVo.CLSS_CD;
+                Dao.EMPE_PLC_CD = EMPE_PLC_NMVo.CLSS_DESC;
+            }
+            else
+            {
+                Dao.EMPE_PLC_NM = "001"; //본사
+            } 
+
+            if (GRP_NMVo != null)
+            {
+                Dao.GRP_ID = GRP_NMVo.GRP_ID;
+                Dao.GRP_NM = GRP_NMVo.GRP_NM;
+            }
 
             Dao.JOIN_CO_DT = this.text_JOIN_CO_DT.Text;
             if (this.check_RESGN_CO_DT.IsChecked == true)
@@ -435,8 +578,11 @@ namespace AquilaErpWpfApp3.View.S.Dialog
                 Dao.DELT_FLG = "N";
             }
 
-            Dao.OFC_PSN_CD = OFC_PSN_NMVo.CLSS_CD;
-            Dao.OFC_PSN_NM = OFC_PSN_NMVo.CLSS_DESC;
+            if(OFC_PSN_NMVo != null)
+            {
+                Dao.OFC_PSN_CD = OFC_PSN_NMVo.CLSS_CD;
+                Dao.OFC_PSN_NM = OFC_PSN_NMVo.CLSS_DESC;
+            }
             Dao.USR_N1ST_NM = this.text_USR_N1ST_NM.Text;
             Dao.USR_LST_NM = "";
             Dao.EMPE_NO = this.text_EMPE_NO.Text;
@@ -458,7 +604,6 @@ namespace AquilaErpWpfApp3.View.S.Dialog
             {
                 Dao.TM_PAY_AMT = 0;
             }
-
 
             if (EMP_LOC_NMVo != null) 
             {
@@ -521,6 +666,7 @@ namespace AquilaErpWpfApp3.View.S.Dialog
                     this.combo_GRP_NM.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<GroupUserVo>>(await response.Content.ReadAsStringAsync()).Cast<GroupUserVo>().ToList();
                 }
             }
+            User_add_setting();
         }
 
         public async void SYSTEM_CODE_VO(string _CLSS_TP_CD1, string _CLSS_TP_CD2, string _CLSS_TP_CD3 )
@@ -550,6 +696,75 @@ namespace AquilaErpWpfApp3.View.S.Dialog
                 }
             }
 
+        }
+
+        private void combo_GRP_NM_EditValueChanged(object sender, DevExpress.Xpf.Editors.EditValueChangedEventArgs e)
+        {
+            User_add_setting();
+        }
+
+        private void User_add_setting()
+        {
+            GroupUserVo Grp_nm_vo = Create_Selected_GrpNm_Value();
+
+            if (Grp_nm_vo != null)
+            {
+                if (Grp_nm_vo.OSTR_FLG.Equals("Y"))
+                {
+                    //부서, 고객사
+                    this.text_GRP_NM.Text = "고객사* : ";
+                    //이름, 업체명
+                    this.text_USR_NM.Text = "업체명* : ";
+                    this.text_EMPE_PLC_NM.Visibility = Visibility.Hidden;
+                    this.combo_EMPE_PLC_NM.Visibility = Visibility.Hidden;
+                    //입사일
+                    this.text_CO_DT.Visibility = Visibility.Hidden;
+                    this.text_JOIN_CO_DT.Visibility = Visibility.Hidden;
+                    //퇴사일
+                    this.check_RESGN_CO_DT.Visibility = Visibility.Hidden;
+                    this.text_RESGN_CO_DT.Visibility = Visibility.Hidden;
+                    //사번
+                    this.text_EMPE_NO_NM.Visibility = Visibility.Hidden;
+                    this.text_EMPE_NO.Visibility = Visibility.Hidden;
+                    //직책
+                    this.text_OFC_PSN_NM.Visibility = Visibility.Hidden;
+                    this.combo_OFC_PSN_NM.Visibility = Visibility.Hidden;
+                    //근무구역
+                    this.text_EMP_LOC_NM.Visibility = Visibility.Hidden;
+                    this.combo_EMP_LOC_NM.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    //부서, 고객사
+                    this.text_GRP_NM.Text = "부서* : ";
+                    //이름, 업체명
+                    this.text_USR_NM.Text = "이름* : ";
+                    this.text_EMPE_PLC_NM.Visibility = Visibility.Visible;
+                    this.combo_EMPE_PLC_NM.Visibility = Visibility.Visible;
+                    //입사일
+                    this.text_CO_DT.Visibility = Visibility.Visible;
+                    this.text_JOIN_CO_DT.Visibility = Visibility.Visible;
+                    //퇴사일
+                    this.check_RESGN_CO_DT.Visibility = Visibility.Visible;
+                    this.text_RESGN_CO_DT.Visibility = Visibility.Visible;
+                    //사번
+                    this.text_EMPE_NO_NM.Visibility = Visibility.Visible;
+                    this.text_EMPE_NO.Visibility = Visibility.Visible;
+                    //직책
+                    this.text_OFC_PSN_NM.Visibility = Visibility.Visible;
+                    this.combo_OFC_PSN_NM.Visibility = Visibility.Visible;
+                    //근무구역
+                    this.text_EMP_LOC_NM.Visibility = Visibility.Visible;
+                    this.combo_EMP_LOC_NM.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private GroupUserVo Create_Selected_GrpNm_Value()
+        {
+            GroupUserVo Grp_nm_vo = this.combo_GRP_NM.SelectedItem as GroupUserVo;
+
+            return Grp_nm_vo;
         }
 
     }

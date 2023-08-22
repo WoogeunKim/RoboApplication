@@ -3211,5 +3211,65 @@
              AND ITM_CD = #ITM_CD#
 	  </update>
 
+
+	  <select id="S1150SelectMaster" parameterClass="ModelsLibrary.Code.SystemCodeVo" resultClass="ModelsLibrary.Code.SystemCodeVo">
+		SELECT CAR_ID
+             , CAR_NO 
+             , CAR_NM 
+             , CAR_PHN_NO 
+             , CAR_DESC
+             , CRE_USR_ID
+             , CRE_DT
+             , UPD_USR_ID 
+             , UPD_DT
+          FROM TB_SL_CAR_INFO
+	     ORDER BY CRE_DT DESC
+	  </select>
+
+	  <insert id="S1150InsertMaster" parameterClass="ModelsLibrary.Code.SystemCodeVo">
+		INSERT INTO TB_SL_CAR_INFO
+        ( 
+              CAR_ID
+            , CAR_NO
+            , CAR_NM
+            , CAR_PHN_NO
+            , CAR_DESC
+            , CRE_USR_ID
+            , CRE_DT
+            , UPD_USR_ID
+            , UPD_DT
+        ) 
+		VALUES 
+		(
+              LEFT(NEWID(), 8)
+            , #CAR_NO#
+            , #CAR_NM#
+            , #CAR_PHN_NO#
+            , #CAR_DESC#
+            , #CRE_USR_ID#
+            , GETDATE()
+            , #UPD_USR_ID#
+            , GETDATE()
+        )
+	  </insert>
+
+	  <update id="S1150UpdateMaster" parameterClass="ModelsLibrary.Code.SystemCodeVo">
+	   UPDATE TB_SL_CAR_INFO
+		  SET CAR_NO = #CAR_NO#
+		    , CAR_NM = #CAR_NM#
+			, CAR_PHN_NO = #CAR_PHN_NO#
+			, CAR_DESC = #CAR_DESC#
+			, UPD_USR_ID = #UPD_USR_ID#
+			, UPD_DT    = GETDATE()
+	    WHERE 1 = 1
+		 AND CAR_ID = #CAR_ID#
+	  </update>
+
+
+	  <delete id="S1150DeleteMaster" parameterClass="ModelsLibrary.Code.SystemCodeVo">
+		 DELETE FROM TB_SL_CAR_INFO
+		  WHERE CAR_ID = #CAR_ID#
+	  </delete>
+
   </statements>
 </sqlMap>

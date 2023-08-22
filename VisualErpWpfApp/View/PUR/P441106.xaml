@@ -372,11 +372,12 @@
                 <!--<dxb:BarButtonItem x:Name="M_DTL_INSERT" Content="도면 등록" KeyGesture="Ctrl+F6" Glyph="{dx:DXImage Image=Insert_16x16.png}" LargeGlyph="{dx:DXImage Image=Insert_32x32.png}" RibbonStyle="Large" Command="{Binding NewDtlContactCommand}" IsEnabled="{Binding isM_UPDATE}" />-->
                 <dxb:BarButtonItem x:Name="M_DTL_INSERT" Content="도면 등록" KeyGesture="Ctrl+F6"  RibbonStyle="Large" Command="{Binding NewDtlContactCommand}"  IsEnabled="{Binding isM_UPDATE}" LargeGlyph="{dxc:DXImage SvgImages/Reports/AddParameter.svg}"  />
                 <dxb:BarButtonItem x:Name="M_DTL_DOWNLOAD" Content="도면 저장" KeyGesture="Ctrl+F7" RibbonStyle="Large" Command="{Binding FileDownloadContactCommand}" IsEnabled="{Binding isM_UPDATE}" LargeGlyph="{dxc:DXImage SvgImages/Save/SaveAndNew.svg}"  />
-                
-                
+                <dxb:BarButtonItem x:Name="M_DTL_CONFIRM" Content="도면 확정" KeyGesture="Ctrl+F8" RibbonStyle="Large" Command="{Binding FileConfirmContactCommand}" IsEnabled="{Binding isM_UPDATE}" LargeGlyph="{dxc:DXImage SvgImages/Snap/Checkbox.svg}"  />
+
+
                 <!--<dxb:BarButtonItem x:Name="M_DTL_INSERT_2" Content="기타 발주" KeyGesture="Ctrl+F7" Glyph="{dx:DXImage Image=Insert_16x16.png}" LargeGlyph="{dx:DXImage Image=Insert_32x32.png}" RibbonStyle="Large" Command="{Binding EditDtlContactCommand}" IsEnabled="{Binding isM_UPDATE}" />-->
                 <!--<dxb:BarButtonItem x:Name="M_DTL_UPDATE" Content="수정" KeyGesture="Ctrl+F7" Glyph="{dx:DXImage Image=Edit_16x16.png}" LargeGlyph="{dx:DXImage Image=Edit_32x32.png}"  RibbonStyle="SmallWithText" IsEnabled="{Binding isD_UPDATE}" Command="{Binding EditDtlDialogCommand}" />-->
-                <dxb:BarButtonItem x:Name="M_DTL_DELETE" Content="삭제" KeyGesture="Ctrl+F8" RibbonStyle="SmallWithText" IsEnabled="{Binding isD_DELETE}" Command="{Binding DelDtlContactCommand}" LargeGlyph="{dxc:DXImage SvgImages/Dashboards/Delete.svg}" Glyph="{dxc:DXImage SvgImages/Dashboards/Delete.svg}" />
+                <dxb:BarButtonItem x:Name="M_DTL_DELETE" Content="삭제" KeyGesture="Ctrl+F9" RibbonStyle="SmallWithText" IsEnabled="{Binding isD_DELETE}" Command="{Binding DelDtlContactCommand}" LargeGlyph="{dxc:DXImage SvgImages/Dashboards/Delete.svg}" Glyph="{dxc:DXImage SvgImages/Dashboards/Delete.svg}" />
             </dxb:BarManager.Items>
             
             <Grid>
@@ -411,6 +412,7 @@
                             <dxr:RibbonPageGroup Caption="도면 관리">
                                 <dxb:BarButtonItemLink BarItemName="M_DTL_INSERT"/>
                                 <dxb:BarButtonItemLink BarItemName="M_DTL_DOWNLOAD"/>
+                                <dxb:BarButtonItemLink BarItemName="M_DTL_CONFIRM"/>
                                 
                                 <dxb:BarButtonItemLink BarItemName="M_DTL_REFRESH"/>
                                 <dxb:BarButtonItemLink BarItemName="M_DTL_DELETE"/>
@@ -576,31 +578,37 @@
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
-                                            <dxg:GridColumn FieldName="UPD_DT" Header="수정일자"  Width="90" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" Validate="GridColumn_Validate"  VisibleIndex="1">
+                                            <dxg:GridColumn FieldName="CRE_DT" Header="도면등록일시"  Width="130" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" Validate="GridColumn_Validate"  VisibleIndex="1">
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Mask="yyyy-MM-dd" MaskUseAsDisplayFormat="True"  />
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
-                                            <dxg:GridColumn FieldName="FLR_NM" Header="등록파일명" Width="230" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="2">
+                                            <dxg:GridColumn FieldName="UPD_DT" Header="도면확정일시"  Width="130" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" Validate="GridColumn_Validate"  VisibleIndex="2">
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Mask="yyyy-MM-dd" MaskUseAsDisplayFormat="True"  />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
+
+                                            <dxg:GridColumn FieldName="FLR_NM" Header="등록파일명" Width="400" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="3">
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
-                                            <dxg:GridColumn FieldName="FLR_NO" Header="도면번호" Width="100" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="3">
+                                            <dxg:GridColumn FieldName="FLR_NO" Header="도면번호" Width="100" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="4">
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
-                                            <dxg:GridColumn FieldName="IN_REQ_DT" Header="납품요청일" Width="90" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True"  VisibleIndex="4">
+                                            <dxg:GridColumn FieldName="IN_REQ_DT" Header="납품요청일" Width="90" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True"  VisibleIndex="5">
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
-                                            <dxg:GridColumn FieldName="CNTR_NM" Header="공사명" Width="150" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="5">
+                                            <dxg:GridColumn FieldName="CNTR_NM" Header="공사명" Width="150" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="6">
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
                                                 </dxg:GridColumn.EditSettings>
@@ -612,7 +620,7 @@
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>-->
 
-                                            <dxg:GridColumn FieldName="DE_CO_NM" Header="납품처"  Width="150" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="6">
+                                            <dxg:GridColumn FieldName="DE_CO_NM" Header="납품처"  Width="150" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="7">
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
                                                 </dxg:GridColumn.EditSettings>
@@ -637,6 +645,18 @@
                                             </dxg:GridColumn>
 
                                             <dxg:GridColumn FieldName="PRG_TP_NM" Header="컨버팅프로그램"  Width="120" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="9">                                                
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
+
+                                            <dxg:GridColumn FieldName="CRE_USR_NM" Header="도면등록자명"  Width="100" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="10">
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
+
+                                            <dxg:GridColumn FieldName="UPD_USR_NM" Header="도면확정자명"  Width="100" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="11">
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
                                                 </dxg:GridColumn.EditSettings>

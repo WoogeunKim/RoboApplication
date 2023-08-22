@@ -10,6 +10,7 @@
       , GRP_TP_CD
       , CAST(GRP_ROLL_ID  AS VARCHAR) AS GRP_ROLL_ID
       , CHNL_CD 
+	  , OSTR_FLG
       FROM TB_SYS_GRP
       WHERE 1 = 1
         AND CHNL_CD = #CHNL_CD#
@@ -40,6 +41,7 @@
         , UPD_USR_ID
         , UPD_DT
         , CHNL_CD
+		, OSTR_FLG
       ) VALUES (
           #PRNT_GRP_ID#
         , #GRP_NM#
@@ -51,6 +53,7 @@
         , #UPD_USR_ID#
         , GETDATE()
         , #CHNL_CD#
+		, #OSTR_FLG#
       )      
     </insert>
     <!-- 그룹수정 -->
@@ -63,6 +66,7 @@
         , GRP_ROLL_ID     = #GRP_ROLL_ID#
         , UPD_USR_ID      = #UPD_USR_ID#
         , UPD_DT          = GETDATE()
+		, OSTR_FLG        = #OSTR_FLG#
       WHERE 1 = 1
         AND GRP_ID = #GRP_ID#
         AND CHNL_CD = #CHNL_CD#
@@ -117,7 +121,8 @@
             , CASE WHEN ISNULL(TM_PAY_FLG, 'N') = 'Y' THEN 1 ELSE 0 END AS TM_PAY_FLG
             , TM_PAY_AMT
             , EMP_LOC_CD
-            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-051', EMP_LOC_CD) AS EMP_LOC_NM
+            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-051', EMP_LOC_CD) AS EMP_LOC_NM	
+			, (SELECT OSTR_FLG FROM TB_SYS_GRP AS A WHERE 1=1 AND A.CHNL_CD = #CHNL_CD# AND  A.GRP_ID = B.GRP_ID) AS OSTR_FLG
       FROM TB_SYS_USR AS B
       WHERE 1=1
       <isNotNull property="USR_ID" >
@@ -257,7 +262,8 @@
       , ISNULL(USR_ID + ' ' + USR_N1ST_NM, GRP_ID + ' ' + GRP_NM) AS USR_N1ST_NM
       , ISNULL(USR_N1ST_NM, 'G') AS IS_GROUP
       , ISNULL(DELT_FLG ,'') AS DELT_FLG
-      , CHNL_CD 
+      , CHNL_CD
+	  , OSTR_FLG
       FROM
       (
         SELECT 'A' AS GBN
@@ -268,7 +274,8 @@
           , NULL AS USR_ID
           , NULL AS USR_N1ST_NM
           , NULL AS DELT_FLG
-          , T1.CHNL_CD 
+          , T1.CHNL_CD
+		  , T1.OSTR_FLG
         FROM TB_SYS_GRP T1
         WHERE 1 = 1
           AND T1.GRP_TP_CD = 'G'
@@ -283,6 +290,7 @@
         , T2.USR_N1ST_NM
         , T2.DELT_FLG
         , T1.CHNL_CD 
+		, T1.OSTR_FLG
       FROM TB_SYS_GRP T1
          , TB_SYS_USR T2
       WHERE 1 = 1

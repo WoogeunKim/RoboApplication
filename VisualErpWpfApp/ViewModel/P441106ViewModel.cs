@@ -5,6 +5,7 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Dialogs;
 using DevExpress.Xpf.WindowsUI;
+using ModelsLibrary.Auth;
 using ModelsLibrary.Code;
 using ModelsLibrary.Pur;
 using Newtonsoft.Json;
@@ -37,7 +38,7 @@ namespace AquilaErpWpfApp3.ViewModel
 
         private P441106MasterDialog masterDialog;
         private P441106DetailDialog detailDialog;
-
+        private GroupUserVo UserVo;
         //private P441102EmailDialog emailDialog;
 
 
@@ -319,30 +320,58 @@ namespace AquilaErpWpfApp3.ViewModel
         }
 
         //
-    
+
 
         // 마스터의 디테일 조회(발주 상세정보)
         [Command]
         public async void SelectMstDetail()
         {
-             try
-             {
-                 //DXSplashScreen.Show<ProgressWindow>();
-
+            try
+            {
                 if (this._selectedMstItem == null)
                 {
                     return;
                 }
 
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("p441106/dtl", new StringContent(JsonConvert.SerializeObject(SelectedMstItem), System.Text.Encoding.UTF8, "application/json")))
+                PurVo Dtlvo = SelectedMstItem;
+
+                //로그인한 유저가 고객사 일 때 (Y)
+                if (this.UserVo.OSTR_FLG.Equals("Y"))
                 {
+                    Dtlvo.OSTR_FLG = "Y";
+                }
+                else
+                {
+                    //고객사가 아니라면 자기가 등록한 도면만 조회
+                    Dtlvo.OSTR_FLG = "N";
+                    Dtlvo.CRE_USR_ID = SystemProperties.USER_VO.USR_ID;
+                }
+
+
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("p441106/dtl", new StringContent(JsonConvert.SerializeObject(Dtlvo), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    IList<PurVo> resultVo = new List<PurVo>();
+
                     if (response.IsSuccessStatusCode)
                     {
-                        this.SelectDtlList = JsonConvert.DeserializeObject<IEnumerable<PurVo>>(await response.Content.ReadAsStringAsync()).Cast<PurVo>().ToList();
+                        resultVo = JsonConvert.DeserializeObject<IEnumerable<PurVo>>(await response.Content.ReadAsStringAsync()).Cast<PurVo>().ToList();
                     }
 
-                    //SelectDtlList = purClient.P4411SelectDtlList(SelectedMstItem);
-                    // //
+
+                    //N1ST는 도면등록자의 부모그룹아이디 (샵업체가 도면등록)
+                    //사용자의 그룹아이디(고객사의 그룹아이디) 와 일치하는것만 보여주기
+                    if (this.UserVo.OSTR_FLG.Equals("Y"))
+                    {
+                        resultVo = resultVo.Where<PurVo>(x => x.N1ST_RVW_USR_ID != null).ToList();
+                        this.SelectDtlList = resultVo.Where<PurVo>(x => x.N1ST_RVW_USR_ID.Equals(this.UserVo.GRP_ID)).ToList();
+                    }
+                    else
+                    {
+                        //고객사가 아니면 자기가 등록한 도면만 모두조회
+                        this.SelectDtlList = resultVo;
+                    }
+
+
                     if (SelectDtlList.Count >= 1)
                     {
                         isD_UPDATE = true;
@@ -358,17 +387,16 @@ namespace AquilaErpWpfApp3.ViewModel
                 }
 
                 //DXSplashScreen.Close();
-             }
-             catch (System.Exception eLog)
-             {
-                 //DXSplashScreen.Close();
-                 //
-                 WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
-                 return;
-             }
+            }
+            catch (System.Exception eLog)
+            {
+                //DXSplashScreen.Close();
+                //
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
         }
         //#endregion
-
 
         //#region Functon <Detail List>
         public IList<PurVo> SelectDtlList
@@ -565,6 +593,58 @@ namespace AquilaErpWpfApp3.ViewModel
             }
         }
 
+        [Command]
+        public async void FileConfirmContact()
+        {
+            try
+            {
+                //도면확정
+                if (SearchDetail == null)
+                {
+                    return;
+                }
+
+                if (!this.UserVo.OSTR_FLG.Equals("Y"))
+                {
+                    WinUIMessageBox.Show("도면 확정 권한이 없습니다.", _title, MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                MessageBoxResult result = WinUIMessageBox.Show("도면번호" + "[" + SearchDetail.FLR_NO + "]" + " (을)를 정말로 확정 하시겠습니까?", "[확정]" + _title, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    SearchDetail.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
+                    SearchDetail.UPD_USR_ID = SystemProperties.USER_VO.USR_ID;
+                    
+                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("p441106/dtl/u", new StringContent(JsonConvert.SerializeObject(SearchDetail), System.Text.Encoding.UTF8, "application/json")))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            int _Num = 0;
+                            string resultMsg = await response.Content.ReadAsStringAsync();
+                            if (int.TryParse(resultMsg, out _Num) == false)
+                            {
+                                //실패
+                                WinUIMessageBox.Show(resultMsg, _title, MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                            //Refresh();
+                            SelectMstDetail();
+
+                            //성공
+                            WinUIMessageBox.Show("도면확정이 완료되었습니다.", _title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
+                        }
+                    }
+
+
+                }
+            }
+            catch (System.Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+        }
 
         [Command]
         public void NewDtlContact()
@@ -642,17 +722,35 @@ namespace AquilaErpWpfApp3.ViewModel
 
         public async void SYSTEM_CODE_VO()
         {
-            //SL_AREA_LIST = SystemProperties.SYSTEM_CODE_VO("L-002");
-            using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.GetAsync("s131/dtl/" + Properties.Settings.Default.SettingChnl + "/" + "L-002"))
+
+            try
             {
-                if (response.IsSuccessStatusCode)
+                //SL_AREA_LIST = SystemProperties.SYSTEM_CODE_VO("L-002");
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.GetAsync("s131/dtl/" + Properties.Settings.Default.SettingChnl + "/" + "L-002"))
                 {
-                    AreaList = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
-                    if (AreaList.Count > 0)
+                    if (response.IsSuccessStatusCode)
                     {
-                        M_SL_AREA_NM = AreaList[0];
+                        AreaList = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
+                        if (AreaList.Count > 0)
+                        {
+                            M_SL_AREA_NM = AreaList[0];
+                        }
                     }
                 }
+
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s136/u", new StringContent(JsonConvert.SerializeObject(new GroupUserVo{USR_ID = SystemProperties.USER_VO.USR_ID, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, DELT_FLG = "N" }), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        this.UserVo = JsonConvert.DeserializeObject<IEnumerable<GroupUserVo>>(await response.Content.ReadAsStringAsync()).Cast<GroupUserVo>().FirstOrDefault();
+                    }
+                }
+
+            }
+            catch (System.Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
             }
 
             ////CustomerList = SystemProperties.SYSTEM_CODE_VO("L-002");
@@ -663,7 +761,6 @@ namespace AquilaErpWpfApp3.ViewModel
             //        this.CustomerList = JsonConvert.DeserializeObject<IEnumerable<SystemCodeVo>>(await response.Content.ReadAsStringAsync()).Cast<SystemCodeVo>().ToList();
             //    }
             //}
-
             Refresh();
         }
     }
