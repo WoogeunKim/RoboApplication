@@ -19,13 +19,14 @@
 	  
 	  <!-- 프로그램 버전 조회-->
 	  <select id="MobileVerSelect" resultClass="ModelsLibrary.Mobile.MobileVo" parameterClass="ModelsLibrary.Mobile.MobileVo">
-		  SELECT TOP 1
+		 SELECT TOP 1
 			    VER_NM
 			  , FL_NM
 			  , ST_NM
 			  , USE_FLG AS DELT_FLG
-		  FROM TB_SYS_MOB_UPD_VER
+		   FROM TB_SYS_MOB_UPD_VER
 		  WHERE 1 = 1
+            AND ST_NM = #ST_NM#
 		  ORDER BY CRE_DT DESC
 	  </select>
 	  

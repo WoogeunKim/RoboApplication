@@ -196,6 +196,7 @@
     <Compile Include="Controllers\Code\S11472Controller.cs" />
     <Compile Include="Controllers\Code\S11479Controller.cs" />
     <Compile Include="Controllers\Code\S1148Controller.cs" />
+    <Compile Include="Controllers\Code\S1150Controller.cs" />
     <Compile Include="Controllers\Code\S14130Controller.cs" />
     <Compile Include="Controllers\Code\S1144Controller.cs" />
     <Compile Include="Controllers\Code\S1146Controller.cs" />
@@ -256,6 +257,7 @@
     <Compile Include="Controllers\Man\M6500Controller.cs" />
     <Compile Include="Controllers\Man\M6684Controller.cs" />
     <Compile Include="Controllers\Man\M6720Controller.cs" />
+    <Compile Include="Controllers\Man\M6740Controller.cs" />
     <Compile Include="Controllers\Man\M7711Controller.cs" />
     <Compile Include="Controllers\Man\M6730Controller.cs" />
     <Compile Include="Controllers\Man\M6710Controller.cs" />
@@ -316,6 +318,7 @@
     <Compile Include="Controllers\Pur\P4422Controller.cs" />
     <Compile Include="Controllers\Pur\P4411Controller.cs" />
     <Compile Include="Controllers\Pur\P4430Controller.cs" />
+    <Compile Include="Controllers\Sale\S221111Controller.cs" />
     <Compile Include="Controllers\Sale\S22111Controller.cs" />
     <Compile Include="Controllers\Sale\S2218Controller.cs" />
     <Compile Include="Controllers\Sale\S2219Controller.cs" />
@@ -323,6 +326,7 @@
     <Compile Include="Controllers\Sale\S2215Controller.cs" />
     <Compile Include="Controllers\Sale\S22226Controller.cs" />
     <Compile Include="Controllers\Sale\S22225Controller.cs" />
+    <Compile Include="Controllers\Sale\S22227Controller.cs" />
     <Compile Include="Controllers\Sale\S2223Controller.cs" />
     <Compile Include="Controllers\Sale\S22320Controller.cs" />
     <Compile Include="Controllers\Sale\S2230Controller.cs" />

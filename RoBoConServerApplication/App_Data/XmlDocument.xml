@@ -682,6 +682,26 @@
             도면 기준 관리 MST - 삭제
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Code.S1150Controller.GetMstSelect(ModelsLibrary.Code.SystemCodeVo)">
+            <summary>
+            운송차량관리 - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Code.S1150Controller.GetMstInsert(ModelsLibrary.Code.SystemCodeVo)">
+            <summary>
+            운송차량관리 - 추가
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Code.S1150Controller.GetMstUpdate(ModelsLibrary.Code.SystemCodeVo)">
+            <summary>
+            운송차량관리 - 수정
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Code.S1150Controller.GetMstDelete(ModelsLibrary.Code.SystemCodeVo)">
+            <summary>
+            운송차량관리 - 삭제
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Code.S14130Controller.GetMstSelect(ModelsLibrary.Code.SystemCodeVo)">
             <summary>
             완제품코드등록 MST - 조회
@@ -1062,6 +1082,46 @@
             거래처 관리 CLASS - 삭제
             </summary>
         </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S221111Controller.GetMstSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            출하 등록 MST - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S221111Controller.GetMstInsert(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            출하 등록 MST - 추가
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S221111Controller.GetMstUpdate(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            출하 등록 MST - 수정
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S221111Controller.GetMstDelete(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            출하 등록 MST - 삭제
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S221111Controller.GetDtlSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            출하 등록 DTL - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S221111Controller.GetDtlPopSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            출하 등록 DTL POPUP - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S221111Controller.GetDtlInsert(System.Collections.Generic.IList{ModelsLibrary.Sale.SaleVo})">
+            <summary>
+            출하 등록 DTL - 추가
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S221111Controller.GetDtlDelete(System.Collections.Generic.IList{ModelsLibrary.Sale.SaleVo})">
+            <summary>
+            출하 등록 DTL - 삭제
+            </summary>
+        </member>
         <member name="M:VisualServerApplication.Controllers.Sale.S22111Controller.GetMstSelect(ModelsLibrary.Sale.SaleVo)">
             <summary>
             수주 등록 MST - 조회
@@ -1240,6 +1300,66 @@
         <member name="M:VisualServerApplication.Controllers.Sale.S22225Controller.GetMstInsert(System.Collections.Generic.List{ModelsLibrary.Sale.SaleVo})">
             <summary>
             GR번호 확정 MST - 추가
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S22227Controller.GetMstLeftSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            주문별 생산공장/GR확정 MST - 발주번호, 고객사 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S22227Controller.GetDtlRightTopSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            주문별 생산공장/GR확정 DTL - 발주번호별 DTL조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S22227Controller.GetDtlLeftBottomSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            주문별 생산공장/GR확정 DTL - GR번호, LOC번호 확정리스트 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S22227Controller.GetDtlRightBottomSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            주문별 생산공장/GR확정 DTL - 공사별 DTL조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S22227Controller.GetDtlGrListSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            주문별 생산공장/GR확정 DTL - 공사별 DTL조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S22227Controller.GetDtlGrNo(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            주문별 생산공장/GR확정 - GR 신규번호 불러오기
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S22227Controller.GetDtlGrNewUpdate(System.Collections.Generic.IList{ModelsLibrary.Sale.SaleVo})">
+            <summary>
+            주문별 생산공장/GR확정 DTL - GR 신규번호 부여 및 리스트 묶음
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S22227Controller.GetDtlGrOriginUpdate(System.Collections.Generic.IList{ModelsLibrary.Sale.SaleVo})">
+            <summary>
+            주문별 생산공장/GR확정 DTL - GR 기존번호 부여 및 리스트 묶음에 포함
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S22227Controller.GetPopLocSelect(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            주문별 생산공장/GR확정- LOC창고 콤보박스 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S22227Controller.GetPopLocUpdate(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            주문별 생산공장/GR확정- LOC창고 업데이트
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S22227Controller.GetDtlGrDelete(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            주문별 생산공장/GR확정 - GR확정 리스트에 있는 GR번호 삭제
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Sale.S22227Controller.GetDtlLocDelete(ModelsLibrary.Sale.SaleVo)">
+            <summary>
+            주문별 생산공장/GR확정 - GR확정 리스트에 있는 창고LOC 삭제
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Sale.S2223Controller.GetMstSelect(ModelsLibrary.Sale.SaleVo)">
@@ -2144,22 +2264,44 @@
         </member>
         <member name="M:VisualServerApplication.Controllers.Man.M661010Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
             <summary>
-            오더매니저 - 조회
-            </summary>
-        </member>
-        <member name="M:VisualServerApplication.Controllers.Man.M661010Controller.GetDtlSelect(ModelsLibrary.Man.ManVo)">
-            <summary>
-            오더매니저 - 조회
+            오더매니저 설비 MST-  설비번호, 설비명, 배정건수 조회
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Man.M661010Controller.GetImgSelect(ModelsLibrary.Man.ManVo)">
             <summary>
-            오더매니저 - 조회
+            오더매니저 설비 MST - 강종 및 규격별 이미지 조회
             </summary>
         </member>
-        <member name="M:VisualServerApplication.Controllers.Man.M661010Controller.GetDtlUpdate(ModelsLibrary.Man.ManVo)">
+        <member name="M:VisualServerApplication.Controllers.Man.M661010Controller.GetDtlSelect(ModelsLibrary.Man.ManVo)">
             <summary>
-            오더매니저 - 수정
+            오더매니저 설비 DTL - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M661010Controller.GetDtlLovSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            오더매니저 설비 DTL - 작업지시리스트 조회
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:VisualServerApplication.Controllers.Man.M661010Controller.GetLovWgtSelect(ModelsLibrary.Man.ManVo)" -->
+        <member name="M:VisualServerApplication.Controllers.Man.M661010Controller.GetWgtUpdate(System.Collections.Generic.IList{ModelsLibrary.Man.ManVo})">
+            <summary>
+            오더매니저 - 생산 관리 중량 컬럼 업데이트
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:VisualServerApplication.Controllers.Man.M661010Controller.GetLovWgtUpdate(ModelsLibrary.Man.ManVo)" -->
+        <member name="M:VisualServerApplication.Controllers.Man.M661010Controller.GetDtlProdInsert(System.Collections.Generic.IList{ModelsLibrary.Man.ManVo})">
+            <summary>
+            오더매니저 - 생산계획관리 추가
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M661010Controller.GetDtlLovUpdate(ModelsLibrary.Man.ManVo)">
+            <summary>
+            오더매니저 - 작업지시리스트 수정
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M661010Controller.GetDtlLovDelete(System.Collections.Generic.IList{ModelsLibrary.Man.ManVo})">
+            <summary>
+            오더매니저 - 작업지시리스트 삭제
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Man.M66103Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
@@ -2483,6 +2625,21 @@
         <member name="M:VisualServerApplication.Controllers.Man.M6720Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
             <summary>
             사출 작업실적보고  - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M6740Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            실적등록 MST - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M6740Controller.GetDtlSelect(ModelsLibrary.Man.ManVo)">
+            <summary>
+            실적등록 DTL - 조회
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Man.M6740Controller.GetDtlGrOriginUpdate(System.Collections.Generic.IList{ModelsLibrary.Man.ManVo})">
+            <summary>
+            실적등록 - 생산입고
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Man.M7711Controller.GetMstSelect(ModelsLibrary.Man.ManVo)">
@@ -4089,6 +4246,11 @@
         <member name="M:VisualServerApplication.Controllers.Pur.P441106Controller.GetDtlDelete(ModelsLibrary.Pur.PurVo)">
             <summary>
             고객사발주등록 DTL - 삭제(도면삭제)
+            </summary>
+        </member>
+        <member name="M:VisualServerApplication.Controllers.Pur.P441106Controller.GetDtlUpdate(ModelsLibrary.Pur.PurVo)">
+            <summary>
+            고객사발주등록 DTL - 수정
             </summary>
         </member>
         <member name="M:VisualServerApplication.Controllers.Pur.P4426Controller.GetMstSelect(ModelsLibrary.Pur.PurVo)">
