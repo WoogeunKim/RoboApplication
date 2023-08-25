@@ -1,14 +1,8 @@
-﻿using AquilaErpWpfApp3.Util;
-using AquilaErpWpfApp3.ViewModel;
+﻿using AquilaErpWpfApp3.ViewModel;
 using DevExpress.Xpf.Editors;
 using DevExpress.Xpf.WindowsUI;
 using ModelsLibrary.Man;
-using ModelsLibrary.Sale;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -43,26 +37,26 @@ namespace AquilaErpWpfApp3.View.M
 
         private void CheckEdit_Checked(object sender, RoutedEventArgs e)
         {
-            //CheckEdit checkEdit = sender as CheckEdit;
-            //SaleVo tmpImsi;
-            //for (int x = 0; x < this.ViewGridDtl.VisibleRowCount; x++)
-            //{
-            //    int rowHandle = this.ViewGridDtl.GetRowHandleByVisibleIndex(x);
-            //    if (rowHandle > -1)
-            //    {
-            //        tmpImsi = this.ViewGridDtl.GetRow(rowHandle) as SaleVo;
-            //        if (checkEdit.IsChecked == true)
-            //        {
-            //            tmpImsi.isCheckd = true;
+            CheckEdit checkEdit = sender as CheckEdit;
+            ManVo tmpImsi;
+            for (int x = 0; x < this.ViewGridDtl.VisibleRowCount; x++)
+            {
+                int rowHandle = this.ViewGridDtl.GetRowHandleByVisibleIndex(x);
+                if (rowHandle > -1)
+                {
+                    tmpImsi = this.ViewGridDtl.GetRow(rowHandle) as ManVo;
+                    if (checkEdit.IsChecked == true)
+                    {
+                        tmpImsi.isCheckd = true;
 
-            //        }
-            //        else
-            //        {
-            //            tmpImsi.isCheckd  
-            //        }
+                    }
+                    else
+                    {
+                        tmpImsi.isCheckd = false;
+                    }
 
-            //    }
-            //}
+                }
+            }
         }
 
 
@@ -148,6 +142,25 @@ namespace AquilaErpWpfApp3.View.M
         private void ViewTableDtl_HiddenEditor(object sender, DevExpress.Xpf.Grid.EditorEventArgs e)
         {
             this.ViewTableDtl.CommitEditing();
+        }
+
+        private void ViewTableDtl_CellValueChanging(object sender, DevExpress.Xpf.Grid.CellValueChangedEventArgs e)
+        {
+            if (e.Column.FieldName == "isCheckd")
+            {
+
+                var viewModel = DataContext as M6740ViewModel;
+                if (viewModel != null)
+                {
+                    viewModel.SelectDetailCheckd();
+                }
+
+                //TableView view = (TableView)sender;
+                //view.CloseEditor();
+                //view.FocusedRowHandle = GridControl.InvalidRowHandle;
+                //view.FocusedRowHandle = e.RowHandle;
+            }
+
         }
 
 

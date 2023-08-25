@@ -297,13 +297,13 @@
                                                         </dxg:GridColumn.EditSettings>
                                                     </dxg:GridColumn>
 
-                                                    <dxg:GridColumn FieldName="SL_RLSE_NO" Header="SL_RLSE_NO" Width="95" AllowAutoFilter="False" AllowSearchPanel="False" AllowSorting="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                                    <dxg:GridColumn FieldName="SL_RLSE_NO" Header="SL_RLSE_NO" Width="95" AllowAutoFilter="False" AllowSearchPanel="False" AllowSorting="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" Visible="False">
                                                         <dxg:GridColumn.EditSettings>
                                                             <dxe:TextEditSettings HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                                         </dxg:GridColumn.EditSettings>
                                                     </dxg:GridColumn>
 
-                                                    <dxg:GridColumn FieldName="SL_RLSE_SEQ" Header="SL_RLSE_SEQ" Width="95" AllowAutoFilter="False" AllowSearchPanel="False" AllowSorting="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                                    <dxg:GridColumn FieldName="SL_RLSE_SEQ" Header="SL_RLSE_SEQ" Width="95" AllowAutoFilter="False" AllowSearchPanel="False" AllowSorting="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" Visible ="False">
                                                         <dxg:GridColumn.EditSettings>
                                                             <dxe:TextEditSettings HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                                         </dxg:GridColumn.EditSettings>
@@ -348,13 +348,13 @@
                                                         </dxg:GridColumn.EditSettings>
                                                     </dxg:GridColumn>
 
-                                                    <dxg:GridColumn FieldName="SL_RLSE_NO" Header="SL_RLSE_NO" Width="80" AllowAutoFilter="False" AllowSearchPanel="False" AllowSorting="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="1">
+                                                    <dxg:GridColumn FieldName="SL_RLSE_NO" Header="SL_RLSE_NO" Width="80" AllowAutoFilter="False" AllowSearchPanel="False" AllowSorting="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="1" Visible="False">
                                                         <dxg:GridColumn.EditSettings>
                                                             <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                                         </dxg:GridColumn.EditSettings>
                                                     </dxg:GridColumn>
 
-                                                    <dxg:GridColumn FieldName="SL_RLSE_SEQ" Header="SL_RLSE_SEQ" Width="80" AllowAutoFilter="False" AllowSearchPanel="False" AllowSorting="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="1">
+                                                    <dxg:GridColumn FieldName="SL_RLSE_SEQ" Header="SL_RLSE_SEQ" Width="80" AllowAutoFilter="False" AllowSearchPanel="False" AllowSorting="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" VisibleIndex="1" Visible="False">
                                                         <dxg:GridColumn.EditSettings>
                                                             <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                                         </dxg:GridColumn.EditSettings>

@@ -133,12 +133,13 @@ namespace AquilaErpWpfApp3.View.M.Dialog
                     if (response.IsSuccessStatusCode)
                     {
                         ret = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
-
-                        if (this.orgVo.RUN_CLSS_CD.Equals("B"))
+                        if (this.orgVo.RUN_CLSS_CD != null)
                         {
-                            ret.Where(x => x.COLR_FLG.Equals("B")).ToList().ForEach(x => x.COLR_FLG = "A");
+                            if (this.orgVo.RUN_CLSS_CD.Equals("B"))
+                            {
+                                ret.Where(x => x.COLR_FLG.Equals("B")).ToList().ForEach(x => x.COLR_FLG = "A");
+                            }
                         }
-
                     }
                 }
             }

@@ -112,8 +112,8 @@ namespace AquilaErpWpfApp3.View.PUR.Dialog
                         //, IN_REQ_DT = DateTime.Now.ToString("yyyy-MM-dd")
                         , IN_REQ_DT = this.OrgDao.DUE_DT
                         , CHNL_CD = SystemProperties.USER_VO.CHNL_CD
-                        , CRE_USR_ID = SystemProperties.USER_VO.CRE_USR_ID
-                        , UPD_USR_ID = SystemProperties.USER_VO.UPD_USR_ID
+                        , CRE_USR_ID = SystemProperties.USER
+                        , UPD_USR_ID = SystemProperties.USER
                     });
                 }
 

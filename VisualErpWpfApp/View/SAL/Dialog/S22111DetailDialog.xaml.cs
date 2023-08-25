@@ -19,17 +19,18 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
     {
         private SaleVo orgDao;
         private string title = "출하 의뢰 등록";
-        IList<SaleVo> tmpDao = new List<SaleVo>();
 
         public S22111DetailDialog(SaleVo Dao)
         {
             InitializeComponent();
-            SYSTEM_CODE_VO();
+            
 
             this.orgDao = Dao;
             //this.ViewGridMst.MouseDoubleClick += ViewGridMst_MouseDoubleClick;
             //this.ViewGridMst.MouseLeftButtonUp += ViewGridMst_MouseButtonUp;
             //this.btn_Search.Click += btn_Search_Click;
+
+            SYSTEM_CODE_VO();
 
             this.OKButton.Click += new RoutedEventHandler(OKButton_Click);
             this.CancelButton.Click += new RoutedEventHandler(CancelButton_Click);
@@ -208,14 +209,22 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
 
         public async void SYSTEM_CODE_VO()
         {
-            using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s221111/dtl/pop", new StringContent(JsonConvert.SerializeObject(this.orgDao), System.Text.Encoding.UTF8, "application/json")))
+            try
             {
-                if (response.IsSuccessStatusCode)
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s221111/dtl/pop", new StringContent(JsonConvert.SerializeObject(this.orgDao), System.Text.Encoding.UTF8, "application/json")))
                 {
-                    tmpDao = JsonConvert.DeserializeObject<IEnumerable<SaleVo>>(await response.Content.ReadAsStringAsync()).Cast<SaleVo>().ToList();
-                    this.ViewGridMst.ItemsSource = tmpDao;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        this.ViewGridMst.ItemsSource = JsonConvert.DeserializeObject<IEnumerable<SaleVo>>(await response.Content.ReadAsStringAsync()).Cast<SaleVo>().ToList();
+                    }
                 }
             }
+            catch (System.Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, "[에러]" + title, MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
         }
 
         //IsEdit

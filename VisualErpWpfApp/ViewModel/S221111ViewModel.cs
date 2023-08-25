@@ -126,6 +126,7 @@ namespace AquilaErpWpfApp3.ViewModel
                     {
                         isD_UPDATE = true;
                         isD_DELETE = true;
+                        isM_DELETE = true;
 
                         SearchDetail = SelectDtlList[0];
                     }
@@ -133,6 +134,7 @@ namespace AquilaErpWpfApp3.ViewModel
                     {
                         isD_UPDATE = false;
                         isD_DELETE = false;
+                        isM_DELETE = false;
                     }
                 }
             }
@@ -261,7 +263,7 @@ namespace AquilaErpWpfApp3.ViewModel
             //    WinUIMessageBox.Show("[요청 번호 명 : " + SelectedMstItem.SL_RLSE_NM + "] 마감 처리 되었습니다", "[수주 등록 물품 관리]" + title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
             //    return;
             //}
-            SelectedMstItem.CHNL_CD = SystemProperties.USER;
+            SelectedMstItem.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
             detailDialog = new S22111DetailDialog(SelectedMstItem);
             detailDialog.Title = "출하 등록 물품 관리 - [요청 번호 명 : " + SelectedMstItem.SL_BIL_NO + "]";
             detailDialog.Owner = Application.Current.MainWindow;

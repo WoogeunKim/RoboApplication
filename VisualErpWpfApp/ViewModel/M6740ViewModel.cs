@@ -56,7 +56,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 return;
             }
         }
-      
+
         //#region mst,dtl 체크관리
         //[Command]
         //public async void SelectMasterCheckd()
@@ -78,26 +78,26 @@ namespace AquilaErpWpfApp3.ViewModel
 
         //}
 
-        //[Command]
-        //public async void SelectDetailCheckd()
-        //{
+        [Command]
+        public async void SelectDetailCheckd()
+        {
 
-        //    if (SelectedDtlItem == null)
-        //    {
-        //        return;
-        //    }
+            if (SelectedDtlItem == null)
+            {
+                return;
+            }
 
-        //    //
-        //    if (SelectedDtlItem.isCheckd)
-        //    {
-        //        SelectedDtlItem.isCheckd = false;
-        //    }
-        //    else
-        //    {
-        //        SelectedDtlItem.isCheckd = true;
-        //    }
-        //}
-        //#endregion
+            //
+            if (SelectedDtlItem.isCheckd)
+            {
+                SelectedDtlItem.isCheckd = false;
+            }
+            else
+            {
+                SelectedDtlItem.isCheckd = true;
+            }
+        }
+
 
         public async void SelectDetailRefresh()
         {
@@ -147,6 +147,10 @@ namespace AquilaErpWpfApp3.ViewModel
                 IList<ManVo> ProdList = new List<ManVo>();
                 ProdList = this.SelectDtlList.Where<ManVo>(w => w.isCheckd == true).ToList<ManVo>();
 
+                if (ProdList.Count < 1)
+                {
+                    return;
+                }
 
                 for (int i = 0; i < ProdList.Count; i++)
                 {
@@ -154,6 +158,7 @@ namespace AquilaErpWpfApp3.ViewModel
                     ProdList[i].CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
                 }
 
+                
                 MessageBoxResult result = WinUIMessageBox.Show(ProdList.Count + "건에 대해 생산입고 하시겠습니까?", title, MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
@@ -171,6 +176,7 @@ namespace AquilaErpWpfApp3.ViewModel
                             }
 
                             //성공
+                            SelectDetailRefresh();
                             WinUIMessageBox.Show(ProdList.Count + "건이 생산입고 되었습니다.", title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
                         }
                     }

@@ -103,7 +103,7 @@ namespace AquilaErpWpfApp3.M.View.Dialog
 
             Dao.FM_DT = Convert.ToDateTime(this.text_START_Dt.Text).ToString("yyyy.MM.dd");
             Dao.TO_DT = Convert.ToDateTime(this.text_END_Dt.Text).ToString("yyyy.MM.dd");
-
+            Dao.CLZ_FLG = "Y";
             return Dao;
         }
         #endregion

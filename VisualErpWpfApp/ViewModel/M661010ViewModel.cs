@@ -95,7 +95,7 @@ namespace AquilaErpWpfApp3.ViewModel
                     CHNL_CD = SystemProperties.USER_VO.CHNL_CD,
                     FM_DT = StartDt.ToString("yyyy-MM-dd"),
                     TO_DT = EndDt.ToString("yyyy-MM-dd"),
-
+                    EQ_NO = SelectedMstItem.EQ_NO
                 };
 
 
@@ -105,46 +105,17 @@ namespace AquilaErpWpfApp3.ViewModel
                 IList<ManVo> voList = new List<ManVo>();
 
                 // 서버로부터 DTL 정보를 가져옵니다.
-                voList = await PostJsonList<ManVo>("m661010/dtl", dtlObj);
-                if (voList != null)
+                SelectDtlList = await PostJsonList<ManVo>("m661010/dtl", dtlObj);
+
+                if (SelectDtlList.Count > 0)
                 {
-                    if (voList.Count > 0)
-                    {
-                        switch (SelectedMstItem.EQ_NO)
-                        {
-                            // Z1 : 전체설비 기준 최적화 지시 정보 조회
-                            case "Z1":
-                                SelectDtlList = voList;
-                                break;
-
-                            // Z2 : 설비미지정 기준 최적화 지시 정보 조회
-                            case "Z2":
-                                SelectDtlList = voList.Where<ManVo>(x => x.N1ST_EQ_NO == null).ToList();
-                                break;
-
-                            // CUT01 : 절단설비 기준 최적화 지시 정보 조회
-                            case "CUT01":
-                                SelectDtlList = voList.Where<ManVo>(x => x.N1ST_EQ_NO != null).ToList();
-                                break;
-
-                            // 나머지 : 가공설비별 최적화 지시 정보 조회
-                            default:
-                                voList = voList.Where<ManVo>(x => x.N2ND_EQ_NO != null).ToList();
-                                SelectDtlList = voList.Where<ManVo>(x => x.N2ND_EQ_NO.Equals(SelectedMstItem.EQ_NO)).ToList();
-                                break;
-                        }
-
-                        if (SelectDtlList.Count > 0)
-                        {
-                            SelectedDtlItem = SelectDtlList[0];
-                        }
-
-                    }
-                    else
-                    {
-                        SelectedDtlItem = null;
-                    }
+                    SelectedDtlItem = SelectDtlList[0];
                 }
+                else
+                {
+                    SelectedDtlItem = null;
+                }
+
 
                 // 성공
                 if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();

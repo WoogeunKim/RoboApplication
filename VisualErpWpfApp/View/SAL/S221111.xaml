@@ -497,6 +497,12 @@
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
+                                            <dxg:GridColumn FieldName="SL_CO_CD" Width="60" Header="SL_CO_CD" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" Visible="False">
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
+
                                             <dxg:GridColumn FieldName="SL_CO_NM" Width="60" Header="거래처" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" >
                                                 <!--GroupIndex="1"-->
                                                 <dxg:GridColumn.EditSettings>

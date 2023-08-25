@@ -344,7 +344,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 {
                     //고객사가 아니라면 자기가 등록한 도면만 조회
                     Dtlvo.OSTR_FLG = "N";
-                    Dtlvo.CRE_USR_ID = SystemProperties.USER_VO.USR_ID;
+                    Dtlvo.CRE_USR_ID = SystemProperties.USER;
                 }
 
 
@@ -614,7 +614,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 if (result == MessageBoxResult.Yes)
                 {
                     SearchDetail.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
-                    SearchDetail.UPD_USR_ID = SystemProperties.USER_VO.USR_ID;
+                    SearchDetail.UPD_USR_ID = SystemProperties.USER;
                     
                     using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("p441106/dtl/u", new StringContent(JsonConvert.SerializeObject(SearchDetail), System.Text.Encoding.UTF8, "application/json")))
                     {
@@ -655,7 +655,7 @@ namespace AquilaErpWpfApp3.ViewModel
                 return;
             }
 
-            detailDialog = new P441106DetailDialog(new PurVo() { PUR_NO = SelectedMstItem.PUR_NO/*, DE_CO_NM = SelectedMstItem.DE_CO_NM*/, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, CRE_USR_ID = SystemProperties.USER_VO.USR_ID, UPD_USR_ID = SystemProperties.USER_VO.USR_ID, DUE_DT = SelectedMstItem.DUE_DT });
+            detailDialog = new P441106DetailDialog(new PurVo() { PUR_NO = SelectedMstItem.PUR_NO/*, DE_CO_NM = SelectedMstItem.DE_CO_NM*/, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, CRE_USR_ID = SystemProperties.USER, UPD_USR_ID = SystemProperties.USER, DUE_DT = SelectedMstItem.DUE_DT });
             detailDialog.Title = "도면등록 - " + SelectedMstItem.PUR_NO + " / " + SelectedMstItem.CO_NM;
             detailDialog.Owner = Application.Current.MainWindow;
             detailDialog.BorderEffect = BorderEffect.Default;

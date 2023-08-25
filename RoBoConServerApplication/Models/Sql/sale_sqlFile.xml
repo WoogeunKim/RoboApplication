@@ -7498,26 +7498,36 @@
 	  </select>	  
 
 	  <select id="S22227LeftBottomDtlSelect" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
-	  SELECT  T2.RLSE_CMD_NO    
-            , T2.LOC_CD
-			, T2.CUST_PUR_NO
+     SELECT  T2.RLSE_CMD_NO
+           , MIN(T3.LOC_NM) AS LOC_CD
+           , T2.CUST_PUR_NO
         FROM TB_SL_RLSE       T1
            , TB_SL_RLSE_DTL   T2
+     OUTER APPLY (
+                   SELECT X.CLSS_DESC    AS LOC_NM 
+                     FROM TB_SYS_CLSS_CD  X
+                    WHERE 1 = 1
+                      AND X.CHNL_CD     = 'C210914-ROBO'
+                      AND X.CLSS_TP_CD  = 'C-008'
+                      AND X.CLSS_CD     = T2.LOC_CD    
+                            ) T3
        WHERE 1 = 1
          AND T1.CHNL_CD       = #CHNL_CD#
          AND T1.CHNL_CD       = T2.CHNL_CD
          AND T2.OK_FLG        = 'Y'              
          AND T2.RLSE_CMD_NO   IS NOT NULL      
          AND T2.CUST_PUR_NO   = #CUST_PUR_NO# 
-         AND NOT EXISTS (SELECT 'X'
+         AND NOT EXISTS 
+		                (SELECT 'X'
                            FROM TB_SL_RLSE_GR_INFO X
                           WHERE 1 = 1
-                            AND X.GR_NO = T2.RLSE_CMD_NO)
+                            AND X.GR_NO = T2.RLSE_CMD_NO )
        GROUP BY T2.RLSE_CMD_NO
-              , T2.LOC_CD
+              , T3.LOC_NM
               , T2.SL_RLSE_NO
-			  , T2.CUST_PUR_NO
-	  </select>
+              , T2.CUST_PUR_NO
+     </select>
+     
 	  
 	  <select id="S22227RightBottomDtlSelect" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
 		   SELECT  'N' AS CHK_FLG
@@ -7823,10 +7833,11 @@
          AND T2.SL_RLSE_NO   = T4.SL_RLSE_NO 
          AND T2.CHNL_CD      = T4.CHNL_CD
          AND T2.CHNL_CD      = T5.CHNL_CD
-         AND T2.CHNL_CD     = #CHNL_CD#
          AND T1.PROD_GD_QTY > 0 
          AND T4.CLZ_FLG       = 'N'
          AND T4.SL_CO_CD      = T5.CO_NO
+		 <!--AND T5.CO_NO         = #SL_CO_CD#-->
+		 AND T2.CHNL_CD       = #CHNL_CD#
          AND NOT EXISTS (SELECT 'X'
                            FROM TB_SL_BIL_DTL X
                           WHERE 1 = 1
