@@ -166,6 +166,18 @@ namespace AquilaErpWpfApp3.View.M.Dialog
                     return;
                 }
 
+                for(int i = 0; i< checkList.Count - 1; i++)
+                {
+                    for(int j= i + 1; j < checkList.Count; j++)
+                    {
+                        if(checkList[i].PROD_DIR_DT.ToString() != checkList[j].PROD_DIR_DT.ToString())
+                        {
+                            WinUIMessageBox.Show("생산계획일자는 같은 일자끼리만 저장할 수 있습니다.", "[유효검사]" + _title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+                    }
+                }
+
                 MessageBoxResult result = WinUIMessageBox.Show("정말로 저장 하시겠습니까?", "[저장]" + _title, MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)

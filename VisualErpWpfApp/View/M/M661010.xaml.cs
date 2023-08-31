@@ -24,6 +24,7 @@ using ModelsLibrary.Code;
 using AquilaErpWpfApp3.View.M.Dialog;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
+using DevExpress.Data;
 
 namespace AquilaErpWpfApp3.View.M
 {
@@ -34,6 +35,7 @@ namespace AquilaErpWpfApp3.View.M
     {
 
         string _title = "오더매니저 설비";
+
 
         public M661010()
         {
@@ -319,6 +321,42 @@ namespace AquilaErpWpfApp3.View.M
                 WinUIMessageBox.Show(eLog.Message, _title + "- 수정 오류", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
             }
         }
+
+        private void CheckEdit_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckEdit checkEdit = sender as CheckEdit;
+
+            SetCheckState(this.ViewGridSlList, checkEdit.IsChecked == true);
+            SetCheckState(this.ViewGridLotList, checkEdit.IsChecked == true);
+
+        }
+
+        private void SetCheckState(GridControl gridView, bool isChecked)
+        {
+            for (int x = 0; x < gridView.VisibleRowCount; x++)
+            {
+                int rowHandle = gridView.GetRowHandleByVisibleIndex(x);
+                if (rowHandle > -1)
+                {
+                    ManVo tmpImsi = gridView.GetRow(rowHandle) as ManVo;
+                    if (tmpImsi != null)
+                    {
+                        tmpImsi.isCheckd = isChecked;
+                    }
+                }
+            }
+        }
+
+        private void AllCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext is M661010ViewModel viewModel)
+            {
+                viewModel.SelectLovListDetail();
+            }
+        }
+
+
+
 
 
     }

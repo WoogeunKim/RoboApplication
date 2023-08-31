@@ -44,7 +44,7 @@ namespace AquilaErpWpfApp3.M.View.Dialog
             try
             {
                 this.orgDao = getDomain();
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66107/mst", new StringContent(JsonConvert.SerializeObject(this.orgDao), System.Text.Encoding.UTF8, "application/json")))
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66311/pop", new StringContent(JsonConvert.SerializeObject(this.orgDao), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {

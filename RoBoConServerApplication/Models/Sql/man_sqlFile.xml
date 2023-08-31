@@ -8294,7 +8294,7 @@
    <!-- 설비 관리  -->
     <select id="M6641SelectMaster" parameterClass="ModelsLibrary.Man.ManVo" resultClass="ModelsLibrary.Man.ManVo">
 		SELECT
-		ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY PROD_EQ_NO) AS RN
+		ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY SRT_SEQ) AS RN
 		, PROD_EQ_NO
 		, EQ_MDL_NM
 		, EQ_NM
@@ -9390,13 +9390,49 @@
       WHERE 1 = 1
         AND T1.CRE_DT >= CAST(CONVERT(VARCHAR, #FM_DT#, 112) + ' 00:00:00' AS DATETIME)
         AND T1.CRE_DT <![CDATA[<=]]> CAST(CONVERT(VARCHAR, #TO_DT#, 112) + ' 23:59:59' AS DATETIME)
-	<isNotNull property="CLZ_FLG" >
+	<!--<isNotNull property="CLZ_FLG" >
         AND T1.CLZ_FLG = #CLZ_FLG# 
     </isNotNull>
-		<!--AND T1.CLZ_FLG = 'Y'-->
+		--><!--AND T1.CLZ_FLG = 'Y'-->
      </select>
+
+	 <select id="M66107SelectMstPop" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">   
+    SELECT 
+             T1.OPMZ_NO
+           , T1.OPMZ_STS_CD
+           , CASE WHEN T1.OPMZ_STS_CD = 'S' THEN '시작' ELSE '종료'  END AS OPMZ_STS_NM
+           , T1.OPMZ_LSS_RT
+           , T1.OPMZ_RMK
+           , T1.CLZ_FLG
+           , T1.RUN_CLSS_CD             
+           , CASE WHEN T1.RUN_CLSS_CD = 'A' THEN '생산 최적화' WHEN T1.RUN_CLSS_CD = 'B' THEN '발주 최적화' ELSE NULL END AS RUN_CLSS_NM
+           , T1.OPMZ_NM
+           , CONVERT(VARCHAR(10),T3.PROD_FM_DT, 23) AS PROD_DIR_DT
+      FROM  TB_OPMZ_RUN T1
+          , TB_OPMZ_DMND T2
+               OUTER APPLY ( 
+                      SELECT MAX(X.PROD_FM_DT) AS PROD_FM_DT
+                        FROM TB_RBK_MORD X
+                       WHERE 1=1
+                        AND T2.ORD_NO = X.SL_RLSE_NO
+                        AND T2.ORD_SEQ = X.SL_RLSE_SEQ
+                            ) T3
+          WHERE 1=1
+           AND T1.OPMZ_NO = T2.OPMZ_NO
+           AND T1.CLZ_FLG = 'Y'
+           AND T3.PROD_FM_DT >= CAST(CONVERT(VARCHAR, #FM_DT#, 112) + ' 00:00:00' AS DATETIME)
+           AND T3.PROD_FM_DT <![CDATA[<=]]> CAST(CONVERT(VARCHAR, #TO_DT#, 112) + ' 23:59:59' AS DATETIME)
+      GROUP BY T1.OPMZ_NO
+             , T3.PROD_FM_DT
+             , T1.OPMZ_STS_CD
+             , T1.OPMZ_LSS_RT
+             , T1.OPMZ_RMK 
+             , T1.CLZ_FLG
+             , T1.RUN_CLSS_CD
+             , T1.OPMZ_NM		 		  
+	 </select>
 	  
-	  <select id="M66107SelectMstLogList" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
+	 <select id="M66107SelectMstLogList" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
 		SELECT OPMZ_NO
              , OPMZ_SEQ
              , STS_CD    
@@ -9406,7 +9442,7 @@
            AND OPMZ_NO = #OPMZ_NO#
 		   
 
-	  </select>
+	 </select>
 
 	  <select id="M66107SelectDtl" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
 		  SELECT  ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY IN_REQ_DT, ORD_ID) AS RN
@@ -9414,6 +9450,7 @@
 		        , T2.SL_CO_CD
 		        , T2.CO_NM
 		        , CONVERT(VARCHAR(10),T2.IN_REQ_DT, 23) AS IN_REQ_DT
+	            , CONVERT(VARCHAR(10),T4.PROD_DIR_DT, 23) AS PROD_DIR_DT 
 		        , T2.CNTR_NM
 		        , T2.CNTR_PSN_NM
 		        , T2.EQ_NO
@@ -9432,6 +9469,13 @@
 		        , T1.ORD_NO
 		        , T1.ORD_SEQ
 		    FROM TB_OPMZ_DMND T1
+           OUTER APPLY (
+            SELECT X.PROD_FM_DT AS PROD_DIR_DT
+              FROM TB_RBK_MORD X
+              WHERE 1=1
+               AND X.SL_RLSE_NO = T1.ORD_NO
+               AND X.SL_RLSE_SEQ = T1.ORD_SEQ
+               ) T4			
 		   OUTER APPLY (
 		    SELECT X.IMG  AS ITM_IMG
 		        FROM TB_CD_ITM_IMG X
@@ -9670,6 +9714,7 @@
          AND T1.SL_RLSE_SEQ = T4.SL_RLSE_SEQ 
          AND T3.SL_RLSE_NO = T4.SL_RLSE_NO
          AND T3.SL_CO_CD    = #CO_CD#
+		 AND T4.ITM_STL_LENG > 799
 		   
 		   
      </select>
@@ -11036,7 +11081,9 @@
                     , T1.SL_RLSE_NO
                     , CONVERT(VARCHAR, T1.SL_RLSE_DT, 23) AS SL_RLSE_DT
                     , T1.SL_CO_CD
-                    , T5.N1ST_EQ_NO
+                    , CASE WHEN T5.N1ST_EQ_NO IS NULL AND T2.ITM_STL_LENG > 799 THEN 'CUT01' 
+                          ELSE T5.N1ST_EQ_NO 
+                           END AS N1ST_EQ_NO
                     , T5.N2ND_EQ_NO
                     , T2.LOC_CD
                     , T2.RLSE_CMD_NO
@@ -11070,11 +11117,13 @@
             SELECT   'Z1'     AS EQ_NO
                    , '전체설비'   AS EQ_NM
                    , COUNT(*) AS EQ_KNT
+				   , 1 AS RN
               FROM TMP
       UNION ALL
             SELECT  'Z2'
                    , '설비미지정(수동,코일)'
                    , COUNT(*)
+				   , 1 AS RN
               FROM TMP
             WHERE 1 = 1
              AND ITM_STL_LENG <![CDATA[<=]]> (  SELECT MAX(CAST(CLSS_DESC AS INT))
@@ -11087,6 +11136,7 @@
             SELECT 'CUT01'
                    , '1층 절단기'
                    , COUNT(*)
+				   , 1 AS RN
               FROM TMP
              WHERE 1 = 1
               AND N1ST_EQ_NO = 'CUT01'
@@ -11094,6 +11144,7 @@
             SELECT PROD_EQ_NO
                   , EQ_NM
                   , EQ_KNT
+				  , RN
             FROM (
             SELECT  T1.PROD_EQ_NO
                   , T1.EQ_NM
@@ -11110,6 +11161,7 @@
            AND T1.CHNL_CD       = #CHNL_CD#
            AND T1.PROD_EQ_NO   <![CDATA[<>]]> 'CUT01'
             ) T1
+	ORDER BY RN
 	  </select>
 
 	  <select id="M661010SelectImg" parameterClass="ModelsLibrary.Man.ManVo" resultClass="ModelsLibrary.Man.ManVo">
@@ -11147,7 +11199,9 @@
         SELECT  T1.RLSE_CMD_NO
               , T1.CNTR_NM
               , T1.IN_REQ_DT
-              , T5.N1ST_EQ_NO
+             , CASE WHEN T5.N1ST_EQ_NO IS NULL AND T1.ITM_STL_LENG > 799 THEN 'CUT01' 
+                    ELSE T5.N1ST_EQ_NO 
+                    END AS N1ST_EQ_NO
               , T5.N2ND_EQ_NO
               , T1.SL_ITM_QTY
               , T1.SL_ITM_QTY - ISNULL(PROD_QTY, 0) AS RMN_QTY

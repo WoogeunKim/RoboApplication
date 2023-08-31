@@ -7499,7 +7499,8 @@
 
 	  <select id="S22227LeftBottomDtlSelect" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
      SELECT  T2.RLSE_CMD_NO
-           , MIN(T3.LOC_NM) AS LOC_CD
+           , MIN(T3.LOC_NM) AS LOC_NM
+		   , MIN(LOC_CD) AS LOC_CD
            , T2.CUST_PUR_NO
         FROM TB_SL_RLSE       T1
            , TB_SL_RLSE_DTL   T2
@@ -7588,6 +7589,15 @@
          AND T1.PUR_NO      = #CUST_PUR_NO#
          AND T2.OK_FLG      = #OK_FLG#
 		 AND T2.RLSE_CMD_NO = #RLSE_CMD_NO#
+	   <isNotNull property="LOC_CD">
+         AND #SL_CO_GRD_NM# IN (T2.RLSE_CMD_NO + '_' + T2.LOC_CD)
+	   </isNotNull>
+	   <isNull property="LOC_CD">
+         AND T2.LOC_CD IS NULL 
+	   </isNull>		  
+	
+		
+		 
 	  </select>	  
 	  
 <!--GR번호 신규 부여 함수-->
@@ -7606,30 +7616,22 @@
        AND SL_RLSE_NO  = #SL_RLSE_NO# 
        AND SL_RLSE_SEQ = #SL_RLSE_SEQ#
     </update> 
+	  	  
+    <update id="S22227UpdateGROriginApply" parameterClass="ModelsLibrary.Sale.SaleVo">
+	  UPDATE TB_SL_RLSE_DTL   
+         SET OK_FLG         = 'Y'
+           , RLSE_CMD_NO    = #RLSE_CMD_NO#
+      WHERE 1 = 1
+       AND CHNL_CD     = #CHNL_CD#
+       AND SL_RLSE_NO  = #SL_RLSE_NO# 
+       AND SL_RLSE_SEQ = #SL_RLSE_SEQ#
+    </update> 
 	  
 <!--LOC창고 콤보박스조회-->
     <select id="S22227SelectLocList" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
-       WITH TMP AS (
-            SELECT T2.LOC_CD
-                 , MAX(T2.LOC_CD) AS MAX_LOC_CD
-              FROM TB_SL_RLSE       T1
-                 , TB_SL_RLSE_DTL   T2
-             WHERE 1 = 1
-               AND T1.CHNL_CD       = #CHNL_CD#
-               AND T1.CHNL_CD       = T2.CHNL_CD
-               AND T2.OK_FLG        = 'Y'     
-               AND T2.RLSE_CMD_NO   IS NOT NULL 
-               AND T2.LOC_CD        IS NOT NULL
-               AND NOT EXISTS (SELECT 'X'
-                                 FROM TB_SL_RLSE_GR_INFO X
-                                WHERE 1 = 1
-                                  AND X.GR_NO = T2.RLSE_CMD_NO)
-            GROUP BY  T2.LOC_CD
-            ), LOC_INFO AS (
-            SELECT LOC_CD
-                 , LOC_NM
-              FROM (
-                    SELECT CLSS_CD      AS LOC_CD
+ 
+ WITH LOC_INFO AS (
+                     SELECT CLSS_CD      AS LOC_CD
                          , CLSS_DESC    AS LOC_NM
                       FROM TB_SYS_CLSS_CD  T1
                      WHERE 1 = 1
@@ -7637,36 +7639,28 @@
                       AND CLSS_TP_CD  = 'C-008'
                       AND USE_ST_DT  <![CDATA[<=]]> GETDATE()
                       AND USE_END_DT >= GETDATE()
-                      AND DELT_FLG    = 'N'
-                 ) T1
-          )
-            SELECT LOC_CD
-                 , '우선 창고 권장 > ' + LOC_NM AS LOC_NM
-              FROM (
-                      SELECT T1.LOC_CD
-                           , T1.LOC_NM
-                           , ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY T1.LOC_CD) AS RN 
-                        FROM LOC_INFO   T1
-             LEFT OUTER JOIN  TMP        T2
-                      ON ( 1 = 1  
-                       AND T1.LOC_CD > T2.MAX_LOC_CD 
-                         )
-                   ) T1
-             WHERE 1  = 1
-               AND RN = 1
-             UNION ALL
-             SELECT T1.LOC_CD
-                   , T1.LOC_NM       
-               FROM LOC_INFO   T1
-              WHERE 1 = 1
-                AND NOT EXISTS (
-                                SELECT 'X'
-                                  FROM TMP X 
-                                WHERE 1 = 1
-                                  AND X.LOC_CD = T1.LOC_CD 
-                                )
-            GROUP BY T1.LOC_CD
-                   , T1.LOC_NM   
+                      AND DELT_FLG    = 'N'           
+
+                   ) 
+
+    SELECT T1.LOC_CD, 
+           CASE WHEN T1.LOC_CD = T2.LOC_CD THEN '우선순위창고 ->' + T1.LOC_NM
+                ELSE T1.LOC_NM
+                END LOC_NM
+      FROM LOC_INFO T1
+    OUTER APPLY(
+                SELECT MIN(T1.LOC_CD) AS LOC_CD
+                             FROM (
+                                           SELECT LOC_CD 
+                                             FROM LOC_INFO
+                                            WHERE 1=1
+                                             AND LOC_CD NOT IN 
+                                              (  SELECT LOC_CD FROM TB_SL_RLSE_DTL
+                                                                WHERE LOC_CD IS NOT NULL
+                                                                GROUP BY LOC_CD)
+                                          
+                                               ) T1
+                                    ) T2        
     </select>	  
 	  
 	  
@@ -7674,8 +7668,14 @@
     UPDATE TB_SL_RLSE_DTL
        SET LOC_CD = #LOC_CD# 
       WHERE 1 = 1
-        AND RLSE_CMD_NO = #RLSE_CMD_NO#
-		AND CHNL_CD     = #CHNL_CD#
+	   AND CHNL_CD     = #CHNL_CD#
+	   AND RLSE_CMD_NO = #RLSE_CMD_NO#
+	  <isNotNull property ="LOC_RMK">
+	   AND LOC_CD = #LOC_RMK#	  
+	  </isNotNull>
+      <isNull property ="LOC_RMK">
+	   AND LOC_CD IS NULL	   
+	   </isNull>
     </update> 
  
 <!--GR번호 삭제 버튼-->
@@ -7686,7 +7686,8 @@
 		  , LOC_CD         = NULL
 	 	WHERE 1 = 1
 		 AND CHNL_CD     = #CHNL_CD#
-		 AND RLSE_CMD_NO = #RLSE_CMD_NO#
+		 AND SL_RLSE_NO  = #SL_RLSE_NO#
+		 AND SL_RLSE_SEQ = #SL_RLSE_SEQ#
 	</update>	  
 
 <!--LOC번호 삭제 버튼-->
@@ -7696,6 +7697,7 @@
       WHERE 1 = 1
       AND CHNL_CD     = #CHNL_CD#
       AND RLSE_CMD_NO = #RLSE_CMD_NO#
+	  AND LOC_CD      = #LOC_CD#
     </update>
 	  
 

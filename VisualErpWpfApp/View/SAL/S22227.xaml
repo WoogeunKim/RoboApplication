@@ -9,13 +9,174 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
     x:Class="AquilaErpWpfApp3.View.SAL.S22227" FontFamily="Arial" FontSize="12"
     d:DesignHeight="768" d:DesignWidth="1024" mc:Ignorable="d">
 
     <UserControl.Resources>
         <dx:ImageDataConverter x:Key="ImageDataConverter" />
 
-        <!--<Style x:Key="customCellStyle" TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}" >
+        <Style x:Key="customCellStyle_DC" TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource ResourceKey={dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}" >
+            <Setter Property="Background" Value="#FFDCF77E" />
+        </Style>
+
+        <Style x:Key="GridCellStyle" TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
+            <Style.Triggers>
+
+                <DataTrigger Binding="{Binding RowData.Row.SL_NXT_CLZ_FLG}" Value="Y">
+                    <Setter Property="Foreground" Value="OrangeRed"/>
+                    <!--<Setter Property="FontWeight" Value="Bold"/>-->
+                    <!--<Setter Property="Foreground" Value="#2BA5BA"/>
+                    <Setter Property="FontWeight" Value="Bold"/>-->
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RowData.Row.ADD_FLG}" Value="Y">
+                    <Setter Property="Foreground" Value="BlueViolet"/>
+                    <!--<Setter Property="FontWeight" Value="Bold"/>-->
+                    <!--<Setter Property="Foreground" Value="#2BA5BA"/>
+                    <Setter Property="FontWeight" Value="Bold"/>-->
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RowData.Row.CLZ_FLG}" Value="Y">
+                    <Setter Property="Foreground" Value="DarkGray"/>
+                    <!--<Setter Property="FontWeight" Value="Bold"/>-->
+                    <!--<Setter Property="Foreground" Value="#2BA5BA"/>
+                    <Setter Property="FontWeight" Value="Bold"/>-->
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <ControlTemplate x:Key="checkTemplate">
+            <Image x:Name="PART_Editor" Height="18" Width="18"/>
+            <ControlTemplate.Triggers>
+                <DataTrigger Binding="{Binding (dxe:BaseEdit.OwnerEdit).IsChecked}" Value="True">
+                    <Setter TargetName="PART_Editor" Property="Source" Value="/Images/check_box_T.png"/>
+                    <Setter TargetName="PART_Editor" Property="ToolTip" Value="True"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding (dxe:BaseEdit.OwnerEdit).IsChecked}" Value="False">
+                    <Setter TargetName="PART_Editor" Property="Source" Value="/Images/check_box_F.png"/>
+                    <Setter TargetName="PART_Editor" Property="ToolTip" Value="False"/>
+                </DataTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <Style TargetType="{x:Type dxe:CheckEdit}" x:Key="checkEditStyle">
+            <Setter Property="DisplayTemplate"  Value="{StaticResource checkTemplate}"/>
+            <Setter Property="EditTemplate"  Value="{StaticResource checkTemplate}"/>
+        </Style>
+
+        <DataTemplate x:Key="ReadOnlyHeaderTemplate">
+            <dxe:CheckEdit IsChecked="{Binding ReadOnly, Mode=TwoWay}" Unchecked="CheckEdit_Checked" Checked="CheckEdit_Checked"/>
+        </DataTemplate>
+
+        <Style x:Key="customCellStyle_Enable" TargetType="{x:Type dxg:LightweightCellEditor}" >
+            <Setter Property="Background" Value="#FF9CD8EC" />
+            <Style.Triggers>
+                <Trigger Property="SelectionState" Value="Focused">
+                    <Setter Property="Background" Value="#afeeee" />
+                </Trigger>
+                <Trigger Property="dxg:DataViewBase.IsFocusedRow" Value="True">
+                    <Setter Property ="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="#6FC2FB"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="customCellStyle_Disable" TargetType="{x:Type dxg:LightweightCellEditor}" >
+            <Setter Property="Background" Value="#FFA5EEBF" />
+            <Style.Triggers>
+                <Trigger Property="SelectionState" Value="Focused">
+                    <Setter Property="Background" Value="#afeeee" />
+                </Trigger>
+                <Trigger Property="dxg:DataViewBase.IsFocusedRow" Value="True">
+                    <Setter Property ="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="#6FC2FB"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+
+        <Style x:Key="GridCellStyle_A" TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RowData.Row.COLOR_FLG}" Value="1">
+                    <Setter Property="Background" Value="#FFA5EEBF"/>
+                    <!--<Setter Property="FontWeight" Value="Bold"/>-->
+                    <!--<Setter Property="Foreground" Value="#2BA5BA"/>
+                    <Setter Property="FontWeight" Value="Bold"/>-->
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RowData.Row.COLOR_FLG}" Value="2">
+                    <Setter Property="Background" Value="DarkGray"/>
+                    <!--<Setter Property="FontWeight" Value="Bold"/>-->
+                    <!--<Setter Property="Foreground" Value="#2BA5BA"/>
+                    <Setter Property="FontWeight" Value="Bold"/>-->
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RowData.Row.COLOR_FLG}" Value="3">
+                    <Setter Property="Background" Value="DarkGray"/>
+                    <!--<Setter Property="FontWeight" Value="Bold"/>-->
+                    <!--<Setter Property="Foreground" Value="#2BA5BA"/>
+                    <Setter Property="FontWeight" Value="Bold"/>-->
+                </DataTrigger>
+                <Trigger Property="dxg:DataViewBase.IsFocusedRow" Value="True">
+                    <Setter Property ="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="Yellow"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="GridCellStyle_B" TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RowData.Row.COLOR_FLG}" Value="2">
+                    <Setter Property="Background" Value="#FFA5EEBF"/>
+                    <!--<Setter Property="FontWeight" Value="Bold"/>-->
+                    <!--<Setter Property="Foreground" Value="#2BA5BA"/>
+                    <Setter Property="FontWeight" Value="Bold"/>-->
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RowData.Row.COLOR_FLG}" Value="1">
+                    <Setter Property="Background" Value="DarkGray"/>
+                    <!--<Setter Property="FontWeight" Value="Bold"/>-->
+                    <!--<Setter Property="Foreground" Value="#2BA5BA"/>
+                    <Setter Property="FontWeight" Value="Bold"/>-->
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RowData.Row.COLOR_FLG}" Value="3">
+                    <Setter Property="Background" Value="DarkGray"/>
+                    <!--<Setter Property="FontWeight" Value="Bold"/>-->
+                    <!--<Setter Property="Foreground" Value="#2BA5BA"/>
+                    <Setter Property="FontWeight" Value="Bold"/>-->
+                </DataTrigger>
+                <Trigger Property="dxg:DataViewBase.IsFocusedRow" Value="True">
+                    <Setter Property ="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="#6FC2FB"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="GridCellStyle_C" TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RowData.Row.COLOR_FLG}" Value="3">
+                    <Setter Property="Background" Value="#FFA5EEBF"/>
+                    <!--<Setter Property="FontWeight" Value="Bold"/>-->
+                    <!--<Setter Property="Foreground" Value="#2BA5BA"/>
+                    <Setter Property="FontWeight" Value="Bold"/>-->
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RowData.Row.COLOR_FLG}" Value="1">
+                    <Setter Property="Background" Value="DarkGray"/>
+                    <!--<Setter Property="FontWeight" Value="Bold"/>-->
+                    <!--<Setter Property="Foreground" Value="#2BA5BA"/>
+                    <Setter Property="FontWeight" Value="Bold"/>-->
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RowData.Row.COLOR_FLG}" Value="2">
+                    <Setter Property="Background" Value="DarkGray"/>
+                    <!--<Setter Property="FontWeight" Value="Bold"/>-->
+                    <!--<Setter Property="Foreground" Value="#2BA5BA"/>
+                    <Setter Property="FontWeight" Value="Bold"/>-->
+                </DataTrigger>
+                <Trigger Property="dxg:DataViewBase.IsFocusedRow" Value="True">
+                    <Setter Property ="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="#6FC2FB"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+
+        <Style x:Key="customCellStyle" TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}" >
             <Setter Property="Background" Value="#fffacd" />
             <Style.Triggers>
                 <Trigger Property="SelectionState" Value="Focused">
@@ -23,14 +184,6 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-
-        <Style x:Key="GridCellStyle" TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding RowData.Row.RTN_APRO_FLG}" Value="Y">
-                    <Setter Property="Foreground" Value="DarkGray"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>-->
 
     </UserControl.Resources>
 
@@ -215,7 +368,13 @@
                                                                 </dxg:GridColumn.EditSettings>
                                                             </dxg:GridColumn>
 
-                                                            <dxg:GridColumn FieldName="LOC_CD" Header="LOC번호 확정리스트" Width="80" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                                            <dxg:GridColumn FieldName="LOC_NM" Header="LOC번호 확정리스트" Width="80" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                                                <dxg:GridColumn.EditSettings>
+                                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                                                                </dxg:GridColumn.EditSettings>
+                                                            </dxg:GridColumn>
+
+                                                            <dxg:GridColumn FieldName="LOC_CD" Header="LOC번호 확정리스트" Width="80" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" Visible="False">
                                                                 <dxg:GridColumn.EditSettings>
                                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                                                 </dxg:GridColumn.EditSettings>
@@ -256,7 +415,7 @@
                                                         </dxg:GridControl.InputBindings>
 
                                                         <dxg:GridControl.View>
-                                                            <dxg:TableView x:Name="ViewTableMst" FontSize="13" ShowTotalSummary="False" ShowFixedTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupPanel="False" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="True" IsColumnMenuEnabled="False" RowMinHeight="35"  >
+                                                            <dxg:TableView x:Name="ViewTableMst"  HorizontalScrollbarVisibility="Visible" FontSize="13" ShowTotalSummary="False" ShowFixedTotalSummary="True" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupPanel="False" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="True" IsColumnMenuEnabled="False" RowMinHeight="35"  >
                                                                 <dxg:TableView.FormatConditions>
 
                                                                     <dxg:FormatCondition FieldName="IN_REQ_DT" Expression="[isCheckd] = 'True'" PredefinedFormatName="BoldText"/>
@@ -271,10 +430,12 @@
                                                         </dxg:GridControl.View>
 
                                                         <dxg:GridControl.Columns>
-                                                            <dxg:GridColumn FieldName="isCheckd" Header="" Width="30" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True">
-                                                                <dxg:GridColumn.EditSettings>
-                                                                    <dxe:CheckEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
-                                                                </dxg:GridColumn.EditSettings>
+                                                            <dxg:GridColumn FieldName="isCheckd" Header="" Width="42" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="False" AllowColumnFiltering="True" AllowSorting="False" CellStyle="{StaticResource customCellStyle}" VisibleIndex="0" ShowCheckBoxInHeader="True" Fixed="Left">
+                                                                <dxg:GridColumn.CellTemplate>
+                                                                    <DataTemplate>
+                                                                        <dxe:CheckEdit x:Name="PART_Editor"  HorizontalContentAlignment="Center" Style="{StaticResource checkEditStyle}" IsChecked="{Binding IsAllChecked, Mode=TwoWay}" Checked="AllCheckBox_Mst_Checked" Unchecked ="AllCheckBox_Mst_Checked"/>
+                                                                    </DataTemplate>
+                                                                </dxg:GridColumn.CellTemplate>
                                                             </dxg:GridColumn>
 
                                                             <dxg:GridColumn FieldName="GBN" Header="납품처" Width="80" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
@@ -408,10 +569,12 @@
                                                         </dxg:GridControl.View>
                                                         <dxg:GridControl.Columns>
 
-                                                            <dxg:GridColumn FieldName="isCheckd" Header="" Width="30" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="True">
-                                                                <dxg:GridColumn.EditSettings>
-                                                                    <dxe:CheckEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
-                                                                </dxg:GridColumn.EditSettings>
+                                                            <dxg:GridColumn FieldName="isCheckd" Header="" Width="30" HorizontalHeaderContentAlignment="Center" AllowEditing="True" AllowResizing="False" AllowColumnFiltering="False" AllowSorting="False" CellStyle="{StaticResource customCellStyle}" VisibleIndex="0" ShowCheckBoxInHeader="True">
+                                                                <dxg:GridColumn.CellTemplate>
+                                                                    <DataTemplate>
+                                                                        <dxe:CheckEdit x:Name="PART_Editor" HorizontalContentAlignment="Center" Style="{StaticResource checkEditStyle}" Checked="AllCheckBox_DTL_Checked" Unchecked ="AllCheckBox_DTL_Checked" />
+                                                                    </DataTemplate>
+                                                                </dxg:GridColumn.CellTemplate>
                                                             </dxg:GridColumn>
 
                                                             <dxg:GridColumn FieldName="RLSE_CMD_NO" Header="GR번호" Width="80" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">

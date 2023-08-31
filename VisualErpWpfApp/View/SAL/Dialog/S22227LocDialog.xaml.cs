@@ -111,6 +111,7 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
                 Dao.LOC_CD = coNmVo.LOC_CD;
                 Dao.LOC_NM = coNmVo.LOC_NM;
             }
+            Dao.LOC_RMK = this.orgDao.LOC_CD;
 
             Dao.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
 

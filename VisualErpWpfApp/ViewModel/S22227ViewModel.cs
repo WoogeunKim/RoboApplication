@@ -109,7 +109,7 @@ namespace AquilaErpWpfApp3.ViewModel
             }
         }
 
-        public async void SelectGrListDetail(string _RLSE_CMD_NO = null)
+        public async void SelectGrListDetail(string _RLSE_CMD_NO = null, string _LOC_CD = null)
         {
 
             try
@@ -124,7 +124,12 @@ namespace AquilaErpWpfApp3.ViewModel
                         {
                             if (!string.IsNullOrEmpty(_RLSE_CMD_NO))
                             {
-                                this.SelectedGRItem = this.SelectGRList.Where(x => x.RLSE_CMD_NO.Equals(_RLSE_CMD_NO)).FirstOrDefault<SaleVo>();
+                                this.SelectedGRItem = this.SelectGRList.Where(x => x.RLSE_CMD_NO .Equals(_RLSE_CMD_NO)).FirstOrDefault<SaleVo>();
+                            }
+
+                            if (!string.IsNullOrEmpty(_RLSE_CMD_NO) && !string.IsNullOrEmpty(_LOC_CD))
+                            {
+                                this.SelectedGRItem = this.SelectGRList.Where(x => (x.RLSE_CMD_NO + "_" + x.LOC_CD).Equals(_RLSE_CMD_NO + "_" + _LOC_CD)).FirstOrDefault<SaleVo>();
                             }
                         }
                     }
@@ -303,6 +308,7 @@ namespace AquilaErpWpfApp3.ViewModel
 
                 SelectedGRItem.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
                 SelectedGRItem.OK_FLG = "Y";
+                SelectedGRItem.SL_CO_GRD_NM = SelectedGRItem.RLSE_CMD_NO + "_" + SelectedGRItem.LOC_CD;
 
                 using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("S22227/dtl/grlist", new StringContent(JsonConvert.SerializeObject(SelectedGRItem), System.Text.Encoding.UTF8, "application/json")))
                 {
@@ -462,7 +468,7 @@ namespace AquilaErpWpfApp3.ViewModel
             bool isDialog = (bool)locDialog.ShowDialog();
             if (isDialog)
             {
-                SelectGrListDetail(locDialog.updateDao.RLSE_CMD_NO);
+                SelectGrListDetail(locDialog.updateDao.RLSE_CMD_NO, locDialog.updateDao.LOC_CD);
             }
         }
 
@@ -474,11 +480,21 @@ namespace AquilaErpWpfApp3.ViewModel
             {
                 if (this.SelectedGRItem.RLSE_CMD_NO == null) return;
 
-                MessageBoxResult result = WinUIMessageBox.Show(SelectedGRItem.RLSE_CMD_NO + "를 삭제하겠습니까?", title, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                IList<SaleVo> delVoList = new List<SaleVo>();
+                delVoList = this.SelectDtlList.Where<SaleVo>(x => x.isCheckd == true).ToList();
+
+                if (delVoList == null) return;
+                if (delVoList.Count < 1) return;
+
+                MessageBoxResult result = WinUIMessageBox.Show(delVoList.Count + "건을 삭제하겠습니까?", title, MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    SelectedGRItem.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
-                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("S22227/dtl/gr/d", new StringContent(JsonConvert.SerializeObject(SelectedGRItem), System.Text.Encoding.UTF8, "application/json")))
+                    for(int i=0; i < delVoList.Count; i++)
+                    {
+                        delVoList[i].CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
+                    }
+
+                    using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("S22227/dtl/gr/d", new StringContent(JsonConvert.SerializeObject(delVoList), System.Text.Encoding.UTF8, "application/json")))
                     {
                         if (response.IsSuccessStatusCode)
                         {
@@ -491,9 +507,11 @@ namespace AquilaErpWpfApp3.ViewModel
                                 return;
                             }
                             //성공
-                            SelectGrListDetail();
+                            SelectGrListDetail(delVoList[0].RLSE_CMD_NO, delVoList[0].LOC_CD) ;
+                            
+                            
                             this.SelectDtlList = null;
-                            WinUIMessageBox.Show("삭제되었습니다.", title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
+                            WinUIMessageBox.Show(delVoList.Count + "건이 삭제되었습니다.", title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
                         }
                     }
                 }

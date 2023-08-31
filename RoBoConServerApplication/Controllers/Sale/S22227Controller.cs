@@ -163,7 +163,7 @@ namespace VisualServerApplication.Controllers.Sale
 
                 foreach (SaleVo _item in voList)
                 {
-                    Properties.EntityMapper.Update("S22227UpdateGRApply", _item);
+                    Properties.EntityMapper.Update("S22227UpdateGROriginApply", _item);
                 }
 
                 Properties.EntityMapper.CommitTransaction();
@@ -218,14 +218,23 @@ namespace VisualServerApplication.Controllers.Sale
         [Route("dtl/gr/d")]
         [HttpPost]
         // GET api/<controller>
-        public async Task<IHttpActionResult> GetDtlGrDelete([FromBody] SaleVo vo)
+        public async Task<IHttpActionResult> GetDtlGrDelete([FromBody] IList<SaleVo> voList)
         {
             try
             {
-                return Ok<int>(Properties.EntityMapper.Update("S22227UpdateGR_RollBack", vo));
+                Properties.EntityMapper.BeginTransaction();
+
+                foreach (SaleVo _item in voList)
+                {
+                    Properties.EntityMapper.Update("S22227UpdateGR_RollBack", _item);
+                }
+
+                Properties.EntityMapper.CommitTransaction();
+                return Ok<int?>(1);
             }
             catch (System.Exception eLog)
             {
+                Properties.EntityMapper.RollBackTransaction();
                 return Ok<string>(eLog.Message);
             }
         }

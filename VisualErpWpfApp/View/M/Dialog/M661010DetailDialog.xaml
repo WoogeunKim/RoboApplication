@@ -32,8 +32,8 @@
         <dxe:DateEdit x:Name="text_ORD_STT_DT" Grid.Column="2"  Grid.Row="1" VerticalAlignment="Stretch" Text="{Binding ORD_STT_DT}" Margin="2" HorizontalContentAlignment="Center" />
 
         <TextBlock x:Name="txt_prod_qty" Height="20" HorizontalAlignment="Right" Text="작업지시수량 : " TextAlignment="Right" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1"  />
-        <dxe:TextEdit x:Name="text_PROD_QTY" Grid.Column="2" Grid.Row="3" VerticalAlignment="Stretch" Text="{Binding PROD_QTY}"  Margin="2" HorizontalContentAlignment="Right" MaskType="Numeric" Mask="###,###,###,##0" MaskUseAsDisplayFormat="True" />
-
+        <dxe:TextEdit x:Name="text_PROD_QTY" Grid.Column="2" Grid.Row="3" VerticalAlignment="Stretch" Text="{Binding PROD_QTY}"  Margin="2" HorizontalContentAlignment="Right" MaskType="Numeric" Mask="###,###,###,###" MaskUseAsDisplayFormat="True" />
+        
         <Button x:Name="OKButton" Height="30" Margin="90,0,110,0" Grid.Column="2" VerticalAlignment="Center" Width="100" HorizontalAlignment="Center" Grid.Row="5">
             <StackPanel HorizontalAlignment="Left" Width="62" Height="Auto" Orientation="Horizontal">
                 <Image Width="20" Height="20" Source="{dx:DXImage Image=Apply_16x16.png}" Stretch="Fill"/>

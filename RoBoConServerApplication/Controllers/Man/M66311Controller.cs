@@ -25,6 +25,22 @@ namespace VisualServerApplication.Controllers.Man
             }
         }
 
+        [Route("pop")]
+        [HttpPost]
+        // POST api/<controller>
+        public async Task<IHttpActionResult> GetMstPopSelect([FromBody] ManVo vo)
+        {
+            try
+            {
+                return Ok<IEnumerable<ManVo>>(Properties.EntityMapper.QueryForList<ManVo>("M66107SelectMstPop", vo));
+            }
+            catch (Exception eLog)
+            {
+                return Ok<string>(eLog.Message);
+            }
+        }
+
+
 
         [Route("n1st/eq")]
         [HttpPost]

@@ -1,8 +1,11 @@
 ﻿using AquilaErpWpfApp3.ViewModel;
+using DevExpress.Xpf.Editors;
+using DevExpress.Xpf.Grid;
 using ModelsLibrary.Sale;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+
 
 namespace AquilaErpWpfApp3.View.SAL
 {
@@ -32,76 +35,47 @@ namespace AquilaErpWpfApp3.View.SAL
         }
 
 
+
         private void CheckEdit_Checked(object sender, RoutedEventArgs e)
         {
-            //CheckEdit checkEdit = sender as CheckEdit;
-            //JobVo tmpImsi;
-            //JobVo resultVo;
-            //for (int x = 0; x < this.ViewGridDtl.VisibleRowCount; x++)
-            //{
-            //    int rowHandle = this.ViewGridDtl.GetRowHandleByVisibleIndex(x);
-            //    if (rowHandle > -1)
-            //    {
-            //        tmpImsi = this.ViewGridDtl.GetRow(rowHandle) as JobVo;
-            //        if (checkEdit.IsChecked == true)
-            //        {
-            //            tmpImsi.CLZ_FLG = "Y";
-            //            tmpImsi.isCheckd = true;
-            //        }
-            //        else
-            //        {
-            //            tmpImsi.CLZ_FLG = "N";
-            //            tmpImsi.isCheckd = false;
-            //        }
-            //        //
-            //        tmpImsi.CRE_USR_ID = SystemProperties.USER;
-            //        tmpImsi.UPD_USR_ID = SystemProperties.USER;
-            //        //
-            //        //
-            //        resultVo = saleOrderClient.S2211UpdateDtl(tmpImsi);
-            //        if (!resultVo.isSuccess)
-            //        {
-            //            //실패
-            //            WinUIMessageBox.Show(resultVo.Message, "[에러]" + title, MessageBoxButton.OK, MessageBoxImage.Error);
-            //            return;
-            //        }
-            //    }
-            //}
+            CheckEdit checkEdit = sender as CheckEdit;
+
+            SetCheckState(this.ViewGridMst, checkEdit.IsChecked == true);
+            SetCheckState(this.ViewGridDtl, checkEdit.IsChecked == true);
+
+
         }
 
-
-
-        private void isCheckEdit_DtlClzFlg(object sender, RoutedEventArgs e)
+        private void SetCheckState(GridControl gridView, bool isChecked)
         {
-            //CheckEdit checkEdit = sender as CheckEdit;
-            //JobVo masterDomain = (JobVo)ViewGridDtl.GetFocusedRow();
-            //JobVo resultVo;
-            ////
-            //if (checkEdit.IsChecked == true)
-            //{
-            //    //Y
-            //    masterDomain.CLZ_FLG = "Y";
-            //    masterDomain.isCheckd = true;
-            //}
-            //else
-            //{
-            //    //N
-            //    masterDomain.CLZ_FLG = "N";
-            //    masterDomain.isCheckd = false;
-            //}
+            for (int x = 0; x < gridView.VisibleRowCount; x++)
+            {
+                int rowHandle = gridView.GetRowHandleByVisibleIndex(x);
+                if (rowHandle > -1)
+                {
+                    SaleVo tmpImsi = gridView.GetRow(rowHandle) as SaleVo;
+                    if (tmpImsi != null)
+                    {
+                        tmpImsi.isCheckd = isChecked;
+                    }
+                }
+            }
+        }
 
-            ////
-            //masterDomain.CRE_USR_ID = SystemProperties.USER;
-            //masterDomain.UPD_USR_ID = SystemProperties.USER;
-            ////
-            ////
-            //resultVo = saleOrderClient.S2211UpdateDtl(masterDomain);
-            //if (!resultVo.isSuccess)
-            //{
-            //    //실패
-            //    WinUIMessageBox.Show(resultVo.Message, "[에러]" + title, MessageBoxButton.OK, MessageBoxImage.Error);
-            //    return;
-            //}
+        private void AllCheckBox_Mst_Checked(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext is S22227ViewModel viewModel)
+            {
+                viewModel.SelectDetailRefresh();
+            }
+        }
+
+        private void AllCheckBox_DTL_Checked(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext is S22227ViewModel viewModel)
+            {
+                viewModel.DtlList_Activity();
+            }
         }
     }
 }
