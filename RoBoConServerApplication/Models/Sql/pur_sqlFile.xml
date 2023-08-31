@@ -3791,7 +3791,7 @@
     <update id="P441106UpdateDtl" parameterClass="ModelsLibrary.Pur.PurVo">
       UPDATE TB_CUST_PUR_DTL
 		 SET UPD_USR_ID  = #UPD_USR_ID#
-			     UPD_DT  = GETDATE()
+		   , UPD_DT  = GETDATE()
 	   WHERE 1 = 1
 	     AND CHNL_CD   = #CHNL_CD#
 	     AND PUR_NO    = #PUR_NO#

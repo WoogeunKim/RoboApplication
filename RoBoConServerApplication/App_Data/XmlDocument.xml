@@ -1352,7 +1352,7 @@
             주문별 생산공장/GR확정- LOC창고 업데이트
             </summary>
         </member>
-        <member name="M:VisualServerApplication.Controllers.Sale.S22227Controller.GetDtlGrDelete(ModelsLibrary.Sale.SaleVo)">
+        <member name="M:VisualServerApplication.Controllers.Sale.S22227Controller.GetDtlGrDelete(System.Collections.Generic.IList{ModelsLibrary.Sale.SaleVo})">
             <summary>
             주문별 생산공장/GR확정 - GR확정 리스트에 있는 GR번호 삭제
             </summary>
