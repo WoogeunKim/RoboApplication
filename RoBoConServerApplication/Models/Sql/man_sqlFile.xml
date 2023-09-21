@@ -11126,6 +11126,7 @@
 				   , 1 AS RN
               FROM TMP
             WHERE 1 = 1
+			 AND N2ND_EQ_NO IS NULL
              AND ITM_STL_LENG <![CDATA[<=]]> (  SELECT MAX(CAST(CLSS_DESC AS INT))
              FROM TB_SYS_CLSS_CD
             WHERE 1 = 1
@@ -11140,6 +11141,14 @@
               FROM TMP
              WHERE 1 = 1
               AND N1ST_EQ_NO = 'CUT01'
+	 UNION ALL
+            SELECT 'CUT02'
+                  , '2층 절단기'
+                  , COUNT(*)
+	              , 1 AS RN
+             FROM TMP
+            WHERE 1 = 1
+             AND N1ST_EQ_NO = 'CUT02'
       UNION ALL
             SELECT PROD_EQ_NO
                   , EQ_NM
@@ -11159,7 +11168,7 @@
             )  T2
           WHERE 1 = 1
            AND T1.CHNL_CD       = #CHNL_CD#
-           AND T1.PROD_EQ_NO   <![CDATA[<>]]> 'CUT01'
+           AND T1.PROD_EQ_NO   NOT IN ('CUT01', 'CUT02')
             ) T1
 	ORDER BY RN
 	  </select>
@@ -11229,7 +11238,8 @@
             AND X.SL_RLSE_SEQ  = T1.SL_RLSE_SEQ
       ) T5
      OUTER APPLY (
-          SELECT ISNULL(SUM(PROD_GD_QTY), 0)   AS PROD_QTY
+          SELECT ISNULL(SUM(PROD_QTY), 0)   AS PROD_QTY
+		        ,ISNULL(SUM(PROD_GD_QTY),0) AS PROD_GD_QTY
             FROM TB_RBK_MORD X
              WHERE 1 = 1
             AND X.SL_RLSE_NO   = T1.SL_RLSE_NO
@@ -11252,7 +11262,7 @@
 	     AND T4.SL_RLSE_DT  >= CAST(#FM_DT# + ' 00:00:00' AS DATETIME)
 	     AND T4.SL_RLSE_DT  <![CDATA[<=]]> CAST(#TO_DT# + ' 23:59:59' AS DATETIME)
        AND T1.RLSE_CMD_NO IS NOT NULL
-       AND T1.SL_ITM_QTY  - T2.PROD_QTY > 0  
+       AND T1.SL_ITM_QTY  - T2.PROD_GD_QTY > 0  
       ) T1 
          OUTER APPLY (
         SELECT ISNULL(X.TK_TM, 0) AS TK_TM
@@ -11310,6 +11320,7 @@
         FROM TMP T1
        WHERE 1 = 1
          AND 'Z2' = #EQ_NO#
+		 AND N2ND_EQ_NO IS NULL
          AND ITM_STL_LENG <![CDATA[<=]]> (  SELECT MAX(CAST(CLSS_DESC AS INT))
                                   FROM TB_SYS_CLSS_CD
                                  WHERE 1 = 1

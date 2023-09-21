@@ -362,7 +362,7 @@
 
                 <!--<dxb:BarButtonItem x:Name="M_SAVE" Content="저장" KeyGesture="F9" Glyph="/CpcErp;component/Images/Icons/Action_Save_12x12.png" LargeGlyph="/CpcErp;component/Images/Icons/Action_Save_32x32.png" RibbonStyle="Large" IsEnabled="{Binding isM_SAVE}" Command="{Binding SaveDialogCommand}" ItemClick="M_SAVE_ItemClick"  />-->
 
-                <dxb:BarButtonItem x:Name="M_MST_INSERT" Content="추가" KeyGesture="F6" Glyph="{dx:DXImage Image=AddItem_16x16.png}" RibbonStyle="Large" Command="{Binding NewContactCommand}" LargeGlyph="{dxc:DXImage SvgImages/Outlook Inspired/AddFile.svg}" />
+                <dxb:BarButtonItem x:Name="M_MST_INSERT" Content="추가" KeyGesture="F6" Glyph="{dx:DXImage Image=AddItem_16x16.png}" RibbonStyle="Large" IsEnabled="{Binding isM_INSERT}" Command="{Binding NewContactCommand}" LargeGlyph="{dxc:DXImage SvgImages/Outlook Inspired/AddFile.svg}" />
                 <dxb:BarButtonItem x:Name="M_MST_UPDATE" Content="수정" KeyGesture="F7" Glyph="{dx:DXImage Image=Edit_16x16.png}"  RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" Command="{Binding EditContactCommand}" LargeGlyph="{dxc:DXImage SvgImages/Dashboards/Edit.svg}" />
                 <dxb:BarButtonItem x:Name="M_MST_DELETE" Content="삭제" KeyGesture="F8" Glyph="{dx:DXImage Image=RemoveItem_16x16.png}" RibbonStyle="Large" IsEnabled="{Binding isM_DELETE}" Command="{Binding DelContactCommand}" LargeGlyph="{dxc:DXImage SvgImages/Snap/SnapDeleteList.svg}" />
                 <!--<dxb:BarButtonItem x:Name="M_MST_PRINT" Content="출력" KeyGesture="F9" Glyph="/CpcErp;component/Images/Icons/Print-16x16.png" LargeGlyph="/CpcErp;component/Images/Icons/Print-32x32.png" RibbonStyle="SmallWithText" />-->
@@ -370,9 +370,9 @@
                 
                 <!--11.05 도면등록버튼 활성화를위해 일단 주석처리했음...-->
                 <!--<dxb:BarButtonItem x:Name="M_DTL_INSERT" Content="도면 등록" KeyGesture="Ctrl+F6" Glyph="{dx:DXImage Image=Insert_16x16.png}" LargeGlyph="{dx:DXImage Image=Insert_32x32.png}" RibbonStyle="Large" Command="{Binding NewDtlContactCommand}" IsEnabled="{Binding isM_UPDATE}" />-->
-                <dxb:BarButtonItem x:Name="M_DTL_INSERT" Content="도면 등록" KeyGesture="Ctrl+F6"  RibbonStyle="Large" Command="{Binding NewDtlContactCommand}"  IsEnabled="{Binding isM_UPDATE}" LargeGlyph="{dxc:DXImage SvgImages/Reports/AddParameter.svg}"  />
-                <dxb:BarButtonItem x:Name="M_DTL_DOWNLOAD" Content="도면 저장" KeyGesture="Ctrl+F7" RibbonStyle="Large" Command="{Binding FileDownloadContactCommand}" IsEnabled="{Binding isM_UPDATE}" LargeGlyph="{dxc:DXImage SvgImages/Save/SaveAndNew.svg}"  />
-                <dxb:BarButtonItem x:Name="M_DTL_CONFIRM" Content="도면 확정" KeyGesture="Ctrl+F8" RibbonStyle="Large" Command="{Binding FileConfirmContactCommand}" IsEnabled="{Binding isM_UPDATE}" LargeGlyph="{dxc:DXImage SvgImages/Snap/Checkbox.svg}"  />
+                <dxb:BarButtonItem x:Name="M_DTL_INSERT" Content="도면 등록" KeyGesture="Ctrl+F6"  RibbonStyle="Large" Command="{Binding NewDtlContactCommand}"  IsEnabled="{Binding isD_UPDATE}" LargeGlyph="{dxc:DXImage SvgImages/Reports/AddParameter.svg}"  />
+                <dxb:BarButtonItem x:Name="M_DTL_DOWNLOAD" Content="도면 저장" KeyGesture="Ctrl+F7" RibbonStyle="Large" Command="{Binding FileDownloadContactCommand}" IsEnabled="{Binding isD_UPDATE}" LargeGlyph="{dxc:DXImage SvgImages/Save/SaveAndNew.svg}"  />
+                <dxb:BarButtonItem x:Name="M_DTL_CONFIRM" Content="도면 확정" KeyGesture="Ctrl+F8" RibbonStyle="Large" Command="{Binding FileConfirmContactCommand}" IsEnabled="{Binding isD_UPDATE}" LargeGlyph="{dxc:DXImage SvgImages/Snap/Checkbox.svg}"  />
 
 
                 <!--<dxb:BarButtonItem x:Name="M_DTL_INSERT_2" Content="기타 발주" KeyGesture="Ctrl+F7" Glyph="{dx:DXImage Image=Insert_16x16.png}" LargeGlyph="{dx:DXImage Image=Insert_32x32.png}" RibbonStyle="Large" Command="{Binding EditDtlContactCommand}" IsEnabled="{Binding isM_UPDATE}" />-->

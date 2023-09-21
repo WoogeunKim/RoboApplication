@@ -141,6 +141,10 @@ namespace AquilaErpWpfApp3.View.S
             {
                 return;
             }
+
+            if (dao.OSTR_FLG == null)
+                return;
+
             //그룹클릭시
             if (dao.IS_GROUP.Equals("G"))
             {

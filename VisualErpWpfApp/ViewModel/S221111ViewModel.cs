@@ -11,10 +11,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 using AquilaErpWpfApp3.Util;
 using AquilaErpWpfApp3.View.SAL.Dialog;
+using AquilaErpWpfApp3.View.SAL.Report;
+using DevExpress.Xpf.Printing;
+using DevExpress.XtraPrinting.Drawing;
+using System.Drawing;
+
 
 namespace AquilaErpWpfApp3.ViewModel
 {
@@ -29,6 +33,9 @@ namespace AquilaErpWpfApp3.ViewModel
 
         private S22111MasterDialog masterDialog;
         private S22111DetailDialog detailDialog;
+        private S22223GrDialog GrDialog;
+        private S22223Report1 Report1;
+        private S22223Report2 Report2;
 
 
 
@@ -154,8 +161,8 @@ namespace AquilaErpWpfApp3.ViewModel
             masterDialog.Title = title + " 마스터 관리 - 추가";
             masterDialog.Owner = Application.Current.MainWindow;
             masterDialog.BorderEffect = BorderEffect.Default;
-            masterDialog.BorderEffectActiveColor = new SolidColorBrush(Color.FromRgb(255, 128, 0));
-            masterDialog.BorderEffectInactiveColor = new SolidColorBrush(Color.FromRgb(255, 170, 170));
+            masterDialog.BorderEffectActiveColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 128, 0));
+            masterDialog.BorderEffectInactiveColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 170, 170));
             bool isDialog = (bool)masterDialog.ShowDialog();
             if (isDialog)
             {
@@ -179,8 +186,8 @@ namespace AquilaErpWpfApp3.ViewModel
                 masterDialog.Title = title + " 마스터 관리 - 수정 - [요청 번호 명 : " + SelectedMstItem.SL_BIL_NO + "]";
                 masterDialog.Owner = Application.Current.MainWindow;
                 masterDialog.BorderEffect = BorderEffect.Default;
-                masterDialog.BorderEffectActiveColor = new SolidColorBrush(Color.FromRgb(255, 128, 0));
-                masterDialog.BorderEffectInactiveColor = new SolidColorBrush(Color.FromRgb(255, 170, 170));
+                masterDialog.BorderEffectActiveColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 128, 0));
+                masterDialog.BorderEffectInactiveColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 170, 170));
                 bool isDialog = (bool)masterDialog.ShowDialog();
                 if (isDialog)
                 {
@@ -268,8 +275,8 @@ namespace AquilaErpWpfApp3.ViewModel
             detailDialog.Title = "출하 등록 물품 관리 - [요청 번호 명 : " + SelectedMstItem.SL_BIL_NO + "]";
             detailDialog.Owner = Application.Current.MainWindow;
             detailDialog.BorderEffect = BorderEffect.Default;
-            detailDialog.BorderEffectActiveColor = new SolidColorBrush(Color.FromRgb(255, 128, 0));
-            detailDialog.BorderEffectInactiveColor = new SolidColorBrush(Color.FromRgb(255, 170, 170));
+            detailDialog.BorderEffectActiveColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 128, 0));
+            detailDialog.BorderEffectInactiveColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 170, 170));
             bool isDialog = (bool)detailDialog.ShowDialog();
             if (isDialog)
             {
@@ -328,6 +335,158 @@ namespace AquilaErpWpfApp3.ViewModel
             catch (System.Exception eLog)
             {
                 //DXSplashScreen.Close();
+                WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+                return;
+            }
+        }
+
+        // 납품확인서 출력 ( Dialog → Report1 → Report2 )
+        [Command]
+        public async void DtlRpt()
+        {
+            try
+            {
+                // DTL 선택된 데이터가 없거나 해당 GR번호가 없을 경우 
+                if (this.SearchDetail == null) return;
+                //// 
+                // GR번호 경우 확정일 때만 출력되도록 추후 수정 필요할 것으로 판단됨. *******************************************************************************************************
+                if (this.SearchDetail.RLSE_CMD_NO == null)
+                {
+                    WinUIMessageBox.Show("[GR번호] 가 필요합니다.", "유효검사", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.None);
+                    return;
+                }
+
+                // GR 조회 Vo
+                SaleVo rptGRDao = new SaleVo() { RLSE_CMD_NO = this.SearchDetail.RLSE_CMD_NO, CHNL_CD = SystemProperties.USER_VO.CHNL_CD };
+
+                // GR 이미 입력된 정보 존재 여부 (추가&수정)
+                SaleVo dlgDao = rptGRDao;
+
+
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("S22223/dlg", new StringContent(JsonConvert.SerializeObject(rptGRDao), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // GR 이미 입력된 정보가 있을 경우 (수정)
+                        if (JsonConvert.DeserializeObject<SaleVo>(await response.Content.ReadAsStringAsync()) != null)
+                        {
+                            dlgDao = JsonConvert.DeserializeObject<SaleVo>(await response.Content.ReadAsStringAsync());
+                        }
+                    }
+                }
+
+                // 납품확인서 필요한 데이터 입력 Dialog
+                dlgDao.SL_BIL_NO = this.SearchDetail.SL_BIL_NO;
+                GrDialog = new S22223GrDialog(dlgDao);
+                GrDialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                GrDialog.Owner = Application.Current.MainWindow;
+                GrDialog.BorderEffect = BorderEffect.Default;
+                GrDialog.BorderEffectActiveColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 128, 0));
+                GrDialog.BorderEffectInactiveColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 170, 170));
+                bool isDialog = (bool)GrDialog.ShowDialog();
+                if (!isDialog)
+                {
+                    // False : 입력을 취소할 경우
+                    return;
+                }
+
+
+
+                // 납품확인서 리포트1 조회 
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("S22223/rpt1", new StringContent(JsonConvert.SerializeObject(rptGRDao), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // 납품확인서 리포트1 조회
+                        IList<SaleVo> rpt1List = new List<SaleVo>();
+                        rpt1List = JsonConvert.DeserializeObject<IEnumerable<SaleVo>>(await response.Content.ReadAsStringAsync()).Cast<SaleVo>().ToList();
+
+                        if (rpt1List.Count > 0)
+                        {
+                            // 납품확인서 리포트 1번 출력...
+                            Report1 = new S22223Report1(rpt1List);
+                            Report1.Margins.Top = 2;
+                            Report1.Margins.Bottom = 0;
+                            Report1.Margins.Left = 40;
+                            Report1.Margins.Right = 1;
+                            Report1.Landscape = false;
+                            Report1.PrintingSystem.ShowPrintStatusDialog = true;
+                            Report1.PaperKind = System.Drawing.Printing.PaperKind.A4;
+
+                            //데모 시연 문서 표시 가능
+                            Report1.Watermark.Text = "로보콘 주식회사";
+                            Report1.Watermark.TextDirection = DirectionMode.ForwardDiagonal;
+                            Report1.Watermark.Font = new Font(Report1.Watermark.Font.FontFamily, 40);
+                            ////Report1.Watermark.ForeColor = Color.DodgerBlue;
+                            Report1.Watermark.ForeColor = System.Drawing.Color.PaleTurquoise;
+                            Report1.Watermark.TextTransparency = 180;
+                            Report1.Watermark.ShowBehind = false;
+                            //Report1.Watermark.PageRange = "1,3-5";
+
+                            var window = new DocumentPreviewWindow();
+                            window.PreviewControl.DocumentSource = Report1;
+                            Report1.CreateDocument(true);
+                            window.Title = "철근납품확인서";
+                            window.Owner = Application.Current.MainWindow;
+                            window.ShowDialog();
+                        }
+                        else
+                        {
+                            // 데이터가 없어 납품확인서 리포트 1번 출력 안함.
+                            WinUIMessageBox.Show("정보가 없어 [납품확인서] 출력은 하지 않습니다.", "[철근납품확인서]", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                    }
+                }
+
+
+                // 납품리스트 리포트2 조회 
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("S22223/rpt2", new StringContent(JsonConvert.SerializeObject(rptGRDao), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // 납품리스트 리포트2 조회
+                        IList<SaleVo> rpt2List = new List<SaleVo>();
+                        rpt2List = JsonConvert.DeserializeObject<IEnumerable<SaleVo>>(await response.Content.ReadAsStringAsync()).Cast<SaleVo>().ToList();
+
+                        if (rpt2List.Count > 0)
+                        {
+                            // 납품리스트 리포트 2번 출력...  ****************************************************************** 상단에 조회한 Data
+                            Report2 = new S22223Report2(rpt2List);
+                            Report2.Margins.Top = 2;
+                            Report2.Margins.Bottom = 0;
+                            Report2.Margins.Left = 40;
+                            Report2.Margins.Right = 1;
+                            Report2.Landscape = false;
+                            Report2.PrintingSystem.ShowPrintStatusDialog = true;
+                            Report2.PaperKind = System.Drawing.Printing.PaperKind.A4;
+
+                            //데모 시연 문서 표시 가능
+                            Report2.Watermark.Text = "로보콘 주식회사";
+                            Report2.Watermark.TextDirection = DirectionMode.ForwardDiagonal;
+                            Report2.Watermark.Font = new Font(Report2.Watermark.Font.FontFamily, 40);
+                            ////Report2.Watermark.ForeColor = Color.DodgerBlue;
+                            Report2.Watermark.ForeColor = System.Drawing.Color.PaleTurquoise;
+                            Report2.Watermark.TextTransparency = 180;
+                            Report2.Watermark.ShowBehind = false;
+                            //Report2.Watermark.PageRange = "1,3-5";
+
+                            var window = new DocumentPreviewWindow();
+                            window.PreviewControl.DocumentSource = Report2;
+                            Report2.CreateDocument(true);
+                            window.Title = "납품리스트";
+                            window.Owner = Application.Current.MainWindow;
+                            window.ShowDialog();
+                        }
+                        else
+                        {
+                            // 데이터가 없어 납품확인서 리포트 2번 출력 안함.
+                            WinUIMessageBox.Show("정보가 없어 [납품리스트] 출력은 하지 않습니다.", "[납품리스트]", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                    }
+                }
+            }
+            catch (Exception eLog)
+            {
                 WinUIMessageBox.Show(eLog.Message, "[" + SystemProperties.PROGRAM_TITLE + "]" + title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }

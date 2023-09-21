@@ -123,6 +123,7 @@
             , EMP_LOC_CD
             , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-051', EMP_LOC_CD) AS EMP_LOC_NM	
 			, (SELECT OSTR_FLG FROM TB_SYS_GRP AS A WHERE 1=1 AND A.CHNL_CD = #CHNL_CD# AND  A.GRP_ID = B.GRP_ID) AS OSTR_FLG
+			, (SELECT PRNT_GRP_ID FROM TB_SYS_GRP AS A WHERE 1=1 AND A.CHNL_CD = #CHNL_CD# AND  A.GRP_ID = B.GRP_ID) AS PRNT_GRP_ID
       FROM TB_SYS_USR AS B
       WHERE 1=1
       <isNotNull property="USR_ID" >
@@ -266,22 +267,7 @@
 	  , OSTR_FLG
       FROM
       (
-        SELECT 'A' AS GBN
-          , CAST(T1.GRP_ID AS VARCHAR) AS GRP_ID
-          , T1.GRP_NM
-          , T1.GRP_DESC
-          , CAST(T1.PRNT_GRP_ID AS VARCHAR) AS PRNT_GRP_ID
-          , NULL AS USR_ID
-          , NULL AS USR_N1ST_NM
-          , NULL AS DELT_FLG
-          , T1.CHNL_CD
-		  , T1.OSTR_FLG
-        FROM TB_SYS_GRP T1
-        WHERE 1 = 1
-          AND T1.GRP_TP_CD = 'G'
-          AND CHNL_CD = #CHNL_CD#
-      UNION ALL
-      SELECT 'B'
+      SELECT 'B' AS GBN
         , CAST(T2.USR_ID  AS VARCHAR) AS GRP_ID
         , T1.GRP_NM
         , T1.GRP_DESC
@@ -307,6 +293,21 @@
         AND T2.USR_ID LIKE #USR_ID# + '%'
       </isNotNull>
         AND T1.GRP_TP_CD = 'G'
+   UNION ALL
+        SELECT 'A' AS GBN
+          , CAST(T1.GRP_ID AS VARCHAR) AS GRP_ID
+          , T1.GRP_NM
+          , T1.GRP_DESC
+          , CAST(T1.PRNT_GRP_ID AS VARCHAR) AS PRNT_GRP_ID
+          , NULL AS USR_ID
+          , NULL AS USR_N1ST_NM
+          , NULL AS DELT_FLG
+          , T1.CHNL_CD
+		  , T1.OSTR_FLG
+        FROM TB_SYS_GRP T1
+        WHERE 1 = 1
+          AND T1.GRP_TP_CD = 'G'
+          AND CHNL_CD = #CHNL_CD#
       ) T1
     </select>
     

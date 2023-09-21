@@ -44,55 +44,11 @@ namespace AquilaErpWpfApp3.ViewModel
 
         public P441106ViewModel() 
         {
-
-            //WeekDt = System.DateTime.Now;
-
             StartDt = Convert.ToDateTime(System.DateTime.Now.ToString("yyyy-MM-01"));
             EndDt = System.DateTime.Now;
 
             //사업장
             SYSTEM_CODE_VO();
-            // - Refresh();
-
-            ////사업장
-            //AreaList = SystemProperties.SYSTEM_CODE_VO("L-002");
-            //_AreaMap = SystemProperties.SYSTEM_CODE_MAP("L-002");
-            //if (AreaList.Count > 0)
-            //{
-            //    TXT_SL_AREA_NM = SystemProperties.USER_VO.EMPE_PLC_CD;
-            //    //for (int x = 0; x < AreaList.Count; x++)
-            //    //{
-            //    //    if (TXT_SL_AREA_NM.Equals(AreaList[x].CLSS_DESC))
-            //    //    {
-            //    //        M_SL_AREA_NM = AreaList[x];
-            //    //        break;
-            //    //    }
-            //    //}
-            //}
-
-
-            ////매입처
-            //_DeptMap = SystemProperties.CUSTOMER_CODE_MAP("AP", SystemProperties.USER_VO.EMPE_PLC_NM);
-            //DeptList = SystemProperties.CUSTOMER_CODE_VO("AP", SystemProperties.USER_VO.EMPE_PLC_NM);
-            //DeptList.Insert(0, new CustomerCodeDao() { CO_NO = "", CO_NM = "" });
-            //if (DeptList.Count > 0)
-            //{
-            //    //M_DEPT_DESC = DeptList[0];
-            //    TXT_DEPT_DESC = DeptList[0].CO_NO;
-
-            //    //TXT_SL_AREA_NM = SystemProperties.USER_VO.EMPE_PLC_CD;
-            //    //for (int x = 0; x < DeptList.Count; x++)
-            //    //{
-            //    //    if (TXT_DEPT_DESC.Equals(DeptList[x].CO_NO))
-            //    //    {
-            //    //        M_SL_AREA_NM = DeptList[x];
-            //    //        break;
-            //    //    }
-            //    //}
-            //}
-
-
-            //Refresh();
         }
 
         [Command]
@@ -105,11 +61,14 @@ namespace AquilaErpWpfApp3.ViewModel
                 SelectDtlList = null;
                 SelectedMstItem = null;
 
+
+                IList<PurVo> resultList = new List<PurVo>();
+
                 using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("p441106/mst", new StringContent(JsonConvert.SerializeObject(new PurVo() { FM_DT = (StartDt).ToString("yyyy-MM-dd"), TO_DT = (EndDt).ToString("yyyy-MM-dd"), AREA_CD = M_SL_AREA_NM.CLSS_CD, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, PUR_ITM_CD = "M" }), System.Text.Encoding.UTF8, "application/json")))
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                        this.SelectMstList = JsonConvert.DeserializeObject<IEnumerable<PurVo>>(await response.Content.ReadAsStringAsync()).Cast<PurVo>().ToList();
+                        resultList = JsonConvert.DeserializeObject<IEnumerable<PurVo>>(await response.Content.ReadAsStringAsync()).Cast<PurVo>().ToList();
                     }
                     //string tmpCO_NO = "";
                     //if (SelectedItemDept != null) { tmpCO_NO=SelectedItemDept.CO_NO; }
@@ -118,11 +77,28 @@ namespace AquilaErpWpfApp3.ViewModel
                     //SelectMstList = purClient.P4411SelectMstList(new PurVo() { FM_DT = (StartDt).ToString("yyyy-MM-dd"), TO_DT = (EndDt).ToString("yyyy-MM-dd"), AREA_CD = (string.IsNullOrEmpty(TXT_SL_AREA_NM) ? null : _AreaMap[TXT_SL_AREA_NM]), PUR_CO_CD = (string.IsNullOrEmpty(tmpCO_NO) ? null : tmpCO_NO) });
                     Title = "[기간]" + (StartDt).ToString("yyyy-MM-dd") + "~" + (EndDt).ToString("yyyy-MM-dd") + ",   [사업장]" + M_SL_AREA_NM.CLSS_DESC;
 
+
+                    //고객사 일 때
+                    if (this.UserVo.OSTR_FLG.Equals("Y"))
+                    {
+                        //자기가 만든 마스터만 보여주기
+                        resultList = resultList.Where(x => x.CRE_USR_ID.Equals(this.UserVo.USR_ID)).ToList<PurVo>();
+                    }
+                    else // 샵업체
+                    {
+                        //자기 상위의 고객사가 만든 마스터만 보여주기
+                        if(this.UserVo.PRNT_GRP_ID != null)
+                        resultList = resultList.Where(x => x.GRP_ID.Equals(this.UserVo.PRNT_GRP_ID)).ToList<PurVo>();
+                    }
+
+                    if(resultList.Count >= 1)
+                    {
+                        SelectMstList = resultList;
+                    }
+
+                       
                     if (SelectMstList.Count >= 1)
                     {
-                        isM_UPDATE = true;
-                        isM_DELETE = true;
-
                         if (string.IsNullOrEmpty(_PUR_ORD_NO))
                         {
                             SelectedMstItem = SelectMstList[0];
@@ -132,16 +108,9 @@ namespace AquilaErpWpfApp3.ViewModel
                             SelectedMstItem = SelectMstList.Where(x => x.PUR_NO.Equals(_PUR_ORD_NO)).LastOrDefault<PurVo>();
                         }
                     }
-                    else
-                    {
 
-                        isM_UPDATE = false;
-                        //isM_UPDATE = true;
-                        isM_DELETE = false;
-                        //
-                        isD_UPDATE = false;
-                        isD_DELETE = false;
-                    }
+                    ValCheck();
+
                     //DXSplashScreen.Close();
                 }
             }
@@ -296,6 +265,13 @@ namespace AquilaErpWpfApp3.ViewModel
             set { SetProperty(ref _isM_UPDATE, value, () => isM_UPDATE); }
         }
 
+        private bool? _isM_INSERT = false;
+        public bool? isM_INSERT
+        {
+            get { return _isM_INSERT; }
+            set { SetProperty(ref _isM_INSERT, value, () => isM_INSERT); }
+        }
+
 
         private bool? _isM_DELETE = false;
         public bool? isM_DELETE
@@ -374,16 +350,10 @@ namespace AquilaErpWpfApp3.ViewModel
 
                     if (SelectDtlList.Count >= 1)
                     {
-                        isD_UPDATE = true;
-                        isD_DELETE = true;
-
                         SearchDetail = SelectDtlList[0];
                     }
-                    else
-                    {
-                        isD_UPDATE = false;
-                        isD_DELETE = false;
-                    }
+
+                    ValCheck();
                 }
 
                 //DXSplashScreen.Close();
@@ -397,6 +367,54 @@ namespace AquilaErpWpfApp3.ViewModel
             }
         }
         //#endregion
+
+        private void ValCheck()
+        {
+            if (SelectMstList.Count >= 1)
+            {
+                if(this.UserVo.OSTR_FLG != null)
+                {       
+
+                    if(this.UserVo.OSTR_FLG.Equals("Y"))
+                    {
+                        isM_INSERT = true;
+                        isM_UPDATE = true;
+                        isM_DELETE = true;
+                    }
+                    else
+                    {
+                        isM_INSERT = false;
+                        isM_UPDATE = false;
+                        isM_DELETE = false;
+                    }
+                }
+
+            }
+            else
+            {
+                //MST
+                isM_UPDATE = false;
+                isM_DELETE = false;
+                //DTL
+                isD_UPDATE = false;
+                isD_DELETE = false;
+            }
+
+            if(SelectDtlList != null)
+            {
+                //Dtl check
+                if (SelectDtlList.Count >= 1)
+                {
+                    isD_UPDATE = true;
+                    isD_DELETE = true;
+                }
+                else
+                {
+                    isD_UPDATE = false;
+                    isD_DELETE = false;
+                }
+            }
+        }
 
         //#region Functon <Detail List>
         public IList<PurVo> SelectDtlList

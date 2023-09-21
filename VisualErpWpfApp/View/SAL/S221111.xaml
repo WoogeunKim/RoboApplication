@@ -490,9 +490,9 @@
                 <dxb:BarButtonItem x:Name="M_DTL_DELETE" Content="삭제" KeyGesture="Ctrl+F7" RibbonStyle="Large" IsEnabled="{Binding isM_DELETE}" Command="{Binding DelContactCommand}" Glyph="{dx:DXImage SvgImages/Dashboards/DeleteQuery.svg}" LargeGlyph="{dx:DXImage SvgImages/Dashboards/DeleteQuery.svg}" />
 
                 <dxb:BarButtonItem x:Name="M_MST_CANCEL" Content="마감" KeyGesture="F12" Glyph="{dx:DXImage Image=Cancel_16x16.png}" RibbonStyle="Large"    IsEnabled="{Binding isM_Cancel}" LargeGlyph="{dx:DXImage Images/Actions/Apply_32x32.png}"  />
-                <dxb:BarButtonItem x:Name="M_MST_G" Content="납품확인서(갑지)" KeyGesture="F13" Glyph="{dx:DXImage Image=Cancel_16x16.png}" RibbonStyle="Large"   IsEnabled="{Binding isM_Cancel}" LargeGlyph="{dx:DXImage Images/Actions/Apply_32x32.png}"  />
+                <dxb:BarButtonItem x:Name="M_DTL_RPT" Content="납품확인서(갑지)" KeyGesture="F13" Glyph="{dx:DXImage Image=Cancel_16x16.png}" RibbonStyle="Large" Command="{Binding DtlRptCommand}"  IsEnabled="{Binding isM_DELETE}" LargeGlyph="{dx:DXImage Images/Actions/Apply_32x32.png}"  />
                 <dxb:BarButtonItem x:Name="M_MST_E" Content="납품확인서(을지)" KeyGesture="F14" Glyph="{dx:DXImage Image=Cancel_16x16.png}" RibbonStyle="Large"   IsEnabled="{Binding isM_Cancel}" LargeGlyph="{dx:DXImage Images/Actions/Apply_32x32.png}"  />
-
+                <!--<dxb:BarButtonItem x:Name="M_DTL_RPT" Content="출력" KeyGesture="Ctrl+F8" RibbonStyle="Large" Command="{Binding DtlRptCommand}" IsEnabled="{Binding isD_UPDATE}" Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_Print.svg}" LargeGlyph="{dx:DXImage SvgImages/Icon Builder/Actions_Print.svg}" />-->
             </dxb:BarManager.Items>
             <Grid>
                 <Grid.RowDefinitions>
@@ -527,8 +527,8 @@
                             </dxr:RibbonPageGroup>
 
                             <dxr:RibbonPageGroup Caption="">
-                                <dxb:BarButtonItemLink BarItemName="M_MST_G"/>
-                                <dxb:BarButtonItemLink BarItemName="M_MST_E"/>
+                                <dxb:BarButtonItemLink BarItemName="M_DTL_RPT"/>
+                                <dxb:BarButtonItemLink BarItemName="M_DTL_RPT"/>
                                 <dxb:BarButtonItemLink BarItemName="M_MST_CANCEL"/>
                             </dxr:RibbonPageGroup>
 
@@ -728,7 +728,7 @@
                                         </dxg:GridControl.InputBindings>
 
                                         <dxg:GridControl.View>
-                                            <dxg:TableView x:Name="ViewTableDtl" RowMinHeight="30" EditorButtonShowMode="ShowForFocusedRow" FontSize="12" ShowTotalSummary="True" ShowFixedTotalSummary="True"  ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Default" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupPanel="False" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="True"  IsColumnMenuEnabled="False" >
+                                            <dxg:TableView x:Name="ViewTableDtl" RowMinHeight="30" EditorButtonShowMode="ShowForFocusedRow" FontSize="14.5" ShowTotalSummary="True" ShowFixedTotalSummary="True"  ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Default" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupPanel="False" AllowFilterEditor="False" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="True"  IsColumnMenuEnabled="False" >
                                                 <dxg:TableView.FormatConditions>
                                                     <dxg:FormatCondition FieldName="IN_REQ_DT" Expression="[isCheckd] = 'True'" PredefinedFormatName="BoldText"/>
                                                     <dxg:FormatCondition FieldName="CNTR_NM" Expression="[isCheckd] = 'True'" PredefinedFormatName="BoldText"/>
@@ -753,7 +753,7 @@
                                             </dxg:GridColumn.EditSettings>
                                         </dxg:GridColumn>
 
-                                        <dxg:GridColumn FieldName="RLSE_CMD_NO" Header="GR번호" Width="120" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                        <dxg:GridColumn FieldName="RLSE_CMD_NO" Header="GR번호" Width="140" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
                                             <dxg:GridColumn.EditSettings>
                                                 <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                             </dxg:GridColumn.EditSettings>
@@ -765,7 +765,7 @@
                                             </dxg:GridColumn.EditSettings>
                                         </dxg:GridColumn>
 
-                                        <dxg:GridColumn FieldName="IN_REQ_DT" Header="납품요청일" Width="80" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                        <dxg:GridColumn FieldName="IN_REQ_DT" Header="납품요청일" Width="110" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
                                             <dxg:GridColumn.EditSettings>
                                                 <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
                                             </dxg:GridColumn.EditSettings>
@@ -813,7 +813,7 @@
                                             </dxg:GridColumn.EditSettings>
                                         </dxg:GridColumn>
 
-                                        <dxg:GridColumn FieldName="PROD_GD_QTY" Header="출고수량" Width="70" AllowColumnFiltering="True" AllowAutoFilter="False" AllowSearchPanel="False" AllowSorting="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                        <dxg:GridColumn FieldName="PROD_GD_QTY" Header="출고수량" Width="90" AllowColumnFiltering="True" AllowAutoFilter="False" AllowSearchPanel="False" AllowSorting="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
                                             <dxg:GridColumn.EditSettings>
                                                 <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True"  />
                                             </dxg:GridColumn.EditSettings>

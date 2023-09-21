@@ -41,7 +41,7 @@
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Text="공사명 : " HorizontalAlignment="Right" TextAlignment="Right" />
         <dxe:TextEdit x:Name="text_GR_CNTR_NM" Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" MaxLength="30" Text="{Binding GR_CNTR_NM}" Margin="2" IsReadOnly="False" IsEnabled="True" Background="White"/>
 
-        <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Text="공정명 : " HorizontalAlignment="Right" TextAlignment="Right" />
+        <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Text="공사부위 : " HorizontalAlignment="Right" TextAlignment="Right" />
         <dxe:TextEdit x:Name="text_GR_CNTR_ROUT_NM" Grid.Column="1" Grid.Row="2" VerticalAlignment="Stretch" MaxLength="30" Text="{Binding GR_CNTR_ROUT_NM}" Margin="2" IsReadOnly="False" IsEnabled="True" Background="White"/>
         
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3" Text="납품차수 : " HorizontalAlignment="Right" TextAlignment="Right" />
@@ -53,8 +53,8 @@
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0" Grid.Row="5" Text="도착일 : " HorizontalAlignment="Right" TextAlignment="Right" />
         <dxe:DateEdit x:Name="text_GR_ARR_DT" HorizontalContentAlignment="Center" Grid.Column="1" Grid.Row="5" VerticalAlignment="Stretch" Margin="2" IsTextEditable="False" ShowClearButton="False" Text="{Binding GR_ARR_DT}" IsEnabled="True"/>
         
-        <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0" Grid.Row="6" Text="송정번호 : " HorizontalAlignment="Right" TextAlignment="Right" />
-        <dxe:TextEdit x:Name="text_GR_INV_NO" Grid.Column="1" Grid.Row="6" VerticalAlignment="Stretch" MaxLength="30" Text="{Binding GR_INV_NO}" Margin="2" IsReadOnly="False" IsEnabled="True" Background="White"/>
+        <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0" Grid.Row="6" Text="송장번호 : " HorizontalAlignment="Right" TextAlignment="Right" />
+        <dxe:TextEdit x:Name="text_GR_INV_NO" Grid.Column="1" Grid.Row="6" VerticalAlignment="Stretch" MaxLength="30" Text="{Binding SL_BIL_NO}" Margin="2" IsReadOnly="False" IsEnabled="False" Background="White" />
         
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="0" Grid.Row="7" Text="착지담당 : " HorizontalAlignment="Right" TextAlignment="Right" />
         <dxe:TextEdit x:Name="text_ARR_USR_NM" Grid.Column="1" Grid.Row="7" VerticalAlignment="Stretch" MaxLength="30" Text="{Binding ARR_USR_NM}" Margin="2" IsReadOnly="False" IsEnabled="True" Background="White"/>

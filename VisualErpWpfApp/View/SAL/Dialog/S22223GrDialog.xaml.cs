@@ -45,7 +45,7 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
                 GR_RLSE_KNT_NM = Dao.GR_RLSE_KNT_NM,
                 GR_SND_DT = Dao.GR_SND_DT,
                 GR_ARR_DT = Dao.GR_ARR_DT,
-                GR_INV_NO = Dao.GR_INV_NO,
+                GR_INV_NO = Dao.SL_BIL_NO,
                 GR_CAR_NO = Dao.GR_CAR_NO,
                 INCR_RT = Dao.INCR_RT,
                 GR_WGT = Dao.GR_WGT,
@@ -54,7 +54,8 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
                 CAR_DRV_USR_NM = Dao.CAR_DRV_USR_NM,
                 N1ST_TEL_NO = Dao.N1ST_TEL_NO,
                 N2ND_TEL_NO = Dao.N2ND_TEL_NO,
-                RLSE_CMD_NO = Dao.RLSE_CMD_NO
+                RLSE_CMD_NO = Dao.RLSE_CMD_NO,
+                SL_BIL_NO = Dao.SL_BIL_NO
             };
 
             // GR_NO == null 경우 [추가] 아니면 [수정]
