@@ -254,6 +254,11 @@ namespace AquilaErpWpfApp3.View.S.Dialog
                     _groupList.Insert(0, new GroupUserVo() { GRP_ID = null, GRP_NM = " " });
                     this.combo_PRNT_GRP_NM.ItemsSource = _groupList;
 
+                    if(this.orgdao.PRNT_GRP_ID != null)
+                    {
+                        this.combo_PRNT_GRP_NM.SelectedItem = _groupList.Where(x => x.GRP_ID == this.orgdao.PRNT_GRP_ID).FirstOrDefault<GroupUserVo>();
+                    }
+
                     //if (this.orgdao.GRP_ID == null)
                     //{
                     //    //추가
