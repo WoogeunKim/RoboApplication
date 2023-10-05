@@ -96,6 +96,10 @@
                 <!--<TextBlock Height="20"  VerticalAlignment="Center" Grid.Column="3" Grid.Row="1" Text="확인 패스워드 : " Foreground="Gray" HorizontalAlignment="Right" TextAlignment="Right" Grid.ColumnSpan="2" Margin="0,6,0,9" Width="117" FontWeight="Bold" />
                 <dxe:PasswordBoxEdit Height="22" x:Name="text_USR_PWD_RE" Grid.Column="5"  Grid.Row="1" MaxLength="20" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="0,2,0,11"  Background="LightGray" />-->
 
+                <TextBlock Height="20"  VerticalAlignment="Top" Grid.Column="3" Grid.Row="1" Text="부서명 : " Foreground="Gray" HorizontalAlignment="Right" TextAlignment="Right" Grid.ColumnSpan="2" Margin="0,9,0,9" Width="117" FontWeight="Bold" />
+                <TextBlock Height="20"  VerticalAlignment="Top" Grid.Column="4" Grid.Row="1" Text= "{Binding ElementName=combo_GRP_NM, Path=SelectedItem.GRP_NM}" Foreground="Gray" HorizontalAlignment="Center" TextAlignment="Left" Grid.ColumnSpan="2" Margin="40,10,0,9" Width="117" FontWeight="Bold" />
+
+
                 <TextBlock x:Name="text_EMPE_PLC_NM" Height="20" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Text="사업장* : " Foreground="Blue" HorizontalAlignment="Right" TextAlignment="Right" FontWeight="Bold"/>
                 <dxg:LookUpEdit Height="22" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" x:Name="combo_EMPE_PLC_NM" Text="{Binding EMPE_PLC_CD}" IsSynchronizedWithCurrentItem="True" DisplayMember="CLSS_DESC" ValueMember="CLSS_DESC" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="False" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsTextEditable="False" ShowSizeGrip="False" Grid.Column="2" Grid.Row="2" >
                     <dxg:LookUpEdit.PopupContentTemplate>
@@ -126,7 +130,7 @@
 
 
                 <TextBlock x:Name="text_GRP_NM" Height="20" VerticalAlignment="Center" Grid.Column="4" Grid.Row="2" Text="부서* : " Foreground="Blue" HorizontalAlignment="Right" TextAlignment="Right" Margin="0" FontWeight="Bold"/>
-                <dxg:LookUpEdit Height="22" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" x:Name="combo_GRP_NM" Text="{Binding GRP_NM}" IsSynchronizedWithCurrentItem="True" DisplayMember="GRP_NM" ValueMember="GRP_NM" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="False" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsTextEditable="False" ShowSizeGrip="False" Grid.Column="5" Grid.Row="2" EditValueChanged="combo_GRP_NM_EditValueChanged">
+                <dxg:LookUpEdit Height="22" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" x:Name="combo_GRP_NM" Text="{Binding GRP_ID}" IsSynchronizedWithCurrentItem="True" DisplayMember="GRP_ID" ValueMember="GRP_ID" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="False" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsTextEditable="False" ShowSizeGrip="False" Grid.Column="5" Grid.Row="2" EditValueChanged="combo_GRP_NM_EditValueChanged">
                     <dxg:LookUpEdit.PopupContentTemplate>
                         <ControlTemplate>
                             <dxg:GridControl Name="PART_GridControl" >

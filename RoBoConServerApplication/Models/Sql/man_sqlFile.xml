@@ -9666,7 +9666,8 @@
              , T4.ITM_STL_SZ_CD
              , T4.ITM_STL_LENG
              , T4.SL_ITM_QTY
-             , ISNULL(T7.RUN_CLSS_CD, 'N') AS COLR_FLG 
+             , ISNULL(T7.RUN_CLSS_CD, 'N') AS COLR_FLG
+			 , ISNULL(T7.CLZ_FLG, 'N') AS CLZ_FLG 
 		     , #OPMZ_NO# AS OPMZ_NO
              , #UPD_USR_ID# AS UPD_USR_ID
 		     , CONVERT(VARCHAR(10),T4.IN_REQ_DT, 23) AS IN_REQ_DT
@@ -9686,15 +9687,16 @@
           , TB_SL_RLSE_DTL T4
                   OUTER APPLY (
                       SELECT X.ORD_NO
-                          , X.ORD_SEQ 
-                          , Y.RUN_CLSS_CD
-                          , Y.CLZ_FLG
-                          FROM TB_OPMZ_DMND X
-                          , TB_OPMZ_RUN  Y
+                           , X.ORD_SEQ 
+                           , Y.RUN_CLSS_CD
+                           , Y.CLZ_FLG
+                        FROM TB_OPMZ_DMND X
+                           , TB_OPMZ_RUN  Y
                       WHERE 1 = 1
                           AND X.ORD_NO    = T4.SL_RLSE_NO
                           AND X.ORD_SEQ   = T4.SL_RLSE_SEQ           
-                          AND X.OPMZ_NO   = Y.OPMZ_NO   
+                          AND X.OPMZ_NO   = Y.OPMZ_NO
+						  AND Y.CLZ_FLG  <![CDATA[<>]]> 'Y'						  
                           GROUP BY X.ORD_NO
                                  , X.ORD_SEQ
                                  , Y.RUN_CLSS_CD

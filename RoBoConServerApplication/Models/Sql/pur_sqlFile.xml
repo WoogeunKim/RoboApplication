@@ -3312,9 +3312,9 @@
          WHERE 1 = 1
            AND T1.CHNL_CD = #CHNL_CD#
            AND T1.PUR_NO  = #PUR_NO#
-		<isNotEqual property="OSTR_FLG" compareValue="Y">
+		<!--<isEqual property="OSTR_FLG" compareValue="N">
 			AND T1.CRE_USR_ID = #CRE_USR_ID#
-		</isNotEqual>
+		</isEqual>-->
      </select>
 
 

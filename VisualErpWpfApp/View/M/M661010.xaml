@@ -509,11 +509,11 @@
 
                                                         <dxg:TableView.FormatConditions>
                                                             <dxg:FormatCondition FieldName="PROD_DIR_DT" Expression="[isCheckd] = 'True'" PredefinedFormatName="YellowFillWithDarkYellowText"/>
-                                                            <dxg:FormatCondition FieldName="PROD_DIR_QTY" Expression="[isCheckd] = 'True'" PredefinedFormatName="YellowFillWithDarkYellowText"/>
+                                                            <!--<dxg:FormatCondition FieldName="PROD_DIR_QTY" Expression="[isCheckd] = 'True'" PredefinedFormatName="YellowFillWithDarkYellowText"/>-->
                                                             <dxg:FormatCondition FieldName="PROD_DIR_DT" Expression="[PROD_DIR_DT] is null " PredefinedFormatName="GreenFillWithDarkGreenText"/>
                                                             <dxg:FormatCondition FieldName="PROD_DIR_DT" Expression="[PROD_DIR_DT] is not null " PredefinedFormatName="GreenFillWithDarkGreenText"/>
-                                                            <dxg:FormatCondition FieldName="PROD_DIR_QTY" Expression="[PROD_DIR_QTY] is null " PredefinedFormatName="GreenFillWithDarkGreenText"/>
-                                                            <dxg:FormatCondition FieldName="PROD_DIR_QTY" Expression="[PROD_DIR_QTY] is not null " PredefinedFormatName="GreenFillWithDarkGreenText"/>
+                                                            <!--<dxg:FormatCondition FieldName="PROD_DIR_QTY" Expression="[PROD_DIR_QTY] is null " PredefinedFormatName="GreenFillWithDarkGreenText"/>
+                                                            <dxg:FormatCondition FieldName="PROD_DIR_QTY" Expression="[PROD_DIR_QTY] is not null " PredefinedFormatName="GreenFillWithDarkGreenText"/>-->
                                                             <dxg:FormatCondition Expression="[isCheckd] = 'True'" PredefinedFormatName="YellowFillWithDarkYellowText"/>
                                                         </dxg:TableView.FormatConditions>
 
@@ -565,7 +565,7 @@
                                                     </dxg:GridColumn.EditSettings>
                                                 </dxg:GridColumn>
 
-                                                <dxg:GridColumn FieldName="PROD_DIR_QTY" Header="지시수량*" Width="100" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="True" VisibleIndex="4" Validate="GridColumn_Validate">
+                                                <dxg:GridColumn FieldName="PROD_DIR_QTY" Header="지시수량" Width="100" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" VisibleIndex="4" Validate="GridColumn_Validate">
                                                     <dxg:GridColumn.EditSettings>
                                                         <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True" />
                                                     </dxg:GridColumn.EditSettings>

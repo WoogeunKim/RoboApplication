@@ -122,9 +122,19 @@
             , TM_PAY_AMT
             , EMP_LOC_CD
             , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-051', EMP_LOC_CD) AS EMP_LOC_NM	
-			, (SELECT OSTR_FLG FROM TB_SYS_GRP AS A WHERE 1=1 AND A.CHNL_CD = #CHNL_CD# AND  A.GRP_ID = B.GRP_ID) AS OSTR_FLG
-			, (SELECT PRNT_GRP_ID FROM TB_SYS_GRP AS A WHERE 1=1 AND A.CHNL_CD = #CHNL_CD# AND  A.GRP_ID = B.GRP_ID) AS PRNT_GRP_ID
+            , A.OSTR_FLG                        
+            , A.PRNT_GRP_ID
       FROM TB_SYS_USR AS B
+	       OUTER APPLY (    
+                SELECT PRNT_GRP_ID  
+                     , CASE WHEN X.OSTR_FLG = 'Y' THEN 'Y'
+                            WHEN X.PRNT_GRP_ID IS NOT NULL THEN 'N'
+                            ELSE 'R' END AS OSTR_FLG
+                  FROM TB_SYS_GRP X
+                 WHERE 1 = 1 
+                   AND B.CHNL_CD = X.CHNL_CD
+                   AND B.GRP_ID  = X.GRP_ID
+             ) A	  
       WHERE 1=1
       <isNotNull property="USR_ID" >
         AND USR_ID = #USR_ID#

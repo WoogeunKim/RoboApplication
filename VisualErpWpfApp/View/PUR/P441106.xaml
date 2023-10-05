@@ -370,9 +370,9 @@
                 
                 <!--11.05 도면등록버튼 활성화를위해 일단 주석처리했음...-->
                 <!--<dxb:BarButtonItem x:Name="M_DTL_INSERT" Content="도면 등록" KeyGesture="Ctrl+F6" Glyph="{dx:DXImage Image=Insert_16x16.png}" LargeGlyph="{dx:DXImage Image=Insert_32x32.png}" RibbonStyle="Large" Command="{Binding NewDtlContactCommand}" IsEnabled="{Binding isM_UPDATE}" />-->
-                <dxb:BarButtonItem x:Name="M_DTL_INSERT" Content="도면 등록" KeyGesture="Ctrl+F6"  RibbonStyle="Large" Command="{Binding NewDtlContactCommand}"  IsEnabled="{Binding isD_UPDATE}" LargeGlyph="{dxc:DXImage SvgImages/Reports/AddParameter.svg}"  />
+                <dxb:BarButtonItem x:Name="M_DTL_INSERT" Content="도면 등록" KeyGesture="Ctrl+F6"  RibbonStyle="Large" Command="{Binding NewDtlContactCommand}"  IsEnabled="{Binding isD_INSERT}" LargeGlyph="{dxc:DXImage SvgImages/Reports/AddParameter.svg}"  />
                 <dxb:BarButtonItem x:Name="M_DTL_DOWNLOAD" Content="도면 저장" KeyGesture="Ctrl+F7" RibbonStyle="Large" Command="{Binding FileDownloadContactCommand}" IsEnabled="{Binding isD_UPDATE}" LargeGlyph="{dxc:DXImage SvgImages/Save/SaveAndNew.svg}"  />
-                <dxb:BarButtonItem x:Name="M_DTL_CONFIRM" Content="도면 확정" KeyGesture="Ctrl+F8" RibbonStyle="Large" Command="{Binding FileConfirmContactCommand}" IsEnabled="{Binding isD_UPDATE}" LargeGlyph="{dxc:DXImage SvgImages/Snap/Checkbox.svg}"  />
+                <dxb:BarButtonItem x:Name="M_DTL_CONFIRM" Content="도면 확정" KeyGesture="Ctrl+F8" RibbonStyle="Large" Command="{Binding FileConfirmContactCommand}" IsEnabled="{Binding isD_CONFIRM}" LargeGlyph="{dxc:DXImage SvgImages/Snap/Checkbox.svg}"  />
 
 
                 <!--<dxb:BarButtonItem x:Name="M_DTL_INSERT_2" Content="기타 발주" KeyGesture="Ctrl+F7" Glyph="{dx:DXImage Image=Insert_16x16.png}" LargeGlyph="{dx:DXImage Image=Insert_32x32.png}" RibbonStyle="Large" Command="{Binding EditDtlContactCommand}" IsEnabled="{Binding isM_UPDATE}" />-->
@@ -388,19 +388,13 @@
                 </Grid.RowDefinitions>
                 <dxr:RibbonControl x:Name="paintRibbon" AllowCustomization="False" Visibility="Visible" Grid.Row="0" ToolbarShowMode="ShowBelow" RibbonHeaderVisibility="Collapsed">
                     <dxr:RibbonDefaultPageCategory>
-                        <dxr:RibbonPage Caption="고객발주관리">
+                        <dxr:RibbonPage Caption="고객사발주관리">
                             <dxr:RibbonPageGroup Caption="조회 조건">
                                 <dxb:BarEditItemLink BarItemName="M_FM_DT" EditWidth="120" EditHeight="28" />
                                 <dxb:BarEditItemLink BarItemName="M_SEARCH_TEXT" EditWidth="120" EditHeight="25" />
                                 <dxb:BarEditItemLink BarItemName="M_TO_DT" EditWidth="120" EditHeight="28" />
-
-                                <!--<dxb:BarEditItemLink BarItemName="M_BLANK" EditWidth="120" EditHeight="28" />-->
-
                                 <dxb:BarEditItemLink BarItemName="M_AREA_NM" EditWidth="120" EditHeight="25" />
-                                <!--<dxb:BarEditItemLink BarItemName="M_ITM_GRP_CLSS_CD" EditWidth="120" EditHeight="25" />-->
-                            </dxr:RibbonPageGroup>
-
-                            <dxr:RibbonPageGroup Caption="관리">
+                                
                                 <dxb:BarButtonItemLink BarItemName="M_MST_REFRESH"/>
                                 <!--<dxb:BarItemLinkSeparator />-->
                             </dxr:RibbonPageGroup>

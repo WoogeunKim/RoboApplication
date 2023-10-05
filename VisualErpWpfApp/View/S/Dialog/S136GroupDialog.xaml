@@ -22,11 +22,13 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4" />
             <ColumnDefinition Width="33*" />
-            <ColumnDefinition Width="145*"/>
+            <ColumnDefinition Width="72*"/>
+            <ColumnDefinition Width="72*"/>
         </Grid.ColumnDefinitions>
 
+        
         <TextBlock Height="22" Margin="0,7,0,0" VerticalAlignment="Top" Text="상위 그룹* : " HorizontalAlignment="Left" Width="80" Foreground="Blue" TextAlignment="Right" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" />
-        <dxg:LookUpEdit Height="22" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" x:Name="combo_PRNT_GRP_NM" Text="{Binding PRNT_GRP_NM}" IsSynchronizedWithCurrentItem="True" DisplayMember="GRP_NM" ValueMember="GRP_NM" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="False" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsTextEditable="False" ShowSizeGrip="False" Grid.Column="2" Grid.Row="1"> <!--EditValueChanged="Combo_PRNT_GRP_NM_Value_Change"-->
+        <dxg:LookUpEdit Height="22" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" x:Name="combo_PRNT_GRP_NM" Text="{Binding PRNT_GRP_NM}" IsSynchronizedWithCurrentItem="True" DisplayMember="GRP_ID" ValueMember="GRP_ID" AutoPopulateColumns="False" AutoComplete="True" IncrementalFiltering="True" ImmediatePopup="True" IsPopupAutoWidth="False" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsTextEditable="False" ShowSizeGrip="False" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="1" > <!--EditValueChanged="Combo_PRNT_GRP_NM_Value_Change"-->
             <dxg:LookUpEdit.PopupContentTemplate>
                 <ControlTemplate>
                     <dxg:GridControl Name="PART_GridControl" >
@@ -53,22 +55,24 @@
             </dxg:LookUpEdit.StyleSettings>
         </dxg:LookUpEdit>
 
+        <TextBlock Height="20" Text="{Binding ElementName=combo_PRNT_GRP_NM, Path=SelectedItem.GRP_NM}" HorizontalAlignment="Stretch" TextAlignment="Left" VerticalAlignment="Center" Margin="10,3,0,0" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" Foreground="Gray"  />
+
         <TextBlock Height="22" Margin="1,3,0,0" VerticalAlignment="Top" Text="그룹 명 : " HorizontalAlignment="Left" Width="80" TextAlignment="Right" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2"/>
-        <dxe:TextEdit Height="22" x:Name="text_GRP_NM" Grid.Column="2" VerticalAlignment="Stretch" MaxLength="40" Text="{Binding GRP_NM}" Grid.Row="3" />
+        <dxe:TextEdit Height="22" x:Name="text_GRP_NM" Grid.Column="2" VerticalAlignment="Stretch" MaxLength="40" Text="{Binding GRP_NM}" Grid.Row="3" Grid.ColumnSpan="2" />
 
         <TextBlock Height="22" Margin="1,1,0,0" VerticalAlignment="Top" Grid.Column="1" Text="그룹 설명 : " HorizontalAlignment="Left" Width="80" TextAlignment="Right" Grid.Row="5" Grid.ColumnSpan="2"/>
-        <dxe:TextEdit x:Name="text_GRP_DESC" Grid.Column="2" VerticalAlignment="Stretch" Text="{Binding GRP_DESC}" MaxLength="350" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Grid.Row="5" />
+        <dxe:TextEdit x:Name="text_GRP_DESC" Grid.Column="2" VerticalAlignment="Stretch" Text="{Binding GRP_DESC}" MaxLength="350" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Grid.Row="5" Grid.ColumnSpan="2"/>
 
         <dxe:CheckEdit x:Name="check_OSTR_FLG" Margin="15,0,0,0" Content=": 고객사 " Grid.Row="6" Grid.Column="1"/> <!--EditValueChanged="Check_OSTR_FLG_Changed"-->
 
-        <Button x:Name="OKButton" Height="30" Margin="146,0,0,2" Grid.Column="2" VerticalAlignment="Center" Width="100" HorizontalAlignment="Left" Grid.Row="6">
+        <Button x:Name="OKButton" Height="30" Margin="146,0,0,2" Grid.Column="2" VerticalAlignment="Center" Width="100" HorizontalAlignment="Left" Grid.Row="6" Grid.ColumnSpan="2">
             <StackPanel HorizontalAlignment="Left" Width="62" Height="Auto" Orientation="Horizontal">
                 <Image Width="20" Height="20" Source="{dx:DXImage Image=Apply_16x16.png}" Stretch="Fill"/>
                 <TextBlock Margin="5,0,50,0" VerticalAlignment="Center" FontSize="18" Text="확인" TextWrapping="Wrap" Width="40"/>
             </StackPanel>
         </Button>
 
-        <Button x:Name="CancelButton" Height="30" VerticalAlignment="Center" Grid.Column="2" HorizontalAlignment="Right" Width="100" Grid.Row="6" Margin="0,0,0,2"  >
+        <Button x:Name="CancelButton" Height="30" VerticalAlignment="Center" Grid.Column="2" HorizontalAlignment="Right" Width="100" Grid.Row="6" Margin="0,0,0,2"  Grid.ColumnSpan="2">
             <StackPanel HorizontalAlignment="Left" Width="62" Height="Auto" Orientation="Horizontal">
                 <Image Width="20" Height="20" Source="{dx:DXImage Image=Cancel_16x16.png}" Stretch="Fill"/>
                 <TextBlock Margin="5,0,50,0" VerticalAlignment="Center" FontSize="18" Text="취소" TextWrapping="Wrap" Width="40"/>
