@@ -388,7 +388,7 @@
                 </Grid.RowDefinitions>
                 <dxr:RibbonControl x:Name="paintRibbon" AllowCustomization="False" Visibility="Visible" Grid.Row="0" ToolbarShowMode="ShowBelow" RibbonHeaderVisibility="Collapsed">
                     <dxr:RibbonDefaultPageCategory>
-                        <dxr:RibbonPage Caption="고객사발주관리">
+                        <dxr:RibbonPage Caption="고객사발주등록">
                             <dxr:RibbonPageGroup Caption="조회 조건">
                                 <dxb:BarEditItemLink BarItemName="M_FM_DT" EditWidth="120" EditHeight="28" />
                                 <dxb:BarEditItemLink BarItemName="M_SEARCH_TEXT" EditWidth="120" EditHeight="25" />

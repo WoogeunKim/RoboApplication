@@ -438,10 +438,7 @@ namespace AquilaErpWpfApp3.ViewModel
         public void NewDtlContact()
         {
             // 11.05 도면등록을 위해 잠시 주석
-            if (SelectedMstItem == null)
-            {
-                return;
-            }
+            if (SelectedMstItem == null) return;
 
             detailDialog = new P441106DetailDialog(new PurVo() { PUR_NO = SelectedMstItem.PUR_NO/*, DE_CO_NM = SelectedMstItem.DE_CO_NM*/, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, CRE_USR_ID = SystemProperties.USER, UPD_USR_ID = SystemProperties.USER, DUE_DT = SelectedMstItem.DUE_DT });
             detailDialog.Title = "도면등록 - " + SelectedMstItem.PUR_NO + " / " + SelectedMstItem.CO_NM;
@@ -466,7 +463,7 @@ namespace AquilaErpWpfApp3.ViewModel
             {
                 //수정 삭제
                 if (SearchDetail == null) return;
-                if(SearchDetail.UPD_DT != null)
+                if (SearchDetail.UPD_DT != null)
                 {
                     WinUIMessageBox.Show(" 이미 확정된 도면입니다.", "[삭제]" + _title, MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;

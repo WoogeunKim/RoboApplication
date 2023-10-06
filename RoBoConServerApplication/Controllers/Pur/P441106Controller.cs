@@ -164,8 +164,6 @@ namespace VisualServerApplication.Controllers.Pur
         {
             try
             {
-                Properties.EntityMapper.BeginTransaction(); 
-
                 vo.FLR_FILE_ID = System.Guid.NewGuid().ToString();
 
                 string _dirPath = @"C:\WebService\www.robocon.ai_file\";
@@ -175,17 +173,22 @@ namespace VisualServerApplication.Controllers.Pur
                 {
                     Directory.CreateDirectory(_dirPath);
                 }
+
                 File.WriteAllBytes(filePath, vo.FLR_FILE);
-                vo.FLR_FILE = new byte[0];
+                if (File.Exists(filePath) == true)
+                {
+                    vo.FLR_FILE = new byte[0];
+                    Properties.EntityMapper.Insert("P441106InsertDtl", vo);
+                }
+                else
+                {
+                    return Ok<string>("파일이 저장되지 않았습니다.");
+                }
 
-                Properties.EntityMapper.Insert("P441106InsertDtl", vo);
-
-                Properties.EntityMapper.CommitTransaction();
                 return Ok<int>(1);
             }
             catch (System.Exception eLog)
             {
-                Properties.EntityMapper.RollBackTransaction();
                 return Ok<string>(eLog.Message);
             }
         }

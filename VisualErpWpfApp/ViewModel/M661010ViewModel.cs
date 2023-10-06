@@ -346,6 +346,17 @@ namespace AquilaErpWpfApp3.ViewModel
                     bool isDialog = (bool)lovDialog.ShowDialog();
                     if (isDialog)
                     {
+                        // 서버로부터 DTL 정보를 초기화합니다.
+                        IList<ManVo> voList = new List<ManVo>();
+                        voList = await PostJsonList<ManVo>("m661010/dtl", new ManVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD, FM_DT = StartDt.ToString("yyyy-MM-dd"), TO_DT = EndDt.ToString("yyyy-MM-dd"), EQ_NO = SelectedMstItem.EQ_NO });
+
+                        foreach(ManVo vo in SelectDtlList.Where<ManVo>(x => x.isCheckd == true).ToList())
+                        {
+                            voList[(int)vo.RN - 1].isCheckd = true;
+                        }
+
+                        this.SelectDtlList = voList;
+
                         SelectLovListDetail();
                     }
                 }
@@ -384,7 +395,19 @@ namespace AquilaErpWpfApp3.ViewModel
                                     WinUIMessageBox.Show(resultMsg, _title, MessageBoxButton.OK, MessageBoxImage.Error);
                                     return;
                                 }
+
                                 //성공
+                                // 서버로부터 DTL 정보를 초기화합니다.
+                                IList<ManVo> voList = new List<ManVo>();
+                                voList = await PostJsonList<ManVo>("m661010/dtl", new ManVo() { CHNL_CD = SystemProperties.USER_VO.CHNL_CD, FM_DT = StartDt.ToString("yyyy-MM-dd"), TO_DT = EndDt.ToString("yyyy-MM-dd"), EQ_NO = SelectedMstItem.EQ_NO });
+
+                                foreach (ManVo vo in SelectDtlList.Where<ManVo>(x => x.isCheckd == true).ToList())
+                                {
+                                    voList[(int)vo.RN - 1].isCheckd = true;
+                                }
+
+                                this.SelectDtlList = voList;
+
                                 SelectLovListDetail();
                                 WinUIMessageBox.Show("삭제되었습니다.", _title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
                             }

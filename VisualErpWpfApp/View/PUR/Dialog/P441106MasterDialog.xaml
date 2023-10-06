@@ -155,7 +155,7 @@
 
 
         <TextBlock Height="20" HorizontalAlignment="Right" Text="비고 : " TextAlignment="Right" VerticalAlignment="Top" Grid.Row="7" Grid.Column="1" Margin="0,3,0,0" />
-        <dxe:TextEdit x:Name="text_ORD_RMK" Grid.Column="2" Margin="2" Grid.ColumnSpan="2" VerticalAlignment="Stretch" Text="{Binding PUR_RMK}" MaxLength="90" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  Grid.Row="7" />
+        <dxe:TextEdit x:Name="text_ORD_RMK" Grid.Column="2" Margin="2" Grid.ColumnSpan="2" VerticalAlignment="Stretch" Text="{Binding PUR_RMK}" MaxLength="90" AcceptsReturn="True" TextWrapping="Wrap" VerticalContentAlignment="Top" VerticalScrollBarVisibility="Auto"  Grid.Row="7" />
 
         <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="1"  Text="마감 유무 : " HorizontalAlignment="Right" TextAlignment="Right" Grid.Row="8" />
         <dxe:ComboBoxEdit x:Name="text_PUR_CLZ_FLG" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Stretch" Text="{Binding DELT_FLG}" Margin="2" Grid.Row="8" IsTextEditable="False" >

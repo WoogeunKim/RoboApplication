@@ -54,6 +54,7 @@
                 <dxb:BarEditItem x:Name="M_BLANK" Content=""  />
 
                 <dxb:BarButtonItem x:Name="M_MST_REFRESH" Content="조회" KeyGesture="F5" Glyph="{dx:DXImage Image=Refresh2_16x16.png}" LargeGlyph="{dx:DXImage Image=Refresh2_32x32.png}" RibbonStyle="Large" Command="{Binding RefreshCommand}" />
+                <dxb:BarButtonItem x:Name="M_ROG_REFRESH" Content="로그조회" RibbonStyle="Large" Command="{Binding DtListRefreshCommand}" IsEnabled="{Binding isM_UPDATE}" Glyph="{dxc:DXImage SvgImages/Outlook Inspired/ShipmentAwaiting.svg}" LargeGlyph="{dxc:DXImage SvgImages/Outlook Inspired/ShipmentAwaiting.svg}"/>
                 <dxb:BarButtonItem x:Name="M_MST_INSERT" Content="추가" KeyGesture="F6" Glyph="{dx:DXImage Image=AddItem_16x16.png}" LargeGlyph="{dx:DXImage Image=AddItem_32x32.png}" RibbonStyle="Large" Command="{Binding NewContactCommand}" />
                 <dxb:BarButtonItem x:Name="M_MST_UPDATE" Content="수정" KeyGesture="F7" Glyph="{dx:DXImage Image=Edit_16x16.png}" LargeGlyph="{dx:DXImage Image=Edit_32x32.png}"  RibbonStyle="Large" IsEnabled="{Binding isM_UPDATE}" Command="{Binding EditContactCommand}" />
                 <dxb:BarButtonItem x:Name="M_MST_PRINT" Content="출력" Glyph="{dx:DXImage Image=PrintDialog_16x16.png}" LargeGlyph="{dx:DXImage Image=PrintDialog_32x32.png}" RibbonStyle="Large" IsEnabled="False"/>
@@ -79,6 +80,8 @@
                                 <dxb:BarEditItemLink BarItemName="M_SEARCH_TEXT" EditWidth="120" EditHeight="25" />
                                 <dxb:BarEditItemLink BarItemName="M_TO_DT" EditWidth="120" EditHeight="28" />
                                 <dxb:BarButtonItemLink BarItemName="M_MST_REFRESH"/>
+                                <dxb:BarItemSeparator />
+                                <dxb:BarButtonItemLink BarItemName="M_ROG_REFRESH"/>
                             </dxr:RibbonPageGroup>
 
                             <dxr:RibbonPageGroup Caption="관리">
@@ -254,8 +257,6 @@
                                             </dxg:GridControl>
                                         </dxd:LayoutPanel>
                                     </dxd:TabbedGroup>
-
-
                                 </Grid>
                             </Grid>
                         </dxd:LayoutPanel>
