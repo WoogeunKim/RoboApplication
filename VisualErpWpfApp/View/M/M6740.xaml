@@ -207,7 +207,7 @@
 
                 <dxd:DockLayoutManager x:Name="JobManager" Grid.Row="1">
                     <dxd:LayoutGroup  Orientation="Vertical">
-                        <dxd:LayoutPanel Caption="MST" ItemHeight="1*" AllowContextMenu="False" AllowClose="False" ShowCaption="True" CaptionImage="{dx:DXImage Image=Zoom100_16x16.png}" AllowMaximize="True">
+                        <dxd:LayoutPanel Caption="GR 리스트" ItemHeight="1*" AllowContextMenu="False" AllowClose="False" ShowCaption="True" CaptionImage="{dx:DXImage Image=Zoom100_16x16.png}" AllowMaximize="True">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
@@ -286,7 +286,7 @@
 
 
 
-                        <dxd:LayoutPanel Caption="Detail" ItemHeight="1*" AllowContextMenu="False" AllowClose="False" ShowCaption="True" CaptionImage="{dx:DXImage Image=Task_16x16.png}" AllowMaximize="True">
+                        <dxd:LayoutPanel Caption="생산자재 현황" ItemHeight="1*" AllowContextMenu="False" AllowClose="False" ShowCaption="True" CaptionImage="{dx:DXImage Image=Task_16x16.png}" AllowMaximize="True">
                             <Grid>
 
                                 <Grid.ColumnDefinitions>

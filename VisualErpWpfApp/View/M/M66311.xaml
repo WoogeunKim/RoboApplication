@@ -53,7 +53,7 @@
 
         <dxr:RibbonControl x:Name="paintRibbon" AllowCustomization="False" Visibility="Visible" Grid.Row="0" ToolbarShowMode="Default" RibbonHeaderVisibility="Collapsed">
             <dxr:RibbonDefaultPageCategory>
-                <dxr:RibbonPage Caption="도면바리스트형상추출">
+                <dxr:RibbonPage Caption="가공생산지시관리">
                     <dxr:RibbonPageGroup Caption="조회 조건">
                         <dxb:BarEditItem x:Name="M_SEARCH_TEXT" Content="검   색 : " EditValue="{Binding M_SEARCH_TEXT, Mode=TwoWay}" EditWidth="120" EditHeight="28">
                             <dxb:BarEditItem.EditTemplate>

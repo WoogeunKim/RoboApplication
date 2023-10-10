@@ -21,6 +21,7 @@ using System.Text;
 using System.Net.Http.Headers;
 using AquilaErpWpfApp3.View.M.Dialog;
 using AquilaErpWpfApp3.M.View.Dialog;
+using System.Threading.Tasks;
 
 namespace AquilaErpWpfApp3.ViewModel
 {
@@ -102,68 +103,94 @@ namespace AquilaErpWpfApp3.ViewModel
         [Command]
         public void DtlRefresh()
         {
-            if (string.IsNullOrEmpty(OpmzNo)) return;
+            if (string.IsNullOrEmpty(OpmzNo + "")) return;
 
             DtlRefresh(OpmzNo);
         }
 
 
-        public async void DtlRefresh(string opmgno)
+        private async void DtlRefresh(string opmgno)
         {
             try
             {
                 if (opmgno == null) return;
 
-                if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
-
-                this.SelectMstList = null;
-                this.SelectedMstItem = null;
-                this.SelectDtlList = null;
-                this.SelectedDtlItem = null;
-                this.SummaryTableList = null;
-
-                IList<ManVo> MstList = new List<ManVo>();
-                IList<ManVo> SummaryList = new List<ManVo>();
-
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310", new StringContent(JsonConvert.SerializeObject(new ManVo() { OPMZ_NO = opmgno, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, CLZ_FLG = BL_CLZ_FLG == true ? "Y" : "N"}), System.Text.Encoding.UTF8, "application/json")))
-                {
-                    if (response.IsSuccessStatusCode)
-                    {
-                        MstList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
-                    }
-                }
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310/dtl/summary", new StringContent(JsonConvert.SerializeObject(new ManVo() { OPMZ_NO = opmgno, CLZ_FLG = BL_CLZ_FLG == true ? "Y" : "N" }), System.Text.Encoding.UTF8, "application/json")))
-                {
-                    if (response.IsSuccessStatusCode)
-                    {
-                        SummaryList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
-                    }
-                }
-                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("m66310/dtl", new StringContent(JsonConvert.SerializeObject(new ManVo() { OPMZ_NO = opmgno, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, CLZ_FLG = BL_CLZ_FLG == true ? "Y" : "N" }), System.Text.Encoding.UTF8, "application/json")))
-                {
-                    if (response.IsSuccessStatusCode)
-                    {
-                        // DTL 조회하는데 오래걸려서 같이 보이도록 조절하였음.
-                        this.SelectMstList = MstList;
-                        this.SummaryTableList = SummaryList;
-
-                        this.SelectDtlList = JsonConvert.DeserializeObject<IEnumerable<ManVo>>(await response.Content.ReadAsStringAsync()).Cast<ManVo>().ToList();
-
-                        B_UPDATE = true;
-                    }
-                }
-
-                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+                MstListRefresh(opmgno);
+                SummaryListRefresh(opmgno);
+                DtlListRefresh(opmgno);
+                B_UPDATE = true;
             }
             catch (System.Exception eLog)
             {
-                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
-
-                WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.None);
+                WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
                 return;
             }
         }
 
+
+        private async void MstListRefresh(string opmgno)
+        {
+            try
+            {
+                this.SelectMstList = await PostHttpSelect<ManVo>("m66310", new ManVo() { OPMZ_NO = opmgno, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, CLZ_FLG = BL_CLZ_FLG == true ? "Y" : "N" });
+                this.SelectedMstItem = null;
+            }
+            catch
+            {
+
+            }
+        }
+        private async void SummaryListRefresh(string opmgno)
+        {
+            try
+            {
+                this.SummaryTableList = await PostHttpSelect<ManVo>("m66310/dtl/summary", new ManVo() { OPMZ_NO = opmgno, CLZ_FLG = BL_CLZ_FLG == true ? "Y" : "N" });
+            }
+            catch
+            {
+
+            }
+        }
+
+        private async void DtlListRefresh(string opmgno)
+        {
+            try
+            {
+                if (DXSplashScreen.IsActive == false) DXSplashScreen.Show<ProgressWindow>();
+
+                this.SelectDtlList = await PostHttpSelect<ManVo>("m66310/dtl", new ManVo() { OPMZ_NO = opmgno, CHNL_CD = SystemProperties.USER_VO.CHNL_CD, CLZ_FLG = BL_CLZ_FLG == true ? "Y" : "N" });
+                this.SelectedDtlItem = null;
+
+                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+            }
+            catch
+            {
+                if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
+            }
+        }
+
+        private async Task<List<T>> PostHttpSelect<T>(string Path, object Obj)
+        {
+            var ret = new List<T>();
+
+            try
+            {
+                using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync( Path
+                                                                                                   , new StringContent(JsonConvert.SerializeObject(Obj), System.Text.Encoding.UTF8, "application/json")))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        ret = JsonConvert.DeserializeObject<IEnumerable<T>>(await response.Content.ReadAsStringAsync()).Cast<T>().ToList();
+                    }
+                }
+            }
+            catch (System.Exception eLog)
+            {
+                WinUIMessageBox.Show(eLog.Message, _title, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
+            }
+
+            return ret;
+        } 
 
 
 
