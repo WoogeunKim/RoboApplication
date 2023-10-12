@@ -150,17 +150,20 @@
         <dxe:TextEdit x:Name="text_USR_NM" Grid.Column="2" Grid.Row="5" Text="{Binding USR_NM}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2" IsEnabled="False"/>
 
 
-        <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="1" Grid.Row="6" Text="운임료 : " HorizontalAlignment="Right" TextAlignment="Right" FontSize="13"  />
-        <dxe:TextEdit x:Name="text_MV_CAR_AMT" Grid.Column="2" Grid.Row="6" Text="{Binding MV_CAR_AMT}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Mask="###,###,##0" MaskType="Numeric" Margin="2" />
+        <TextBlock Height="20" VerticalAlignment="Center" Grid.Column="1" Grid.Row="6" Text="색상 : " HorizontalAlignment="Right" TextAlignment="Right" FontSize="14"  />
+        <dxe:TextEdit x:Name="text_CLR_TXT" Grid.Column="2" Grid.Row="6" Text="{Binding CLR_TXT}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2" />
 
-        <TextBlock Height="20" HorizontalAlignment="Right" Text="비고 : " TextAlignment="Right" VerticalAlignment="Top" Grid.Row="7" Grid.Column="1" Margin="0,3,0,0" FontSize="13"  />
+        <!--<TextBlock Height="20" VerticalAlignment="Center" Grid.Column="1" Grid.Row="6" Text="운임료 : " HorizontalAlignment="Right" TextAlignment="Right" FontSize="13"  />
+        <dxe:TextEdit x:Name="text_MV_CAR_AMT" Grid.Column="2" Grid.Row="6" Text="{Binding MV_CAR_AMT}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Mask="###,###,##0" MaskType="Numeric" Margin="2" />-->
+
+        <TextBlock Height="20" HorizontalAlignment="Right" Text="비고 : " TextAlignment="Right" VerticalAlignment="Top" Grid.Row="7" Grid.Column="1" Margin="0,3,0,0" FontSize="14"  />
         <dxe:TextEdit x:Name="text_SL_BIL_RMK" Grid.Column="2" Grid.Row="7" Grid.RowSpan="2" Margin="2" VerticalAlignment="Stretch" Text="{Binding SL_BIL_RMK}" MaxLength="190" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" FontSize="14" />
 
         <dxwui:AppBar x:Name="appBar" IsOpen="True" HideMode="Manual" Grid.Row="10" Grid.ColumnSpan="3" IsCompact="True" >
             <dxwui:AppBarButton  Label="확인" Name="OKButton" ToolTip="확인" Glyph="{dx:DXImageGrayscale Image=Apply_32x32.png}"  HorizontalAlignment="Center" AllowGlyphTheming="True" />
             <dxwui:AppBarButton Label="취소" x:Name="CancelButton" ToolTip="취소" Glyph="{dx:DXImageGrayscale Image=Cancel_32x32.png}" HorizontalAlignment="Center" AllowGlyphTheming="True" />
         </dxwui:AppBar>
-        
+
         <!--<Separator HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Row="19" Grid.Column="0" Grid.ColumnSpan="8" Foreground="LightGray" Margin="0,0,0,1" />-->
         <!--<Button x:Name="OKButton" Height="30" Margin="205,0,0,13" Grid.Column="2" VerticalAlignment="Bottom" Width="100" HorizontalAlignment="Left" Grid.Row="20">
             <StackPanel HorizontalAlignment="Left" Width="62" Height="Auto" Orientation="Horizontal">

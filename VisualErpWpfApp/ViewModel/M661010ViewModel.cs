@@ -352,7 +352,12 @@ namespace AquilaErpWpfApp3.ViewModel
 
                         foreach(ManVo vo in SelectDtlList.Where<ManVo>(x => x.isCheckd == true).ToList())
                         {
-                            voList[(int)vo.RN - 1].isCheckd = true;
+                            var count = voList.Where(x => x.RN < vo.RN).ToList<ManVo>().Count;
+
+                            if(voList[count].RN == vo.RN)
+                            {
+                                voList[count].isCheckd = true;
+                            }
                         }
 
                         this.SelectDtlList = voList;

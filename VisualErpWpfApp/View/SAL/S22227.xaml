@@ -263,7 +263,7 @@
                 </Grid.RowDefinitions>
                 <dxr:RibbonControl x:Name="paintRibbon" AllowCustomization="False" Visibility="Visible" Grid.Row="0" ToolbarShowMode="ShowBelow" RibbonHeaderVisibility="Collapsed">
                     <dxr:RibbonDefaultPageCategory>
-                        <dxr:RibbonPage Caption="주문별 생산공장/GR확정">
+                        <dxr:RibbonPage Caption="GR번호/LOC관리">
 
                             <dxr:RibbonPageGroup Caption="조회 조건">
                                 <dxb:BarEditItemLink BarItemName="M_IN_REQ_FM_DT" EditWidth="120" EditHeight="28" />

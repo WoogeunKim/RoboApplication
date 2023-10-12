@@ -154,6 +154,20 @@ namespace AquilaErpWpfApp3.ViewModel
                     }
                     break;
 
+                case "R": // 로보콘 (임시)
+                    isM_INSERT = true;
+                    if (SelectMstList.Count >= 1)
+                    {
+                        isM_UPDATE = true;
+                        isM_DELETE = true;
+                    }
+                    else
+                    {
+                        isM_UPDATE = false;
+                        isM_DELETE = false;
+                    }
+                    break;
+
                 default: // 로보콘, 샵업체
                     isM_INSERT = false;
                     isM_UPDATE = false;
@@ -167,10 +181,24 @@ namespace AquilaErpWpfApp3.ViewModel
             switch (SystemProperties.USER_VO.OSTR_FLG)
             {
                 case "R": // 로보콘
-                    isD_INSERT = false;
-                    isD_UPDATE = SelectDtlList.Count >= 1 ? true : false;
-                    isD_DELETE = false;
-                    isD_CONFIRM = false;
+                    //isD_INSERT = false;
+                    //isD_UPDATE = SelectDtlList.Count >= 1 ? true : false;
+                    //isD_DELETE = false;
+                    //isD_CONFIRM = false;
+
+                    isD_INSERT = true;
+                    if (SelectDtlList.Count >= 1)
+                    {
+                        isD_UPDATE = true;  //도면저장 0
+                        isD_CONFIRM = true; //도면확정권한 O
+                        isD_DELETE = true;  //도면삭제 0
+                    }
+                    else
+                    {
+                        isD_UPDATE = false;
+                        isD_CONFIRM = false;
+                        isD_DELETE = false;  //도면삭제 X
+                    }
                     break;
 
                 case "Y": // 고객사

@@ -7702,13 +7702,13 @@
 	  
 
 <!--출하등록-->
-	<select id="S221111SelectMst" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
+   <select id="S221111SelectMst" parameterClass="ModelsLibrary.Sale.SaleVo" resultClass="ModelsLibrary.Sale.SaleVo">
     SELECT T1.CHNL_CD
          , T1.SL_BIL_NO
          , T1.SL_AREA_CD
-		 , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-002', T1.SL_AREA_CD) AS SL_AREA_NM
+         , dbo.CD_SYS_CLSS_FNC(T1.CHNL_CD, 'L-002', T1.SL_AREA_CD) AS SL_AREA_NM
          , T1.SL_CO_CD
-		 , dbo.CD_COMPANY_NM_FNC(T1.CHNL_CD, T1.SL_CO_CD) AS SL_CO_NM
+         , dbo.CD_COMPANY_NM_FNC(T1.CHNL_CD, T1.SL_CO_CD) AS SL_CO_NM
          , T1.CAR_NO
          , CONVERT(VARCHAR, T1.SL_BIL_DT, 23) AS SL_BIL_DT
          , T1.SL_BIL_RMK
@@ -7719,7 +7719,8 @@
          , T1.UPD_DT
          , T2.HDQTR_PHN_NO
          , T2.HDQTR_ADDR
-		 , T2.HDQTR_FAX_NO
+         , T2.HDQTR_FAX_NO
+         , T1.CLR_TXT
       FROM TB_SL_BIL T1
         OUTER APPLY (
                 SELECT * FROM TB_CD_CO
@@ -7729,9 +7730,9 @@
                 ) T2
       WHERE 1=1
        AND T1.CHNL_CD = #CHNL_CD#
-	   AND T1.SL_BIL_DT >= CAST(CONVERT(VARCHAR, #FM_DT#, 112) + ' 00:00:00' AS DATETIME)
+       AND T1.SL_BIL_DT >= CAST(CONVERT(VARCHAR, #FM_DT#, 112) + ' 00:00:00' AS DATETIME)
        AND T1.SL_BIL_DT <![CDATA[<=]]> CAST(CONVERT(VARCHAR, #TO_DT#, 112) + ' 23:59:59' AS DATETIME)
-    </select>	
+    </select>   
 	  
  <!-- 운송장번호 생성 -->
     <select id="S221111SelectSLBILNo" resultClass="string">
@@ -7739,7 +7740,7 @@
     </select>
 	  
 	  
-	<insert id="S221111InsertMst" parameterClass="ModelsLibrary.Sale.SaleVo">
+   <insert id="S221111InsertMst" parameterClass="ModelsLibrary.Sale.SaleVo">
       INSERT INTO TB_SL_BIL
      (
         SL_BIL_NO
@@ -7748,7 +7749,8 @@
       , CAR_NO
       , SL_BIL_DT
       , SL_BIL_RMK
-      , MV_CAR_AMT
+      , CLR_TXT
+      <!--, MV_CAR_AMT-->
       , CRE_USR_ID
       , CRE_DT
       , UPD_USR_ID
@@ -7763,7 +7765,8 @@
       , #CAR_NO#
       , #SL_BIL_DT#
       , #SL_BIL_RMK#
-      , #MV_CAR_AMT#
+      , #CLR_TXT#
+      <!--, #MV_CAR_AMT#-->
       , #CRE_USR_ID#
       , GETDATE()
       , #UPD_USR_ID#
@@ -7782,7 +7785,7 @@
        AND AREA_CD  = '001'
     </update>	  
 	  
-	<update id="S221111UpdateMst" parameterClass="ModelsLibrary.Sale.SaleVo">
+   <update id="S221111UpdateMst" parameterClass="ModelsLibrary.Sale.SaleVo">
       UPDATE TB_SL_BIL
          SET   
               SL_AREA_CD = #SL_AREA_CD#
@@ -7790,12 +7793,13 @@
             , CAR_NO     = #CAR_NO#
             , SL_BIL_DT  = #SL_BIL_DT#
             , SL_BIL_RMK = #SL_BIL_RMK#
-            , MV_CAR_AMT = #MV_CAR_AMT#
+            , CLR_TXT    = #CLR_TXT#
+            <!--, MV_CAR_AMT = #MV_CAR_AMT#-->
             , UPD_USR_ID = #UPD_USR_ID#
             , UPD_DT     = GETDATE()
             , CHNL_CD    = #CHNL_CD#
          WHERE 1=1
-          AND CHNL_CD = #CHNL_CD#
+          AND CHNL_CD   = #CHNL_CD#
           AND SL_BIL_NO = #SL_BIL_NO#
     </update>
 	  

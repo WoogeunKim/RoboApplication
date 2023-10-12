@@ -42,7 +42,8 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
                 CAR_NO = Dao.CAR_NO,
                 //CAR_NM = Dao.CAR_NM,
                 SL_BIL_DT = Dao.SL_BIL_DT,
-                MV_CAR_AMT = Dao.MV_CAR_AMT,
+                //MV_CAR_AMT = Dao.MV_CAR_AMT,
+                CLR_TXT = Dao.CLR_TXT,
                 SL_BIL_RMK = Dao.SL_BIL_RMK,
                 USR_NM = SystemProperties.USER_VO.USR_N1ST_NM
             };
@@ -82,7 +83,7 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
 
         async void combo_SL_AREA_NM_SelectedIndexChanged(object sender, RoutedEventArgs e)
         {
-           SystemCodeVo areaNmVo = this.combo_SL_AREA_NM.SelectedItem as SystemCodeVo;
+            SystemCodeVo areaNmVo = this.combo_SL_AREA_NM.SelectedItem as SystemCodeVo;
             if (areaNmVo != null)
             {
                 using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync("s143", new StringContent(JsonConvert.SerializeObject(new SystemCodeVo() { DELT_FLG = "N", CO_TP_CD = "AR", AREA_CD = SystemProperties.USER_VO.EMPE_PLC_NM, CHNL_CD = SystemProperties.USER_VO.CHNL_CD }), System.Text.Encoding.UTF8, "application/json")))
@@ -204,13 +205,20 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
                 this.text_USR_NM.Focus();
                 return false;
             }
-            else if (string.IsNullOrEmpty(this.text_MV_CAR_AMT.Text))
+            else if (string.IsNullOrEmpty(this.text_CLR_TXT.Text))
             {
-                WinUIMessageBox.Show("[운임료] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
-                this.text_MV_CAR_AMT.IsTabStop = true;
-                this.text_MV_CAR_AMT.Focus();
+                WinUIMessageBox.Show("[색상] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                this.text_CLR_TXT.IsTabStop = true;
+                this.text_CLR_TXT.Focus();
                 return false;
             }
+            //else if (string.IsNullOrEmpty(this.text_MV_CAR_AMT.Text))
+            //{
+            //    WinUIMessageBox.Show("[운임료] 입력 값이 맞지 않습니다.", "[유효검사]" + title, MessageBoxButton.OK, MessageBoxImage.Warning);
+            //    this.text_MV_CAR_AMT.IsTabStop = true;
+            //    this.text_MV_CAR_AMT.Focus();
+            //    return false;
+            //}
             return true;
         }
         #endregion
@@ -240,18 +248,23 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
 
             //배차번호
             SaleVo carNo = this.combo_CAR_NM.SelectedItem as SaleVo;
-            if( carNo != null)
+            if (carNo != null)
             {
                 Dao.CAR_NO = carNo.CAR_NO;
                 Dao.CAR_NM = carNo.CAR_NM;
             }
             //출하일자
             Dao.SL_BIL_DT = this.text_SL_BIL_DT.Text;
+
             //운임료
-            Dao.MV_CAR_AMT = double.Parse(this.text_MV_CAR_AMT.Text);
+            //Dao.MV_CAR_AMT = double.Parse(this.text_MV_CAR_AMT.Text);
+
+            //색상
+            Dao.CLR_TXT = this.text_CLR_TXT.Text;
+
             //비고
             Dao.SL_BIL_RMK = this.text_SL_BIL_RMK.Text;
-            
+
             Dao.CRE_USR_ID = SystemProperties.USER;
             Dao.UPD_USR_ID = SystemProperties.USER;
             Dao.CHNL_CD = SystemProperties.USER_VO.CHNL_CD;
@@ -276,7 +289,7 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
         }
 
 
- 
+
         public async void SYSTEM_CODE_VO()
         {
 
@@ -314,7 +327,7 @@ namespace AquilaErpWpfApp3.View.SAL.Dialog
                     }
                 }
             }
-            catch(System.Exception eLog)
+            catch (System.Exception eLog)
             {
                 //실패
                 WinUIMessageBox.Show(eLog.ToString(), title, MessageBoxButton.OK, MessageBoxImage.Error);

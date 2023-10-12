@@ -5654,5 +5654,10 @@
             get;
             set;
         }
+        public string CLR_TXT
+        {
+            get;
+            set;
+        }
     }
 }

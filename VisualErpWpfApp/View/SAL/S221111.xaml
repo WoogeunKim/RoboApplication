@@ -654,7 +654,7 @@
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
-                                            <dxg:GridColumn FieldName="SL_CO_NM" Width="60" Header="거래처" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" >
+                                            <dxg:GridColumn FieldName="SL_CO_NM" Width="80" Header="거래처" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" >
                                                 <!--GroupIndex="1"-->
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
@@ -664,6 +664,7 @@
                                             <dxg:GridColumn FieldName="CAR_NO" Width="60" Header="배차번호" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" >
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
@@ -679,11 +680,19 @@
                                                 </dxg:GridColumn.EditSettings>
                                             </dxg:GridColumn>
 
-                                            <dxg:GridColumn FieldName="MV_CAR_AMT" Width="50" Header="운임료" AllowColumnFiltering="True" AllowAutoFilter="False" AllowSearchPanel="False" AllowSorting="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                            <dxg:GridColumn FieldName="CLR_TXT" Width="50" Header="색상" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" >
+                                                <dxg:GridColumn.EditSettings>
+                                                    <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
+                                                </dxg:GridColumn.EditSettings>
+                                            </dxg:GridColumn>
+
+
+
+                                            <!--<dxg:GridColumn FieldName="MV_CAR_AMT" Width="50" Header="운임료" AllowColumnFiltering="True" AllowAutoFilter="False" AllowSearchPanel="False" AllowSorting="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
                                                 <dxg:GridColumn.EditSettings>
                                                     <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0"  MaskUseAsDisplayFormat="True"  />
                                                 </dxg:GridColumn.EditSettings>
-                                            </dxg:GridColumn>
+                                            </dxg:GridColumn>-->
 
                                             <dxg:GridColumn FieldName="SL_RLSE_NO" Width="60" Header="SL_RLSE_NO" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" Visible="False">
                                                 <dxg:GridColumn.EditSettings>
@@ -753,7 +762,7 @@
                                             </dxg:GridColumn.EditSettings>
                                         </dxg:GridColumn>
 
-                                        <dxg:GridColumn FieldName="RLSE_CMD_NO" Header="GR번호" Width="140" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
+                                        <dxg:GridColumn FieldName="RLSE_CMD_NO" Header="GR번호" Width="190" AllowColumnFiltering="True" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True">
                                             <dxg:GridColumn.EditSettings>
                                                 <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                                             </dxg:GridColumn.EditSettings>
