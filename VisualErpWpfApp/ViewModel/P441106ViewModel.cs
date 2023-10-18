@@ -433,11 +433,18 @@ namespace AquilaErpWpfApp3.ViewModel
                 //도면확정
                 if (SearchDetail == null) return;
 
-                if (SystemProperties.USER_VO.OSTR_FLG != "Y")
+                // 로보콘 (임시)
+                if (SystemProperties.USER_VO.OSTR_FLG == "N")
                 {
                     WinUIMessageBox.Show("도면 확정 권한이 없습니다.", _title, MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
+
+                //if (SystemProperties.USER_VO.OSTR_FLG != "Y")
+                //{
+                //    WinUIMessageBox.Show("도면 확정 권한이 없습니다.", _title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                //    return;
+                //}
 
                 MessageBoxResult result = WinUIMessageBox.Show("도면번호" + "[" + SearchDetail.FLR_NO + "]" + " (을)를 정말로 확정 하시겠습니까?", "[확정]" + _title, MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)

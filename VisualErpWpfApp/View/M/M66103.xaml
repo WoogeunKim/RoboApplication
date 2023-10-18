@@ -111,7 +111,7 @@
                             <dxg:GridControl.Columns>
                                 <dxg:GridColumn FieldName="EXTR_STS_NM" Header="도면분석상태" Width="100" HorizontalHeaderContentAlignment="Center" VisibleIndex="1">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
@@ -121,9 +121,9 @@
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="PUR_SEQ" Header="발주순번" Width="60" HorizontalHeaderContentAlignment="Center" VisibleIndex="3">
+                                <dxg:GridColumn FieldName="PUR_SEQ" Header="순번" Width="50" HorizontalHeaderContentAlignment="Center" VisibleIndex="3">
                                     <dxg:GridColumn.EditSettings>
-                                        <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,##0" MaskUseAsDisplayFormat="True"/>
+                                        <dxe:TextEditSettings  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,##0" MaskUseAsDisplayFormat="True"/>
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
@@ -139,7 +139,7 @@
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="PUR_CO_NM" Header="발주업체" Width="150" HorizontalHeaderContentAlignment="Center" VisibleIndex="7">
+                                <dxg:GridColumn FieldName="PUR_CO_NM" Header="발주업체" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="7">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
@@ -157,25 +157,25 @@
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="FLR_NM" Header="파일명" Width="150" HorizontalHeaderContentAlignment="Center" VisibleIndex="10">
+                                <dxg:GridColumn FieldName="FLR_NM" Header="파일명" Width="250" HorizontalHeaderContentAlignment="Center" VisibleIndex="10">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="PUR_WGT" Header="도면중량" Width="80" HorizontalHeaderContentAlignment="Center" VisibleIndex="12">
+                                <dxg:GridColumn FieldName="PUR_WGT" Header="도면중량" Width="60" HorizontalHeaderContentAlignment="Center" VisibleIndex="12">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,##0.00" MaskUseAsDisplayFormat="True"/>
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="DE_CO_NM" Header="납품처" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="13">
+                                <dxg:GridColumn FieldName="DE_CO_NM" Header="납품처" Width="100" HorizontalHeaderContentAlignment="Center" VisibleIndex="13">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="CNTR_NM" Header="공사명" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="14">
+                                <dxg:GridColumn FieldName="CNTR_NM" Header="공사명" Width="100" HorizontalHeaderContentAlignment="Center" VisibleIndex="14">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
@@ -189,7 +189,7 @@
                     <Grid>
                         <dxg:GridControl x:Name="ConfigViewPage1Edit_Detail" ItemsSource="{Binding Path=SelectDtlList}" >
                             <dxg:GridControl.View>
-                                <dxg:TableView x:Name="configViewPage1EditView_Detail" ShowFixedTotalSummary="True" AllowEditing="False" AllowMoving="False" AllowResizing="True" ShowSearchPanelCloseButton="False" ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="False" AutoWidth="True" AllowPerPixelScrolling="True" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="False"  />
+                                <dxg:TableView x:Name="configViewPage1EditView_Detail" ShowFixedTotalSummary="True" AllowEditing="False" AllowMoving="False" AllowResizing="True" ShowSearchPanelCloseButton="False" ShowSearchPanelMode="Never" SearchDelay="0" ShowGroupPanel="False" AutoWidth="False" AllowPerPixelScrolling="True" ShowGroupedColumns="False" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False"  IsColumnMenuEnabled="False"  />
                             </dxg:GridControl.View>
 
                             <dxg:GridControl.TotalSummary>
@@ -198,25 +198,25 @@
 
                             <dxg:GridControl.Columns>
                                 
-                                <dxg:GridColumn FieldName="LOG_SEQ" Header="로그진행" Width="30" HorizontalHeaderContentAlignment="Center" VisibleIndex="1">
+                                <dxg:GridColumn FieldName="LOG_SEQ" Header="로그진행" Width="80" HorizontalHeaderContentAlignment="Center" VisibleIndex="1">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,##0" MaskUseAsDisplayFormat="True"/>
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="EXTR_STS_NM" Header="진행상태" Width="100" HorizontalHeaderContentAlignment="Center" VisibleIndex="2">
+                                <dxg:GridColumn FieldName="EXTR_STS_NM" Header="진행상태" Width="300" HorizontalHeaderContentAlignment="Center" VisibleIndex="2">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="STS_DESC" Header="로그 설명" Width="120" HorizontalHeaderContentAlignment="Center" VisibleIndex="3">
+                                <dxg:GridColumn FieldName="STS_DESC" Header="로그 설명" Width="500" HorizontalHeaderContentAlignment="Center" VisibleIndex="3">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  />
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="WK" Header="진행시간(초)" Width="20" HorizontalHeaderContentAlignment="Center" VisibleIndex="3">
+                                <dxg:GridColumn FieldName="WK" Header="진행시간(초)" Width="80" HorizontalHeaderContentAlignment="Center" VisibleIndex="3">
                                     <dxg:GridColumn.EditSettings>
                                         <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,##0 초" MaskUseAsDisplayFormat="True"/>
                                     </dxg:GridColumn.EditSettings>

@@ -295,7 +295,7 @@ namespace AquilaErpWpfApp3.ViewModel
             if (!SelectedMstItem.RUN_CLSS_CD.Equals("B"))
             {
                 WinUIMessageBox.Show("발주최적화 대상이 아닙니다.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //return;
+                return;
             }
 
             // 발주일 경우 원자재 조회
@@ -319,6 +319,12 @@ namespace AquilaErpWpfApp3.ViewModel
             try
             {
                 if (SelectedMstItem == null) return;
+
+                if(SelectedMstItem.RUN_CLSS_CD.Equals("B"))
+                {
+                    WinUIMessageBox.Show("확정 대상이 아닙니다.", "[유효검사]", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
                 MessageBoxResult isResult = WinUIMessageBox.Show("[ Opti.NO: " + SelectedMstItem.OPMZ_NO + " ] 를 확정하겠습니까? ", title + "[완료]", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (isResult == MessageBoxResult.Yes)

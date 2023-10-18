@@ -9221,7 +9221,8 @@
            AND T2.EXTR_STS_CD = #EXTR_STS_CD#
          </isNotNull>
            AND T1.PUR_DT >= CAST (#FM_DT# + ' 00:00:00' AS DATETIME)   
-           AND T1.PUR_DT <![CDATA[<=]]> CAST (#TO_DT# + ' 23:59:59' AS DATETIME)    
+           AND T1.PUR_DT <![CDATA[<=]]> CAST (#TO_DT# + ' 23:59:59' AS DATETIME)       
+           AND T2.UPD_USR_ID IS NOT NULL
 	  </select>
 	  
 	   <select id="M66103SelectDtlList" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
@@ -9445,67 +9446,69 @@
 	 </select>
 
 	  <select id="M66107SelectDtl" resultClass="ModelsLibrary.Man.ManVo" parameterClass="ModelsLibrary.Man.ManVo">
-		  SELECT  ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY IN_REQ_DT, ORD_ID) AS RN
-		        , T1.ORD_ID
-		        , T2.SL_CO_CD
-		        , T2.CO_NM
-		        , CONVERT(VARCHAR(10),T2.IN_REQ_DT, 23) AS IN_REQ_DT
-	            , CONVERT(VARCHAR(10),T4.PROD_DIR_DT, 23) AS PROD_DIR_DT 
-		        , T2.CNTR_NM
-		        , T2.CNTR_PSN_NM
-		        , T2.EQ_NO
-		        , T2.LOC_CD
-		        , T1.ITM_SHP_CD
-		        , T3.ITM_IMG
-		        , T1.ITM_STL_CD
-		        , T1.ITM_STL_SZ_CD
-		        , T1.ITM_LEN
-		        , T1.ITM_QTY
-		        , T2.SL_ITM_QTY
-		        , T1.ITM_WGT
-		        , T2.ITM_STL_PRD_DESC
-		        , T2.CNTR_DE_NM
-		        , T1.OPMZ_NO
-		        , T1.ORD_NO
-		        , T1.ORD_SEQ
+		  SELECT ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY IN_REQ_DT, ORD_ID) AS RN
+		       , T1.ORD_ID
+		       , T2.SL_CO_CD
+		       , T2.CO_NM
+		       , CONVERT(VARCHAR(10),T2.IN_REQ_DT, 23) AS IN_REQ_DT
+	           , CONVERT(VARCHAR(10),T4.PROD_DIR_DT, 23) AS PROD_DIR_DT 
+		       , T2.CNTR_NM
+		       , T2.CNTR_PSN_NM
+		       , T2.EQ_NO
+		       , T2.LOC_CD
+		       , T1.ITM_SHP_CD
+		       , T3.ITM_IMG
+		       , T1.ITM_STL_CD
+		       , T1.ITM_STL_SZ_CD
+		       , T1.ITM_LEN
+		       , T1.ITM_QTY
+		       , T2.SL_ITM_QTY
+               , T4.PROD_DIR_QTY
+		       , T1.ITM_WGT
+		       , T2.ITM_STL_PRD_DESC
+		       , T2.CNTR_DE_NM
+		       , T1.OPMZ_NO
+		       , T1.ORD_NO
+		       , T1.ORD_SEQ
 		    FROM TB_OPMZ_DMND T1
-           OUTER APPLY (
-            SELECT X.PROD_FM_DT AS PROD_DIR_DT
-              FROM TB_RBK_MORD X
-              WHERE 1=1
-               AND X.SL_RLSE_NO = T1.ORD_NO
-               AND X.SL_RLSE_SEQ = T1.ORD_SEQ
+                 OUTER APPLY (
+                    SELECT X.PROD_FM_DT AS PROD_DIR_DT
+                         , X.PROD_QTY   AS PROD_DIR_QTY
+                      FROM TB_RBK_MORD X
+                     WHERE 1 = 1
+                       AND X.SL_RLSE_NO = T1.ORD_NO
+                       AND X.SL_RLSE_SEQ = T1.ORD_SEQ
                ) T4			
-		   OUTER APPLY (
-		    SELECT X.IMG  AS ITM_IMG
-		        FROM TB_CD_ITM_IMG X
-		      WHERE 1 = 1
-		        AND X.CHNL_CD     = #CHNL_CD#
-		        AND X.ITM_CD      = T1.ITM_SHP_CD
-		    ) T3
-		   OUTER APPLY (
-		    SELECT Z.CO_NM
-		         , Y.IN_REQ_DT
-		         , Y.CNTR_NM
-		         , Y.CNTR_PSN_NM
-		         , Y.EQ_NO
-		         , Y.LOC_CD
-		         , Y.CNTR_DE_NM
-		         , Y.ITM_STL_PRD_DESC
-		         , X.SL_CO_CD
-		         , Y.SL_ITM_QTY
-		       FROM TB_SL_RLSE       X
-		          , TB_SL_RLSE_DTL   Y
-		          , TB_CD_CO         Z
-		      WHERE 1 = 1
-		        AND X.CHNL_CD     = #CHNL_CD#
-		        AND X.CHNL_CD     = Y.CHNL_CD
-		        AND X.CHNL_CD     = Z.CHNL_CD
-		        AND X.SL_RLSE_NO  = Y.SL_RLSE_NO
-		        AND X.SL_CO_CD    = Z.CO_NO
-		        AND Y.SL_RLSE_NO  = T1.ORD_NO
-		        AND Y.SL_RLSE_SEQ = T1.ORD_SEQ
-		    ) T2
+		         OUTER APPLY (
+		            SELECT X.IMG  AS ITM_IMG
+		              FROM TB_CD_ITM_IMG X
+		             WHERE 1 = 1
+		               AND X.CHNL_CD     = #CHNL_CD#
+		               AND X.ITM_CD      = T1.ITM_SHP_CD
+		       ) T3
+		         OUTER APPLY (
+		            SELECT Z.CO_NM
+		                 , Y.IN_REQ_DT
+		                 , Y.CNTR_NM
+		                 , Y.CNTR_PSN_NM
+		                 , Y.EQ_NO
+		                 , Y.LOC_CD
+		                 , Y.CNTR_DE_NM
+		                 , Y.ITM_STL_PRD_DESC
+		                 , X.SL_CO_CD
+		                 , Y.SL_ITM_QTY
+		              FROM TB_SL_RLSE       X
+		                 , TB_SL_RLSE_DTL   Y
+		                 , TB_CD_CO         Z
+		             WHERE 1 = 1
+		               AND X.CHNL_CD     = #CHNL_CD#
+		               AND X.CHNL_CD     = Y.CHNL_CD
+		               AND X.CHNL_CD     = Z.CHNL_CD
+		               AND X.SL_RLSE_NO  = Y.SL_RLSE_NO
+		               AND X.SL_CO_CD    = Z.CO_NO
+		               AND Y.SL_RLSE_NO  = T1.ORD_NO
+		               AND Y.SL_RLSE_SEQ = T1.ORD_SEQ
+		       ) T2
 		   WHERE 1 = 1
 		     AND T1.OPMZ_NO = #OPMZ_NO#
 	  </select>
@@ -9649,7 +9652,6 @@
              , T1.PROD_QTY AS PROD_DIR_QTY
              , ISNULL(T1.PROD_WGT, 0.0)              AS PROD_WGT
              , ISNULL(T2.TK_TM, 0.0) * T1.PROD_QTY  AS PROD_USE_TM
-             , T1.UPD_USR_ID  
              , CONVERT(VARCHAR, T1.UPD_DT, 23) AS UPD_DT
              , T1.SL_RLSE_NO
              , T1.SL_RLSE_SEQ
@@ -9671,7 +9673,6 @@
 		     , #OPMZ_NO# AS OPMZ_NO
              , #UPD_USR_ID# AS UPD_USR_ID
 		     , CONVERT(VARCHAR(10),T4.IN_REQ_DT, 23) AS IN_REQ_DT
-			 , T4.RLSE_CMD_NO
           FROM TB_RBK_MORD  T1
         OUTER APPLY ( 
                 SELECT Y.TK_TM 
@@ -9717,6 +9718,9 @@
          AND T3.SL_RLSE_NO = T4.SL_RLSE_NO
          AND T3.SL_CO_CD    = #CO_CD#
 		 AND T4.ITM_STL_LENG > 799
+		 <!--20231013 확정된 제품 생산자재 창에서 표시되면 안됨. -->
+         <!--AND (T7.CLZ_FLG <![CDATA[<>]]> 'Y' OR T7.CLZ_FLG IS NULL)-->
+         <!--AND (T7.CLZ_FLG != 'Y' OR T7.RUN_CLSS_CD != 'A')-->
 		   
 		   
      </select>

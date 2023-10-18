@@ -361,11 +361,17 @@
                                             </dxg:GridColumn.EditSettings>
                                         </dxg:GridColumn>
 
-                                        <dxg:GridColumn FieldName="SL_ITM_QTY" Header="수량" Width="70" AllowColumnFiltering="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="14">
+                                        <!--<dxg:GridColumn FieldName="SL_ITM_QTY" Header="수량" Width="70" AllowColumnFiltering="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="14">
+                                            <dxg:GridColumn.EditSettings>
+                                                <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,###,##0"  MaskUseAsDisplayFormat="True" />
+                                            </dxg:GridColumn.EditSettings>
+                                        </dxg:GridColumn>-->
+                                        <dxg:GridColumn FieldName="PROD_DIR_QTY" Header="수량" Width="70" AllowColumnFiltering="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="False" VisibleIndex="14">
                                             <dxg:GridColumn.EditSettings>
                                                 <dxe:TextEditSettings  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" MaskType="Numeric" Mask="###,###,###,###,##0"  MaskUseAsDisplayFormat="True" />
                                             </dxg:GridColumn.EditSettings>
                                         </dxg:GridColumn>
+                                        
 
                                         <dxg:GridColumn FieldName="ITM_STL_PRD_DESC" Header="가공정보" Width="200" AllowColumnFiltering="False" FilterPopupMode="CheckedList" HorizontalHeaderContentAlignment="Center" AllowEditing="False" AllowResizing="True" AllowMoving="True" VisibleIndex="15">
                                             <dxg:GridColumn.EditSettings>
