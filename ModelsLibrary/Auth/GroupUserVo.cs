@@ -205,5 +205,17 @@
             get;
             set;
         }
+
+        public string CLIENT_VER
+        {
+            get;
+            set;
+        }
+
+        public string DBNAME
+        {
+            get;
+            set;
+        }
     }
 }

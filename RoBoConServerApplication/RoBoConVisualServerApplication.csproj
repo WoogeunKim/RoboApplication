@@ -17,7 +17,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort>44349</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -508,6 +508,8 @@
     <Content Include="Scripts\dx-diagram.min.js" />
     <Content Include="Scripts\dx-gantt.js" />
     <Content Include="Scripts\dx-gantt.min.js" />
+    <Content Include="Scripts\dx-quill.js" />
+    <Content Include="Scripts\dx-quill.min.js" />
     <Content Include="Scripts\dx.all.debug.js" />
     <Content Include="Scripts\dx.all.js" />
     <Content Include="Scripts\dx.viz-web.debug.js" />
@@ -516,6 +518,10 @@
     <Content Include="Scripts\dx.viz.js" />
     <Content Include="Scripts\dx.web.debug.js" />
     <Content Include="Scripts\dx.web.js" />
+    <Content Include="Scripts\exceljs.js" />
+    <Content Include="Scripts\exceljs.min.js" />
+    <Content Include="Scripts\FileSaver.js" />
+    <Content Include="Scripts\FileSaver.min.js" />
     <Content Include="Scripts\globalize.js" />
     <Content Include="Scripts\globalize.min.js" />
     <Content Include="Scripts\globalize\currency.js" />
@@ -530,8 +536,13 @@
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="Scripts\jspdf.plugin.autotable.js" />
+    <Content Include="Scripts\jspdf.plugin.autotable.min.js" />
+    <Content Include="Scripts\jspdf.umd.js" />
+    <Content Include="Scripts\jspdf.umd.min.js" />
     <Content Include="Scripts\jszip.js" />
     <Content Include="Scripts\jszip.min.js" />
+    <Content Include="Scripts\localization\dx.messages.ar.js" />
     <Content Include="Scripts\localization\dx.messages.cs.js" />
     <Content Include="Scripts\localization\dx.messages.de.js" />
     <Content Include="Scripts\localization\dx.messages.el.js" />
@@ -542,13 +553,16 @@
     <Content Include="Scripts\localization\dx.messages.hu.js" />
     <Content Include="Scripts\localization\dx.messages.it.js" />
     <Content Include="Scripts\localization\dx.messages.ja.js" />
+    <Content Include="Scripts\localization\dx.messages.nb.js" />
     <Content Include="Scripts\localization\dx.messages.nl.js" />
     <Content Include="Scripts\localization\dx.messages.pt.js" />
+    <Content Include="Scripts\localization\dx.messages.ro.js" />
     <Content Include="Scripts\localization\dx.messages.ru.js" />
     <Content Include="Scripts\localization\dx.messages.sl.js" />
     <Content Include="Scripts\localization\dx.messages.sv.js" />
     <Content Include="Scripts\localization\dx.messages.tr.js" />
     <Content Include="Scripts\localization\dx.messages.vi.js" />
+    <Content Include="Scripts\localization\dx.messages.zh-tw.js" />
     <Content Include="Scripts\localization\dx.messages.zh.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\vectormap-data\africa.js" />
@@ -648,7 +662,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties DismissedDevExtremeVersion="19.2.12.0" />
+      <UserProperties DismissedDevExtremeVersion="19.2.13.0" />
     </VisualStudio>
   </ProjectExtensions>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

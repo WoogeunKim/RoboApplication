@@ -87,56 +87,59 @@
     <!-- 사용자 조회-->
     <!-- 해당 그룹안에 사용자가 없으면 삭제처리 되게끔 제약 조건 정의 하였음. -->
     <select id="S136SelectUserList" resultClass="ModelsLibrary.Auth.GroupUserVo" parameterClass="ModelsLibrary.Auth.GroupUserVo">
-      SELECT  USR_ID
-            , USR_PWD
-            , USR_N1ST_NM
-            , USR_LST_NM
-            , GRP_ID
-            , ISNULL((SELECT GRP_NM FROM TB_SYS_GRP AS A WHERE 1=1 AND A.CHNL_CD = #CHNL_CD# AND  A.GRP_ID = B.GRP_ID), '')  AS GRP_NM
-            , PHN_NO
-            , CELL_PHN_NO
-            , EML_ID
-            , ADDR
-            , DTL_ADDR
-            , LST_LGN_IP
-            , LST_LGN_DT
-            , DELT_FLG
-            , CRE_USR_ID
-            , CRE_DT
-            , UPD_USR_ID
-            , UPD_DT
-            , EMPE_NO
-            , RESDNT_RGST_NO
-            , OFC_PSN_CD
-            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'G-001', OFC_PSN_CD) AS OFC_PSN_NM
-            , CONVERT(VARCHAR, JOIN_CO_DT, 23) AS JOIN_CO_DT
-            , CONVERT(VARCHAR, RESGN_CO_DT, 23) AS RESGN_CO_DT
-            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-002', EMPE_PLC_NM) AS EMPE_PLC_CD
-            , EMPE_PLC_NM
-            , LAST_ORD_NO
-            , USR_IMG
-            , SGN_NM
-            , CHNL_CD
-            , (SELECT x.CHNL_NM FROM TB_CHNL_CD AS x WHERE DELT_FLG  = 'N' AND CHNL_CD   = #CHNL_CD#) AS CHNL_NM
-            , CASE WHEN ISNULL(TM_PAY_FLG, 'N') = 'Y' THEN 1 ELSE 0 END AS TM_PAY_FLG
-            , TM_PAY_AMT
-            , EMP_LOC_CD
-            , dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-051', EMP_LOC_CD) AS EMP_LOC_NM	
-            , A.OSTR_FLG                        
-            , A.PRNT_GRP_ID
-      FROM TB_SYS_USR AS B
-	       OUTER APPLY (    
-                SELECT PRNT_GRP_ID  
-                     , CASE WHEN X.OSTR_FLG = 'Y' THEN 'Y'
-                            WHEN X.PRNT_GRP_ID IS NOT NULL THEN 'N'
-                            ELSE 'R' END AS OSTR_FLG
-                  FROM TB_SYS_GRP X
-                 WHERE 1 = 1 
-                   AND B.CHNL_CD = X.CHNL_CD
-                   AND B.GRP_ID  = X.GRP_ID
-             ) A	  
-      WHERE 1=1
-      <isNotNull property="USR_ID" >
+		SELECT  USR_ID
+		, USR_PWD
+		, USR_N1ST_NM
+		, USR_LST_NM
+		, GRP_ID
+		, ISNULL((SELECT GRP_NM FROM TB_SYS_GRP AS A WHERE 1=1 AND A.CHNL_CD = #CHNL_CD# AND  A.GRP_ID = B.GRP_ID), '')  AS GRP_NM
+		, PHN_NO
+		, CELL_PHN_NO
+		, EML_ID
+		, ADDR
+		, DTL_ADDR
+		, LST_LGN_IP
+		, LST_LGN_DT
+		, DELT_FLG
+		, CRE_USR_ID
+		, CRE_DT
+		, UPD_USR_ID
+		, UPD_DT
+		, EMPE_NO
+		, RESDNT_RGST_NO
+		, OFC_PSN_CD
+		, dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'G-001', OFC_PSN_CD) AS OFC_PSN_NM
+		, CONVERT(VARCHAR, JOIN_CO_DT, 23) AS JOIN_CO_DT
+		, CONVERT(VARCHAR, RESGN_CO_DT, 23) AS RESGN_CO_DT
+		, dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'L-002', EMPE_PLC_NM) AS EMPE_PLC_CD
+		, EMPE_PLC_NM
+		, LAST_ORD_NO
+		, USR_IMG
+		, SGN_NM
+		, CHNL_CD
+		, (SELECT x.CHNL_NM FROM TB_CHNL_CD AS x WHERE DELT_FLG  = 'N' AND CHNL_CD   = #CHNL_CD#) AS CHNL_NM
+		, CASE WHEN ISNULL(TM_PAY_FLG, 'N') = 'Y' THEN 1 ELSE 0 END AS TM_PAY_FLG
+		, TM_PAY_AMT
+		, EMP_LOC_CD
+		, dbo.CD_SYS_CLSS_FNC(#CHNL_CD#, 'S-051', EMP_LOC_CD) AS EMP_LOC_NM
+		, A.OSTR_FLG
+		, A.PRNT_GRP_ID
+		, (SELECT SUBSTRING(REPLACE(ITEMVALUE, '.', '') + '0000', 0, 8) FROM CT_USERDEF
+		WHERE ITEM = 'CLIENT_VER') CLIENT_VER
+		, (SELECT DB_NAME()) DBNAME
+		FROM TB_SYS_USR AS B
+		OUTER APPLY (
+		SELECT PRNT_GRP_ID
+		, CASE WHEN X.OSTR_FLG = 'Y' THEN 'Y'
+		WHEN X.PRNT_GRP_ID IS NOT NULL THEN 'N'
+		ELSE 'R' END AS OSTR_FLG
+		FROM TB_SYS_GRP X
+		WHERE 1 = 1
+		AND B.CHNL_CD = X.CHNL_CD
+		AND B.GRP_ID  = X.GRP_ID
+		) A
+		WHERE 1=1
+		<isNotNull property="USR_ID" >
         AND USR_ID = #USR_ID#
       </isNotNull>
       <isNotNull property="DELT_FLG" >
@@ -296,9 +299,9 @@
       <isNotNull property="DELT_FLG" >
         AND T2.DELT_FLG = #DELT_FLG#
       </isNotNull>
-      <isNotNull property="EMPE_PLC_NM" >
+      <!--<isNotNull property="EMPE_PLC_NM" >
         AND T2.EMPE_PLC_NM = #EMPE_PLC_NM#
-      </isNotNull>
+      </isNotNull>-->
       <isNotNull property="USR_ID" >
         AND T2.USR_ID LIKE #USR_ID# + '%'
       </isNotNull>
@@ -323,60 +326,60 @@
     
     <!-- 그룹 메뉴 권한 조회   -->
     <select id="S136SelectProgramGroupList" resultClass="ModelsLibrary.Auth.ProgramVo" parameterClass="ModelsLibrary.Auth.ProgramVo">
-      SELECT T1.MDL_ID
-        , T1.PRNT_MDL_ID
-        , T1.MDL_NM
-        , CASE WHEN ISNULL(T2.VIS_FLG, 'N') = 'Y' THEN 1 ELSE 0 END AS VIS_FLG
-        , CASE WHEN ISNULL(T2.UPD_FLG, 'N') = 'Y' THEN 1 ELSE 0 END AS UPD_FLG
-        , T1.PGM_CD
-        , T1.CHNL_CD 
-        , T1.ICON_FILE AS IMAGE
-      FROM TB_SYS_PGM     T1
-          LEFT OUTER JOIN  TB_SYS_GRP_PGM T2 ON ( T1.MDL_ID = T2.MDL_ID AND T1.CHNL_CD = T2.CHNL_CD AND T2.GRP_ID = #GRP_ID# )
-        WHERE 1 = 1
-		  AND T1.PGM_APLY_CD = 'WEB'
-          AND T1.DELT_FLG = 'N'
-          AND T1.CHNL_CD = #CHNL_CD#
-       ORDER BY T1.MDL_ID
-    </select>
+		SELECT T1.MDL_ID
+		, T1.PRNT_MDL_ID
+		, CONCAT('[', T1.MDL_ID, '] ', T1.MDL_NM) MDL_NM
+		, CASE WHEN ISNULL(T2.VIS_FLG, 'N') = 'Y' THEN 1 ELSE 0 END AS VIS_FLG
+		, CASE WHEN ISNULL(T2.UPD_FLG, 'N') = 'Y' THEN 1 ELSE 0 END AS UPD_FLG
+		, T1.PGM_CD
+		, T1.CHNL_CD
+		, T1.ICON_FILE AS IMAGE
+		FROM TB_SYS_PGM     T1
+		LEFT OUTER JOIN  TB_SYS_GRP_PGM T2 ON ( T1.MDL_ID = T2.MDL_ID AND T1.CHNL_CD = T2.CHNL_CD AND T2.GRP_ID = #GRP_ID# )
+		WHERE 1 = 1
+		AND T1.PGM_APLY_CD = 'WEB'
+		AND T1.DELT_FLG = 'N'
+		AND T1.CHNL_CD = #CHNL_CD#
+		ORDER BY T1.MDL_ID
+	</select>
     
     <!-- 사용자 메뉴 권한 조회   -->
     <select id="S136SelectProgramUserList" resultClass="ModelsLibrary.Auth.ProgramVo" parameterClass="ModelsLibrary.Auth.ProgramVo">
-       SELECT T1.MDL_ID
-        , T1.PRNT_MDL_ID
-        , T1.MDL_NM
-        , CASE WHEN ISNULL(T2.VIS_FLG, 'N') = 'Y' THEN 1 ELSE 0 END AS VIS_FLG
-        , CASE WHEN ISNULL(T2.UPD_FLG, 'N') = 'Y' THEN 1 ELSE 0 END AS UPD_FLG
-        , T1.PGM_CD
-        , T1.CHNL_CD 
-        , T1.ICON_FILE AS IMAGE
-      FROM TB_SYS_PGM     T1
-        LEFT OUTER JOIN  TB_SYS_GRP_PGM T2 ON ( T1.MDL_ID = T2.MDL_ID AND T1.CHNL_CD = T2.CHNL_CD AND T2.GRP_ID = #GRP_ID# )
-      WHERE 1 = 1
-	    AND T1.PGM_APLY_CD = 'WEB'
-        AND T1.DELT_FLG = 'N'
-        AND T1.CHNL_CD = #CHNL_CD#
-        AND NOT EXISTS (SELECT 'X' FROM TB_SYS_USR_PGM Z WHERE Z.MDL_ID = T1.MDL_ID AND T1.CHNL_CD = Z.CHNL_CD AND Z.USR_ID = #USR_ID# )
-      UNION ALL
-      SELECT T1.MDL_ID
-        , T1.PRNT_MDL_ID
-        , T1.MDL_NM
-        , CASE WHEN ISNULL(T2.VIS_FLG, 'N') = 'Y' THEN 1 ELSE 0 END AS VIS_FLG
-        , CASE WHEN ISNULL(T2.UPD_FLG, 'N') = 'Y' THEN 1 ELSE 0 END AS UPD_FLG
-        , T1.PGM_CD
-        , T1.CHNL_CD 
-        , T1.ICON_FILE AS IMAGE
-      FROM TB_SYS_PGM     T1
-         , TB_SYS_USR_PGM T2
-      WHERE 1 = 1
-	    AND T1.PGM_APLY_CD = 'WEB'
-        AND T1.MDL_ID = T2.MDL_ID
-        AND T1.CHNL_CD = T2.CHNL_CD
-        AND T1.CHNL_CD = #CHNL_CD#
-        AND T2.USR_ID =  #USR_ID# 
-        AND T1.DELT_FLG = 'N'
-      ORDER BY T1.MDL_ID
-    </select>
+		SELECT T1.MDL_ID
+		, T1.PRNT_MDL_ID
+		, CONCAT('[', T1.MDL_ID, '] ', T1.MDL_NM) MDL_NM
+		, CASE WHEN ISNULL(T2.VIS_FLG, 'N') = 'Y' THEN 1 ELSE 0 END AS VIS_FLG
+		, CASE WHEN ISNULL(T2.UPD_FLG, 'N') = 'Y' THEN 1 ELSE 0 END AS UPD_FLG
+		, T1.PGM_CD
+		, T1.CHNL_CD
+		, T1.ICON_FILE AS IMAGE
+		FROM TB_SYS_PGM     T1
+		LEFT OUTER JOIN  TB_SYS_GRP_PGM T2 ON ( T1.MDL_ID = T2.MDL_ID AND T1.CHNL_CD = T2.CHNL_CD AND T2.GRP_ID = #GRP_ID# )
+		WHERE 1 = 1
+		AND T1.PGM_APLY_CD = 'WEB'
+		AND T1.DELT_FLG = 'N'
+		AND T1.CHNL_CD = #CHNL_CD#
+		AND NOT EXISTS (SELECT 'X' FROM TB_SYS_USR_PGM Z WHERE Z.MDL_ID = T1.MDL_ID AND T1.CHNL_CD = Z.CHNL_CD AND Z.USR_ID = #USR_ID# )
+		UNION ALL
+		SELECT T1.MDL_ID
+		, T1.PRNT_MDL_ID
+		, CONCAT('[', T1.MDL_ID, '] ', T1.MDL_NM) MDL_NM
+		, CASE WHEN ISNULL(T2.VIS_FLG, 'N') = 'Y' THEN 1 ELSE 0 END AS VIS_FLG
+		, CASE WHEN ISNULL(T2.UPD_FLG, 'N') = 'Y' THEN 1 ELSE 0 END AS UPD_FLG
+		, T1.PGM_CD
+		, T1.CHNL_CD
+		, T1.ICON_FILE AS IMAGE
+		FROM TB_SYS_PGM     T1
+		, TB_SYS_USR_PGM T2
+		WHERE 1 = 1
+		AND T1.PGM_APLY_CD = 'WEB'
+		AND T1.MDL_ID = T2.MDL_ID
+		AND T1.CHNL_CD = T2.CHNL_CD
+		AND T1.CHNL_CD = #CHNL_CD#
+		AND T2.USR_ID =  #USR_ID#
+		AND T1.DELT_FLG = 'N'
+		ORDER BY T1.MDL_ID
+	</select>
 
     <!-- 그룹 프로그램 등록-->
     <insert id="S136InsertGroupProgram" parameterClass="ModelsLibrary.Auth.ProgramVo">
@@ -550,232 +553,232 @@
     </update>
         
     <!-- 프로그램 메뉴-->
-    <select id="SelectProgramMenuList" resultClass="ModelsLibrary.Auth.ProgramVo" parameterClass="ModelsLibrary.Auth.ProgramVo" >		
-		    WITH MENU_LIST AS (
-                  SELECT  GBN 
-                        , MDL_ID
-                        , MDL_NM
-                        , MDL_DESC
-                        , PRNT_MDL_ID
-                        , PGM_CD
-                        , PGM_NM
-                        , PGM_IMG_NM
-                        , SRT_ORD_SEQ
-                        , SYS_AREA_CD
-                        , VIS_FLG
-                        , UPD_FLG
-                        , ICON_FILE
-                    FROM (
-                          SELECT 'A' GBN
-                                , T1.MDL_ID
-                                , T1.PRNT_MDL_ID
-                                , T1.MDL_NM
-                                , ISNULL(T2.VIS_FLG, 'N')  AS VIS_FLG
-                                , ISNULL(T2.UPD_FLG, 'N')  AS UPD_FLG
-                                , T1.MDL_DESC
-                                , T1.PGM_CD
-                                , T1.PGM_NM
-                                , T1.PGM_IMG_NM
-                                , T1.SRT_ORD_SEQ
-                                , T1.SYS_AREA_CD
-                                , T1.ICON_FILE
-                             FROM TB_SYS_PGM     T1
-                                  LEFT OUTER JOIN  TB_SYS_GRP_PGM T2 
-                                  ON (
-                                      T1.CHNL_CD = T2.CHNL_CD
-                                  AND T1.MDL_ID = T2.MDL_ID
-                                  AND T2.GRP_ID = (SELECT GRP_ID
-                                                     FROM TB_SYS_USR
-                                                    WHERE USR_ID =  #USR_ID#
-                                                      AND CHNL_CD = #CHNL_CD#
-                                                  )
-                                      )
-                            WHERE 1 = 1
-            	                AND T1.PGM_APLY_CD = 'WEB'
-                              AND T1.PGM_CD NOT IN ('G', 'T', 'M')
-                              AND T1.CHNL_CD = #CHNL_CD#
-                              AND T1.DELT_FLG = 'N'                 
-                              AND NOT EXISTS (SELECT 'X'
-                                                FROM TB_SYS_USR_PGM Z
-                                               WHERE Z.MDL_ID = T1.MDL_ID
-                                                 AND Z.USR_ID = #USR_ID#
-                                                 AND Z.CHNL_CD = #CHNL_CD#
-                                             )
-                      UNION ALL
-                          SELECT 'B'
-                                , T1.MDL_ID
-                                , T1.PRNT_MDL_ID
-                                , T1.MDL_NM
-                                , ISNULL(T2.VIS_FLG, 'N')  AS VIS_FLG
-                                , ISNULL(T2.UPD_FLG, 'N')  AS UPD_FLG
-                                , T1.MDL_DESC
-                                , T1.PGM_CD
-                                , T1.PGM_NM
-                                , T1.PGM_IMG_NM
-                                , T1.SRT_ORD_SEQ
-                                , T1.SYS_AREA_CD
-                                , T1.ICON_FILE
-                            FROM TB_SYS_PGM     T1
-                               , TB_SYS_USR_PGM T2
-                           WHERE 1 = 1
-          	                 AND T1.PGM_APLY_CD = 'WEB'
-                             AND T1.CHNL_CD = T2.CHNL_CD
-                             AND T1.DELT_FLG = 'N'
-                             AND T1.MDL_ID = T2.MDL_ID
-                             AND T2.USR_ID = #USR_ID#
-                             AND T1.CHNL_CD = #CHNL_CD#
-                      UNION ALL
-                        SELECT 'C'
-                              , T1.MDL_ID
-                              , T1.PRNT_MDL_ID
-                              , T1.MDL_NM
-                              , 'Y'  AS VIS_FLG
-                              , 'Y'  AS UPD_FLG
-                              , T1.MDL_DESC
-                              , T1.PGM_CD
-                              , T1.PGM_NM
-                              , T1.PGM_IMG_NM
-                              , T1.SRT_ORD_SEQ
-                              , T1.SYS_AREA_CD
-                              , T1.ICON_FILE
-                          FROM TB_SYS_PGM T1
-                         WHERE 1 = 1
-          	               AND T1.PGM_APLY_CD = 'WEB'
-                           AND T1.CHNL_CD = #CHNL_CD#
-                           AND PGM_CD IN ('G', 'T', 'M')               
-                           AND MDL_ID IN  (
-                                            SELECT T1.PRNT_MDL_ID
-                                              FROM TB_SYS_PGM T1
-                                                 , TB_SYS_GRP_PGM T2
-                                             WHERE 1 = 1
-                          	                   AND T1.PGM_APLY_CD = 'WEB'
-                                               AND T1.CHNL_CD = T2.CHNL_CD
-                                               AND T1.MDL_ID = T2.MDL_ID
-                                               AND T2.VIS_FLG = 'Y'
-                                               AND T2.CHNL_CD = #CHNL_CD#
-                                        UNION ALL
-                                            SELECT T1.PRNT_MDL_ID
-                                              FROM TB_SYS_PGM T1
-                                                 , TB_SYS_USR_PGM T2
-                                             WHERE 1 = 1
-                          	                   AND T1.PGM_APLY_CD = 'WEB'
-                                               AND T1.CHNL_CD = T2.CHNL_CD
-                                               AND T1.MDL_ID = T2.MDL_ID
-                                               AND T2.VIS_FLG = 'Y'
-                                               AND T2.CHNL_CD = #CHNL_CD#
-                                          )
-                          ) T1
-                      WHERE VIS_FLG   = 'Y'
-                    ) 
-        , A_TMP AS (
-                  SELECT  PRNT_MDL_ID
-                    FROM (
-                          SELECT PRNT_MDL_ID
-                            FROM MENU_LIST
-                           WHERE 1 = 1
-                             AND PGM_CD = 'A'
-                          UNION ALL
-                          SELECT PRNT_MDL_ID
-                            FROM MENU_LIST
-                           WHERE 1 = 1
-                             AND MDL_ID IN (
-                                            SELECT PRNT_MDL_ID
-                                              FROM MENU_LIST
-                                             WHERE 1 = 1
-                                               AND PGM_CD = 'A'
-                                             ) 
-                          ) T1       
-                   WHERE 1 = 1
-                  GROUP BY PRNT_MDL_ID 
-              )                 
-              SELECT MDL_ID
-                   , MDL_NM
-                   , MDL_DESC
-                   , PRNT_MDL_ID
-                   , PGM_CD
-                   , PGM_NM
-                   , PGM_IMG_NM
-                   , SRT_ORD_SEQ
-                   , SYS_AREA_CD
-                   , VIS_FLG
-                   , UPD_FLG
-                   , ICON_FILE AS IMAGE
-                FROM MENU_LIST X
-               WHERE 1 = 1         
-                 AND MDL_ID  IN (SELECT PRNT_MDL_ID FROM A_TMP )
-                 AND PRNT_MDL_ID NOT IN (
-                                        SELECT  PRNT_MDL_ID
-                                          FROM (
-                                                SELECT PRNT_MDL_ID
-                                                  FROM MENU_LIST Z
-                                                WHERE PRNT_MDL_ID NOT IN ('T')
-                                                GROUP BY PRNT_MDL_ID
-                                                ) T1    
-                                  WHERE NOT EXISTS ( SELECT 'X'
-                                                       FROM MENU_LIST Z
-                                                      WHERE T1.PRNT_MDL_ID = Z.MDL_ID
-                                                    )
-                                            
-                                        )
-              GROUP BY MDL_ID
-                    , MDL_NM
-                    , MDL_DESC
-                    , PRNT_MDL_ID
-                    , PGM_CD
-                    , PGM_NM
-                    , PGM_IMG_NM
-                    , SRT_ORD_SEQ
-                    , SYS_AREA_CD
-                    , VIS_FLG
-                    , UPD_FLG
-                    , ICON_FILE
-            UNION ALL
-              SELECT MDL_ID
-                   , MDL_NM
-                   , MDL_DESC
-                   , PRNT_MDL_ID
-                   , PGM_CD
-                   , PGM_NM
-                   , PGM_IMG_NM
-                   , SRT_ORD_SEQ
-                   , SYS_AREA_CD
-                   , VIS_FLG
-                   , UPD_FLG
-                   , ICON_FILE AS IMAGE
-                FROM MENU_LIST X
-               WHERE 1 = 1         
-                 AND PRNT_MDL_ID  IN (SELECT PRNT_MDL_ID FROM A_TMP )
-                 AND PGM_CD = 'A'
-                 AND PRNT_MDL_ID NOT IN (
-                                        SELECT  PRNT_MDL_ID
-                                          FROM (
-                                                SELECT PRNT_MDL_ID
-                                                  FROM MENU_LIST Z
-                                                WHERE PRNT_MDL_ID NOT IN ('T')
-                                                GROUP BY PRNT_MDL_ID
-                                                ) T1    
-                                  WHERE NOT EXISTS ( SELECT 'X'
-                                                       FROM MENU_LIST Z
-                                                      WHERE T1.PRNT_MDL_ID = Z.MDL_ID
-                                                    )
-                                            
-                                        )
-              GROUP BY MDL_ID
-                    , MDL_NM
-                    , MDL_DESC
-                    , PRNT_MDL_ID
-                    , PGM_CD
-                    , PGM_NM
-                    , PGM_IMG_NM
-                    , SRT_ORD_SEQ
-                    , SYS_AREA_CD
-                    , VIS_FLG
-                    , UPD_FLG
-                    , ICON_FILE    
-             ORDER BY PRNT_MDL_ID, SRT_ORD_SEQ
-			 
-			 
-     <!--WITH MENU_LIST AS (
+    <select id="SelectProgramMenuList" resultClass="ModelsLibrary.Auth.ProgramVo" parameterClass="ModelsLibrary.Auth.ProgramVo" >
+		WITH MENU_LIST AS (
+		SELECT  GBN
+		, MDL_ID
+		, CONCAT('[', MDL_ID, '] ', MDL_NM) MDL_NM
+		, MDL_DESC
+		, PRNT_MDL_ID
+		, PGM_CD
+		, PGM_NM
+		, PGM_IMG_NM
+		, SRT_ORD_SEQ
+		, SYS_AREA_CD
+		, VIS_FLG
+		, UPD_FLG
+		, ICON_FILE
+		FROM (
+		SELECT 'A' GBN
+		, T1.MDL_ID
+		, T1.PRNT_MDL_ID
+		, T1.MDL_NM
+		, ISNULL(T2.VIS_FLG, 'N')  AS VIS_FLG
+		, ISNULL(T2.UPD_FLG, 'N')  AS UPD_FLG
+		, T1.MDL_DESC
+		, T1.PGM_CD
+		, T1.PGM_NM
+		, T1.PGM_IMG_NM
+		, T1.SRT_ORD_SEQ
+		, T1.SYS_AREA_CD
+		, T1.ICON_FILE
+		FROM TB_SYS_PGM     T1
+		LEFT OUTER JOIN  TB_SYS_GRP_PGM T2
+		ON (
+		T1.CHNL_CD = T2.CHNL_CD
+		AND T1.MDL_ID = T2.MDL_ID
+		AND T2.GRP_ID = (SELECT GRP_ID
+		FROM TB_SYS_USR
+		WHERE USR_ID =  #USR_ID#
+		AND CHNL_CD = #CHNL_CD#
+		)
+		)
+		WHERE 1 = 1
+		AND T1.PGM_APLY_CD = 'WEB'
+		AND T1.PGM_CD NOT IN ('G', 'T', 'M')
+		AND T1.CHNL_CD = #CHNL_CD#
+		AND T1.DELT_FLG = 'N'
+		AND NOT EXISTS (SELECT 'X'
+		FROM TB_SYS_USR_PGM Z
+		WHERE Z.MDL_ID = T1.MDL_ID
+		AND Z.USR_ID = #USR_ID#
+		AND Z.CHNL_CD = #CHNL_CD#
+		)
+		UNION ALL
+		SELECT 'B'
+		, T1.MDL_ID
+		, T1.PRNT_MDL_ID
+		, T1.MDL_NM
+		, ISNULL(T2.VIS_FLG, 'N')  AS VIS_FLG
+		, ISNULL(T2.UPD_FLG, 'N')  AS UPD_FLG
+		, T1.MDL_DESC
+		, T1.PGM_CD
+		, T1.PGM_NM
+		, T1.PGM_IMG_NM
+		, T1.SRT_ORD_SEQ
+		, T1.SYS_AREA_CD
+		, T1.ICON_FILE
+		FROM TB_SYS_PGM     T1
+		, TB_SYS_USR_PGM T2
+		WHERE 1 = 1
+		AND T1.PGM_APLY_CD = 'WEB'
+		AND T1.CHNL_CD = T2.CHNL_CD
+		AND T1.DELT_FLG = 'N'
+		AND T1.MDL_ID = T2.MDL_ID
+		AND T2.USR_ID = #USR_ID#
+		AND T1.CHNL_CD = #CHNL_CD#
+		UNION ALL
+		SELECT 'C'
+		, T1.MDL_ID
+		, T1.PRNT_MDL_ID
+		, T1.MDL_NM
+		, 'Y'  AS VIS_FLG
+		, 'Y'  AS UPD_FLG
+		, T1.MDL_DESC
+		, T1.PGM_CD
+		, T1.PGM_NM
+		, T1.PGM_IMG_NM
+		, T1.SRT_ORD_SEQ
+		, T1.SYS_AREA_CD
+		, T1.ICON_FILE
+		FROM TB_SYS_PGM T1
+		WHERE 1 = 1
+		AND T1.PGM_APLY_CD = 'WEB'
+		AND T1.CHNL_CD = #CHNL_CD#
+		AND PGM_CD IN ('G', 'T', 'M')
+		AND MDL_ID IN  (
+		SELECT T1.PRNT_MDL_ID
+		FROM TB_SYS_PGM T1
+		, TB_SYS_GRP_PGM T2
+		WHERE 1 = 1
+		AND T1.PGM_APLY_CD = 'WEB'
+		AND T1.CHNL_CD = T2.CHNL_CD
+		AND T1.MDL_ID = T2.MDL_ID
+		AND T2.VIS_FLG = 'Y'
+		AND T2.CHNL_CD = #CHNL_CD#
+		UNION ALL
+		SELECT T1.PRNT_MDL_ID
+		FROM TB_SYS_PGM T1
+		, TB_SYS_USR_PGM T2
+		WHERE 1 = 1
+		AND T1.PGM_APLY_CD = 'WEB'
+		AND T1.CHNL_CD = T2.CHNL_CD
+		AND T1.MDL_ID = T2.MDL_ID
+		AND T2.VIS_FLG = 'Y'
+		AND T2.CHNL_CD = #CHNL_CD#
+		)
+		) T1
+		WHERE VIS_FLG   = 'Y'
+		)
+		, A_TMP AS (
+		SELECT  PRNT_MDL_ID
+		FROM (
+		SELECT PRNT_MDL_ID
+		FROM MENU_LIST
+		WHERE 1 = 1
+		AND PGM_CD = 'A'
+		UNION ALL
+		SELECT PRNT_MDL_ID
+		FROM MENU_LIST
+		WHERE 1 = 1
+		AND MDL_ID IN (
+		SELECT PRNT_MDL_ID
+		FROM MENU_LIST
+		WHERE 1 = 1
+		AND PGM_CD = 'A'
+		)
+		) T1
+		WHERE 1 = 1
+		GROUP BY PRNT_MDL_ID
+		)
+		SELECT MDL_ID
+		, MDL_NM
+		, MDL_DESC
+		, PRNT_MDL_ID
+		, PGM_CD
+		, PGM_NM
+		, PGM_IMG_NM
+		, SRT_ORD_SEQ
+		, SYS_AREA_CD
+		, VIS_FLG
+		, UPD_FLG
+		, ICON_FILE AS IMAGE
+		FROM MENU_LIST X
+		WHERE 1 = 1
+		AND MDL_ID  IN (SELECT PRNT_MDL_ID FROM A_TMP )
+		AND PRNT_MDL_ID NOT IN (
+		SELECT  PRNT_MDL_ID
+		FROM (
+		SELECT PRNT_MDL_ID
+		FROM MENU_LIST Z
+		WHERE PRNT_MDL_ID NOT IN ('T')
+		GROUP BY PRNT_MDL_ID
+		) T1
+		WHERE NOT EXISTS ( SELECT 'X'
+		FROM MENU_LIST Z
+		WHERE T1.PRNT_MDL_ID = Z.MDL_ID
+		)
+
+		)
+		GROUP BY MDL_ID
+		, MDL_NM
+		, MDL_DESC
+		, PRNT_MDL_ID
+		, PGM_CD
+		, PGM_NM
+		, PGM_IMG_NM
+		, SRT_ORD_SEQ
+		, SYS_AREA_CD
+		, VIS_FLG
+		, UPD_FLG
+		, ICON_FILE
+		UNION ALL
+		SELECT MDL_ID
+		, MDL_NM
+		, MDL_DESC
+		, PRNT_MDL_ID
+		, PGM_CD
+		, PGM_NM
+		, PGM_IMG_NM
+		, SRT_ORD_SEQ
+		, SYS_AREA_CD
+		, VIS_FLG
+		, UPD_FLG
+		, ICON_FILE AS IMAGE
+		FROM MENU_LIST X
+		WHERE 1 = 1
+		AND PRNT_MDL_ID  IN (SELECT PRNT_MDL_ID FROM A_TMP )
+		AND PGM_CD = 'A'
+		AND PRNT_MDL_ID NOT IN (
+		SELECT  PRNT_MDL_ID
+		FROM (
+		SELECT PRNT_MDL_ID
+		FROM MENU_LIST Z
+		WHERE PRNT_MDL_ID NOT IN ('T')
+		GROUP BY PRNT_MDL_ID
+		) T1
+		WHERE NOT EXISTS ( SELECT 'X'
+		FROM MENU_LIST Z
+		WHERE T1.PRNT_MDL_ID = Z.MDL_ID
+		)
+
+		)
+		GROUP BY MDL_ID
+		, MDL_NM
+		, MDL_DESC
+		, PRNT_MDL_ID
+		, PGM_CD
+		, PGM_NM
+		, PGM_IMG_NM
+		, SRT_ORD_SEQ
+		, SYS_AREA_CD
+		, VIS_FLG
+		, UPD_FLG
+		, ICON_FILE
+		ORDER BY PRNT_MDL_ID, SRT_ORD_SEQ
+
+
+		<!--WITH MENU_LIST AS (
       SELECT  GBN , MDL_ID
       , MDL_NM
       , MDL_DESC

@@ -77,5 +77,11 @@
     <Setting Name="SettingOptPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\OPT</Value>
     </Setting>
+    <Setting Name="ApplicationThemeName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Office2016White</Value>
+    </Setting>
+    <Setting Name="SettingDBName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ROBO</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

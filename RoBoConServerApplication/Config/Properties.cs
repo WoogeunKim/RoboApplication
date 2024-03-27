@@ -13,8 +13,6 @@ namespace VisualServerApplication.Config
                 try
                 {
                     ISqlMapper mapper = Mapper.Instance();
-                    ///mapper.DataSource.ConnectionString = "Data Source=210.217.42.142;Initial Catalog=SFND;Persist Security Info=True;User ID=sa; Password=cpc_1234; Timeout=800";
-                    //mapper.DataSource.ConnectionString = "User Id=daegil;Password=daegil;Data Source=(DESCRIPTION=(ADDRESS_LIST= (ADDRESS=(PROTOCOL=TCP) (HOST=210.217.42.132) (PORT=1521))) (CONNECT_DATA = (SERVICE_NAME = daegil)))";
                     mapper.SessionStore = new HybridWebThreadSessionStore(mapper.Id);
                     return mapper;
                 }

@@ -48,7 +48,22 @@ namespace AquilaErpWpfApp3
             this.GridEdit_menu.MouseDoubleClick += new System.Windows.Input.MouseButtonEventHandler(GridEdit_menu_MouseDoubleClick);
 
             this.Title = SystemProperties.PROGRAM_TITLE;
-            this.p_menu.Caption = Properties.Settings.Default.SettingCompany;
+
+            if ("Test Server".Equals(Properties.Settings.Default.SettingCompany) == true)
+            {
+                this.ribbonControl1.Background = Brushes.LightPink;
+                if ("ROBO".Equals(Properties.Settings.Default.SettingDBName) == true)
+                    this.p_menu.Caption = Properties.Settings.Default.SettingCompany + " (운영DB)";
+                else
+                    this.p_menu.Caption = Properties.Settings.Default.SettingCompany + " (개발DB)";
+            }
+            else
+            {
+                if ("ROBO".Equals(Properties.Settings.Default.SettingDBName) == false)
+                    this.p_menu.Caption = Properties.Settings.Default.SettingCompany + " (개발DB)";
+                else
+                    this.p_menu.Caption = Properties.Settings.Default.SettingCompany;
+            }
 
             //MAIN - IMAGE
             //this.img_main.ImageSource  = new BitmapImage(new Uri(@"Images\logo.ico", UriKind.Relative));

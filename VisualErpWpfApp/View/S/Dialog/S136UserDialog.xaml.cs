@@ -709,7 +709,7 @@ namespace AquilaErpWpfApp3.View.S.Dialog
 
             if (Grp_nm_vo != null)
             {
-                if (Grp_nm_vo.OSTR_FLG.Equals("Y"))
+                if (Grp_nm_vo.OSTR_FLG != null && Grp_nm_vo.OSTR_FLG.Equals("Y"))
                 {
                     //부서, 고객사
                     this.text_GRP_NM.Text = "고객사* : ";

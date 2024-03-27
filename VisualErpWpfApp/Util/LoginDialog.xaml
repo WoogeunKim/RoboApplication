@@ -18,6 +18,7 @@
     </Window.Resources>-->
 
     <Grid>
+
         <Rectangle Height="300" VerticalAlignment="Top">
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -28,11 +29,10 @@
             </Rectangle.Fill>
         </Rectangle>
 
-        
         <Border VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1" Margin="0,0,0,0" x:Name="titleBar" Cursor="ScrollAll" ToolTip="Move" >
             <TextBlock  Text="" HorizontalAlignment="Stretch" VerticalAlignment="Top" Foreground="WhiteSmoke" FontSize="18" />
         </Border>
-        
+
         <!-- 채널코드 설정 -->
         <dxe:ImageEdit HorizontalAlignment="Left" Name="img_config" Stretch="Fill" VerticalAlignment="Top" IsReadOnly="True" ShowBorder="False" Width="20" Height="20" Source="{dx:DXImageOffice2013 Image=LoadPageSetup_32x32.png}" ToolTip="채널 설정" Cursor="Hand" />
 
@@ -73,7 +73,7 @@
         <dx:SimpleButton HorizontalAlignment="Center" Name="btn_login" VerticalAlignment="Bottom" Margin="0,50" Width="200"  >
             <StackPanel>
                 <Image Source="{dx:DXImageOffice2013 Image=Apply_32x32.png}" Width="20" Height="20" />
-                <TextBlock>LOGIN</TextBlock>
+                <TextBlock x:Name="loginTxt">LOGIN</TextBlock>
             </StackPanel>
         </dx:SimpleButton>
         <!--<Button  HorizontalAlignment="Center"  Name="btn_login" VerticalAlignment="Bottom" Margin="0,50" Width="150" >
@@ -82,7 +82,7 @@
                 <TextBlock>LOGIN</TextBlock>
             </StackPanel>
         </Button>-->
-        <TextBlock Text="2022 © JSS CO., ALL RIGHTS RESERVED" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" FontSize="11" />
+        <TextBlock Text="2024 © Robocon Corp, ALL RIGHTS RESERVED" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" FontSize="11" />
 
     </Grid>
 

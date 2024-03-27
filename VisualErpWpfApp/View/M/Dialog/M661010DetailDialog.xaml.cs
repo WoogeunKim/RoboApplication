@@ -62,17 +62,18 @@ namespace AquilaErpWpfApp3.View.M.Dialog
                     this.updateDaoList = getDomain();
 
                     // 생산계획 추가
-                    await PostJsonUpdate("m661010/dtl/prod/i", updateDaoList);
+                    if (await PostJsonUpdate("m661010/dtl/prod/i", updateDaoList))
+                    {
+                        //중량 업데이트
+                        if (await PostJsonUpdate("m661010/wgt/u", updateDaoList))
+                        {
+                            // 성공
+                            WinUIMessageBox.Show("완료 되었습니다", title, MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    //중량 업데이트
-                    await PostJsonUpdate("m661010/wgt/u", updateDaoList);
-
-                    // 성공
-                    WinUIMessageBox.Show("완료 되었습니다", title, MessageBoxButton.OK, MessageBoxImage.Information);
-
-                    if (DXSplashScreen.IsActive == true) DXSplashScreen.Close();
-                    this.DialogResult = true;
-                    this.Close();
+                            this.DialogResult = true;
+                            this.Close();
+                        }
+                    }
                 }
                 catch (Exception eLog)
                 {
@@ -170,8 +171,10 @@ namespace AquilaErpWpfApp3.View.M.Dialog
         /// <param name="Path"></param>
         /// <param name="obj"></param>
         /// <returns></returns>
-        private async Task PostJsonUpdate(string Path, object obj)
+        private async Task<Boolean> PostJsonUpdate(string Path, object obj)
         {
+            var ret = false;
+
             try
             {
                 using (HttpResponseMessage response = await SystemProperties.PROGRAM_HTTP.PostAsync(Path
@@ -189,6 +192,7 @@ namespace AquilaErpWpfApp3.View.M.Dialog
                         else
                         {
                             // 성공
+                            ret = true;
                         }
                     }
                 }
@@ -197,6 +201,8 @@ namespace AquilaErpWpfApp3.View.M.Dialog
             {
                 WinUIMessageBox.Show(eLog.Message, title + "- 수정 오류", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
             }
+
+            return ret;
         }
 
         #endregion

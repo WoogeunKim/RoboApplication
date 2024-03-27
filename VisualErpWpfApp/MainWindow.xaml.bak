@@ -1,4 +1,4 @@
-﻿<dxr:DXRibbonWindow x:Class="VisualErpWpfApp.MainWindow"
+﻿<dxr:DXRibbonWindow x:Class="AquilaErpWpfApp3.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
@@ -6,8 +6,9 @@
     xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
     xmlns:dxd="http://schemas.devexpress.com/winfx/2008/xaml/docking"
     xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
-   Icon="pack://application:,,,/VisualErpWpfApp;component/Images/logo.ico" 
-    Title="Visual ERP" Height="700" Width="1100" WindowState="Maximized" SnapsToDevicePixels="True" UseLayoutRounding="True" FontFamily="Arial" FontSize="12">
+                  xmlns:local="clr-namespace:AquilaErpWpfApp3.Utillity"
+   Icon="pack://application:,,,/AquilaErpWpfApp3;component/Images/logo1_128.ico" 
+    Title="AToZ ERP" Height="700" Width="1100" WindowState="Maximized" SnapsToDevicePixels="True" UseLayoutRounding="True" FontFamily="Arial" FontSize="12">
     
     <!--<dxr:DXRibbonWindow.Resources>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
@@ -29,20 +30,25 @@
 
     <dxb:BarManager x:Name="barManager">
         <dxb:BarManager.Items>
-            <!--<dxb:BarButtonItem x:Name="bRefresh" Content="메뉴 다시 불려오기" Glyph="{dx:DXImage Image=Refresh2_16x16.png}" LargeGlyph="{dx:DXImage Image=Refresh2_32x32.png}" ItemClick="b_Refresh_ItemClick" />
+            <dxb:BarButtonItem x:Name="bUserInfo" Content="사용자" Glyph="{dx:DXImage Image=Contact_16x16.png}" LargeGlyph="{dx:DXImage Image=Contact_32x32.png}" ItemClick="b_UserInfo_ItemClick" />
+            <dxb:BarButtonItem x:Name="bRefresh" Content="메뉴" Glyph="{dx:DXImage Image=Refresh2_16x16.png}" LargeGlyph="{dx:DXImage Image=Refresh2_32x32.png}" ItemClick="b_Refresh_ItemClick" />
+
+            <dxb:BarButtonItem x:Name="Mail_write" Content="보내기" ItemClick="Mail_write_ItemClick" Glyph="{dx:DXImage Images/Communication/Phone_16x16.png}" LargeGlyph="{dx:DXImage Images/Communication/Phone_32x32.png}" />
+            <dxb:BarButtonItem x:Name="Mail_get" Content="메일함" ItemClick="Mail_get_ItemClick" Glyph="{dx:DXImage Images/Support/Article_32x32.png}" LargeGlyph="{dx:DXImage Images/Support/Article_32x32.png}"/>
+            <!--
             <dxb:BarButtonItem x:Name="bNotice" Content="공지 사항" Glyph="{dx:DXImage Image=Notes_16x16.png}" LargeGlyph="{dx:DXImage Image=Notes_32x32.png}" ItemClick="b_Notice_ItemClick" />
-            <dxb:BarButtonItem x:Name="bUserInfo" Content="사용자 정보" Glyph="{dx:DXImage Image=Contact_16x16.png}" LargeGlyph="{dx:DXImage Image=Contact_32x32.png}" ItemClick="b_UserInfo_ItemClick" />
             <dxb:BarButtonItem x:Name="bLogout" Glyph="{dx:DXImage Image=AssignToMe_16x16.png}" LargeGlyph="{dx:DXImage Image=AssignToMe_32x32.png}" ItemClick="b_Logout_ItemClick" />-->
             <!--<dxb:BarButtonItem x:Name="bEnd" Content="종료" Glyph="Images/Icons/Action_Exit-16x16.png" LargeGlyph="Images/Icons/Action_Exit-32x32.png" ItemClick="b_End_ItemClick" />-->
         </dxb:BarManager.Items>
         <DockPanel>
-            <dxr:RibbonControl x:Name="ribbonControl1" DockPanel.Dock="Top" ToolbarShowCustomizationButton="False">
+            <!-- ApplicationButtonLargeIcon="pack://application:,,,/Images/logo_32.png"-->
+            <dxr:RibbonControl x:Name="ribbonControl1" DockPanel.Dock="Top" ToolbarShowCustomizationButton="False" ShowApplicationButton="True" ApplicationButtonLargeIcon="pack://application:,,,/Images/logo1_48.png" RibbonStyle="Office2007" >
                 <dxr:RibbonControl.ApplicationMenu>
                     <dxr:BackstageViewControl SelectedTabIndex="{Binding DefaultBackstatgeIndex, Mode=TwoWay}" IsOpen="{Binding IsBackstageOpen, Mode=TwoWay}">
                         <dxr:BackstageViewControl.Items>
-                            <!--<dxr:BackstageTabItem Content="Info">
+                            <!--<dxr:BackstageTabItem Content="IEG Home Page">
                                 <dxr:BackstageTabItem.ControlPane>
-                                    <local:InfoView />
+                                    <local:IEG_InfoView />
                                 </dxr:BackstageTabItem.ControlPane>
                             </dxr:BackstageTabItem>-->
                             <!--<dxr:BackstageTabItem  Content="Print/Export" IsEnabled="{Binding HasPrinting, Mode=OneWay}">
@@ -50,7 +56,7 @@
                                     <local:PrintView/>
                                 </dxr:BackstageTabItem.ControlPane>
                             </dxr:BackstageTabItem>
-                            <dxr:BackstageButtonItem Glyph="pack://application:,,,/DevExpress.Images.v15.2;component/Images/Actions/Close_16x16.png" Content="Exit" Command="{Binding EndProgramCommand}" />
+                            <dxr:BackstageButtonItem Glyph="pack://application:,,,/DevExpress.Images.v19.2;component/Images/Actions/Close_16x16.png" Content="Exit" Command="{Binding EndProgramCommand}" />
                             -->
                             <!--<dxr:BackstageButtonItem Content="Exit" Glyph="Images/Action_Exit-16x16.png" Click="BackstageButtonItem_Click" />-->
                         </dxr:BackstageViewControl.Items>
@@ -63,6 +69,15 @@
                 </dxr:RibbonControl.PageHeaderItemLinks>-->
                 <dxr:RibbonDefaultPageCategory>
                     <dxr:RibbonPage Name="Home" Caption="홈">
+                        <dxr:RibbonPageGroup Caption="시스템">
+                            <dxb:BarButtonItemLink BarItemName="bRefresh" />
+                            <dxb:BarButtonItemLink BarItemName="bUserInfo" />
+                        </dxr:RibbonPageGroup>
+                        <dxr:RibbonPageGroup Caption="메시지">
+                            <dxb:BarButtonItemLink BarItemName="Mail_write"/>
+                            <dxb:BarButtonItemLink BarItemName="Mail_get"/>
+                        </dxr:RibbonPageGroup>
+
                         <!--<dxr:RibbonPageGroup Caption="공지사항">
                             <dxr:RibbonPageGroup.ItemLinks>
                                 <dxb:BarButtonItemLink BarItemName="bNotice" />
@@ -134,7 +149,7 @@
                                     <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding OnModulesLoadedCommand}" />
                                 </dxmvvm:Interaction.Triggers>-->
                                     <dxg:GridControl.View>
-                                        <dxg:TreeListView x:Name="GridEditView_menu" KeyFieldName="MDL_ID" ParentFieldName="PRNT_MDL_ID" IsSynchronizedWithCurrentItem="True" ShowFixedTotalSummary="False" FontSize="12" ShowSearchPanelCloseButton="True" ShowSearchPanelMode="Never" SearchDelay="0" AutoWidth="True" AllowPerPixelScrolling="True" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False" ShowColumnHeaders="False" AutoExpandAllNodes="True" TreeDerivationMode="Selfreference" ShowNodeImages="True" ImageFieldName="IMAGE" />
+                                        <dxg:TreeListView x:Name="GridEditView_menu" KeyFieldName="MDL_ID" ParentFieldName="PRNT_MDL_ID" IsSynchronizedWithCurrentItem="True" ShowFixedTotalSummary="False" FontSize="12" ShowSearchPanelCloseButton="True" SearchDelay="0" AutoWidth="True" AllowPerPixelScrolling="True" BestFitMode="Smart" BestFitArea="All" ShowHorizontalLines="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" FadeSelectionOnLostFocus="False" ShowIndicator="False" IsColumnMenuEnabled="False" ShowColumnHeaders="False" AutoExpandAllNodes="True" TreeDerivationMode="Selfreference" ShowNodeImages="True" ImageFieldName="IMAGE" ShowSearchPanelMode="Always" />
                                     </dxg:GridControl.View>
                                     <dxg:GridControl.Columns>
                                         <!--+ ' (' + [PRNT_MDL_ID] + ')' -->
@@ -164,6 +179,9 @@
                             </dxd:DocumentGroup.ContextMenu>-->
                             <dxd:DocumentPanel Caption="Home" AllowClose="False" AllowContextMenu="False" CaptionImage="{dx:DXImage Image=Home_16x16.png}">
                                 <TextBlock Margin="24" TextWrapping="Wrap"></TextBlock>
+                                <!--<Image Source="Images/logo.ico" ></Image>-->
+                                <!--<WebBrowser x:Name="wbSite"   />-->
+
                             </dxd:DocumentPanel>
                             <!--<dxd:DocumentPanel Caption="Document2" CaptionImage="/DaegilErpClient;component/Images/Icons/new-16x16.png">
                                     <TextBlock Margin="24" TextWrapping="Wrap">Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur sit amet sapien metus, eget pharetra velit.</TextBlock>

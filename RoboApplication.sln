@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AquilaVisualServerApplication", "VisualServerApplication\AquilaVisualServerApplication.csproj", "{1C15F2B2-A0AE-4C1C-BCCD-A0735261784E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AquilaErpWpfApp3", "VisualErpWpfApp\AquilaErpWpfApp3.csproj", "{73D858D7-92C9-4280-8563-A2052DD8FDD7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelsLibrary", "ModelsLibrary\ModelsLibrary.csproj", "{45F964FF-989E-473F-83E5-4C5B6AB3B834}"
@@ -19,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1C15F2B2-A0AE-4C1C-BCCD-A0735261784E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C15F2B2-A0AE-4C1C-BCCD-A0735261784E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C15F2B2-A0AE-4C1C-BCCD-A0735261784E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C15F2B2-A0AE-4C1C-BCCD-A0735261784E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{73D858D7-92C9-4280-8563-A2052DD8FDD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{73D858D7-92C9-4280-8563-A2052DD8FDD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73D858D7-92C9-4280-8563-A2052DD8FDD7}.Release|Any CPU.ActiveCfg = Release|Any CPU

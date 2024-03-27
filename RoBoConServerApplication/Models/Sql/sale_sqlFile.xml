@@ -7501,7 +7501,7 @@
      SELECT  T2.RLSE_CMD_NO
            , MIN(T3.LOC_NM) AS LOC_NM
 		   , MIN(LOC_CD) AS LOC_CD
-           , T2.CUST_PUR_NO
+           , T2.CUST_PUR_NO 
         FROM TB_SL_RLSE       T1
            , TB_SL_RLSE_DTL   T2
      OUTER APPLY (

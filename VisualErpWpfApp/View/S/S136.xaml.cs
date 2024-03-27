@@ -142,8 +142,10 @@ namespace AquilaErpWpfApp3.View.S
                 return;
             }
 
+            /*
             if (dao.OSTR_FLG == null)
                 return;
+            */
 
             //그룹클릭시
             if (dao.IS_GROUP.Equals("G"))
@@ -167,8 +169,9 @@ namespace AquilaErpWpfApp3.View.S
                 }
             }
 
+
             //유저클릭시 + 일반유저
-            if (!dao.IS_GROUP.Equals("G") && !dao.OSTR_FLG.Equals("Y"))
+            if (!dao.IS_GROUP.Equals("G") && (dao.OSTR_FLG == null || !dao.OSTR_FLG.Equals("Y")))
             {
                 DetailView_group.Visibility = Visibility.Hidden;
                 //
@@ -198,7 +201,7 @@ namespace AquilaErpWpfApp3.View.S
                 }
             }
             //유저클릭시 + 고객사
-            if (!dao.IS_GROUP.Equals("G") && dao.OSTR_FLG.Equals("Y"))
+            if (!dao.IS_GROUP.Equals("G") && dao.OSTR_FLG != null && dao.OSTR_FLG.Equals("Y"))
             {
                 DetailView_group.Visibility = Visibility.Hidden;
                 //

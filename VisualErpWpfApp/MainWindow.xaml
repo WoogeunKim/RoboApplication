@@ -56,7 +56,7 @@
                                     <local:PrintView/>
                                 </dxr:BackstageTabItem.ControlPane>
                             </dxr:BackstageTabItem>
-                            <dxr:BackstageButtonItem Glyph="pack://application:,,,/DevExpress.Images.v19.2;component/Images/Actions/Close_16x16.png" Content="Exit" Command="{Binding EndProgramCommand}" />
+                            <dxr:BackstageButtonItem Glyph="pack://application:,,,/DevExpress.Images.v22.1;component/Images/Actions/Close_16x16.png" Content="Exit" Command="{Binding EndProgramCommand}" />
                             -->
                             <!--<dxr:BackstageButtonItem Content="Exit" Glyph="Images/Action_Exit-16x16.png" Click="BackstageButtonItem_Click" />-->
                         </dxr:BackstageViewControl.Items>

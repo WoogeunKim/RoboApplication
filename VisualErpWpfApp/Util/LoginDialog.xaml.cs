@@ -1,4 +1,5 @@
-﻿using DevExpress.Xpf.WindowsUI;
+﻿using DevExpress.Xpf.Core.Native;
+using DevExpress.Xpf.WindowsUI;
 using Microsoft.Win32;
 using ModelsLibrary.Auth;
 using ModelsLibrary.Code;
@@ -33,6 +34,17 @@ namespace AquilaErpWpfApp3.Util
             this.text_loginNm.Text = this.Title;
             this.text_CoNm.Text = Properties.Settings.Default.SettingCompany;
 
+            if ("Test Server".Equals(Properties.Settings.Default.SettingCompany) == true)
+            {
+                this.loginTxt.Foreground = Brushes.Red;
+                this.loginTxt.Text = "테스트 LOGIN";
+            }
+            else
+            {
+                this.loginTxt.Foreground = Brushes.Black;
+                this.loginTxt.Text = "LOGIN";
+            }
+
             //main_img check
             //if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + Properties.Settings.Default.SettingLogImg) == true)
             if (string.IsNullOrEmpty(Properties.Settings.Default.SettingLogImg) == false)
@@ -52,11 +64,11 @@ namespace AquilaErpWpfApp3.Util
 
                     this.img_main.Source = ByteToImage(Convert.FromBase64String(Properties.Settings.Default.SettingLogImg));
                 }
-                catch {  }
+                catch { }
             }
 
             this.txtId.Text = Properties.Settings.Default.SettingId;
-  
+
             this.btn_login.IsEnabled = !string.IsNullOrEmpty(Properties.Settings.Default.SettingChnl);
             this.img_setting.IsEnabled = !string.IsNullOrEmpty(Properties.Settings.Default.SettingChnl);
             this.img_main_setting.IsEnabled = !string.IsNullOrEmpty(Properties.Settings.Default.SettingChnl);
@@ -113,7 +125,7 @@ namespace AquilaErpWpfApp3.Util
                     HttpClient client;
                     HttpResponseMessage response;
 
-                    
+
                     ////URL Check & CHNL Check
                     using (client = new HttpClient())
                     {
@@ -140,14 +152,14 @@ namespace AquilaErpWpfApp3.Util
                                 {
                                     //if (Directory.Exists(AppDomain.CurrentDomain.BaseDirectory) == true)
                                     //{
-                                        //Properties.Settings.Default.SettingLogImg = Guid.NewGuid().ToString() + ".png";
-                                        //Properties.Settings.Default.Save();
-                                        //
-                                        //File.WriteAllBytes(AppDomain.CurrentDomain.BaseDirectory + Properties.Settings.Default.SettingLogImg, chnlVo.CHNL_LOG_IMG);
-                                        //this.img_main.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + Properties.Settings.Default.SettingLogImg, UriKind.Absolute));
+                                    //Properties.Settings.Default.SettingLogImg = Guid.NewGuid().ToString() + ".png";
+                                    //Properties.Settings.Default.Save();
+                                    //
+                                    //File.WriteAllBytes(AppDomain.CurrentDomain.BaseDirectory + Properties.Settings.Default.SettingLogImg, chnlVo.CHNL_LOG_IMG);
+                                    //this.img_main.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + Properties.Settings.Default.SettingLogImg, UriKind.Absolute));
 
-                                        Properties.Settings.Default.SettingLogImg = Convert.ToBase64String(chnlVo.CHNL_LOG_IMG);
-                                        Properties.Settings.Default.Save();
+                                    Properties.Settings.Default.SettingLogImg = Convert.ToBase64String(chnlVo.CHNL_LOG_IMG);
+                                    Properties.Settings.Default.Save();
                                     //
                                     //File.WriteAllBytes(AppDomain.CurrentDomain.BaseDirectory + Properties.Settings.Default.SettingLogImg, chnlVo.CHNL_LOG_IMG);
                                     //this.img_main.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + Properties.Settings.Default.SettingLogImg, UriKind.Absolute));
@@ -161,7 +173,7 @@ namespace AquilaErpWpfApp3.Util
                                         this.img_main.Source = ByteToImage(Convert.FromBase64String(Properties.Settings.Default.SettingLogImg));
                                         //
                                     }
-                                   //}
+                                    //}
                                 }
 
                                 //성공
@@ -197,6 +209,21 @@ namespace AquilaErpWpfApp3.Util
                     string chnl = Decrypt(lines[1], key);
                     string ver = Decrypt(lines[2], key);
 
+                    if ("http://39.125.161.233:8888/".Equals(url) == false)
+                    {
+                        this.loginTxt.Foreground = Brushes.Red;
+                        this.loginTxt.Text = "테스트 LOGIN";
+                        url = "http://localhost:44349/";
+                        this.text_CoNm.Text = "Test Server";
+
+                    }
+                    else
+                    {
+                        this.loginTxt.Foreground = Brushes.Black;
+                        this.loginTxt.Text = "LOGIN";
+                        this.text_CoNm.Text = "로보콘 주식회사";
+                    }
+
                     //해당 ERP 인증서 버전 체크  => F5BD540D-8B27-4E89-9965-53F85AE74388
                     if ("F5BD540D-8B27-4E89-9965-53F85AE74388".Equals(ver) == false)
                     {
@@ -220,22 +247,18 @@ namespace AquilaErpWpfApp3.Util
                         {
                             chnlVo = JsonConvert.DeserializeObject<ProgramVo>(await response.Content.ReadAsStringAsync());
                             Properties.Settings.Default.SettingChnl = chnlVo.CHNL_CD;
-                            Properties.Settings.Default.SettingCompany = chnlVo.CHNL_NM;
+                            Properties.Settings.Default.SettingLogImg = (chnlVo.CHNL_LOG_IMG == null ? null : Convert.ToBase64String(chnlVo.CHNL_LOG_IMG));
                             Properties.Settings.Default.SettingHttp = url;
 
+                            if ("http://39.125.161.233:8888/".Equals(url) == false)
+                                Properties.Settings.Default.SettingCompany = "Test Server";
+                            else
+                                Properties.Settings.Default.SettingCompany = chnlVo.CHNL_NM;
 
-                            Properties.Settings.Default.SettingLogImg = (chnlVo.CHNL_LOG_IMG == null ? null : Convert.ToBase64String(chnlVo.CHNL_LOG_IMG));
                             Properties.Settings.Default.Save();
 
-                            //#if DEBUG TEST Server
-                            //Properties.Settings.Default.SettingHttp = "http://localhost:44349/";
-                            //Properties.Settings.Default.SettingCompany = "Local Test Server...";
-                            //#endif
-
-                            //Properties.Settings.Default.Save();
-
                             //Log Img Save
-                            if (chnlVo.CHNL_LOG_IMG?.Length > 0)
+                            if (chnlVo.CHNL_LOG_IMG != null && chnlVo.CHNL_LOG_IMG?.Length > 0)
                             {
                                 //if (Directory.Exists(AppDomain.CurrentDomain.BaseDirectory) == true)
                                 //{
@@ -259,7 +282,7 @@ namespace AquilaErpWpfApp3.Util
                                 //this.img_main.Source = bi;
                                 //if (string.IsNullOrEmpty(Properties.Settings.Default.SettingLogImg) == false)
                                 //{
-                                    this.img_main.Source = ByteToImage(Convert.FromBase64String(Properties.Settings.Default.SettingLogImg));
+                                this.img_main.Source = ByteToImage(Convert.FromBase64String(Properties.Settings.Default.SettingLogImg));
                                 //}
                                 //}
                             }
@@ -316,7 +339,7 @@ namespace AquilaErpWpfApp3.Util
             catch (Exception eLog)
             {
                 //WinUIMessageBox.Show(eLog.Message, SystemProperties.PROGRAM_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
-                WinUIMessageBox.Show("해당 CPC 파일은 버전이 맞지 않습니다", SystemProperties.PROGRAM_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
+                //WinUIMessageBox.Show("해당 CPC 파일은 버전이 맞지 않습니다", SystemProperties.PROGRAM_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
         }
@@ -463,7 +486,7 @@ namespace AquilaErpWpfApp3.Util
             }
         }
 
-       async void userLogin()
+        async void userLogin()
         {
             try
             {
@@ -486,6 +509,7 @@ namespace AquilaErpWpfApp3.Util
                         //Dao.USR_PWD = Convert.ToBase64String(sha256Managed.ComputeHash(System.Text.Encoding.UTF8.GetBytes(this.text_USR_PWD.Text)));
 
                         GroupUserVo usrVo = JsonConvert.DeserializeObject<GroupUserVo>(await response.Content.ReadAsStringAsync());
+
                         if (usrVo == null)
                         {
                             this.btn_login.IsEnabled = true;
@@ -509,6 +533,25 @@ namespace AquilaErpWpfApp3.Util
                             return;
                         }
 
+                        int client_ver = int.Parse((SystemProperties.ProgramVersion.Replace(".", "") + "0000").Substring(0, 7));
+
+                        if (usrVo.CLIENT_VER == null || client_ver < int.Parse(usrVo.CLIENT_VER))
+                        {
+                            this.btn_login.IsEnabled = true;
+                            this.txtId.IsEnabled = true;
+                            this.txtPass.IsEnabled = true;
+                            this.img_setting.IsEnabled = true;
+                            this.img_main_setting.IsEnabled = true;
+
+                            WinUIMessageBox.Show("최신 버전이 아닙니다. 업데이트를 진행해 주세요.", "[" + SystemProperties.PROGRAM_TITLE + "]실패", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+
+                        if (usrVo.DBNAME != null)
+                        {
+                            Properties.Settings.Default.SettingDBName = usrVo.DBNAME;
+                            Properties.Settings.Default.Save();
+                        }
 
                         //암호화 비교 Convert.ToBase64String(sha256Managed.ComputeHash(System.Text.Encoding.UTF8.GetBytes(   )))
                         if (Convert.ToBase64String(sha256Managed.ComputeHash(System.Text.Encoding.UTF8.GetBytes(this.txtPass.Password))).Equals(usrVo.USR_PWD))
@@ -680,6 +723,12 @@ namespace AquilaErpWpfApp3.Util
                     }
                     else
                     {
+                        this.btn_login.IsEnabled = true;
+                        this.txtId.IsEnabled = true;
+                        this.txtPass.IsEnabled = true;
+                        this.img_setting.IsEnabled = true;
+                        this.img_main_setting.IsEnabled = true;
+
                         WinUIMessageBox.Show(await response.Content.ReadAsStringAsync(), SystemProperties.PROGRAM_TITLE, MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
